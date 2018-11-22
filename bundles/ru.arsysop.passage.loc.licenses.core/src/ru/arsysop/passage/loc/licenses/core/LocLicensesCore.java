@@ -26,4 +26,8 @@ public class LocLicensesCore {
 	public static final String TOPIC_LICENSES_UPDATED = "passage/loc/licenses/updated";  //$NON-NLS-1$
 	public static final String TOPIC_LICENSES_DELETED = "passage/loc/licenses/deleted";  //$NON-NLS-1$
 
+	public static final String TOPIC_USERS_INSERTED = "passage/loc/users/inserted";  //$NON-NLS-1$
+	public static final String TOPIC_USERS_UPDATED = "passage/loc/users/updated";  //$NON-NLS-1$
+	public static final String TOPIC_USERS_DELETED = "passage/loc/users/deleted";  //$NON-NLS-1$
+
 }
