@@ -9,7 +9,7 @@
       <children xsi:type="menu:Menu" xmi:id="_NUsyMOTuEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.menu.view" label="View"/>
       <children xsi:type="menu:Menu" xmi:id="_4tOAUIFiEeivxedica_7mQ" elementId="ru.arsysop.passage.loc.workbench.menu.help" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_LYoXUO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.inspect.hardware" label="Inspect Hardware" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" command="_V2DtgO4pEei1L9WYDuiuXw"/>
       </children>
     </mainMenu>
     <trimBars xmi:id="_6wlLlcgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.trimbars.top">
@@ -18,6 +18,7 @@
   </children>
   <handlers xmi:id="_uPtcsOdJEeigXNdbugUBXw" elementId="ru.arsysop.passage.loc.workbench.handler.perspective.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenPerspectiveHandler" command="_5P07MOdJEeigXNdbugUBXw"/>
   <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://ru.arsysop.passage.lic.inspector.ui/ru.arsysop.passage.lic.inspector.ui.hadlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
+  <handlers xmi:id="_dnVRcO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.aboutdialog.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenAboutDialogHandler" command="_V2DtgO4pEei1L9WYDuiuXw"/>
   <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingtable" bindingContext="_6wlLecgZEeSyMNYR5xypkQ"/>
   <rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
@@ -27,6 +28,7 @@
     <parameters xmi:id="_8svG8OdJEeigXNdbugUBXw" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id" name="Command Parameter Perspective Id" optional="false"/>
   </commands>
   <commands xmi:id="_mYhFMO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.command.inspect.hardware" commandName="Inspect Hardware"/>
+  <commands xmi:id="_V2DtgO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.command.aboutdialog.open" commandName="Open About Dialog"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
