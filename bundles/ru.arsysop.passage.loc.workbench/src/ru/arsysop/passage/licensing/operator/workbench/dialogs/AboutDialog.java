@@ -137,4 +137,12 @@ public class AboutDialog extends AbstractDialog {
 		btnOk.setLayoutData(btnData);
 	}
 
+	@Override
+	public boolean close() {
+		if (productLogo != null) {
+			productLogo.dispose();
+			productLogo = null;
+		}
+		return super.close();
+	}
 }
