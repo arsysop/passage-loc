@@ -50,7 +50,7 @@ public class AboutDialog extends AbstractDialog {
 	private static final String ABOUT_IMAGE = "%aboutImage";
 	private static final String ABOUT_DIALOG_TITLE = "%product.name";
 
-	private static final  String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench";
+	private static final String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench";
 	private static final String PRODUCT_BUNDLE_ABOUT_IMAGE = "%s//%s";
 	private Image productLogo;
 
