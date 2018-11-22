@@ -51,7 +51,6 @@ public class ExitConfirmationDialog extends AbstractDialog {
 	protected void configureShell(Shell newShell) {
 		newShell.setSize(DIALOG_WIDTH_DEFAULT, DIALOG_HEIGHT_DEFAULT);
 		super.configureShell(newShell);
-
 	}
 
 	@Override
