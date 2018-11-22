@@ -50,7 +50,7 @@ public class AboutDialog extends AbstractDialog {
 	private static final String ABOUT_IMAGE = "%aboutImage";
 	private static final String ABOUT_DIALOG_TITLE = "%product.name";
 
-	private final static String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench";
+	private static final  String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench";
 	private static final String PRODUCT_BUNDLE_ABOUT_IMAGE = "%s//%s";
 	private Image productLogo;
 
@@ -63,7 +63,6 @@ public class AboutDialog extends AbstractDialog {
 		if (translations == null) {
 			translations = context.get(TranslationService.class);
 		}
-
 	}
 
 	@Override
