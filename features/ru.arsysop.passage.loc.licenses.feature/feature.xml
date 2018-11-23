@@ -38,6 +38,13 @@
    </license>
 
    <plugin
+         id="ru.arsysop.passage.loc.licenses.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="ru.arsysop.passage.loc.licenses.ui"
          download-size="0"
          install-size="0"

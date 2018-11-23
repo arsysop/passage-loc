@@ -18,12 +18,16 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.products.core;
+package ru.arsysop.passage.loc.licenses.core;
 
-public class LocProductsCore {
+public class LocLicensesCore {
 
-	public static final String TOPIC_PRODUCTS_INSERTED = "passage/loc/products/inserted";  //$NON-NLS-1$
-	public static final String TOPIC_PRODUCTS_UPDATED = "passage/loc/products/updated";  //$NON-NLS-1$
-	public static final String TOPIC_PRODUCTS_DELETED = "passage/loc/products/deleted";  //$NON-NLS-1$
+	public static final String TOPIC_LICENSES_INSERTED = "passage/loc/licenses/inserted";  //$NON-NLS-1$
+	public static final String TOPIC_LICENSES_UPDATED = "passage/loc/licenses/updated";  //$NON-NLS-1$
+	public static final String TOPIC_LICENSES_DELETED = "passage/loc/licenses/deleted";  //$NON-NLS-1$
+
+	public static final String TOPIC_USERS_INSERTED = "passage/loc/users/inserted";  //$NON-NLS-1$
+	public static final String TOPIC_USERS_UPDATED = "passage/loc/users/updated";  //$NON-NLS-1$
+	public static final String TOPIC_USERS_DELETED = "passage/loc/users/deleted";  //$NON-NLS-1$
 
 }

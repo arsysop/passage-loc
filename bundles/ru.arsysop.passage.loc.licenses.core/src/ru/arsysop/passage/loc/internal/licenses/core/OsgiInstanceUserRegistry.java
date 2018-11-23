@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.internal.products.core;
+package ru.arsysop.passage.loc.internal.licenses.core;
 
 import java.io.IOException;
 import java.net.URI;
@@ -31,18 +31,17 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import ru.arsysop.passage.lic.registry.ProductDescriptor;
-import ru.arsysop.passage.lic.registry.ProductRegistry;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
+import ru.arsysop.passage.lic.registry.UserDescriptor;
+import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 
 @Component
-public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<ProductDescriptor> implements ProductRegistry {
+public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDescriptor> implements UserRegistry {
 	
 	@Override
-	protected Class<ProductDescriptor> getDescriptorClass() {
-		return ProductDescriptor.class;
+	protected Class<UserDescriptor> getDescriptorClass() {
+		return UserDescriptor.class;
 	}
 
 	@Reference
@@ -73,13 +72,6 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 	}
 
 	@Override
-	public String createPassword(ProductVersionDescriptor productVersion) {
-		String name = productVersion.getProduct().getName();
-		String version = productVersion.getVersion();
-		return name + "###" + version;
-	}
-
-	@Override
 	protected String getSourceDefault() {
 		String areaValue = environmentInfo.getProperty("osgi.instance.area");
 		Path instance = Paths.get(URI.create(areaValue));
@@ -90,8 +82,8 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Path productsPath = passagePath.resolve("products.lic");
-		return productsPath.toFile().getAbsolutePath();
+		Path licensesPath = passagePath.resolve("users.lic");
+		return licensesPath.toFile().getAbsolutePath();
 	}
 
 }
