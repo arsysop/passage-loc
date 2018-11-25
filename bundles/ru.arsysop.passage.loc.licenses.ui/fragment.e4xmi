@@ -3,7 +3,7 @@
   <imports xsi:type="commands:Command" xmi:id="_KAjdkOjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.perspective.open"/>
   <imports xsi:type="commands:CommandParameter" xmi:id="_if128OjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_iZkhwOjhEeirQd2CUcYMjQ" featurename="handlers" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Handler" xmi:id="_1BCMIOjhEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.CreateUserHandler" command="_H22bkOjiEeirQd2CUcYMjQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_1BCMIOjhEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.handlers.CreateUserHandler" command="_H22bkOjiEeirQd2CUcYMjQ"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_3e25cOjhEeirQd2CUcYMjQ" featurename="commands" parentElementId="ru.arsysop.passage.loc.workbench.application">
     <elements xsi:type="commands:Command" xmi:id="_H22bkOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.command.user.create" commandName="Create User" category="_-dgGkOjhEeirQd2CUcYMjQ"/>

@@ -6,8 +6,13 @@ Bundle-Version: 0.2.0.qualifier
 Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Copyright: %Bundle-Copyright
-Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="0.0.0",
- org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="0.0.0",
+Require-Bundle: javax.inject;bundle-version="0.0.0",
+ org.eclipse.e4.core.di;bundle-version="0.0.0",
+ org.eclipse.e4.core.services;bundle-version="0.0.0",
+ org.eclipse.e4.ui.model.workbench;bundle-version="0.0.0",
+ ru.arsysop.passage.lic.model;bundle-version="0.0.0",
  ru.arsysop.passage.loc.workbench.emfforms;bundle-version="0.0.0",
+ ru.arsysop.passage.loc.edit;bundle-version="0.0.0",
+ ru.arsysop.passage.loc.licenses.core;bundle-version="0.0.0",
  ru.arsysop.passage.loc.licenses.ui;bundle-version="0.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
