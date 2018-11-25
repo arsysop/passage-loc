@@ -28,7 +28,6 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.workbench.viewers.DescriptorRegistryExplorer;
 
