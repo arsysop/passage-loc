@@ -94,6 +94,10 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		}
 	}
 	
+	public ComposedAdapterFactory getComposedAdapterFactory() {
+		return composedAdapterFactory;
+	}
+	
 	@Override
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
