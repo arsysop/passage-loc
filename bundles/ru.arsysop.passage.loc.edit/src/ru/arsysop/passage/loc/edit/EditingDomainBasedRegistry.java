@@ -33,14 +33,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 
 import ru.arsysop.passage.lic.registry.BaseDescriptor;
 import ru.arsysop.passage.lic.registry.BaseDescriptorRegistry;
 
-public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements BaseDescriptorRegistry<D>, IEditingDomainProvider {
+public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements BaseDescriptorRegistry<D>, EditingDomainRegistry {
 	
 	protected EnvironmentInfo environmentInfo;
 
@@ -94,6 +93,7 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		}
 	}
 	
+	@Override
 	public ComposedAdapterFactory getComposedAdapterFactory() {
 		return composedAdapterFactory;
 	}

@@ -20,15 +20,17 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.viewers;
 
-import java.util.Iterator;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -39,25 +41,24 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import ru.arsysop.passage.lic.registry.BaseDescriptor;
-import ru.arsysop.passage.lic.registry.BaseDescriptorRegistry;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
+import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
 
-public class DescriptorRegistryExplorer<D extends BaseDescriptor> {
+public class DomainRegistryExplorer {
 
-	private final BaseDescriptorRegistry<D> descriptorRegistry;
+	private final EditingDomainRegistry descriptorRegistry;
 	private final ESelectionService selectionService;
 
 	private ISelectionChangedListener selectionChangeListener;
 	private TreeViewer viewer;
 
-	public DescriptorRegistryExplorer(BaseDescriptorRegistry<D> registry, ESelectionService selectionService) {
+	public DomainRegistryExplorer(EditingDomainRegistry registry, ESelectionService selectionService) {
 		super();
 		this.descriptorRegistry = registry;
 		this.selectionService = selectionService;
 	}
 	
-	public BaseDescriptorRegistry<D> getDescriptorRegistry() {
+	public EditingDomainRegistry getDescriptorRegistry() {
 		return descriptorRegistry;
 	}
 
@@ -69,7 +70,6 @@ public class DescriptorRegistryExplorer<D extends BaseDescriptor> {
 
 		viewer = new TreeViewer(base);
 		viewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		viewer.setContentProvider(new DescriptorRegistryContentProvider());
 		AdapterFactory factory;
 		if (descriptorRegistry instanceof EditingDomainBasedRegistry<?>) {
 			EditingDomainBasedRegistry<?> registry = (EditingDomainBasedRegistry<?>) descriptorRegistry;
@@ -77,7 +77,7 @@ public class DescriptorRegistryExplorer<D extends BaseDescriptor> {
 		} else {
 			factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		}
-		
+		viewer.setContentProvider(new AdapterFactoryContentProvider(factory));
 		viewer.setLabelProvider(new AdapterFactoryLabelProvider(factory));
 		selectionChangeListener = new StructuredSelectionListener(selectionService);
 		viewer.addSelectionChangedListener(selectionChangeListener);
@@ -96,14 +96,14 @@ public class DescriptorRegistryExplorer<D extends BaseDescriptor> {
 
 	protected void resetInput() {
 		if (viewer != null && !viewer.getControl().isDisposed()) {
+			ResourceSet resourceSet = descriptorRegistry.getEditingDomain().getResourceSet();
 			ISelection selection = viewer.getSelection();
-			viewer.setInput(descriptorRegistry);
+			viewer.setInput(resourceSet);
 			if (selection.isEmpty()) {
-				Iterable<D> products = descriptorRegistry.getDescriptors();
-				Iterator<D> iterator = products.iterator();
-				if (iterator.hasNext()) {
-					D next = iterator.next();
-					selection = new StructuredSelection(next);
+				EList<Resource> resources = resourceSet.getResources();
+				if (!resources.isEmpty()) {
+					Resource resource = resources.get(0);
+					selection = new StructuredSelection(resource);
 				}
 			}
 			viewer.setSelection(selection);

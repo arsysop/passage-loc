@@ -36,9 +36,10 @@ import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
+import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 @Component
-public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<ProductDescriptor> implements ProductRegistry {
+public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<ProductDescriptor> implements ProductRegistry, ProductDomainRegistry {
 	
 	@Override
 	protected Class<ProductDescriptor> getDescriptorClass() {

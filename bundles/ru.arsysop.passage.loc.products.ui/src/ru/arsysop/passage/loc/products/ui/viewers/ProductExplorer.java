@@ -27,15 +27,15 @@ import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
-import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.products.core.LocProductsCore;
-import ru.arsysop.passage.loc.workbench.viewers.DescriptorRegistryExplorer;
+import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
 
-public class ProductExplorer extends DescriptorRegistryExplorer<ProductDescriptor> {
+public class ProductExplorer extends DomainRegistryExplorer {
 	
 	@Inject
-	public ProductExplorer(ProductRegistry registry, ESelectionService selectionService, ComposedAdapterFactoryProvider factoryProvider) {
+	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService, ComposedAdapterFactoryProvider factoryProvider) {
 		super(registry, selectionService);
 	}
 	
