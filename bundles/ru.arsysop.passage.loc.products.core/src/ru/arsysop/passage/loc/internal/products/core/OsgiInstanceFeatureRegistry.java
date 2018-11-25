@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.internal.licenses.core;
+package ru.arsysop.passage.loc.internal.products.core;
 
 import java.io.IOException;
 import java.net.URI;
@@ -31,18 +31,18 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import ru.arsysop.passage.lic.registry.LicenseDescriptor;
-import ru.arsysop.passage.lic.registry.LicenseRegistry;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
-import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
+import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
 @Component
-public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<LicenseDescriptor> implements LicenseRegistry, LicenseDomainRegistry {
+public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<FeatureDescriptor> implements FeatureRegistry, FeatureDomainRegistry {
 	
 	@Override
-	protected Class<LicenseDescriptor> getDescriptorClass() {
-		return LicenseDescriptor.class;
+	protected Class<FeatureDescriptor> getDescriptorClass() {
+		return FeatureDescriptor.class;
 	}
 
 	@Reference
@@ -83,8 +83,8 @@ public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<Lice
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Path licensesPath = passagePath.resolve("licenses.lic");
-		return licensesPath.toFile().getAbsolutePath();
+		Path productsPath = passagePath.resolve("features.lic");
+		return productsPath.toFile().getAbsolutePath();
 	}
 
 }

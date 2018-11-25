@@ -26,21 +26,21 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
-import ru.arsysop.passage.lic.registry.ProductDescriptor;
-import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.products.core.LocProductsCore;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
 
-public class ProductExplorer extends DomainRegistryExplorer {
+public class FeatureExplorer extends DomainRegistryExplorer {
 	
 	@Inject
-	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService) {
+	public FeatureExplorer(FeatureDomainRegistry registry, ESelectionService selectionService) {
 		super(registry, selectionService);
 	}
 
 	@Inject
 	@Optional
-	private void subscribeProductsInserted(@UIEventTopic(LocProductsCore.TOPIC_PRODUCTS_INSERTED) Iterable<ProductDescriptor> products) {
+	private void subscribeProductsInserted(@UIEventTopic(LocProductsCore.TOPIC_FEATURES_INSERTED) Iterable<FeatureDescriptor> features) {
 		resetInput();
 	}
 

@@ -15,12 +15,12 @@
     <elements xsi:type="advanced:Perspective" xmi:id="_VBf38OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.perspective.main" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_h1z38OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.partsashcontainer.main" selectedElement="_k2D84OjiEeirQd2CUcYMjQ" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_k2D84OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.partstack.explorers">
+          <children xsi:type="basic:Part" xmi:id="_vskMYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.licenses" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.viewers.LicenseExplorer" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png"/>
           <children xsi:type="basic:Part" xmi:id="_pHumYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.users" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.viewers.UserExplorer" label="Users" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png">
             <toolbar xmi:id="_Ich44PCgEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.crud">
               <children xsi:type="menu:HandledToolItem" xmi:id="_KRw8MPCgEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.licenses.ui.handledtoolitem.user.create" label="User" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png" tooltip="Create New User" command="_H22bkOjiEeirQd2CUcYMjQ"/>
             </toolbar>
           </children>
-          <children xsi:type="basic:Part" xmi:id="_vskMYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.licenses" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png"/>
         </children>
       </children>
     </elements>
