@@ -18,20 +18,20 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.ui.viewers;
+package ru.arsysop.passage.loc.workbench.viewers;
 
 import java.util.stream.StreamSupport;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import ru.arsysop.passage.lic.registry.UserDescriptor;
-import ru.arsysop.passage.lic.registry.UserRegistry;
+import ru.arsysop.passage.lic.registry.BaseDescriptor;
+import ru.arsysop.passage.lic.registry.BaseDescriptorRegistry;
 
-public class UserContentProvider implements ITreeContentProvider {
-	
-	private UserRegistry registry;
-	
+public class DescriptorRegistryContentProvider implements ITreeContentProvider {
+
+	private BaseDescriptorRegistry<?> registry;
+
 	@Override
 	public Object[] getElements(Object inputElement) {
 		return getChildren(inputElement);
@@ -39,9 +39,9 @@ public class UserContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof UserRegistry) {
-			UserRegistry registry = (UserRegistry) parentElement;
-			Iterable<UserDescriptor> descriptors = registry.getDescriptors();
+		if (parentElement instanceof BaseDescriptorRegistry<?>) {
+			BaseDescriptorRegistry<?> registry = (BaseDescriptorRegistry<?>) parentElement;
+			Iterable<?> descriptors = registry.getDescriptors();
 			return StreamSupport.stream(descriptors.spliterator(), false).toArray();
 		}
 		return new Object[0];
@@ -49,7 +49,7 @@ public class UserContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object getParent(Object element) {
-		if (element instanceof UserDescriptor) {
+		if (element instanceof BaseDescriptor) {
 			return registry;
 		}
 		return null;
@@ -62,8 +62,8 @@ public class UserContentProvider implements ITreeContentProvider {
 	
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		if (newInput instanceof UserRegistry) {
-			this.registry = (UserRegistry) newInput;
+		if (newInput instanceof BaseDescriptorRegistry<?>) {
+			this.registry = (BaseDescriptorRegistry<?>) newInput;
 		}
 	}
 

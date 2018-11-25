@@ -43,6 +43,7 @@ import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
+import ru.arsysop.passage.loc.workbench.viewers.DescriptorRegistryContentProvider;
 import ru.arsysop.passage.loc.workbench.viewers.StructuredSelectionListener;
 
 public class UserExplorer {
@@ -64,7 +65,7 @@ public class UserExplorer {
 
 		viewer = new TreeViewer(base);
 		viewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		viewer.setContentProvider(new UserContentProvider());
+		viewer.setContentProvider(new DescriptorRegistryContentProvider());
 		viewer.setLabelProvider(new UserLabelProvider());
 		selectionChangeListener = new StructuredSelectionListener(selectionService);
 		viewer.addSelectionChangedListener(selectionChangeListener);
