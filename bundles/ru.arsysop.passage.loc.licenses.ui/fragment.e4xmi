@@ -4,7 +4,7 @@
   <imports xsi:type="commands:CommandParameter" xmi:id="_if128OjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_iZkhwOjhEeirQd2CUcYMjQ" featurename="handlers" parentElementId="ru.arsysop.passage.loc.workbench.application">
     <elements xsi:type="commands:Handler" xmi:id="_1BCMIOjhEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.handler.user.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.handlers.CreateUserHandler" command="_H22bkOjiEeirQd2CUcYMjQ"/>
-    <elements xsi:type="commands:Handler" xmi:id="_T1dusPFeEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.lic.inspector.ui.hadlers.CreateLicenseHandler" command="_UC48IPFdEeiDoO1zH3kD5g"/>
+    <elements xsi:type="commands:Handler" xmi:id="_T1dusPFeEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.CreateLicenseHandler" command="_UC48IPFdEeiDoO1zH3kD5g"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_3e25cOjhEeirQd2CUcYMjQ" featurename="commands" parentElementId="ru.arsysop.passage.loc.workbench.application">
     <elements xsi:type="commands:Command" xmi:id="_H22bkOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.command.user.create" commandName="Create User" description="Creates new User" category="_-dgGkOjhEeirQd2CUcYMjQ"/>

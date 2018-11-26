@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
  org.eclipse.core.runtime,
  org.eclipse.swt,
  org.eclipse.jface,
+ org.eclipse.emf.ecore.xmi;bundle-version="0.0.0",
  org.eclipse.emf.edit.ui,
  org.eclipse.e4.core.contexts,
  org.eclipse.e4.core.commands,
@@ -28,8 +29,10 @@ Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
  ru.arsysop.passage.loc.edit;bundle-version="0.0.0";visibility:=reexport,
  ru.arsysop.passage.loc.runtime;bundle-version="0.0.0"
 Import-Package: javax.inject;version="1.0.0"
-Export-Package: ru.arsysop.passage.loc.workbench.handlers,
- ru.arsysop.passage.loc.workbench.viewers
+Export-Package: ru.arsysop.passage.loc.workbench,
+ ru.arsysop.passage.loc.workbench.handlers,
+ ru.arsysop.passage.loc.workbench.viewers,
+ ru.arsysop.passage.loc.workbench.wizards
 Eclipse-BundleShape: dir
 Service-Component: OSGI-INF/*.xml
 Bundle-ActivationPolicy: lazy
