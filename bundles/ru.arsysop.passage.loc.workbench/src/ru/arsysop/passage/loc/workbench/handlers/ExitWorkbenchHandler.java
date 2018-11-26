@@ -28,10 +28,9 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.IWorkbench;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-
-import ru.arsysop.passage.licensing.operator.workbench.dialogs.ExitConfirmationDialog;
 
 public class ExitWorkbenchHandler {
 
@@ -39,11 +38,13 @@ public class ExitWorkbenchHandler {
 	private IEclipseContext context;
 
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) throws ExecutionException {
-		ExitConfirmationDialog dialog = new ExitConfirmationDialog(shell);
-		int dialogResult = dialog.open();
-
-		if (IDialogConstants.OK_ID == dialogResult) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, EPartService partService) throws ExecutionException {
+		if (!partService.saveAll(true)) {
+			return;
+		}
+		String title = "Exit";
+		String message = "Do you want to exit the product?";
+		if (MessageDialog.openQuestion(shell, title, message)) {
 			Object workbench = context.get(IWorkbench.class.getName());
 			if (workbench != null && workbench instanceof IWorkbench) {
 				((IWorkbench) workbench).close();
