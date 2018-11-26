@@ -18,12 +18,30 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.ui;
+package ru.arsysop.passage.loc.licenses.ui.viewers;
 
-public class LicensesUi {
+import javax.inject.Inject;
 
-	public static final String TOPIC_LICENSES_CREATE = "passage/loc/licenses/create"; //$NON-NLS-1$
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
-	public static final String TOPIC_USERS_CREATE = "passage/loc/users/create"; //$NON-NLS-1$
+import ru.arsysop.passage.lic.registry.LicenseDescriptor;
+import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
+import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
+import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
+
+public class LicenseExplorer extends DomainRegistryExplorer {
+
+	@Inject
+	public LicenseExplorer(LicenseDomainRegistry registry, ESelectionService selectionService) {
+		super(registry, selectionService);
+	}
+
+	@Inject
+	@Optional
+	private void subscribeTopicUser(@UIEventTopic(LicensesUi.TOPIC_LICENSES_CREATE) Iterable<LicenseDescriptor> users) {
+		resetInput();
+	}
 
 }

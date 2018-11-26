@@ -18,12 +18,10 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.ui;
+package ru.arsysop.passage.loc.edit;
 
-public class LicensesUi {
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
-	public static final String TOPIC_LICENSES_CREATE = "passage/loc/licenses/create"; //$NON-NLS-1$
-
-	public static final String TOPIC_USERS_CREATE = "passage/loc/users/create"; //$NON-NLS-1$
+public interface EditingDomainRegistry extends IEditingDomainProvider, ComposedAdapterFactoryProvider {
 
 }

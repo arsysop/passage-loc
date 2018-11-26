@@ -35,9 +35,10 @@ import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
 @Component
-public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDescriptor> implements UserRegistry {
+public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDescriptor> implements UserRegistry, UserDomainRegistry {
 	
 	@Override
 	protected Class<UserDescriptor> getDescriptorClass() {

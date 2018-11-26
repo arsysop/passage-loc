@@ -31,19 +31,18 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import ru.arsysop.passage.lic.registry.ProductDescriptor;
-import ru.arsysop.passage.lic.registry.ProductRegistry;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
-import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
+import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
 @Component
-public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<ProductDescriptor> implements ProductRegistry, ProductDomainRegistry {
+public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<FeatureDescriptor> implements FeatureRegistry, FeatureDomainRegistry {
 	
 	@Override
-	protected Class<ProductDescriptor> getDescriptorClass() {
-		return ProductDescriptor.class;
+	protected Class<FeatureDescriptor> getDescriptorClass() {
+		return FeatureDescriptor.class;
 	}
 
 	@Reference
@@ -74,13 +73,6 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 	}
 
 	@Override
-	public String createPassword(ProductVersionDescriptor productVersion) {
-		String name = productVersion.getProduct().getName();
-		String version = productVersion.getVersion();
-		return name + "###" + version;
-	}
-
-	@Override
 	protected String getSourceDefault() {
 		String areaValue = environmentInfo.getProperty("osgi.instance.area");
 		Path instance = Paths.get(URI.create(areaValue));
@@ -91,7 +83,7 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Path productsPath = passagePath.resolve("products.lic");
+		Path productsPath = passagePath.resolve("features.lic");
 		return productsPath.toFile().getAbsolutePath();
 	}
 

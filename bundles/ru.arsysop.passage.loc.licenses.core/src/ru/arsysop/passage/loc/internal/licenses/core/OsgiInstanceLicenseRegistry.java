@@ -35,9 +35,10 @@ import ru.arsysop.passage.lic.registry.LicenseDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
+import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 
 @Component
-public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<LicenseDescriptor> implements LicenseRegistry {
+public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<LicenseDescriptor> implements LicenseRegistry, LicenseDomainRegistry {
 	
 	@Override
 	protected Class<LicenseDescriptor> getDescriptorClass() {

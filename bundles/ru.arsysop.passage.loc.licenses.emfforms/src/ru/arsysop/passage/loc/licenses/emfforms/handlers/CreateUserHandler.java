@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.ui.handlers;
+package ru.arsysop.passage.loc.licenses.emfforms.handlers;
 
 import java.util.Collections;
 import java.util.stream.StreamSupport;
@@ -27,12 +27,15 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.meta.LicFactory;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
+import ru.arsysop.passage.loc.workbench.emfforms.CreateFormDialog;
 
 public class CreateUserHandler {
 	
@@ -44,7 +47,7 @@ public class CreateUserHandler {
 	}
 	
 	@Execute
-	public void execute(UserRegistry registry) {
+	public void execute(Shell shell, UserRegistry registry) {
 		User created = LicFactory.eINSTANCE.createUser();
 		Iterable<UserDescriptor> descriptors = registry.getDescriptors();
 		long size = StreamSupport.stream(descriptors.spliterator(), false).count();
@@ -52,6 +55,17 @@ public class CreateUserHandler {
 		created.setEmail("identifier" + postfix + "@acme.com");
 		created.setFullName("Name" + postfix + " " + "Family" + postfix);
 		created.setDescription("");
+		CreateFormDialog dialog = new CreateFormDialog(shell, "Create New User", "User", created);
+		try {
+			int open = dialog.open();
+			if (!(Window.OK == open)) {
+				return;
+			}
+		} catch (Exception e1) {
+			
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			registry.insertDescriptors(Collections.singleton(created));
 			eventBroker.post(LicensesUi.TOPIC_USERS_CREATE, created);
