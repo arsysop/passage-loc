@@ -20,12 +20,16 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.emfforms;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.command.CommandStack;
@@ -33,6 +37,7 @@ import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -52,6 +57,8 @@ public class DetailsView {
 	private final MPart part;
 
 	private Composite content;
+
+	private EObject input;
 
 	private CommandStackListener dirtyStackListener;
 	private CommandStack commandStack;
@@ -75,6 +82,7 @@ public class DetailsView {
 	@Inject
 	@Optional
 	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) EObject input) {
+		this.input = input;
 		if (input == null) {
 			return;
 		}
@@ -118,6 +126,25 @@ public class DetailsView {
 	public void dispose() {
 		if (commandStack != null) {
 			commandStack.removeCommandStackListener(dirtyStackListener);
+		}
+	}
+	
+	@Persist
+	public void save() {
+		if (input == null) {
+			part.setDirty(false);
+			return;
+		}
+		Resource eResource = input.eResource();
+		if (eResource != null) {
+			//FIXME: should be extracted to .core to respect save options 
+			try {
+				eResource.save(new HashMap<>());
+				part.setDirty(false);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
