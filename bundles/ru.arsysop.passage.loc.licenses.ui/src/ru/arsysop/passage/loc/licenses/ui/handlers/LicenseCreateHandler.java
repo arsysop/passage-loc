@@ -30,13 +30,13 @@ import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
-public class CreateLicenseHandler {
+public class LicenseCreateHandler {
 
 	@Execute
 	public void execute(Shell shell, LicenseDomainRegistry registry) {
 		EditingDomain editingDomain = registry.getEditingDomain();
-		EClass license = LicPackage.Literals.LICENSE;
-		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(editingDomain, license));
+		EClass eClass = LicPackage.Literals.LICENSE;
+		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(editingDomain, eClass));
 		dialog.create();
 		dialog.setTitle("License");
 		dialog.setMessage("Please specify a file name to store licensing data");;

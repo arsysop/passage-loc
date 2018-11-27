@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
-public class OpenLicenseHandler {
+public class LicenseOpenHandler {
 
 	@Execute
 	public void execute(Shell shell, LicenseDomainRegistry registry) {

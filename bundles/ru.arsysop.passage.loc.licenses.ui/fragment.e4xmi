@@ -3,32 +3,20 @@
   <imports xsi:type="commands:Command" xmi:id="_KAjdkOjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.perspective.open"/>
   <imports xsi:type="commands:CommandParameter" xmi:id="_if128OjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <imports xsi:type="commands:Command" xmi:id="_LEzGEPIpEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.open"/>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_iZkhwOjhEeirQd2CUcYMjQ" featurename="handlers" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Handler" xmi:id="_1BCMIOjhEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.handler.user.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.handlers.CreateUserHandler" command="_H22bkOjiEeirQd2CUcYMjQ"/>
-    <elements xsi:type="commands:Handler" xmi:id="_T1dusPFeEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.CreateLicenseHandler" command="_UC48IPFdEeiDoO1zH3kD5g"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_3e25cOjhEeirQd2CUcYMjQ" featurename="commands" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Command" xmi:id="_H22bkOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.command.user.create" commandName="Create User" description="Creates new User" category="_-dgGkOjhEeirQd2CUcYMjQ"/>
-    <elements xsi:type="commands:Command" xmi:id="_UC48IPFdEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.command.license.create" commandName="Create License" description="Creates new License" category="_WSYSgPFdEeiDoO1zH3kD5g"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8Nqx8OjhEeirQd2CUcYMjQ" featurename="categories" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Category" xmi:id="_-dgGkOjhEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.category.user.crud" name="User CRUD" description="User Create/Read/Update/Delete commands"/>
-    <elements xsi:type="commands:Category" xmi:id="_WSYSgPFdEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.category.license.crud" name="License CRUD" description="License Create/Read/Update/Delete commands"/>
-  </fragments>
+  <imports xsi:type="commands:Command" xmi:id="_KkOQIPJLEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_RRnF0OjiEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.perspectivestack.main">
     <elements xsi:type="advanced:Perspective" xmi:id="_VBf38OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.perspective.main" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_h1z38OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.partsashcontainer.main" selectedElement="_k2D84OjiEeirQd2CUcYMjQ" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_k2D84OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.partstack.explorers" selectedElement="_vskMYOjiEeirQd2CUcYMjQ">
           <children xsi:type="basic:Part" xmi:id="_vskMYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.licenses" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.viewers.LicenseExplorer" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png" tooltip="Manage Licenses">
-            <handlers xmi:id="_HEOMkPIpEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.open" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.OpenLicenseHandler" command="_LEzGEPIpEeiO9ZCh0caXIg"/>
-            <toolbar xmi:id="_9hoVsPFcEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.0">
-              <children xsi:type="menu:HandledToolItem" xmi:id="_EtAXQPFdEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.handledtoolitem.license" label="License" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png" tooltip="Create New License" command="_UC48IPFdEeiDoO1zH3kD5g"/>
-            </toolbar>
+            <handlers xmi:id="_T1dusPFeEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseCreateHandler" command="_KkOQIPJLEeiO9ZCh0caXIg"/>
+            <handlers xmi:id="_HEOMkPIpEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.open" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseOpenHandler" command="_LEzGEPIpEeiO9ZCh0caXIg"/>
+            <toolbar xmi:id="_9hoVsPFcEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.0"/>
           </children>
           <children xsi:type="basic:Part" xmi:id="_pHumYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.users" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.viewers.UserExplorer" label="Users" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png" tooltip="Manage Users">
-            <toolbar xmi:id="_Ich44PCgEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.crud">
-              <children xsi:type="menu:HandledToolItem" xmi:id="_KRw8MPCgEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.licenses.ui.handledtoolitem.user.create" label="User" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png" tooltip="Create New User" command="_H22bkOjiEeirQd2CUcYMjQ"/>
-            </toolbar>
+            <handlers xmi:id="_1BCMIOjhEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.handler.user.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.UserCreateHandler" command="_KkOQIPJLEeiO9ZCh0caXIg"/>
+            <handlers xmi:id="_vKXGkPJLEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.user.open" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.UserOpenHandler" command="_LEzGEPIpEeiO9ZCh0caXIg"/>
+            <toolbar xmi:id="_Ich44PCgEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.crud"/>
           </children>
         </children>
       </children>
