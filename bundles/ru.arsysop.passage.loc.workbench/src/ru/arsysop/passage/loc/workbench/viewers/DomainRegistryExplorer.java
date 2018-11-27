@@ -51,6 +51,7 @@ public class DomainRegistryExplorer {
 
 	private ISelectionChangedListener selectionChangeListener;
 	private TreeViewer viewer;
+	private ResourceSetAdapter resourceSetAdapter;
 
 	public DomainRegistryExplorer(EditingDomainRegistry registry, ESelectionService selectionService) {
 		super();
@@ -81,6 +82,9 @@ public class DomainRegistryExplorer {
 		viewer.setLabelProvider(new AdapterFactoryLabelProvider(factory));
 		selectionChangeListener = new StructuredSelectionListener(selectionService);
 		viewer.addSelectionChangedListener(selectionChangeListener);
+		ResourceSet resourceSet = descriptorRegistry.getEditingDomain().getResourceSet();
+		resourceSetAdapter = new ResourceSetAdapter(viewer);
+		resourceSet.eAdapters().add(resourceSetAdapter);
 		resetInput();
 	}
 
@@ -91,6 +95,7 @@ public class DomainRegistryExplorer {
 
 	@PreDestroy
 	public void dispose() {
+		descriptorRegistry.getEditingDomain().getResourceSet().eAdapters().remove(resourceSetAdapter);
 		viewer.removeSelectionChangedListener(selectionChangeListener);
 	}
 

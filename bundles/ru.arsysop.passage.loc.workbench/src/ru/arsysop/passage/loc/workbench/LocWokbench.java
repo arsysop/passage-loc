@@ -20,37 +20,32 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench;
 
-import java.io.File;
-import java.util.Arrays;
-
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import ru.arsysop.passage.lic.model.meta.LicPackage;
+
 public class LocWokbench {
+	
+	public static final String[] FILE_EXTENSIONS_LIC = new String[] {"*." + LicPackage.eNAME};
 
-	public static String[] openFilePathDialog(Shell shell, int style, String[] fileExtensionFilters) {
-		FileDialog fileDialog = new FileDialog(shell, style);
+	public static String selectSavePath(Shell shell, String[] extensions) {
+		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
+		fileDialog.setFilterExtensions(extensions);
+		String selected = fileDialog.open();
+		return selected;
+	}
 
-		fileDialog.setFilterExtensions(fileExtensionFilters);
-		fileDialog.open();
+	public static String selectLoadPath(Shell shell) {
+		return selectLoadPath(shell, FILE_EXTENSIONS_LIC);
+	}
 
-		String[] filenames = fileDialog.getFileNames();
-		String[] result = new String[filenames.length];
-		String path = fileDialog.getFilterPath() + File.separator;
-		String extension = null;
-
-		for (int i = 0; i < filenames.length; i++) {
-			String filename = path + filenames[i];
-			if (extension != null) {
-				int dot = filename.lastIndexOf('.');
-				if (dot == -1 || !Arrays.asList(fileExtensionFilters).contains("*" + filename.substring(dot))) //$NON-NLS-1$
-				{
-					filename += extension;
-				}
-			}
-			result[i] = filename;
-		}
-		return result;
+	public static String selectLoadPath(Shell shell, String[] extensions) {
+		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
+		fileDialog.setFilterExtensions(extensions);
+		String selected = fileDialog.open();
+		return selected;
 	}
 
 }

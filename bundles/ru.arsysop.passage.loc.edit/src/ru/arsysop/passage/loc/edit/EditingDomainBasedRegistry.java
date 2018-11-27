@@ -44,6 +44,8 @@ import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements DescriptorRegistry<D>, EditingDomainRegistry {
 	
+	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
+	
 	protected EnvironmentInfo environmentInfo;
 
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -215,6 +217,12 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 	@Override
 	public void registerSource(String source) {
 		sources.add(source);
+		try {
+			loadSource(source);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -225,5 +233,13 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 	@Override
 	public Iterable<String> getSources() {
 		return Collections.unmodifiableList(sources);
+	}
+
+	protected void addDescriptors(String source, Iterable<D> descriptors) {
+		//FIXME: call on load
+	}
+
+	protected void removeDescriptors(String source, Iterable<D> descriptors) {
+		//FIXME: call on unload
 	}
 }

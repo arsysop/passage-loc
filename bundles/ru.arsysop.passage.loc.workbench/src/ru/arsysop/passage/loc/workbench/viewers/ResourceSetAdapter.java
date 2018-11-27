@@ -18,12 +18,24 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.edit;
+package ru.arsysop.passage.loc.workbench.viewers;
 
-import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.LicenseDescriptor;
-import ru.arsysop.passage.lic.registry.LicenseRegistry;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.jface.viewers.StructuredViewer;
 
-public interface LicenseDomainRegistry extends LicenseRegistry, EditingDomainRegistry, DescriptorRegistry<LicenseDescriptor> {
+public class ResourceSetAdapter extends EContentAdapter {
+	
+	private final StructuredViewer viewer;
+
+	public ResourceSetAdapter(StructuredViewer viewer) {
+		this.viewer = viewer;
+	}
+	
+	@Override
+	public void notifyChanged(Notification notification) {
+		//FIXME: removing calls to super for now, revisit later
+		viewer.refresh();
+	}
 
 }

@@ -111,9 +111,9 @@ public class CreateFileWizardPage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				String[] filters = new String[] { LicPackage.eNAME };
-				String[] files = LocWokbench.openFilePathDialog(getShell(), SWT.SAVE, filters);
-				if (files.length > 0) {
-					fileField.setText(files[0]);
+				String selected = LocWokbench.selectSavePath(getShell(), filters);
+				if (selected != null) {
+					fileField.setText(selected);
 				}
 			}
 		});

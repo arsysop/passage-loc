@@ -15,6 +15,7 @@
     </mainMenu>
     <trimBars xmi:id="_6wlLlcgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.trimbars.top">
       <children xsi:type="menu:ToolBar" xmi:id="_52QqQOTyEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.toolbar.main">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_a0iSMPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.open" label="Open" command="_VVIqQPIlEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_7WOgYPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.save" label="Save" command="_qIUC4PGkEei3isMrv8wWOw"/>
       </children>
     </trimBars>
@@ -25,8 +26,9 @@
   <handlers xmi:id="_zo4A8O50Eei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.file.exit" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.ExitWorkbenchHandler" command="_o5o3EO50Eei1L9WYDuiuXw"/>
   <handlers xmi:id="_IgapwPGlEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handler.file.save" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.SaveHandler" command="_qIUC4PGkEei3isMrv8wWOw"/>
   <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingtable" bindingContext="_QxDqgO6VEei7yYuaWqiXSw">
-    <bindings xmi:id="_ELBT4O6REei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.keybinding.workbench.exit" keySequence="M1+Q" command="_o5o3EO50Eei1L9WYDuiuXw"/>
-    <bindings xmi:id="_xuxToO6TEei7yYuaWqiXSw" elementId="ru.arsysop.passage.loc.workbench.keybinding.about.dialog" keySequence="M1+A" command="_V2DtgO4pEei1L9WYDuiuXw"/>
+    <bindings xmi:id="_xuxToO6TEei7yYuaWqiXSw" elementId="ru.arsysop.passage.loc.workbench.keybinding.help.about" keySequence="M1+A" command="_V2DtgO4pEei1L9WYDuiuXw"/>
+    <bindings xmi:id="_ikkgAPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.keybinding.file.save" keySequence="M1+S" command="_qIUC4PGkEei3isMrv8wWOw"/>
+    <bindings xmi:id="_ELBT4O6REei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.keybinding.file.exit" keySequence="M1+Q" command="_o5o3EO50Eei1L9WYDuiuXw"/>
   </bindingTables>
   <rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
@@ -40,6 +42,7 @@
   <commands xmi:id="_V2DtgO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.command.aboutdialog.open" commandName="Open About Dialog"/>
   <commands xmi:id="_o5o3EO50Eei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.command.file.exit" commandName="Exit Workbench "/>
   <commands xmi:id="_qIUC4PGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.command.file.save" commandName="Save"/>
+  <commands xmi:id="_VVIqQPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.open" commandName="Open"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
