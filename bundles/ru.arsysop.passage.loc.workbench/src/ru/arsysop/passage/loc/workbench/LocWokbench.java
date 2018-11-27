@@ -28,7 +28,7 @@ import ru.arsysop.passage.lic.model.meta.LicPackage;
 
 public class LocWokbench {
 	
-	public static final String[] FILE_EXTENSIONS_LIC = new String[] {"*." + LicPackage.eNAME};
+	public static final String[] FILE_EXTENSIONS_LIC = new String[] {"*." + LicPackage.eNAME}; //$NON-NLS-1$
 
 	public static String selectSavePath(Shell shell, String[] extensions) {
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
