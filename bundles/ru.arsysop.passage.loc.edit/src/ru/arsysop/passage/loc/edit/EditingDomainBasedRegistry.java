@@ -99,6 +99,24 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		}
 	}
 	
+	public void deactivate() {
+		String sourceDefault = getSourceDefault();
+		try {
+			File file = new File(sourceDefault);
+			if (file.exists()) {
+				loadSource(sourceDefault);
+			} else {
+				ResourceSet resourceSet = editingDomain.getResourceSet();
+				URI uri = createURI(sourceDefault);
+				Resource resource = resourceSet.createResource(uri);
+				resource.save(getSaveOptions());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public ComposedAdapterFactory getComposedAdapterFactory() {
 		return composedAdapterFactory;
@@ -165,42 +183,14 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 
 	@Override
 	public void insertDescriptors(Iterable<D> descriptors) throws Exception {
-		String sourceDefault = getSourceDefault();
-		URI uri = createURI(sourceDefault);
-		ResourceSet resourceSet = editingDomain.getResourceSet();
-		Resource resource = resourceSet.getResource(uri, true);
-		EList<EObject> contents = resource.getContents();
-		EList<EObject> toAdd = extractEObjects(descriptors);
-		contents.addAll(toAdd);
-		Class<D> descriptorClass = getDescriptorClass();
-		for (EObject eObject : contents) {
-			if (descriptorClass.isInstance(eObject)) {
-				D descriptor = descriptorClass.cast(eObject);
-				String identifier = descriptor.getIdentifier();
-				this.descriptors.put(identifier, descriptor);
-			}
-		}
-		resource.save(getSaveOptions());
 	}
 
 	@Override
 	public void updateDescriptors(Iterable<D> descriptors) throws Exception {
-		String sourceDefault = getSourceDefault();
-		URI uri = createURI(sourceDefault);
-		Resource resource = editingDomain.getResourceSet().createResource(uri);
-		EList<EObject> toUpdate = extractEObjects(descriptors);
-		resource.save(getSaveOptions());
 	}
 
 	@Override
 	public void deleteDescriptors(Iterable<D> descriptors) throws Exception {
-		String sourceDefault = getSourceDefault();
-		URI uri = createURI(sourceDefault);
-		Resource resource = editingDomain.getResourceSet().createResource(uri);
-		EList<EObject> contents = resource.getContents();
-		EList<EObject> toRemove = extractEObjects(descriptors);
-		contents.removeAll(toRemove);
-		resource.save(getSaveOptions());
 	}
 
 	protected EList<EObject> extractEObjects(Iterable<D> descriptors) {
