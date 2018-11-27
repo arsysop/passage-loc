@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,7 +41,6 @@ import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.licensing.operator.LicenseDescriptor;
-import ru.arsysop.passage.licensing.operator.LicenseDescriptorValidator;
 import ru.arsysop.passage.licensing.operator.LicenseService;
 
 public class PassageProvider implements LicenseService {
@@ -98,7 +98,7 @@ public class PassageProvider implements LicenseService {
 		instance.set(Calendar.DAY_OF_MONTH, date);
 		instance.set(Calendar.MONTH, month);
 		instance.set(Calendar.YEAR, year);
-		String dateString = LicenseDescriptorValidator.reductionDate(instance.getTime());
+		String dateString = new SimpleDateFormat("dd/MM/yyyy").format(instance.getTime());
 
 		File licenseFolder = new File(productVersion.getProduct().getIdentifier() + File.separator + productVersion.getVersion()
 				+ File.separator + featureVersion.getFeature().getIdentifier() + File.separator + "license");
