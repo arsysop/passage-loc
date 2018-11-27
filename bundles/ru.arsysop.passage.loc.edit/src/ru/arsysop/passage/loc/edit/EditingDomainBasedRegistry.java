@@ -21,7 +21,10 @@
 package ru.arsysop.passage.loc.edit;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -37,9 +40,9 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 
 import ru.arsysop.passage.lic.registry.BaseDescriptor;
-import ru.arsysop.passage.lic.registry.BaseDescriptorRegistry;
+import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
-public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements BaseDescriptorRegistry<D>, EditingDomainRegistry {
+public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements DescriptorRegistry<D>, EditingDomainRegistry {
 	
 	protected EnvironmentInfo environmentInfo;
 
@@ -47,10 +50,11 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 
 	private AdapterFactoryEditingDomain editingDomain;
 
-	private Map<String, D> descriptors;
+	private final Map<String, D> descriptors = new HashMap<>();
+
+	private final List<String> sources = new ArrayList<>();
 
 	public EditingDomainBasedRegistry() {
-		descriptors = new HashMap<>();
 		BasicCommandStack commandStack = new BasicCommandStack();
 		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
@@ -207,5 +211,19 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		}
 		return eObjects;
 	}
-
+	
+	@Override
+	public void registerSource(String source) {
+		sources.add(source);
+	}
+	
+	@Override
+	public void unregisterSource(String source) {
+		sources.remove(source);
+	}
+	
+	@Override
+	public Iterable<String> getSources() {
+		return Collections.unmodifiableList(sources);
+	}
 }
