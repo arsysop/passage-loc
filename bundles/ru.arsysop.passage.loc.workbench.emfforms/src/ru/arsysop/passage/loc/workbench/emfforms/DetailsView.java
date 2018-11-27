@@ -111,7 +111,6 @@ public class DetailsView {
 			}
 //			createRootView(input);
 			TreeMasterDetailComposite rootView = createRootView(content, input.eResource(), getCreateElementCallback());
-			content.layout();
 			TreeViewer selectionProvider = rootView.getSelectionProvider();
 			selectionProvider.refresh();
 			EObject objectToReveal = input;
@@ -127,6 +126,7 @@ public class DetailsView {
 			}
 
 			rootView.setSelection(new StructuredSelection(objectToReveal));
+			content.layout();
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
