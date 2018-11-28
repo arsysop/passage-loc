@@ -20,7 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+<<<<<<< Upstream, based on branch 'move_forward' of git@github.com:arsysop/passage-loc.git
 import java.io.File;
+=======
+>>>>>>> 64889d0 siplify registries
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

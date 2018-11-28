@@ -26,6 +26,8 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 public interface EditingDomainRegistry extends IEditingDomainProvider, ComposedAdapterFactoryProvider {
 	
+	Path getBasePath();
+	
 	String getFileExtension();
 	
 	Path getBasePath();

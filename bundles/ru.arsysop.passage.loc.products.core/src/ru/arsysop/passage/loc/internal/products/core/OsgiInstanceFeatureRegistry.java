@@ -79,9 +79,4 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<Feat
 		return LocProductsCore.EXTENSION_FEATURES;
 	}
 
-	@Override
-	public String getFileExtension() {
-		return LocProductsCore.EXTENSION_FEATURES;
-	}
-
 }
