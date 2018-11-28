@@ -20,15 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.products.core;
 
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
@@ -71,20 +66,11 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<Feat
 	public void activate() {
 		super.activate();
 	}
-
+	
+	@Deactivate
 	@Override
-	protected String getSourceDefault() {
-		String areaValue = environmentInfo.getProperty("osgi.instance.area");
-		Path instance = Paths.get(URI.create(areaValue));
-		Path passagePath = instance.resolve(".passage");
-		try {
-			Files.createDirectories(passagePath);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Path productsPath = passagePath.resolve("features.lic");
-		return productsPath.toFile().getAbsolutePath();
+	public void deactivate() {
+		super.deactivate();
 	}
 
 }

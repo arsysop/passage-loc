@@ -20,7 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,40 +84,24 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
 	
-	public void activate() {
-		String sourceDefault = getSourceDefault();
+	@Override
+	public Path getBasePath() {
+		String areaValue = environmentInfo.getProperty("osgi.instance.area");
+		Path instance = Paths.get(java.net.URI.create(areaValue));
+		Path passagePath = instance.resolve(".passage");
 		try {
-			File file = new File(sourceDefault);
-			if (file.exists()) {
-				loadSource(sourceDefault);
-			} else {
-				ResourceSet resourceSet = editingDomain.getResourceSet();
-				URI uri = createURI(sourceDefault);
-				Resource resource = resourceSet.createResource(uri);
-				resource.save(getSaveOptions());
-			}
-		} catch (Exception e) {
+			Files.createDirectories(passagePath);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return passagePath;
+	}
+	
+	public void activate() {
 	}
 	
 	public void deactivate() {
-		String sourceDefault = getSourceDefault();
-		try {
-			File file = new File(sourceDefault);
-			if (file.exists()) {
-				loadSource(sourceDefault);
-			} else {
-				ResourceSet resourceSet = editingDomain.getResourceSet();
-				URI uri = createURI(sourceDefault);
-				Resource resource = resourceSet.createResource(uri);
-				resource.save(getSaveOptions());
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -127,8 +114,6 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		return editingDomain;
 	}
 	
-	protected abstract String getSourceDefault();
-
 	protected Map<?, ?> getLoadOptions() {
 		return new HashMap<>();
 	}
