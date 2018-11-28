@@ -5,9 +5,10 @@ Bundle-SymbolicName: ru.arsysop.passage.loc.workbench;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: ru.arsysop.passage.loc.workbench,
-  ru.arsysop.passage.loc.workbench.handlers,
-  ru.arsysop.passage.loc.workbench.viewers,
-  ru.arsysop.passage.loc.workbench.wizards
+ ru.arsysop.passage.loc.workbench.dialogs,
+ ru.arsysop.passage.loc.workbench.handlers,
+ ru.arsysop.passage.loc.workbench.viewers,
+ ru.arsysop.passage.loc.workbench.wizards
 Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
   org.eclipse.core.runtime,
   org.eclipse.swt,

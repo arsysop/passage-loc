@@ -22,6 +22,7 @@ package ru.arsysop.passage.loc.workbench.emfforms;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -34,23 +35,36 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
 
 public class DetailsView {
 
@@ -95,26 +109,81 @@ public class DetailsView {
 			for (Control control : children) {
 				control.dispose();
 			}
-			final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-			properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
-					EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
-			ECPSWTViewRenderer.INSTANCE.render(content, input, properties);
+//			createRootView(input);
+			TreeMasterDetailComposite rootView = createRootView(content, input.eResource(), getCreateElementCallback());
+			TreeViewer selectionProvider = rootView.getSelectionProvider();
+			selectionProvider.refresh();
+			EObject objectToReveal = input;
+			while (objectToReveal != null) {
+				selectionProvider.reveal(objectToReveal);
+				if (selectionProvider.testFindItem(objectToReveal) != null) {
+					break;
+				}
+				objectToReveal = objectToReveal.eContainer();
+			}
+			if (objectToReveal == null) {
+				return;
+			}
+
+			rootView.setSelection(new StructuredSelection(objectToReveal));
 			content.layout();
-		} catch (final ECPRendererException e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void createRootView(EObject input) throws ECPRendererException {
+		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
+				EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
+		ECPSWTViewRenderer.INSTANCE.render(content, input, properties);
+	}
+
+	protected TreeMasterDetailComposite createRootView(Composite parent, Object editorInput,
+			CreateElementCallback createElementCallback) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+
+		composite.setLayout(new FormLayout());
+
+		final FormData treeMasterDetailLayoutData = new FormData();
+		treeMasterDetailLayoutData.top = new FormAttachment(0);
+		treeMasterDetailLayoutData.left = new FormAttachment(0);
+		treeMasterDetailLayoutData.right = new FormAttachment(100);
+		treeMasterDetailLayoutData.bottom = new FormAttachment(100);
+		final TreeMasterDetailComposite treeMasterDetail = createTreeMasterDetail(composite, editorInput,
+				createElementCallback);
+		treeMasterDetail.setLayoutData(treeMasterDetailLayoutData);
+		return treeMasterDetail;
+	}
+
+	protected TreeMasterDetailComposite createTreeMasterDetail(final Composite composite, Object editorInput,
+			final CreateElementCallback createElementCallback) {
+		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
+				.fillDefaults(composite, SWT.NONE, editorInput).customizeCildCreation(createElementCallback)
+				.customizeMenu(new MenuProvider() {
+					@Override
+					public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
+						final MenuManager menuMgr = new MenuManager();
+						menuMgr.setRemoveAllWhenShown(true);
+						final List<MasterDetailAction> masterDetailActions = ActionCollector.newList()
+								.addCutAction(editingDomain).addCopyAction(editingDomain).addPasteAction(editingDomain)
+								.getList();
+						menuMgr.addMenuListener(new TreeMasterDetailMenuListener(new ChildrenDescriptorCollector(),
+								menuMgr, treeViewer, editingDomain, masterDetailActions, createElementCallback,
+								new DefaultDeleteActionBuilder()));
+						final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
+						return menu;
+
+					}
+				}).create();
+		return treeMasterDetail;
 	}
 
 	protected void configurePart(EObject input) {
 		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(input);
 		if (editingDomain instanceof AdapterFactoryEditingDomain) {
-			AdapterFactoryEditingDomain afed = (AdapterFactoryEditingDomain) editingDomain;
-			AdapterFactory adapterFactory = afed.getAdapterFactory();
-			Adapter adapt = adapterFactory.adapt(input, IItemLabelProvider.class);
-			if (adapt instanceof IItemLabelProvider) {
-				IItemLabelProvider labelProvider = (IItemLabelProvider) adapt;
-				part.setLabel(labelProvider.getText(input));
-			}
+			part.setLabel(String.valueOf(input.eResource().getURI()));
 			if (commandStack == null) {
 				commandStack = editingDomain.getCommandStack();
 				commandStack.addCommandStackListener(dirtyStackListener);
@@ -128,7 +197,7 @@ public class DetailsView {
 			commandStack.removeCommandStackListener(dirtyStackListener);
 		}
 	}
-	
+
 	@Persist
 	public void save() {
 		if (input == null) {
@@ -137,7 +206,7 @@ public class DetailsView {
 		}
 		Resource eResource = input.eResource();
 		if (eResource != null) {
-			//FIXME: should be extracted to .core to respect save options 
+			// FIXME: should be extracted to .core to respect save options
 			try {
 				eResource.save(new HashMap<>());
 				part.setDirty(false);
@@ -146,6 +215,10 @@ public class DetailsView {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	protected CreateElementCallback getCreateElementCallback() {
+		return null;
 	}
 
 }

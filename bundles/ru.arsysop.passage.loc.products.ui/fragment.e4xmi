@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_kEFoAOjPEeirQd2CUcYMjQ">
-  <imports xsi:type="commands:Command" xmi:id="_-FL1kOjTEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.perspective.open"/>
+  <imports xsi:type="commands:Command" xmi:id="_-FL1kOjTEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
   <imports xsi:type="commands:CommandParameter" xmi:id="_KydZcOjUEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ivIYgOjVEeirQd2CUcYMjQ" featurename="handlers" parentElementId="ru.arsysop.passage.loc.workbench.application">
     <elements xsi:type="commands:Handler" xmi:id="_uhDHYOjVEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.CreateProductHandler" command="_ldypEOjTEeirQd2CUcYMjQ"/>

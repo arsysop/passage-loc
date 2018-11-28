@@ -18,10 +18,24 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.licensing.operator;
+package ru.arsysop.passage.loc.workbench.viewers;
 
-public class LicensingAdmin {
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.jface.viewers.StructuredViewer;
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.licensing.admin"; //$NON-NLS-1$
+public class ResourceSetAdapter extends EContentAdapter {
+	
+	private final StructuredViewer viewer;
+
+	public ResourceSetAdapter(StructuredViewer viewer) {
+		this.viewer = viewer;
+	}
+	
+	@Override
+	public void notifyChanged(Notification notification) {
+		//FIXME: removing calls to super for now, revisit later
+		viewer.refresh();
+	}
 
 }

@@ -18,34 +18,29 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.licensing.operator.internal;
+package ru.arsysop.passage.loc.licenses.ui.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.model.api.Feature;
-import ru.arsysop.passage.lic.model.meta.LicFactory;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
+import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
-public class ComponentStub {
-	static LicPackage packagePassage;
-
-	static List<FeatureDescriptor> createComponentStub() {
-		LicFactory factory = LicPackage.eINSTANCE.getLicFactory();
-
-		List<FeatureDescriptor> listOfComponent = new ArrayList<>();
-
-		Feature featureOne = factory.createFeature();
-		featureOne.setIdentifier("org.pgcase.xobot.ide.component");
-		featureOne.setName("Xobot IDE Component");
-//		featureOne.setVersion("1.0.0");
-		featureOne.setDescription("Xobot IDE Component");
-
-		listOfComponent.add(featureOne);
-
-		return listOfComponent;
-
+public class UserCreateHandler {
+	
+	@Execute
+	public void execute(Shell shell, UserDomainRegistry registry) {
+		EditingDomain editingDomain = registry.getEditingDomain();
+		EClass eClass = LicPackage.Literals.USER;
+		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(editingDomain, eClass));
+		dialog.create();
+		dialog.setTitle("User");
+		dialog.setMessage("Please specify a file name to store user data");;
+		dialog.getShell().setText("New User");
+		dialog.open();
 	}
-
 }

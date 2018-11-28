@@ -21,7 +21,10 @@
 package ru.arsysop.passage.loc.edit;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -37,9 +40,11 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 
 import ru.arsysop.passage.lic.registry.BaseDescriptor;
-import ru.arsysop.passage.lic.registry.BaseDescriptorRegistry;
+import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
-public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements BaseDescriptorRegistry<D>, EditingDomainRegistry {
+public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> implements DescriptorRegistry<D>, EditingDomainRegistry {
+	
+	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
 	
 	protected EnvironmentInfo environmentInfo;
 
@@ -47,10 +52,11 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 
 	private AdapterFactoryEditingDomain editingDomain;
 
-	private Map<String, D> descriptors;
+	private final Map<String, D> descriptors = new HashMap<>();
+
+	private final List<String> sources = new ArrayList<>();
 
 	public EditingDomainBasedRegistry() {
-		descriptors = new HashMap<>();
 		BasicCommandStack commandStack = new BasicCommandStack();
 		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
@@ -93,6 +99,24 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		}
 	}
 	
+	public void deactivate() {
+		String sourceDefault = getSourceDefault();
+		try {
+			File file = new File(sourceDefault);
+			if (file.exists()) {
+				loadSource(sourceDefault);
+			} else {
+				ResourceSet resourceSet = editingDomain.getResourceSet();
+				URI uri = createURI(sourceDefault);
+				Resource resource = resourceSet.createResource(uri);
+				resource.save(getSaveOptions());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public ComposedAdapterFactory getComposedAdapterFactory() {
 		return composedAdapterFactory;
@@ -159,42 +183,14 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 
 	@Override
 	public void insertDescriptors(Iterable<D> descriptors) throws Exception {
-		String sourceDefault = getSourceDefault();
-		URI uri = createURI(sourceDefault);
-		ResourceSet resourceSet = editingDomain.getResourceSet();
-		Resource resource = resourceSet.getResource(uri, true);
-		EList<EObject> contents = resource.getContents();
-		EList<EObject> toAdd = extractEObjects(descriptors);
-		contents.addAll(toAdd);
-		Class<D> descriptorClass = getDescriptorClass();
-		for (EObject eObject : contents) {
-			if (descriptorClass.isInstance(eObject)) {
-				D descriptor = descriptorClass.cast(eObject);
-				String identifier = descriptor.getIdentifier();
-				this.descriptors.put(identifier, descriptor);
-			}
-		}
-		resource.save(getSaveOptions());
 	}
 
 	@Override
 	public void updateDescriptors(Iterable<D> descriptors) throws Exception {
-		String sourceDefault = getSourceDefault();
-		URI uri = createURI(sourceDefault);
-		Resource resource = editingDomain.getResourceSet().createResource(uri);
-		EList<EObject> toUpdate = extractEObjects(descriptors);
-		resource.save(getSaveOptions());
 	}
 
 	@Override
 	public void deleteDescriptors(Iterable<D> descriptors) throws Exception {
-		String sourceDefault = getSourceDefault();
-		URI uri = createURI(sourceDefault);
-		Resource resource = editingDomain.getResourceSet().createResource(uri);
-		EList<EObject> contents = resource.getContents();
-		EList<EObject> toRemove = extractEObjects(descriptors);
-		contents.removeAll(toRemove);
-		resource.save(getSaveOptions());
 	}
 
 	protected EList<EObject> extractEObjects(Iterable<D> descriptors) {
@@ -207,5 +203,33 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		}
 		return eObjects;
 	}
+	
+	@Override
+	public void registerSource(String source) {
+		sources.add(source);
+		try {
+			loadSource(source);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void unregisterSource(String source) {
+		sources.remove(source);
+	}
+	
+	@Override
+	public Iterable<String> getSources() {
+		return Collections.unmodifiableList(sources);
+	}
 
+	protected void addDescriptors(String source, Iterable<D> descriptors) {
+		//FIXME: call on load
+	}
+
+	protected void removeDescriptors(String source, Iterable<D> descriptors) {
+		//FIXME: call on unload
+	}
 }

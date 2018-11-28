@@ -22,13 +22,9 @@ package ru.arsysop.passage.loc.licenses.ui.viewers;
 
 import javax.inject.Inject;
 
-import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
-import ru.arsysop.passage.lic.registry.LicenseDescriptor;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
-import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
 
 public class LicenseExplorer extends DomainRegistryExplorer {
@@ -36,12 +32,6 @@ public class LicenseExplorer extends DomainRegistryExplorer {
 	@Inject
 	public LicenseExplorer(LicenseDomainRegistry registry, ESelectionService selectionService) {
 		super(registry, selectionService);
-	}
-
-	@Inject
-	@Optional
-	private void subscribeTopicUser(@UIEventTopic(LicensesUi.TOPIC_LICENSES_CREATE) Iterable<LicenseDescriptor> users) {
-		resetInput();
 	}
 
 }

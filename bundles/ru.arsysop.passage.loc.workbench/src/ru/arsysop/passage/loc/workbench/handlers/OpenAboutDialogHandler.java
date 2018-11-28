@@ -29,7 +29,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.licensing.operator.workbench.dialogs.AboutDialog;
+import ru.arsysop.passage.loc.workbench.dialogs.AboutDialog;
 
 public class OpenAboutDialogHandler {
 

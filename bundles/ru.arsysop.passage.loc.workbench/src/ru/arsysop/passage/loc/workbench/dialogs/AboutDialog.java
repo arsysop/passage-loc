@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.licensing.operator.workbench.dialogs;
+package ru.arsysop.passage.loc.workbench.dialogs;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.translation.TranslationService;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -42,9 +43,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.licensing.operator.workbench.dialogs.AbstractDialog;
-
-public class AboutDialog extends AbstractDialog {
+public class AboutDialog extends Dialog {
 
 	private static final String ABOUT_TEXT = "%aboutText";
 	private static final String ABOUT_IMAGE = "%aboutImage";
@@ -124,7 +123,7 @@ public class AboutDialog extends AbstractDialog {
 		try {
 			url = new URL(String.format(PRODUCT_BUNDLE_ABOUT_IMAGE, PRODUCT_BUNDLE_URL, productImg));
 		} catch (MalformedURLException e) {
-			Logger.getLogger(AbstractDialog.class.getName()).log(Level.INFO, e.getMessage(), e);
+			Logger.getLogger(AboutDialog.class.getName()).log(Level.INFO, e.getMessage(), e);
 		}
 		return url;
 	}
