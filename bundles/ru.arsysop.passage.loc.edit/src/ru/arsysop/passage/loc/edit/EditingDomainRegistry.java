@@ -23,5 +23,7 @@ package ru.arsysop.passage.loc.edit;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 public interface EditingDomainRegistry extends IEditingDomainProvider, ComposedAdapterFactoryProvider {
-
+	
+	String getFileExtension();
+	
 }

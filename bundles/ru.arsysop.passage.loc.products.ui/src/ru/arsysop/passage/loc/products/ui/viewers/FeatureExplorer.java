@@ -22,13 +22,9 @@ package ru.arsysop.passage.loc.products.ui.viewers;
 
 import javax.inject.Inject;
 
-import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
-import ru.arsysop.passage.loc.products.core.LocProductsCore;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
 
 public class FeatureExplorer extends DomainRegistryExplorer {
@@ -36,12 +32,6 @@ public class FeatureExplorer extends DomainRegistryExplorer {
 	@Inject
 	public FeatureExplorer(FeatureDomainRegistry registry, ESelectionService selectionService) {
 		super(registry, selectionService);
-	}
-
-	@Inject
-	@Optional
-	private void subscribeProductsInserted(@UIEventTopic(LocProductsCore.TOPIC_FEATURES_INSERTED) Iterable<FeatureDescriptor> features) {
-		resetInput();
 	}
 
 }

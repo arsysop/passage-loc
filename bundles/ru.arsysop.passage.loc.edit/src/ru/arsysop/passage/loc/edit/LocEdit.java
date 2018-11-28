@@ -18,20 +18,36 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.products.ui.viewers;
+package ru.arsysop.passage.loc.edit;
 
-import javax.inject.Inject;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 
-import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-
-import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
-
-public class ProductExplorer extends DomainRegistryExplorer {
+public class LocEdit {
 	
-	@Inject
-	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService) {
-		super(registry, selectionService);
+	public static Resource extractResource(Object object) {
+		if (object instanceof EObject) {
+			EObject eObject = (EObject) object;
+			return eObject.eResource();
+		}
+		if (object instanceof Resource) {
+			return (Resource) object;
+		}
+		return null;
 	}
 
+	public static EObject extractEObject(Object object) {
+		if (object instanceof EObject) {
+			return (EObject) object;
+		}
+		if (object instanceof Resource) {
+			Resource resource = (Resource) object;
+			EList<EObject> contents = resource.getContents();
+			if (!contents.isEmpty()) {
+				return contents.get(0);
+			}
+		}
+		return null;
+	}
 }

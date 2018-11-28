@@ -18,20 +18,27 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.products.ui.viewers;
+package ru.arsysop.passage.loc.products.ui.handlers;
 
-import javax.inject.Inject;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
 
-import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
+import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
-public class ProductExplorer extends DomainRegistryExplorer {
+public class ProductCreateHandler {
 	
-	@Inject
-	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService) {
-		super(registry, selectionService);
+	@Execute
+	public void execute(Shell shell, ProductDomainRegistry registry) {
+		EClass eClass = LicPackage.Literals.PRODUCT;
+		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass));
+		dialog.create();
+		dialog.setTitle("Product Line");
+		dialog.setMessage("Please specify a file name to store product data");;
+		dialog.getShell().setText("New Product Line");
+		dialog.open();
 	}
-
 }

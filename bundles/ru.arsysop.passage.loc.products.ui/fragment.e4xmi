@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_kEFoAOjPEeirQd2CUcYMjQ">
+  <imports xsi:type="commands:Command" xmi:id="_1ltBAPMJEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
+  <imports xsi:type="commands:Command" xmi:id="_RzFcwPMKEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.workbench.command.file.open"/>
+  <imports xsi:type="commands:Command" xmi:id="_co724PMIEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.workbench.command.file.export"/>
   <imports xsi:type="commands:Command" xmi:id="_-FL1kOjTEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
   <imports xsi:type="commands:CommandParameter" xmi:id="_KydZcOjUEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ivIYgOjVEeirQd2CUcYMjQ" featurename="handlers" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Handler" xmi:id="_uhDHYOjVEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.CreateProductHandler" command="_ldypEOjTEeirQd2CUcYMjQ"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_e78FoOjTEeirQd2CUcYMjQ" featurename="commands" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Command" xmi:id="_ldypEOjTEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.command.product.create" commandName="Create Product" category="_VPl8IOjTEeirQd2CUcYMjQ"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_NnMAUOjTEeirQd2CUcYMjQ" featurename="categories" parentElementId="ru.arsysop.passage.loc.workbench.application">
-    <elements xsi:type="commands:Category" xmi:id="_VPl8IOjTEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.category.product.crud" name="Product CRUD"/>
-  </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_m0kyoOjPEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.perspectivestack.main">
     <elements xsi:type="advanced:Perspective" xmi:id="__OHwYOjPEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.perspective.main" label="Products" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_sUDdoOjQEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.partsashcontainer.main" selectedElement="__DQuwOjQEeirQd2CUcYMjQ" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="__DQuwOjQEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.partstack.explorers" selectedElement="_UvOr8OjREeirQd2CUcYMjQ">
           <children xsi:type="basic:Part" xmi:id="_UvOr8OjREeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.part.products" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.viewers.ProductExplorer" label="Products" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png">
+            <handlers xmi:id="_wdoT8PMJEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.create" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductCreateHandler" command="_1ltBAPMJEeiuJLGN-praBQ"/>
+            <handlers xmi:id="_bF72QPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.open" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductOpenHandler" command="_RzFcwPMKEeiuJLGN-praBQ"/>
+            <handlers xmi:id="_fE4_IPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.export" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductExportHandler" command="_co724PMIEeiuJLGN-praBQ"/>
             <toolbar xmi:id="_Ft3BcPDHEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.products.ui.toolbar.0">
-              <children xsi:type="menu:HandledToolItem" xmi:id="_G80u8PDHEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.products.ui.handledtoolitem.product.create" accessibilityPhrase="" label="Product" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png" tooltip="Create New Product" command="_ldypEOjTEeirQd2CUcYMjQ"/>
+              <children xsi:type="menu:HandledToolItem" xmi:id="_G80u8PDHEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.products.ui.handledtoolitem.product.export" accessibilityPhrase="" label="Export..." iconURI="" tooltip="Export Product" command="_co724PMIEeiuJLGN-praBQ"/>
             </toolbar>
           </children>
-          <children xsi:type="basic:Part" xmi:id="_ejjFsOjREeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.part.features" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.viewers.FeatureExplorer" label="Features" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/feature.png"/>
+          <children xsi:type="basic:Part" xmi:id="_ejjFsOjREeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.part.features" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.viewers.FeatureExplorer" label="Features" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/feature.png">
+            <handlers xmi:id="_imCKoPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.feature.create" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.FeatureCreateHandler" command="_1ltBAPMJEeiuJLGN-praBQ"/>
+            <handlers xmi:id="_lxXeMPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.feature.open" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.FeatureOpenHandler" command="_RzFcwPMKEeiuJLGN-praBQ"/>
+          </children>
         </children>
       </children>
     </elements>
