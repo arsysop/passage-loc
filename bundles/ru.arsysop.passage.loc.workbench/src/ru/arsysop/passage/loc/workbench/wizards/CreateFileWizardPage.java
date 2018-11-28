@@ -50,8 +50,11 @@ public class CreateFileWizardPage extends WizardPage {
 
 	protected Combo encodingField;
 
-	public CreateFileWizardPage(String pageName) {
+	private String extension;
+
+	public CreateFileWizardPage(String pageName, String extension) {
 		super(pageName);
+		this.extension = extension;
 	}
 
 	@Override
@@ -110,8 +113,7 @@ public class CreateFileWizardPage extends WizardPage {
 		resourceURIBrowseFileSystemButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
-				String[] filters = new String[] { LicPackage.eNAME };
-				String selected = LocWokbench.selectSavePath(getShell(), filters);
+				String selected = LocWokbench.selectSavePath(getShell(), extension);
 				if (selected != null) {
 					fileField.setText(selected);
 				}

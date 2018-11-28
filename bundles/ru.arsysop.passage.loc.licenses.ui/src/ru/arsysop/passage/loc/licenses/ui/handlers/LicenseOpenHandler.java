@@ -30,7 +30,7 @@ public class LicenseOpenHandler {
 
 	@Execute
 	public void execute(Shell shell, LicenseDomainRegistry registry) {
-		String selected = LocWokbench.selectLoadPath(shell);
+		String selected = LocWokbench.selectLoadPath(shell, registry.getFileExtension());
 		if (selected != null) {
 			registry.registerSource(selected);
 		}

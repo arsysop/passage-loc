@@ -79,4 +79,9 @@ public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<Lice
 		return LocLicensesCore.FILE_EXTENSION_CONDITIONS;
 	}
 
+	@Override
+	public String getFileExtension() {
+		return LocLicensesCore.FILE_EXTENSION_CONDITIONS;
+	}
+
 }

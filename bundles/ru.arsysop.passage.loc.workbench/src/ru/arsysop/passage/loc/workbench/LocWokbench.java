@@ -20,32 +20,43 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-
 public class LocWokbench {
 	
-	public static final String[] FILE_EXTENSIONS_LIC = new String[] {"*." + LicPackage.eNAME}; //$NON-NLS-1$
-
-	public static String selectSavePath(Shell shell, String[] extensions) {
+	public static String selectSavePath(Shell shell, String extenion, String... others) {
+		String[] array = maskFilters(extenion, others);
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
-		fileDialog.setFilterExtensions(extensions);
+		fileDialog.setFilterExtensions(array);
 		String selected = fileDialog.open();
 		return selected;
 	}
 
-	public static String selectLoadPath(Shell shell) {
-		return selectLoadPath(shell, FILE_EXTENSIONS_LIC);
-	}
-
-	public static String selectLoadPath(Shell shell, String[] extensions) {
+	public static String selectLoadPath(Shell shell, String extenion, String... others) {
+		String[] array = maskFilters(extenion, others);
 		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
-		fileDialog.setFilterExtensions(extensions);
+		fileDialog.setFilterExtensions(array);
 		String selected = fileDialog.open();
 		return selected;
+	}
+
+	private static String[] maskFilters(String extenion, String... others) {
+		List<String> filters = new ArrayList<>();
+		filters.add(maskExtension(extenion));
+		for (String other : others) {
+			filters.add(maskExtension(other));
+		}
+		String[] array = (String[]) filters.toArray(new String[filters.size()]);
+		return array;
+	}
+	
+	private static String maskExtension(String extension) {
+		return "*." + extension; //$NON-NLS-1$
 	}
 
 }

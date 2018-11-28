@@ -32,26 +32,27 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
+import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
+
 public class CreateFileWizard extends Wizard {
 	
-	private final EditingDomain editingDomain;
+	private final EditingDomainRegistry editingDomainRegistry;
 	private final EClass eClass;
 	private CreateFileWizardPage filePage;
 	
-	public CreateFileWizard(EditingDomain editingDomain, EClass eClass) {
-		this.editingDomain = editingDomain;
+	public CreateFileWizard(EditingDomainRegistry registry, EClass eClass) {
+		this.editingDomainRegistry = registry;
 		this.eClass = eClass;
 	}
 	
 	
 	@Override
 	public void addPages() {
-		filePage = new CreateFileWizardPage(CreateFileWizardPage.class.getName());
+		filePage = new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension());
 		addPage(filePage);
 	}
 
@@ -70,7 +71,7 @@ public class CreateFileWizard extends Wizard {
 			IRunnableWithProgress operation = new IRunnableWithProgress() {
 				public void run(IProgressMonitor progressMonitor) {
 						try {
-							ResourceSet resourceSet = editingDomain.getResourceSet();
+							ResourceSet resourceSet = editingDomainRegistry.getEditingDomain().getResourceSet();
 							Resource resource = resourceSet.createResource(fileURI);
 							EObject rootObject = createInitialModel();
 							if (rootObject != null) {

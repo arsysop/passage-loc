@@ -33,6 +33,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Notifier;
@@ -175,12 +176,13 @@ public class DetailsView {
 	}
 
 	protected void configurePart(Resource resource) {
-		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(resource);
+		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(LocEdit.extractEObject(resource));
 		if (editingDomain instanceof AdapterFactoryEditingDomain) {
 			if (commandStack == null) {
 				commandStack = editingDomain.getCommandStack();
 				commandStack.addCommandStackListener(dirtyStackListener);
 			}
+			commandStack.flush();
 		}
 		if (resource != null) {
 			part.setLabel(String.valueOf(resource.getURI()));
@@ -207,7 +209,11 @@ public class DetailsView {
 			// FIXME: should be extracted to .core to respect save options
 			try {
 				eResource.save(new HashMap<>());
-				part.setDirty(false);
+				if (commandStack instanceof BasicCommandStack) {
+					BasicCommandStack basicCommandStack = (BasicCommandStack) commandStack;
+					basicCommandStack.saveIsDone();
+					part.setDirty(basicCommandStack.isSaveNeeded());
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
