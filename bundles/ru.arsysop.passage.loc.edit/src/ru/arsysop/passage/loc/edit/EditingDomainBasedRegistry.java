@@ -145,6 +145,12 @@ public abstract class EditingDomainBasedRegistry<D extends BaseDescriptor> imple
 		resource.load(getLoadOptions());
 		EList<EObject> contents = resource.getContents();
 		Class<D> descriptorClass = getDescriptorClass();
+//		String name = descriptorClass.getName();
+//		Class<?> forName = Class.forName(name);
+//		if (forName.equals(descriptorClass)) {
+//			//we can use String component property
+//			descriptorClass = (Class<D>) forName;
+//		}
 		for (EObject eObject : contents) {
 			if (descriptorClass.isInstance(eObject)) {
 				D descriptor = descriptorClass.cast(eObject);

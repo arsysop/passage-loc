@@ -18,20 +18,27 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.products.ui.viewers;
+package ru.arsysop.passage.loc.products.ui.handlers;
 
-import javax.inject.Inject;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
 
-import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
-import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
-
-public class ProductExplorer extends DomainRegistryExplorer {
+public class FeatureCreateHandler {
 	
-	@Inject
-	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService) {
-		super(registry, selectionService);
+	@Execute
+	public void execute(Shell shell, FeatureDomainRegistry registry) {
+		EClass eClass = LicPackage.Literals.FEATURE;
+		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass));
+		dialog.create();
+		dialog.setTitle("Feature Set");
+		dialog.setMessage("Please specify a file name to store feature data");;
+		dialog.getShell().setText("New Feature Set");
+		dialog.open();
 	}
-
 }

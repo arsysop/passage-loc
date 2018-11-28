@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_kEFoAOjPEeirQd2CUcYMjQ">
-  <imports xsi:type="commands:Command" xmi:id="_KAjdkOjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
-  <imports xsi:type="commands:CommandParameter" xmi:id="_if128OjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <imports xsi:type="commands:Command" xmi:id="_LEzGEPIpEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.open"/>
   <imports xsi:type="commands:Command" xmi:id="_KkOQIPJLEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
   <imports xsi:type="commands:Command" xmi:id="_B0LYAPJlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.export"/>
+  <imports xsi:type="commands:Command" xmi:id="_KAjdkOjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
+  <imports xsi:type="commands:CommandParameter" xmi:id="_if128OjjEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_RRnF0OjiEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.perspectivestack.main">
     <elements xsi:type="advanced:Perspective" xmi:id="_VBf38OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.perspective.main" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_h1z38OjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.partsashcontainer.main" selectedElement="_k2D84OjiEeirQd2CUcYMjQ" horizontal="true">
@@ -12,7 +12,7 @@
           <children xsi:type="basic:Part" xmi:id="_vskMYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.licenses" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.viewers.LicenseExplorer" label="Licenses" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png" tooltip="Manage Licenses">
             <handlers xmi:id="_T1dusPFeEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseCreateHandler" command="_KkOQIPJLEeiO9ZCh0caXIg"/>
             <handlers xmi:id="_HEOMkPIpEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.open" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseOpenHandler" command="_LEzGEPIpEeiO9ZCh0caXIg"/>
-            <handlers xmi:id="_uF8WAPJoEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseExportHandler" command="_B0LYAPJlEeiO9ZCh0caXIg"/>
+            <handlers xmi:id="_uF8WAPJoEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.export" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseExportHandler" command="_B0LYAPJlEeiO9ZCh0caXIg"/>
             <toolbar xmi:id="_9hoVsPFcEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.0">
               <children xsi:type="menu:HandledToolItem" xmi:id="_hgWWMPJiEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handledtoolitem.license.export" label="Export..." command="_B0LYAPJlEeiO9ZCh0caXIg"/>
             </toolbar>

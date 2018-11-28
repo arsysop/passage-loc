@@ -20,8 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import ru.arsysop.passage.lic.registry.DescriptorRegistry;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 
-public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainRegistry {
+public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainRegistry, DescriptorRegistry<FeatureDescriptor> {
 
 }
