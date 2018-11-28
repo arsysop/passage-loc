@@ -35,13 +35,10 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
@@ -52,7 +49,6 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
-import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -66,13 +62,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
+import ru.arsysop.passage.loc.edit.LocEdit;
+
 public class DetailsView {
 
 	private final MPart part;
 
 	private Composite content;
 
-	private EObject input;
+	//TreeMasterDetailComposite implies the Resource has root EObject
+	private EObject root;
 
 	private CommandStackListener dirtyStackListener;
 	private CommandStack commandStack;
@@ -95,48 +94,43 @@ public class DetailsView {
 
 	@Inject
 	@Optional
-	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) EObject input) {
-		this.input = input;
-		if (input == null) {
-			return;
-		}
+	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) Notifier input) {
 		if (content == null || content.isDisposed()) {
 			return;
 		}
-		configurePart(input);
-		try {
-			Control[] children = content.getChildren();
-			for (Control control : children) {
-				control.dispose();
-			}
-//			createRootView(input);
-			TreeMasterDetailComposite rootView = createRootView(content, input.eResource(), getCreateElementCallback());
-			TreeViewer selectionProvider = rootView.getSelectionProvider();
-			selectionProvider.refresh();
-			EObject objectToReveal = input;
-			while (objectToReveal != null) {
-				selectionProvider.reveal(objectToReveal);
-				if (selectionProvider.testFindItem(objectToReveal) != null) {
-					break;
-				}
-				objectToReveal = objectToReveal.eContainer();
-			}
-			if (objectToReveal == null) {
-				return;
-			}
-
-			rootView.setSelection(new StructuredSelection(objectToReveal));
-			content.layout();
-		} catch (final Exception e) {
-			e.printStackTrace();
+		if (input == null) {
+			return;
 		}
-	}
+		this.root = LocEdit.extractEObject(input);
+		Resource resource = LocEdit.extractResource(input);
+		configurePart(resource);
+		Control[] children = content.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		if (this.root != null) {
+			try {
+				TreeMasterDetailComposite rootView = createRootView(content, resource, getCreateElementCallback());
+				TreeViewer selectionProvider = rootView.getSelectionProvider();
+				selectionProvider.refresh();
+				EObject objectToReveal = this.root;
+				while (objectToReveal != null) {
+					selectionProvider.reveal(objectToReveal);
+					if (selectionProvider.testFindItem(objectToReveal) != null) {
+						break;
+					}
+					objectToReveal = objectToReveal.eContainer();
+				}
+				if (objectToReveal == null) {
+					return;
+				}
 
-	private void createRootView(EObject input) throws ECPRendererException {
-		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-		properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
-				EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
-		ECPSWTViewRenderer.INSTANCE.render(content, input, properties);
+				rootView.setSelection(new StructuredSelection(objectToReveal));
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		}
+		content.layout();
 	}
 
 	protected TreeMasterDetailComposite createRootView(Composite parent, Object editorInput,
@@ -180,14 +174,18 @@ public class DetailsView {
 		return treeMasterDetail;
 	}
 
-	protected void configurePart(EObject input) {
-		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(input);
+	protected void configurePart(Resource resource) {
+		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(resource);
 		if (editingDomain instanceof AdapterFactoryEditingDomain) {
-			part.setLabel(String.valueOf(input.eResource().getURI()));
 			if (commandStack == null) {
 				commandStack = editingDomain.getCommandStack();
 				commandStack.addCommandStackListener(dirtyStackListener);
 			}
+		}
+		if (resource != null) {
+			part.setLabel(String.valueOf(resource.getURI()));
+		} else {
+			part.setLabel("Details");
 		}
 	}
 
@@ -200,11 +198,11 @@ public class DetailsView {
 
 	@Persist
 	public void save() {
-		if (input == null) {
+		if (root == null) {
 			part.setDirty(false);
 			return;
 		}
-		Resource eResource = input.eResource();
+		Resource eResource = root.eResource();
 		if (eResource != null) {
 			// FIXME: should be extracted to .core to respect save options
 			try {
