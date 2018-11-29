@@ -80,7 +80,7 @@ public class ProductViewer {
 	ProductRegistry productService;
 
 	@Inject
-	ConditionCodec licensingDataService;
+	ConditionCodec conditionCodec;
 
 	@Inject
 	ESelectionService selectionService;
@@ -256,7 +256,7 @@ public class ProductViewer {
 								Files.createDirectories(path);
 								String publicKeyPath = storageKeyFolder + File.separator + "public.pub";
 								String privateKeyPath = storageKeyFolder + File.separator + "private.skr";
-								licensingDataService.createKeyPair(publicKeyPath, privateKeyPath, product.getName(),
+								conditionCodec.createKeyPair(publicKeyPath, privateKeyPath, product.getName(),
 										productService.createPassword(productVersion), 1024);
 								productVersion.setInstallationToken(publicKeyPath);
 								productVersion.setSecureToken(privateKeyPath);
