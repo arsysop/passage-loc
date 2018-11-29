@@ -87,4 +87,9 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 		return LocProductsCore.EXTENSION_PRODUCTS;
 	}
 
+	@Override
+	public String getFileExtension() {
+		return LocProductsCore.EXTENSION_PRODUCTS;
+	}
+
 }
