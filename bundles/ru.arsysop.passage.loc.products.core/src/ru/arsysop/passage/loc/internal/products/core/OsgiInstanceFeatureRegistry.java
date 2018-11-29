@@ -31,6 +31,7 @@ import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.loc.products.core.LocProductsCore;
 
 @Component
 public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<FeatureDescriptor> implements FeatureRegistry, FeatureDomainRegistry {
@@ -71,6 +72,11 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<Feat
 	@Override
 	public void deactivate() {
 		super.deactivate();
+	}
+
+	@Override
+	public String getFileExtension() {
+		return LocProductsCore.EXTENSION_FEATURES;
 	}
 
 }

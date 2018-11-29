@@ -31,6 +31,7 @@ import ru.arsysop.passage.lic.registry.LicenseRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
+import ru.arsysop.passage.loc.licenses.core.LocLicensesCore;
 
 @Component
 public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<LicenseDescriptor> implements LicenseRegistry, LicenseDomainRegistry {
@@ -71,6 +72,11 @@ public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<Lice
 	@Override
 	public void deactivate() {
 		super.deactivate();
+	}
+
+	@Override
+	public String getFileExtension() {
+		return LocLicensesCore.FILE_EXTENSION_CONDITIONS;
 	}
 
 }

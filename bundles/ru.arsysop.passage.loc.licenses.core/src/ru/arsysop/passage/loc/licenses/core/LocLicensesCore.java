@@ -23,5 +23,6 @@ package ru.arsysop.passage.loc.licenses.core;
 public class LocLicensesCore {
 
 	public static final String FILE_EXTENSION_CONDITIONS = "lic_conditions";  //$NON-NLS-1$
+	public static final String FILE_EXTENSION_USERS = "lic_users";  //$NON-NLS-1$
 
 }

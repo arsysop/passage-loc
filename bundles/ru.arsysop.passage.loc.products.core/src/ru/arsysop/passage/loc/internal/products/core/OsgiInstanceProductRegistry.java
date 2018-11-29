@@ -32,6 +32,7 @@ import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
+import ru.arsysop.passage.loc.products.core.LocProductsCore;
 
 @Component
 public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<ProductDescriptor> implements ProductRegistry, ProductDomainRegistry {
@@ -79,6 +80,11 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 		String name = productVersion.getProduct().getName();
 		String version = productVersion.getVersion();
 		return name + "###" + version;
+	}
+
+	@Override
+	public String getFileExtension() {
+		return LocProductsCore.EXTENSION_PRODUCTS;
 	}
 
 }

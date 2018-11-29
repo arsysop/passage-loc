@@ -31,6 +31,7 @@ import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
+import ru.arsysop.passage.loc.licenses.core.LocLicensesCore;
 
 @Component
 public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDescriptor> implements UserRegistry, UserDomainRegistry {
@@ -71,6 +72,11 @@ public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDes
 	@Override
 	public void deactivate() {
 		super.deactivate();
+	}
+
+	@Override
+	public String getFileExtension() {
+		return LocLicensesCore.FILE_EXTENSION_USERS;
 	}
 
 }
