@@ -79,9 +79,4 @@ public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDes
 		return LocLicensesCore.FILE_EXTENSION_USERS;
 	}
 
-	@Override
-	public String getFileExtension() {
-		return LocLicensesCore.FILE_EXTENSION_USERS;
-	}
-
 }
