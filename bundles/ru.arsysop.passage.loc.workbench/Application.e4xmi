@@ -27,12 +27,16 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_LJ9REPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.export" label="Export..." command="_Us_jAPJjEeiO9ZCh0caXIg"/>
       </children>
     </trimBars>
+    <trimBars xmi:id="_i1VvsPPBEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.trimbar.0" side="Bottom">
+      <children xsi:type="menu:ToolControl" xmi:id="_j1Rj4PPbEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.toolcontrol.licensing.status" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.internal.workbench.LicensingStatusToolControl"/>
+    </trimBars>
   </children>
   <handlers xmi:id="_uPtcsOdJEeigXNdbugUBXw" elementId="ru.arsysop.passage.loc.workbench.handler.perspective.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenPerspectiveHandler" command="_5P07MOdJEeigXNdbugUBXw"/>
   <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://ru.arsysop.passage.lic.inspector.ui/ru.arsysop.passage.lic.inspector.ui.hadlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
   <handlers xmi:id="_dnVRcO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.aboutdialog.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenAboutDialogHandler" command="_V2DtgO4pEei1L9WYDuiuXw"/>
   <handlers xmi:id="_zo4A8O50Eei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.file.exit" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.ExitWorkbenchHandler" command="_o5o3EO50Eei1L9WYDuiuXw"/>
   <handlers xmi:id="_IgapwPGlEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handler.file.save" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.SaveHandler" command="_qIUC4PGkEei3isMrv8wWOw"/>
+  <handlers xmi:id="_KhcKIPPFEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.handler.help.licensing" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.lic.inspector.ui.handlers.LicensingStatusHandler" command="_oD-3cPPEEeidN5pWK-UnUQ"/>
   <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingtable.global" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
     <bindings xmi:id="_xuxToO6TEei7yYuaWqiXSw" elementId="ru.arsysop.passage.loc.workbench.keybinding.help.about" keySequence="M1+A" command="_V2DtgO4pEei1L9WYDuiuXw"/>
     <bindings xmi:id="_ikkgAPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.keybinding.file.save" keySequence="M1+S" command="_qIUC4PGkEei3isMrv8wWOw"/>
@@ -52,6 +56,7 @@
   <commands xmi:id="_mYhFMO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.command.inspect.hardware" commandName="Inspect Hardware"/>
   <commands xmi:id="_V2DtgO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.command.help.about" commandName="About"/>
   <commands xmi:id="_o5o3EO50Eei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.command.file.exit" commandName="Exit"/>
+  <commands xmi:id="_oD-3cPPEEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.command.help.licensing" commandName="Licensing" description="Licensing details"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
@@ -59,4 +64,5 @@
   <addons xmi:id="_6wlLdsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_6wlLd8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_6wlLeMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <addons xmi:id="_UDwQEPPUEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.addon.licensing" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.lic.inspector.ui.addons.LicensingInspectorAddon"/>
 </application:Application>

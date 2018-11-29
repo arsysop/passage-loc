@@ -18,27 +18,30 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.viewers;
+package ru.arsysop.passage.lic.base;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.osgi.service.environment.EnvironmentInfo;
 
-public class ResourceSetAdapter extends EContentAdapter {
-	
-	private final StructuredViewer viewer;
+public class LicensingConfigurations {
 
-	public ResourceSetAdapter(StructuredViewer viewer) {
-		this.viewer = viewer;
-	}
-	
-	@Override
-	public void notifyChanged(Notification notification) {
-		//FIXME: removing calls to super for now, revisit later
-		if (viewer.getControl().isDisposed()) {
-			return;
+	public static String extractProductIdentifier(EnvironmentInfo info) {
+		if (info == null) {
+			return null;
 		}
-		viewer.refresh();
+		String[] nonFrameworkArgs = info.getNonFrameworkArgs();
+		String configuration = null;
+		for (int i = 0; i < nonFrameworkArgs.length; i++) {
+			String arg = nonFrameworkArgs[i];
+			if ("-product".equals(arg)) {
+				int index = i + 1;
+				if (index < nonFrameworkArgs.length) {
+					configuration = nonFrameworkArgs[index];
+					break;
+				}
+	
+			}
+		}
+		return configuration;
 	}
 
 }
