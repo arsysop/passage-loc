@@ -31,8 +31,4 @@ public interface EditingDomainRegistry extends IEditingDomainProvider, ComposedA
 	
 	Path getBasePath();
 	
-	String getFileExtension();
-	
-	Path getBasePath();
-
 }
