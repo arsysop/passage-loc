@@ -18,27 +18,37 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.viewers;
+package ru.arsysop.passage.lic.base;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.jface.viewers.StructuredViewer;
+public class LicensingEvents {
 
-public class ResourceSetAdapter extends EContentAdapter {
+	/**
+	 * Topic separator character
+	 */
+	public static final String TOPIC_SEP = "/"; //$NON-NLS-1$
+
+	/**
+	 * Wild card character for matching all sub topics
+	 */
+	public static final String ALL_SUB_TOPICS = "*"; //$NON-NLS-1$
+
+	/**
+	 * Base name of all Licensing events
+	 */
+	public static final String LicensingTopicBase = "ru/arsysop/passage/lic/base"; //$NON-NLS-1$
 	
-	private final StructuredViewer viewer;
+	public class LicensingLifeCycle {
+		
+		/**
+		 * Base name for all Licensing life cycle events
+		 */
+		public static final String TOPIC = LicensingTopicBase + "/LifeCycle"; //$NON-NLS-1$
 
-	public ResourceSetAdapter(StructuredViewer viewer) {
-		this.viewer = viewer;
-	}
-	
-	@Override
-	public void notifyChanged(Notification notification) {
-		//FIXME: removing calls to super for now, revisit later
-		if (viewer.getControl().isDisposed()) {
-			return;
-		}
-		viewer.refresh();
+		/**
+		 * Sent when application startup is complete
+		 */
+		public static final String RESTRICTION_EXECUTED = TOPIC + TOPIC_SEP + "restrictionExecuted"; //$NON-NLS-1$
+
 	}
 
 }
