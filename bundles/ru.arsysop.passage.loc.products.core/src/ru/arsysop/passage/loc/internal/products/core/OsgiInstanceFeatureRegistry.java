@@ -28,19 +28,15 @@ import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
+import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.products.core.LocProductsCore;
 
 @Component
-public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<FeatureDescriptor> implements FeatureRegistry, FeatureDomainRegistry {
+public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry implements FeatureRegistry, FeatureDomainRegistry {
 	
-	@Override
-	protected Class<FeatureDescriptor> getDescriptorClass() {
-		return FeatureDescriptor.class;
-	}
-
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
@@ -77,6 +73,18 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry<Feat
 	@Override
 	public String getFileExtension() {
 		return LocProductsCore.EXTENSION_FEATURES;
+	}
+
+	@Override
+	public FeatureSetDescriptor getFeatureSet(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FeatureDescriptor getFeature(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

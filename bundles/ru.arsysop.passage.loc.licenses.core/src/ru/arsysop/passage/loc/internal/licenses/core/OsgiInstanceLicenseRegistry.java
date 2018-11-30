@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import ru.arsysop.passage.lic.registry.LicenseDescriptor;
+import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
@@ -34,13 +34,8 @@ import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.licenses.core.LocLicensesCore;
 
 @Component
-public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<LicenseDescriptor> implements LicenseRegistry, LicenseDomainRegistry {
+public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry implements LicenseRegistry, LicenseDomainRegistry {
 	
-	@Override
-	protected Class<LicenseDescriptor> getDescriptorClass() {
-		return LicenseDescriptor.class;
-	}
-
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
@@ -77,6 +72,12 @@ public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry<Lice
 	@Override
 	public String getFileExtension() {
 		return LocLicensesCore.FILE_EXTENSION_CONDITIONS;
+	}
+
+	@Override
+	public LicensePackDescriptor getLicensPack(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

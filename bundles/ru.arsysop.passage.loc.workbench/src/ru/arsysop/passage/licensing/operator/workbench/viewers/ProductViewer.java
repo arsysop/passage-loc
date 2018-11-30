@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,7 +67,7 @@ import ru.arsysop.passage.lic.model.api.ProductVersion;
 import ru.arsysop.passage.lic.model.meta.LicFactory;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
-import ru.arsysop.passage.lic.runtime.io.ConditionCodec;
+import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.licensing.operator.workbench.dialogs.AbstractDialog;
 import ru.arsysop.passage.licensing.operator.workbench.utils.PassageUI;
 import ru.arsysop.passage.loc.workbench.viewers.StructuredSelectionListener;
@@ -80,7 +81,7 @@ public class ProductViewer {
 	ProductRegistry productService;
 
 	@Inject
-	ConditionCodec conditionCodec;
+	StreamCodec conditionCodec;
 
 	@Inject
 	ESelectionService selectionService;
@@ -234,7 +235,7 @@ public class ProductViewer {
 		Button btnGenerateKeys = new Button(bottomBar, SWT.PUSH);
 		btnGenerateKeys.setText("Register");
 		btnGenerateKeys.setLayoutData(PassageUI.getButtonLayoutData());
-		Iterable<ProductDescriptor> productDescriptors = productService.getDescriptors();
+		Iterable<ProductDescriptor> productDescriptors = new ArrayList<>();
 		btnGenerateKeys.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

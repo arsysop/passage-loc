@@ -45,8 +45,8 @@ public class LicensingInspectorAddon {
 	@Inject
 	@Optional
 	public void applicationStarted(@UIEventTopic(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE) Event event) {
-		EnvironmentInfo info = environmentInfo;
-		Object configuration = LicensingConfigurations.extractProductIdentifier(info);
+		String[] args = environmentInfo.getNonFrameworkArgs();
+		Object configuration = LicensingConfigurations.extractProductIdentifier(args);
 		accessManager.executeAccessRestrictions(configuration);
 	}
 

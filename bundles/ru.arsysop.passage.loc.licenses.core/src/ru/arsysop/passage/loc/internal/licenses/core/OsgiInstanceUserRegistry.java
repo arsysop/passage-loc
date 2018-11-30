@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.registry.UserDescriptor;
+import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
@@ -34,13 +35,8 @@ import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.licenses.core.LocLicensesCore;
 
 @Component
-public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDescriptor> implements UserRegistry, UserDomainRegistry {
+public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry implements UserRegistry, UserDomainRegistry {
 	
-	@Override
-	protected Class<UserDescriptor> getDescriptorClass() {
-		return UserDescriptor.class;
-	}
-
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
@@ -77,6 +73,18 @@ public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry<UserDes
 	@Override
 	public String getFileExtension() {
 		return LocLicensesCore.FILE_EXTENSION_USERS;
+	}
+
+	@Override
+	public UserOriginDescriptor getUserOrigin(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDescriptor getUser(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

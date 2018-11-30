@@ -22,7 +22,6 @@ package ru.arsysop.passage.loc.licenses.ui.handlers;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -34,8 +33,7 @@ public class LicenseCreateHandler {
 
 	@Execute
 	public void execute(Shell shell, LicenseDomainRegistry registry) {
-		EditingDomain editingDomain = registry.getEditingDomain();
-		EClass eClass = LicPackage.Literals.LICENSE;
+		EClass eClass = LicPackage.Literals.LICENSE_PACK;
 		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass));
 		dialog.create();
 		dialog.setTitle("License Pack");

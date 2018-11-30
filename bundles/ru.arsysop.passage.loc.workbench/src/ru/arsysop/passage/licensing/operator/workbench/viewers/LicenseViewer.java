@@ -63,7 +63,7 @@ import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
-import ru.arsysop.passage.lic.runtime.io.ConditionCodec;
+import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.licensing.operator.LicenseDescriptor;
 import ru.arsysop.passage.licensing.operator.LicenseService;
 import ru.arsysop.passage.licensing.operator.workbench.dialogs.AbstractDialog;
@@ -87,7 +87,7 @@ public class LicenseViewer {
 	LicenseService licenseService;
 
 	@Inject
-	ConditionCodec permissionCodec;
+	StreamCodec permissionCodec;
 
 	@PostConstruct
 	public void postConstruct(Composite parent) {
@@ -111,7 +111,7 @@ public class LicenseViewer {
 			@Override
 			public String getText(Object element) {
 				if (element != null && element instanceof LicenseDescriptor) {
-//					return ((LicenseDescriptor) element).getId();
+//					return ((LicensePackDescriptor) element).getId();
 				}
 				return "";
 			}
@@ -189,7 +189,7 @@ public class LicenseViewer {
 			@Override
 			public String getText(Object element) {
 				if (element != null && element instanceof LicenseDescriptor) {
-//					return ((License) element).getUserInfo().getEmail();
+//					return ((LicensePack) element).getUserInfo().getEmail();
 				}
 				return "";
 			}
@@ -202,7 +202,7 @@ public class LicenseViewer {
 			@Override
 			public String getText(Object element) {
 				if (element != null && element instanceof LicenseDescriptor) {
-//					return LicenseDescriptorValidator.reductionDate(((License) element).getExpireDate());
+//					return LicenseDescriptorValidator.reductionDate(((LicensePack) element).getExpireDate());
 				}
 				return "";
 			}
@@ -215,7 +215,7 @@ public class LicenseViewer {
 			@Override
 			public String getText(Object element) {
 				if (element != null && element instanceof LicenseDescriptor) {
-//					return ((License) element).getToken();
+//					return ((LicensePack) element).getToken();
 				}
 				return "";
 			}
@@ -299,7 +299,7 @@ public class LicenseViewer {
 			lblProduct.setLayoutData(createLabelLayoutData());
 
 			cmbProduct = new Combo(cmps, SWT.BORDER);
-			final Iterable<ProductDescriptor> products = productService.getDescriptors();
+			final Iterable<ProductDescriptor> products = new ArrayList<>();
 			for (ProductDescriptor iter : products) {
 				for (ProductDescriptor productDescriptor : products) {
 					if (products instanceof Product) {
@@ -328,7 +328,6 @@ public class LicenseViewer {
 
 			Combo cmbComponentSelection = new Combo(cmps, SWT.BORDER);
 			
-			Iterable<FeatureDescriptor> descriptorsF = componentService.getDescriptors();
 			List<FeatureDescriptor> components = new ArrayList<>();
 
 			for (FeatureDescriptor iter : components) {
@@ -354,7 +353,6 @@ public class LicenseViewer {
 			lblUser.setLayoutData(createLabelLayoutData());
 
 			Combo cmbUserSelection = new Combo(cmps, SWT.BORDER);
-			Iterable<UserDescriptor> descriptors = userService.getDescriptors();
 			List<UserDescriptor> users = new ArrayList<>();
 			for (UserDescriptor iter : users) {
 				cmbUserSelection.add(iter.getFullName());

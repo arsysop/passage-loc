@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
+import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
@@ -35,13 +36,8 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.products.core.LocProductsCore;
 
 @Component
-public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<ProductDescriptor> implements ProductRegistry, ProductDomainRegistry {
+public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry implements ProductRegistry, ProductDomainRegistry {
 	
-	@Override
-	protected Class<ProductDescriptor> getDescriptorClass() {
-		return ProductDescriptor.class;
-	}
-
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
@@ -85,6 +81,18 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry<Prod
 	@Override
 	public String getFileExtension() {
 		return LocProductsCore.EXTENSION_PRODUCTS;
+	}
+
+	@Override
+	public ProductLineDescriptor getProductSet(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDescriptor getProduct(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

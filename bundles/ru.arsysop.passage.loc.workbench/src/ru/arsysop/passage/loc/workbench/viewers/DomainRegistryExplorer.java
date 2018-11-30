@@ -72,8 +72,8 @@ public class DomainRegistryExplorer {
 		viewer = new TreeViewer(base);
 		viewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		AdapterFactory factory;
-		if (descriptorRegistry instanceof EditingDomainBasedRegistry<?>) {
-			EditingDomainBasedRegistry<?> registry = (EditingDomainBasedRegistry<?>) descriptorRegistry;
+		if (descriptorRegistry instanceof EditingDomainBasedRegistry) {
+			EditingDomainBasedRegistry registry = (EditingDomainBasedRegistry) descriptorRegistry;
 			factory = registry.getComposedAdapterFactory();
 		} else {
 			factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
