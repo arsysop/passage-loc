@@ -21,6 +21,7 @@
 package ru.arsysop.passage.loc.workbench.wizards;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +41,8 @@ import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
 
 public class CreateFileWizard extends Wizard {
 	
-	private final EditingDomainRegistry editingDomainRegistry;
+	protected final EditingDomainRegistry editingDomainRegistry;
+
 	private final EClass eClass;
 	private CreateFileWizardPage filePage;
 	
@@ -52,8 +54,13 @@ public class CreateFileWizard extends Wizard {
 	
 	@Override
 	public void addPages() {
-		filePage = new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension());
+		filePage = createFilePage();
 		addPage(filePage);
+	}
+
+
+	protected CreateFileWizardPage createFilePage() {
+		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension());
 	}
 
 	@Override
@@ -78,7 +85,7 @@ public class CreateFileWizard extends Wizard {
 								resource.getContents().add(rootObject);
 							}
 							Map<Object, Object> options = new HashMap<Object, Object>();
-							options.put(XMLResource.OPTION_ENCODING, filePage.getEncoding());
+							options.put(XMLResource.OPTION_ENCODING, StandardCharsets.UTF_8.name());
 							resource.save(options);
 						}
 						catch (Exception exception) {

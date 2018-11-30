@@ -20,11 +20,15 @@
  *******************************************************************************/
 package ru.arsysop.passage.lic.inspector.ui.addons;
 
+import java.net.URL;
+
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.event.Event;
 
@@ -46,6 +50,14 @@ public class LicensingInspectorAddon {
 	@Optional
 	public void applicationStarted(@UIEventTopic(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE) Event event) {
 		String[] args = environmentInfo.getNonFrameworkArgs();
+		String infoString = "platform:/plugin/ru.arsysop.passage.loc.workbench/images/info.png";
+		try {
+			ImageDescriptor info = ImageDescriptor.createFromURL(new URL(infoString));
+			JFaceResources.getImageRegistry().put("info", info);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Object configuration = LicensingConfigurations.extractProductIdentifier(args);
 		accessManager.executeAccessRestrictions(configuration);
 	}

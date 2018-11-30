@@ -8,7 +8,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_vfriYPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.open" label="Open..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/open.png" command="_VVIqQPIlEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="__inoUPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.save" label="Save" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/save.png" command="_qIUC4PGkEei3isMrv8wWOw"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_b1ZJEPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.menuseparator.fie"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_jhpDEPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.export" label="Export..." tooltip="" command="_Us_jAPJjEeiO9ZCh0caXIg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_jhpDEPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.export" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" tooltip="" command="_Us_jAPJjEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_gOyLMPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.menuseparator.exit"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qN9n4OcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.quit" label="Quit" mnemonics="" command="_o5o3EO50Eei1L9WYDuiuXw"/>
       </children>
@@ -24,7 +24,7 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_a0iSMPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.open" label="Open..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/open.png" command="_VVIqQPIlEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_7WOgYPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.save" label="Save" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/save.png" command="_qIUC4PGkEei3isMrv8wWOw"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_IvR-YPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.fie"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_LJ9REPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.export" label="Export..." command="_Us_jAPJjEeiO9ZCh0caXIg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_LJ9REPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.export" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" command="_Us_jAPJjEeiO9ZCh0caXIg"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_i1VvsPPBEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.trimbar.0" side="Bottom">

@@ -61,11 +61,13 @@ public class LicensingStatusToolControl {
 		verdicts.clear();
 		for (RestrictionVerdict verdict : actions) {
 			verdicts.add(verdict);
-			button.setImage(Display.getDefault().getSystemImage(SWT.ICON_WARNING));
+			button.setImage(JFaceResources.getImage("info"));
+			button.setText("Info");
 			button.setToolTipText("Licensing status: Warning");
 		}
 		if (verdicts.isEmpty()) {
-			button.setImage(Display.getDefault().getSystemImage(SWT.ICON_INFORMATION));
+			button.setImage(JFaceResources.getImage("info"));
+			button.setText("OK");
 			button.setToolTipText("Licensing status: OK");
 		}
 	}
@@ -74,7 +76,8 @@ public class LicensingStatusToolControl {
 	public void createGui(Composite parent) {
 		button = new Button(parent, SWT.NONE);
 		button.setFont(JFaceResources.getDefaultFont());
-		button.setImage(parent.getDisplay().getSystemImage(SWT.ICON_QUESTION));
+		button.setText("Undefined");
+		button.setImage(JFaceResources.getImage("info"));
 		button.setToolTipText("Licensing status: Undefined");
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override

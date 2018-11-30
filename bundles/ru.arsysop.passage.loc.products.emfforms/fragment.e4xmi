@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_Nvg8QOjbEeirQd2CUcYMjQ">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_Nvg8QOjbEeirQd2CUcYMjQ">
   <imports xsi:type="basic:Part" xmi:id="_sr6jAOjbEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.emfforms.part.details"/>
+  <imports xsi:type="commands:Command" xmi:id="_1CB5APTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_eEGlEOjbEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.products.ui.partsashcontainer.main" positionInList="">
     <elements xsi:type="basic:PartStack" xmi:id="_Fc0X0PJTEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.products.emfforms.partstack.details" selectedElement="_I9u50PJTEeiO9ZCh0caXIg">
       <children xsi:type="basic:Part" xmi:id="_I9u50PJTEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.products.emfforms.part.details" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench.emfforms/ru.arsysop.passage.loc.workbench.emfforms.DetailsView" label="Details" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/edit.png"/>
     </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_43mcYPTGEeiI64G0mnmT3g" featurename="handlers" parentElementId="ru.arsysop.passage.loc.products.ui.part.features">
+    <elements xsi:type="commands:Handler" xmi:id="_-VclIPTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.featureset.create" contributionURI="bundleclass://ru.arsysop.passage.loc.products.emfforms/ru.arsysop.passage.loc.products.emfforms.CreateFeatureSetHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Fx69wPTHEeiI64G0mnmT3g" featurename="handlers" parentElementId="ru.arsysop.passage.loc.products.ui.part.products">
+    <elements xsi:type="commands:Handler" xmi:id="_KkPdQPTHEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.productline.create" contributionURI="bundleclass://ru.arsysop.passage.loc.products.emfforms/ru.arsysop.passage.loc.products.emfforms.CreateProductLineHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
   </fragments>
 </fragment:ModelFragments>
