@@ -7,6 +7,7 @@ Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.e4.core.di,
  org.eclipse.e4.ui.model.workbench;bundle-version="0.0.0",
  org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="0.0.0",
+ ru.arsysop.passage.lic.base.ui;bundle-version="0.0.0",
  ru.arsysop.passage.lic.model;bundle-version="0.0.0",
  ru.arsysop.passage.loc.workbench.emfforms;bundle-version="0.0.0",
  ru.arsysop.passage.loc.edit;bundle-version="0.0.0",

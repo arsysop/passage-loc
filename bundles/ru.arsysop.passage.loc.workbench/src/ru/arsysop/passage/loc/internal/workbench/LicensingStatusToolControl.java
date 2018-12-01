@@ -34,16 +34,18 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.LicensingEvents;
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.base.ui.RestrictionVerdictLabels;
 import ru.arsysop.passage.lic.inspector.HardwareInspector;
 import ru.arsysop.passage.lic.inspector.ui.dialogs.LicensingInspectorDialog;
 import ru.arsysop.passage.lic.runtime.RestrictionVerdict;
 
 public class LicensingStatusToolControl {
 	
+	private final LicensingImages images;
 	private final HardwareInspector hardwareInspector;
 
 	private final List<RestrictionVerdict> verdicts = new ArrayList<>();
@@ -51,7 +53,8 @@ public class LicensingStatusToolControl {
 	private Button button;
 
 	@Inject
-	public LicensingStatusToolControl(HardwareInspector hardwareInspector) {
+	public LicensingStatusToolControl(LicensingImages images, HardwareInspector hardwareInspector) {
+		this.images = images;
 		this.hardwareInspector = hardwareInspector;
 	}
 	
@@ -59,26 +62,15 @@ public class LicensingStatusToolControl {
 	@Optional
 	public void applicationStarted(@UIEventTopic(LicensingEvents.LicensingLifeCycle.RESTRICTION_EXECUTED) Iterable<RestrictionVerdict> actions) {
 		verdicts.clear();
-		for (RestrictionVerdict verdict : actions) {
-			verdicts.add(verdict);
-			button.setImage(JFaceResources.getImage("info"));
-			button.setText("Info");
-			button.setToolTipText("Licensing status: Warning");
-		}
-		if (verdicts.isEmpty()) {
-			button.setImage(JFaceResources.getImage("info"));
-			button.setText("OK");
-			button.setToolTipText("Licensing status: OK");
-		}
+		actions.forEach(verdicts::add);
+		RestrictionVerdict last = RestrictionVerdictLabels.resolveLastVerdict(verdicts);
+		updateButton(last);
 	}
 
 	@PostConstruct
 	public void createGui(Composite parent) {
 		button = new Button(parent, SWT.NONE);
 		button.setFont(JFaceResources.getDefaultFont());
-		button.setText("Undefined");
-		button.setImage(JFaceResources.getImage("info"));
-		button.setToolTipText("Licensing status: Undefined");
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -88,5 +80,15 @@ public class LicensingStatusToolControl {
 				dialog.open();
 			}
 		});
+		button.setImage(images.getImage(LicensingImages.IMG_LEVEL_OK));
+		button.setText("Undefined");
 	}
+
+	protected void updateButton(RestrictionVerdict last) {
+		String key = RestrictionVerdictLabels.resolveImageKey(last);
+		button.setImage(images.getImage(key));
+		button.setText(RestrictionVerdictLabels.resolveLabel(last));
+		button.setToolTipText(RestrictionVerdictLabels.resolveTooltip(last));
+	}
+
 }
