@@ -3,6 +3,7 @@ package ru.arsysop.passage.loc.products.emfforms;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -16,14 +17,20 @@ public class CreateProductLineHandler {
 	
 	@Execute
 	public void execute(Shell shell, LicensingImages images, ProductDomainRegistry registry) {
-		EClass eClass = LicPackage.Literals.PRODUCT_LINE;
-		Wizard wizard = new CreateFormWizard(registry, eClass);
+		LicPackage ePackage = LicPackage.eINSTANCE;
+		EClass eClass = ePackage.getProductLine();
+		EObject eObject = ePackage.getEFactoryInstance().create(eClass);
+		String newText = "New Product Line";
+		String newTitle = "Product Line";
+		String newMessage = "Please specify a file name to store product data";
+
+		Wizard wizard = new CreateFormWizard(registry, eObject);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
-		dialog.setTitle("Product Line");
-		dialog.setMessage("Please specify a file name to store product data");;
+		dialog.setTitle(newTitle);
+		dialog.setMessage(newMessage);;
 		Shell createdShell = dialog.getShell();
-		createdShell.setText("New Product Line");
+		createdShell.setText(newText);
 		createdShell.setImage(images.getImage(eClass.getName()));
 		dialog.open();
 	}
