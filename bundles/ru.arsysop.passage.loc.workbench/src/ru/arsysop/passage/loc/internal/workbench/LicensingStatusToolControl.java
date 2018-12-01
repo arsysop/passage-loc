@@ -75,7 +75,7 @@ public class LicensingStatusToolControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Shell activeShell = button.getDisplay().getActiveShell();
-				LicensingInspectorDialog dialog = new LicensingInspectorDialog(activeShell, verdicts);
+				LicensingInspectorDialog dialog = new LicensingInspectorDialog(activeShell, images, verdicts);
 				dialog.setHardwareInspector(hardwareInspector);
 				dialog.open();
 			}

@@ -26,13 +26,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
-import ru.arsysop.passage.loc.licenses.core.LocLicensesCore;
 
 @Component
 public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry implements UserRegistry, UserDomainRegistry {
@@ -72,7 +72,7 @@ public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry impleme
 
 	@Override
 	public String getFileExtension() {
-		return LocLicensesCore.FILE_EXTENSION_USERS;
+		return LicModelCore.FILE_EXTENSION_USERS;
 	}
 
 	@Override

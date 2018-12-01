@@ -74,6 +74,7 @@ public class CreateFileWizard extends Wizard {
 				public void run(IProgressMonitor progressMonitor) {
 					ResourceSet resourceSet = editingDomainRegistry.getEditingDomain().getResourceSet();
 					Resource resource = resourceSet.createResource(fileURI);
+					resource.getContents().add(eObject);
 					LicModelCore.save(resource);
 				}
 			};

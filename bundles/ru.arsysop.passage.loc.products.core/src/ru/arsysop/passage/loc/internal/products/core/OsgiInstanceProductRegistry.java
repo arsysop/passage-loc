@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
@@ -33,7 +34,6 @@ import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
-import ru.arsysop.passage.loc.products.core.LocProductsCore;
 
 @Component
 public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry implements ProductRegistry, ProductDomainRegistry {
@@ -80,7 +80,7 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 
 	@Override
 	public String getFileExtension() {
-		return LocProductsCore.EXTENSION_PRODUCTS;
+		return LicModelCore.FILE_EXTENSION_PRODUCTS;
 	}
 
 	@Override

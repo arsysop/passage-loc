@@ -29,11 +29,14 @@ import org.eclipse.swt.widgets.Shell;
 
 public class LocWokbench {
 	
-	public static String selectSavePath(Shell shell, String extenion, String... others) {
-		String[] array = maskFilters(extenion, others);
+	public static String selectSavePath(Shell shell, String extenion) {
+		String[] array = maskFilters(extenion);
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
 		fileDialog.setFilterExtensions(array);
 		String selected = fileDialog.open();
+		if (selected != null && !selected.endsWith(extenion)) {
+			selected = selected + extenion;
+		}
 		return selected;
 	}
 

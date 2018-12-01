@@ -15,7 +15,7 @@
       <children xsi:type="menu:Menu" xmi:id="_NUsyMOTuEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.menu.view" label="View"/>
       <children xsi:type="menu:Menu" xmi:id="_4tOAUIFiEeivxedica_7mQ" elementId="ru.arsysop.passage.loc.workbench.menu.help" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_LYoXUO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.inspect.hardware" label="Inspect Hardware" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" command="_V2DtgO4pEei1L9WYDuiuXw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
       </children>
     </mainMenu>
     <trimBars xmi:id="_6wlLlcgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.trimbars.top">
