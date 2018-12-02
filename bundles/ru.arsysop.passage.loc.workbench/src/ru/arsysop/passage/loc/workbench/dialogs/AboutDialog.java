@@ -25,13 +25,12 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Image;
@@ -43,31 +42,36 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
+
 public class AboutDialog extends Dialog {
 
-	private static final String ABOUT_TEXT = "%aboutText";
-	private static final String ABOUT_IMAGE = "%aboutImage";
-	private static final String ABOUT_DIALOG_TITLE = "%product.name";
+	private static final String PRODUCT_NAME = "%product.name"; //$NON-NLS-1$
+	private static final String ABOUT_TEXT = "%aboutText"; //$NON-NLS-1$
+	private static final String ABOUT_IMAGE = "%aboutImage"; //$NON-NLS-1$
+	private static final String ABOUT_TITLE = "%aboutTitle"; //$NON-NLS-1$
 
-	private static final String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench";
-	private static final String PRODUCT_BUNDLE_ABOUT_IMAGE = "%s//%s";
+	private static final String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench"; //$NON-NLS-1$
+	private static final String PRODUCT_BUNDLE_ABOUT_IMAGE = "%s//%s"; //$NON-NLS-1$
 	private Image productLogo;
 
-	@Inject
-	private TranslationService translations;
+	private final TranslationService translations;
+	private final LicensingImages licensingImages;
 
 	public AboutDialog(Shell parentShell, IEclipseContext context) {
 		super(parentShell);
-		setShellStyle(SWT.TITLE);
-		if (translations == null) {
-			translations = context.get(TranslationService.class);
-		}
+//		setShellStyle(SWT.TITLE);
+		translations = context.get(TranslationService.class);
+		licensingImages = context.get(LicensingImages.class);
 	}
 
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText(translations.translate(ABOUT_DIALOG_TITLE, PRODUCT_BUNDLE_URL));
+		String pattern = translations.translate(ABOUT_TITLE, PRODUCT_BUNDLE_URL);
+		String name = translations.translate(PRODUCT_NAME, PRODUCT_BUNDLE_URL);
+		newShell.setText(NLS.bind(pattern, name));
+		newShell.setImage(licensingImages.getImage(LicensingImages.IMG_DEFAULT));;
 	}
 
 	@Override
