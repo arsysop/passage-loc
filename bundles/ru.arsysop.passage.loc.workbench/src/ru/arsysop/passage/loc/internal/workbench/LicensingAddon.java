@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.lic.inspector.ui.addons;
+package ru.arsysop.passage.loc.internal.workbench;
 
 import javax.inject.Inject;
 
@@ -31,13 +31,13 @@ import org.osgi.service.event.Event;
 import ru.arsysop.passage.lic.base.LicensingConfigurations;
 import ru.arsysop.passage.lic.runtime.AccessManager;
 
-public class LicensingInspectorAddon {
+public class LicensingAddon {
 
 	private final EnvironmentInfo environmentInfo;
 	private final AccessManager accessManager;
 
 	@Inject
-	public LicensingInspectorAddon(EnvironmentInfo environmentInfo, AccessManager accessManager) {
+	public LicensingAddon(EnvironmentInfo environmentInfo, AccessManager accessManager) {
 		this.environmentInfo = environmentInfo;
 		this.accessManager = accessManager;
 	}
