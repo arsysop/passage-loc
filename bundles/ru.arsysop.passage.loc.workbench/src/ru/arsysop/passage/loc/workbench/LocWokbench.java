@@ -23,12 +23,15 @@ package ru.arsysop.passage.loc.workbench;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class LocWokbench {
-	
+
 	public static String selectSavePath(Shell shell, String extension) {
 		String[] array = maskFilters(extension);
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
@@ -52,9 +55,36 @@ public class LocWokbench {
 		String[] array = (String[]) filters.toArray(new String[filters.size()]);
 		return array;
 	}
-	
+
 	private static String maskExtension(String extension) {
 		return "*." + extension; //$NON-NLS-1$
+	}
+
+	public static String extractValidationError(EObject newObject) {
+		if (newObject == null) {
+			return "Input is invalid";
+		}
+		final Diagnostic result = Diagnostician.INSTANCE.validate(newObject);
+		if (result.getSeverity() == Diagnostic.OK) {
+			return null;
+		}
+		// Get the error count and create an appropriate Error message:
+		final int errorCount = result.getChildren().size();
+		
+		final String header = "%s error(s) occured while analyzing your inputs:";
+		final String entry = "%s. %s";
+		
+		final StringBuilder sb = new StringBuilder();
+		sb.append(String.format(header, errorCount));
+		sb.append('\n');
+
+		int messageCount = 0;
+		for (final Diagnostic d : result.getChildren()) {
+			sb.append('\n');
+			sb.append(String.format(entry, ++messageCount, d.getMessage()));
+		}
+		
+		return sb.toString();
 	}
 
 }
