@@ -60,10 +60,12 @@ public class CreateFileWizard extends Wizard {
 	public boolean performFinish() {
 		try {
 			final URI fileURI = filePage.getFileURI();
-			if (new File(fileURI.toFileString()).exists()) {
+			File file = new File(fileURI.toFileString());
+			if (file.exists()) {
+				String absolutePath = file.getAbsolutePath();
 				String message = String.format(
 						"The file \"%s\" already exists.  Do you want to replace the existing file?",
-						fileURI.toFileString());
+						absolutePath);
 				if (!MessageDialog.openQuestion(getShell(), "Question", message)) {
 					filePage.selectFileField();
 					return false;

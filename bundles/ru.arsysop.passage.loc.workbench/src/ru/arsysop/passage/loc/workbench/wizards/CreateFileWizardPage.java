@@ -149,7 +149,11 @@ public class CreateFileWizardPage extends WizardPage {
 
 	public URI getFileURI() {
 		try {
-			return URI.createFileURI(fileField.getText());
+			String text = fileField.getText();
+			if (text != null && !text.endsWith('.' + extension)) {
+				text = text + '.' + extension;
+			}
+			return URI.createFileURI(text);
 		} catch (Exception exception) {
 			// Ignore
 		}

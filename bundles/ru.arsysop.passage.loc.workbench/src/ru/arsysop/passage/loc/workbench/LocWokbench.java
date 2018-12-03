@@ -29,28 +29,23 @@ import org.eclipse.swt.widgets.Shell;
 
 public class LocWokbench {
 	
-	public static String selectSavePath(Shell shell, String extenion) {
-		String[] array = maskFilters(extenion);
+	public static String selectSavePath(Shell shell, String extension) {
+		String[] array = maskFilters(extension);
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
 		fileDialog.setFilterExtensions(array);
-		String selected = fileDialog.open();
-		if (selected != null && !selected.endsWith(extenion)) {
-			selected = selected + extenion;
-		}
-		return selected;
+		return fileDialog.open();
 	}
 
-	public static String selectLoadPath(Shell shell, String extenion, String... others) {
-		String[] array = maskFilters(extenion, others);
+	public static String selectLoadPath(Shell shell, String extension, String... others) {
+		String[] array = maskFilters(extension, others);
 		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
 		fileDialog.setFilterExtensions(array);
-		String selected = fileDialog.open();
-		return selected;
+		return fileDialog.open();
 	}
 
-	private static String[] maskFilters(String extenion, String... others) {
+	private static String[] maskFilters(String extension, String... others) {
 		List<String> filters = new ArrayList<>();
-		filters.add(maskExtension(extenion));
+		filters.add(maskExtension(extension));
 		for (String other : others) {
 			filters.add(maskExtension(other));
 		}

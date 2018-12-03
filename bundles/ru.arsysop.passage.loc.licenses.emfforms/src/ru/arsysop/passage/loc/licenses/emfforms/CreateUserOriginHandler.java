@@ -1,5 +1,5 @@
  
-package ru.arsysop.passage.loc.products.emfforms;
+package ru.arsysop.passage.loc.licenses.emfforms;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecore.EClass;
@@ -10,19 +10,19 @@ import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.workbench.emfforms.CreateFormWizard;
 
-public class CreateFeatureSetHandler {
-
+public class CreateUserOriginHandler {
+	
 	@Execute
-	public void execute(Shell shell, LicensingImages images, FeatureDomainRegistry registry) {
+	public void execute(Shell shell, LicensingImages images, UserDomainRegistry registry) {
 		LicPackage ePackage = LicPackage.eINSTANCE;
-		EClass eClass = ePackage.getFeatureSet();
+		EClass eClass = ePackage.getUserOrigin();
 		EObject eObject = ePackage.getEFactoryInstance().create(eClass);
-		String newText = "New Feature Set";
-		String newTitle = "Feature Set";
-		String newMessage = "Please specify a file name to store feature data";
+		String newText = "New User Origin";
+		String newTitle = "User Origin";
+		String newMessage = "Please specify a file name to store user data";
 
 		Wizard wizard = new CreateFormWizard(registry, eObject);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
