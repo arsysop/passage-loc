@@ -30,7 +30,6 @@ import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -72,10 +71,8 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 	}
 
 	@Override
-	public String createPassword(ProductVersionDescriptor productVersion) {
-		String name = productVersion.getProduct().getName();
-		String version = productVersion.getVersion();
-		return name + "###" + version;
+	public String createPassword(String identifier, String version) {
+		return identifier + "###" + version; //$NON-NLS-1$
 	}
 
 	@Override

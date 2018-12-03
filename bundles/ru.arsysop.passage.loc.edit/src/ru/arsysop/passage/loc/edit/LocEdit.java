@@ -20,9 +20,11 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 
 public class LocEdit {
 	
@@ -49,5 +51,32 @@ public class LocEdit {
 			}
 		}
 		return null;
+	}
+
+	public static String extractValidationError(EObject newObject) {
+		if (newObject == null) {
+			return "Input is invalid";
+		}
+		final Diagnostic result = Diagnostician.INSTANCE.validate(newObject);
+		if (result.getSeverity() == Diagnostic.OK) {
+			return null;
+		}
+		// Get the error count and create an appropriate Error message:
+		final int errorCount = result.getChildren().size();
+		
+		final String header = "%s error(s) occured while analyzing your inputs:";
+		final String entry = "%s. %s";
+		
+		final StringBuilder sb = new StringBuilder();
+		sb.append(String.format(header, errorCount));
+		sb.append('\n');
+	
+		int messageCount = 0;
+		for (final Diagnostic d : result.getChildren()) {
+			sb.append('\n');
+			sb.append(String.format(entry, ++messageCount, d.getMessage()));
+		}
+		
+		return sb.toString();
 	}
 }
