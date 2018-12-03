@@ -46,7 +46,7 @@ public class LicensingAddon {
 	@Optional
 	public void applicationStarted(@UIEventTopic(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE) Event event) {
 		String[] args = environmentInfo.getNonFrameworkArgs();
-		Object configuration = LicensingConfigurations.extractProductIdentifier(args);
+		Object configuration = LicensingConfigurations.findProductIdentifier(args);
 		accessManager.executeAccessRestrictions(configuration);
 	}
 
