@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 
 public class LocEdit {
 	
+	public static final String EXTENSION_KEY_PRIVATE = ".scr"; //$NON-NLS-1$
+	
 	public static Resource extractResource(Object object) {
 		if (object instanceof EObject) {
 			EObject eObject = (EObject) object;

@@ -68,18 +68,26 @@ public class LicensesCore {
 		Path path = basePath.resolve(identifier).resolve(version);
 		String storageKeyFolder = path.toFile().getAbsolutePath();
 		String keyFileName = identifier + '_' + version;
-		String uuid = UUID.randomUUID().toString();
-		String licenseOut = storageKeyFolder + File.separator + uuid + LicensingPaths.EXTENSION_LICENSE_ENCRYPTED;
-		String privateKeyPath = storageKeyFolder + File.separator + keyFileName + ".skr";
-		String username = identifier;
+		String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 		File privateProductToken = new File(privateKeyPath);
+		if (!privateProductToken.exists()) {
+			String pattern = "Product private key not found: \n %s";
+			String message = String.format(pattern, privateProductToken.getAbsolutePath());
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
+			throw new CoreException(error);
+		}
+
+		String uuid = UUID.randomUUID().toString();
+		Date value = new Date();
+		String licenseOut = storageKeyFolder + File.separator + uuid + LicensingPaths.EXTENSION_LICENSE_ENCRYPTED;
 		String licenseFile = licensePack.eResource().getURI().toFileString();
+		File licenseEncoded = new File(licenseOut);
 		try (FileInputStream licenseInput = new FileInputStream(licenseFile);
-				FileOutputStream licenseOutput = new FileOutputStream(new File(licenseOut)); FileInputStream keyStream = new FileInputStream(privateProductToken)) {
+				FileOutputStream licenseOutput = new FileOutputStream(licenseEncoded); FileInputStream keyStream = new FileInputStream(privateProductToken)) {
+			String username = identifier;
 			String password = productRegistry.createPassword(identifier, version);
 			streamCodec.encodeStream(licenseInput, licenseOutput, keyStream, username, password);
 			licensePack.setIdentifier(uuid);;
-			Date value = new Date();
 			licensePack.setIssueDate(value);;
 			return licenseOut;
 		} catch (Exception e) {

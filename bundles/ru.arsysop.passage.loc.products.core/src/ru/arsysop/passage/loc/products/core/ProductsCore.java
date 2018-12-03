@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
+import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.model.api.Product;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
 import ru.arsysop.passage.lic.runtime.io.StreamCodec;
@@ -76,8 +77,8 @@ public class ProductsCore {
 			Files.createDirectories(path);
 			String storageKeyFolder = path.toFile().getAbsolutePath();
 			String keyFileName = identifier + '_' + version;
-			String publicKeyPath = storageKeyFolder + File.separator + keyFileName + ".pub";
-			String privateKeyPath = storageKeyFolder + File.separator + keyFileName + ".skr";
+			String publicKeyPath = storageKeyFolder + File.separator + keyFileName + LicensingPaths.EXTENSION_PRODUCT_PUBLIC;
+			String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 			streamCodec.createKeyPair(publicKeyPath, privateKeyPath, product.getName(),
 					registry.createPassword(identifier, version), 1024);
 			productVersion.setInstallationToken(publicKeyPath);
