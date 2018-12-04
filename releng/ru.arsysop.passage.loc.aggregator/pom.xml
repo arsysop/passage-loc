@@ -39,7 +39,6 @@
 	<modules>
 		<module>../../releng/ru.arsysop.passage.loc.target</module>
 
-		<module>../../bundles/ru.arsysop.passage.loc.runtime</module>
 		<module>../../bundles/ru.arsysop.passage.loc.edit</module>
 		<module>../../bundles/ru.arsysop.passage.loc.workbench</module>
 		<module>../../bundles/ru.arsysop.passage.loc.workbench.emfforms</module>

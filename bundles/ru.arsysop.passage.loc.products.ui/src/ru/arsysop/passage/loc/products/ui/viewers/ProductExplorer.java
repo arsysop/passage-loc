@@ -24,14 +24,15 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
 
 public class ProductExplorer extends DomainRegistryExplorer {
 	
 	@Inject
-	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService) {
-		super(registry, selectionService);
+	public ProductExplorer(ProductDomainRegistry registry, ESelectionService selectionService, LicensingImages images) {
+		super(registry, selectionService, images);
 	}
 
 }

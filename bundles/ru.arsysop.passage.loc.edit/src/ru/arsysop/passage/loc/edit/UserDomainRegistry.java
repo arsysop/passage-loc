@@ -21,9 +21,8 @@
 package ru.arsysop.passage.loc.edit;
 
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 
-public interface UserDomainRegistry extends UserRegistry, EditingDomainRegistry, DescriptorRegistry<UserDescriptor> {
+public interface UserDomainRegistry extends UserRegistry, EditingDomainRegistry, DescriptorRegistry {
 
 }

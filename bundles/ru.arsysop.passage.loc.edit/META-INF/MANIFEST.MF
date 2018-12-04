@@ -11,5 +11,4 @@ Require-Bundle: org.eclipse.osgi;bundle-version="0.0.0",
  org.eclipse.emf.edit;bundle-version="0.0.0";visibility:=reexport,
  ru.arsysop.passage.lic.registry;bundle-version="0.0.0";visibility:=reexport,
  ru.arsysop.passage.lic.model;bundle-version="0.3.0"
-Export-Package: ru.arsysop.passage.lic.registry,
- ru.arsysop.passage.loc.edit
+Export-Package: ru.arsysop.passage.loc.edit

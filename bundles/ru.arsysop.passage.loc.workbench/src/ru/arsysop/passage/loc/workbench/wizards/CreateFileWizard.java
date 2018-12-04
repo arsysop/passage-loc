@@ -21,91 +21,74 @@
 package ru.arsysop.passage.loc.workbench.wizards;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
+import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
 
 public class CreateFileWizard extends Wizard {
-	
-	private final EditingDomainRegistry editingDomainRegistry;
-	private final EClass eClass;
+
+	protected final EditingDomainRegistry editingDomainRegistry;
+	protected final EObject eObject;
+
 	private CreateFileWizardPage filePage;
-	
-	public CreateFileWizard(EditingDomainRegistry registry, EClass eClass) {
+
+	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject) {
 		this.editingDomainRegistry = registry;
-		this.eClass = eClass;
+		this.eObject = eObject;
 	}
-	
-	
+
 	@Override
 	public void addPages() {
-		filePage = new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension());
+		filePage = createFilePage();
 		addPage(filePage);
+	}
+
+	protected CreateFileWizardPage createFilePage() {
+		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension());
 	}
 
 	@Override
 	public boolean performFinish() {
 		try {
 			final URI fileURI = filePage.getFileURI();
-			if (new File(fileURI.toFileString()).exists()) {
-				String message = String.format("The file \"%s\" already exists.  Do you want to replace the existing file?", fileURI.toFileString());
+			File file = new File(fileURI.toFileString());
+			if (file.exists()) {
+				String absolutePath = file.getAbsolutePath();
+				String message = String.format(
+						"The file \"%s\" already exists.  Do you want to replace the existing file?",
+						absolutePath);
 				if (!MessageDialog.openQuestion(getShell(), "Question", message)) {
 					filePage.selectFileField();
 					return false;
 				}
 			}
-			
+
 			IRunnableWithProgress operation = new IRunnableWithProgress() {
 				public void run(IProgressMonitor progressMonitor) {
-						try {
-							ResourceSet resourceSet = editingDomainRegistry.getEditingDomain().getResourceSet();
-							Resource resource = resourceSet.createResource(fileURI);
-							EObject rootObject = createInitialModel();
-							if (rootObject != null) {
-								resource.getContents().add(rootObject);
-							}
-							Map<Object, Object> options = new HashMap<Object, Object>();
-							options.put(XMLResource.OPTION_ENCODING, filePage.getEncoding());
-							resource.save(options);
-						}
-						catch (Exception exception) {
-							//FIXME:
-							exception.printStackTrace();
-						}
-						finally {
-							progressMonitor.done();
-						}
-					}
-				};
+					ResourceSet resourceSet = editingDomainRegistry.getEditingDomain().getResourceSet();
+					Resource resource = resourceSet.createResource(fileURI);
+					resource.getContents().add(eObject);
+					LicModelCore.save(resource);
+				}
+			};
 
 			getContainer().run(false, false, operation);
 
-			return true;			
-		}
-		catch (Exception exception) {
-			//FIXME:
+			return true;
+		} catch (Exception exception) {
+			// FIXME:
 			exception.printStackTrace();
 			return false;
 		}
-	}
-
-
-	protected EObject createInitialModel() {
-		EPackage ePackage = eClass.getEPackage();
-		return ePackage.getEFactoryInstance().create(eClass);
 	}
 
 }

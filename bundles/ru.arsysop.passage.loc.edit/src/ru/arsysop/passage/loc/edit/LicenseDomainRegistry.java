@@ -21,9 +21,8 @@
 package ru.arsysop.passage.loc.edit;
 
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.LicenseDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
 
-public interface LicenseDomainRegistry extends LicenseRegistry, EditingDomainRegistry, DescriptorRegistry<LicenseDescriptor> {
+public interface LicenseDomainRegistry extends LicenseRegistry, EditingDomainRegistry, DescriptorRegistry {
 
 }

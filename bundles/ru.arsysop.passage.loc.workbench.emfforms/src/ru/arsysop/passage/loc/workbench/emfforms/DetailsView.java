@@ -20,8 +20,6 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.emfforms;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -29,6 +27,7 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -63,6 +62,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
+import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.loc.edit.LocEdit;
 
 public class DetailsView {
@@ -206,17 +206,13 @@ public class DetailsView {
 		}
 		Resource eResource = root.eResource();
 		if (eResource != null) {
-			// FIXME: should be extracted to .core to respect save options
-			try {
-				eResource.save(new HashMap<>());
+			IStatus status = LicModelCore.save(eResource);
+			if (status.isOK()) {
 				if (commandStack instanceof BasicCommandStack) {
 					BasicCommandStack basicCommandStack = (BasicCommandStack) commandStack;
 					basicCommandStack.saveIsDone();
 					part.setDirty(basicCommandStack.isSaveNeeded());
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}

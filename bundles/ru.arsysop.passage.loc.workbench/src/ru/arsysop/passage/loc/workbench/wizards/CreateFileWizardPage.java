@@ -20,10 +20,6 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.wizards;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -34,21 +30,21 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
 
 	protected Text fileField;
 
-	protected List<String> encodings;
-
-	protected Combo encodingField;
+	protected ModifyListener validator = new ModifyListener() {
+		public void modifyText(ModifyEvent e) {
+			setPageComplete(validatePage());
+		}
+	};
 
 	private String extension;
 
@@ -73,6 +69,14 @@ public class CreateFileWizardPage extends WizardPage {
 			composite.setLayoutData(data);
 		}
 
+		createFileControls(composite);
+		createOtherControls(composite);
+
+		setPageComplete(validatePage());
+		setControl(composite);
+	}
+
+	protected void createFileControls(Composite composite) {
 		Label resourceURILabel = new Label(composite, SWT.LEFT);
 		{
 			resourceURILabel.setText("&File");
@@ -119,39 +123,10 @@ public class CreateFileWizardPage extends WizardPage {
 				}
 			}
 		});
-
-		Label encodingLabel = new Label(composite, SWT.LEFT);
-		{
-			encodingLabel.setText("XML Encoding"); //$NON-NLS-1$
-
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			encodingLabel.setLayoutData(data);
-		}
-		encodingField = new Combo(composite, SWT.BORDER);
-		{
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = true;
-			encodingField.setLayoutData(data);
-		}
-
-		for (String encoding : getEncodings()) {
-			encodingField.add(encoding);
-		}
-
-		encodingField.select(0);
-		encodingField.addModifyListener(validator);
-
-		setPageComplete(validatePage());
-		setControl(composite);
 	}
 
-	protected ModifyListener validator = new ModifyListener() {
-		public void modifyText(ModifyEvent e) {
-			setPageComplete(validatePage());
-		}
-	};
+	protected void createOtherControls(Composite composite) {
+	}
 
 	protected boolean validatePage() {
 		URI fileURI = getFileURI();
@@ -161,25 +136,24 @@ public class CreateFileWizardPage extends WizardPage {
 		}
 		setMessage(null);
 		setErrorMessage(null);
-		return getEncodings().contains(encodingField.getText());
+		return true;
 	}
 
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible) {
-			encodingField.clearSelection();
 			fileField.setFocus();
 		}
 	}
 
-	public String getEncoding() {
-		return encodingField.getText();
-	}
-
 	public URI getFileURI() {
 		try {
-			return URI.createFileURI(fileField.getText());
+			String text = fileField.getText();
+			if (text != null && !text.endsWith('.' + extension)) {
+				text = text + '.' + extension;
+			}
+			return URI.createFileURI(text);
 		} catch (Exception exception) {
 			// Ignore
 		}
@@ -187,16 +161,8 @@ public class CreateFileWizardPage extends WizardPage {
 	}
 
 	public void selectFileField() {
-		encodingField.clearSelection();
 		fileField.selectAll();
 		fileField.setFocus();
 	}
 
-	protected Collection<String> getEncodings() {
-		if (encodings == null) {
-			encodings = new ArrayList<String>();
-			encodings.add("UTF-8");
-		}
-		return encodings;
-	}
 }

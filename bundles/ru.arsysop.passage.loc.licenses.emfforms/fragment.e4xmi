@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_Nvg8QOjbEeirQd2CUcYMjQ">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_Nvg8QOjbEeirQd2CUcYMjQ">
+  <imports xsi:type="commands:Command" xmi:id="_rAKYoPbNEei8_cVTxm7o5w" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_fd4zwOjhEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.licenses.ui.partsashcontainer.main">
     <elements xsi:type="basic:PartStack" xmi:id="_ZT6e8PFfEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.emfforms.partstack.details" selectedElement="_JOabAPFfEeiDoO1zH3kD5g">
       <children xsi:type="basic:Part" xmi:id="_JOabAPFfEeiDoO1zH3kD5g" elementId="ru.arsysop.passage.loc.licenses.emfforms.part.details" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench.emfforms/ru.arsysop.passage.loc.workbench.emfforms.DetailsView" label="Details" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/edit.png"/>
     </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_TPVnwPbNEei8_cVTxm7o5w" featurename="handlers" parentElementId="ru.arsysop.passage.loc.licenses.ui.part.licenses">
+    <elements xsi:type="commands:Handler" xmi:id="_XcBDkPbNEei8_cVTxm7o5w" elementId="ru.arsysop.passage.loc.licenses.emfforms.handler.licensepack.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.CreateLicensePackHandler" command="_rAKYoPbNEei8_cVTxm7o5w"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_z9p4EPbNEei8_cVTxm7o5w" featurename="handlers" parentElementId="ru.arsysop.passage.loc.licenses.ui.part.users">
+    <elements xsi:type="commands:Handler" xmi:id="_3TImIPbNEei8_cVTxm7o5w" elementId="ru.arsysop.passage.loc.licenses.emfforms.handler.userorigin" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.CreateUserOriginHandler" command="_rAKYoPbNEei8_cVTxm7o5w"/>
   </fragments>
 </fragment:ModelFragments>

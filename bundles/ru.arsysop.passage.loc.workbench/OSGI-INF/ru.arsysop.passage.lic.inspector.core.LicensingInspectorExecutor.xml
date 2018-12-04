@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.lic.inspector.core.LicensingInspectorExecutor">
-   <service>
-      <provide interface="ru.arsysop.passage.lic.runtime.RestrictionExecutor"/>
-   </service>
-   <reference bind="bindEventAdmin" interface="org.osgi.service.event.EventAdmin" name="EventAdmin"/>
-   <implementation class="ru.arsysop.passage.lic.inspector.core.LicensingInspectorExecutor"/>
-</scr:component>

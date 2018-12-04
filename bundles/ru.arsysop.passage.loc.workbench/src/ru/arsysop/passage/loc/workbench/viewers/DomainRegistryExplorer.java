@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -41,6 +40,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
 
@@ -48,15 +48,17 @@ public class DomainRegistryExplorer {
 
 	private final EditingDomainRegistry descriptorRegistry;
 	private final ESelectionService selectionService;
+	private final LicensingImages licensingImages;
 
 	private ISelectionChangedListener selectionChangeListener;
 	private TreeViewer viewer;
 	private ResourceSetAdapter resourceSetAdapter;
 
-	public DomainRegistryExplorer(EditingDomainRegistry registry, ESelectionService selectionService) {
+	public DomainRegistryExplorer(EditingDomainRegistry registry, ESelectionService selectionService, LicensingImages images) {
 		super();
 		this.descriptorRegistry = registry;
 		this.selectionService = selectionService;
+		this.licensingImages = images;
 	}
 	
 	public EditingDomainRegistry getDescriptorRegistry() {
@@ -72,14 +74,14 @@ public class DomainRegistryExplorer {
 		viewer = new TreeViewer(base);
 		viewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		AdapterFactory factory;
-		if (descriptorRegistry instanceof EditingDomainBasedRegistry<?>) {
-			EditingDomainBasedRegistry<?> registry = (EditingDomainBasedRegistry<?>) descriptorRegistry;
+		if (descriptorRegistry instanceof EditingDomainBasedRegistry) {
+			EditingDomainBasedRegistry registry = (EditingDomainBasedRegistry) descriptorRegistry;
 			factory = registry.getComposedAdapterFactory();
 		} else {
 			factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		}
 		viewer.setContentProvider(new AdapterFactoryContentProvider(factory));
-		viewer.setLabelProvider(new AdapterFactoryLabelProvider(factory));
+		viewer.setLabelProvider(new DomainRegistryLabelProvider(licensingImages, factory));
 		selectionChangeListener = new StructuredSelectionListener(selectionService);
 		viewer.addSelectionChangedListener(selectionChangeListener);
 		ResourceSet resourceSet = descriptorRegistry.getEditingDomain().getResourceSet();
