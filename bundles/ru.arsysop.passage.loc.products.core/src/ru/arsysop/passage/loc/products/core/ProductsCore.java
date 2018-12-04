@@ -38,10 +38,11 @@ import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 public class ProductsCore {
-	
+
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.core"; //$NON-NLS-1$
 
-	public static List<String> exportProductKeys(ProductVersion productVersion, ProductDomainRegistry registry, StreamCodec streamCodec) throws CoreException {
+	public static List<String> exportProductKeys(ProductVersion productVersion, ProductDomainRegistry registry,
+			StreamCodec streamCodec) throws CoreException {
 		String installationToken = productVersion.getInstallationToken();
 		if (installationToken != null) {
 			File publicFile = new File(installationToken);
@@ -62,7 +63,7 @@ public class ProductsCore {
 				throw new CoreException(error);
 			}
 		}
-	
+
 		Product product = productVersion.getProduct();
 		String errors = LocEdit.extractValidationError(product);
 		if (errors != null) {
@@ -77,13 +78,14 @@ public class ProductsCore {
 			Files.createDirectories(path);
 			String storageKeyFolder = path.toFile().getAbsolutePath();
 			String keyFileName = identifier + '_' + version;
-			String publicKeyPath = storageKeyFolder + File.separator + keyFileName + LicensingPaths.EXTENSION_PRODUCT_PUBLIC;
+			String publicKeyPath = storageKeyFolder + File.separator + keyFileName
+					+ LicensingPaths.EXTENSION_PRODUCT_PUBLIC;
 			String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
-			streamCodec.createKeyPair(publicKeyPath, privateKeyPath, product.getName(),
+			streamCodec.createKeyPair(publicKeyPath, privateKeyPath, identifier,
 					registry.createPassword(identifier, version), 1024);
 			productVersion.setInstallationToken(publicKeyPath);
 			productVersion.setSecureToken(privateKeyPath);
-			
+
 			return Arrays.asList(publicKeyPath, privateKeyPath);
 		} catch (Exception e) {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "Product key export error", e);
