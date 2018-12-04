@@ -46,7 +46,7 @@
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="ru.arsysop.passage.lic.feature.feature.group" version="0.0.0"/>
-			<repository location="http://dl.bintray.com/arsysop/passage-lic/0.3.0/"/>
+			<repository location="http://dl.bintray.com/arsysop/passage-lic/0.3.1/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.junit" version="4.12.0.v201504281640"/>
