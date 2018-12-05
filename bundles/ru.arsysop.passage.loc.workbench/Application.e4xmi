@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.window.main" label="%application.name" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/passage32.png" tooltip="%application.tooltip" width="900" height="600">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.window.main" selectedElement="_iI4kYKO-EeeLebrZVlD4jQ" label="%application.name" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/passage32.png" tooltip="%application.tooltip" width="900" height="600">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_iI4kYKO-EeeLebrZVlD4jQ" elementId="ru.arsysop.passage.loc.workbench.perspectivestack.main"/>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_6wlLisgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.menu.file" label="File">
@@ -36,14 +36,20 @@
   <handlers xmi:id="_dnVRcO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.aboutdialog.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenAboutDialogHandler" command="_V2DtgO4pEei1L9WYDuiuXw"/>
   <handlers xmi:id="_zo4A8O50Eei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.file.exit" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.ExitWorkbenchHandler" command="_o5o3EO50Eei1L9WYDuiuXw"/>
   <handlers xmi:id="_IgapwPGlEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handler.file.save" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.SaveHandler" command="_qIUC4PGkEei3isMrv8wWOw"/>
-  <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingtable.global" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
-    <bindings xmi:id="_xuxToO6TEei7yYuaWqiXSw" elementId="ru.arsysop.passage.loc.workbench.keybinding.help.about" keySequence="M1+A" command="_V2DtgO4pEei1L9WYDuiuXw"/>
-    <bindings xmi:id="_ikkgAPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.keybinding.file.save" keySequence="M1+S" command="_qIUC4PGkEei3isMrv8wWOw"/>
-    <bindings xmi:id="_ELBT4O6REei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.keybinding.file.exit" keySequence="M1+Q" command="_o5o3EO50Eei1L9WYDuiuXw"/>
+  <bindingTables xmi:id="_TLnQwPf-EeiUjf2KbhjyHQ" elementId="ru.arsysop.passage.loc.workbench.bindingtable.area" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
+    <bindings xmi:id="_VDexUPf-EeiUjf2KbhjyHQ" elementId="ru.arsysop.passage.loc.workbench.keybinding.exit" keySequence="M1+Q" command="_o5o3EO50Eei1L9WYDuiuXw">
+      <tags>type:user</tags>
+    </bindings>
+    <bindings xmi:id="_xuxToO6TEei7yYuaWqiXSw" elementId="ru.arsysop.passage.loc.workbench.keybinding.help.about" keySequence="M1+A" command="_V2DtgO4pEei1L9WYDuiuXw">
+      <tags>type:user</tags>
+    </bindings>
+    <bindings xmi:id="_ikkgAPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.keybinding.file.save" keySequence="M1+S" command="_qIUC4PGkEei3isMrv8wWOw">
+      <tags>type:user</tags>
+    </bindings>
   </bindingTables>
-  <rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingcontext.root" name="In Dialog and Windows">
+  <rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingcontext.window" name="In Windows"/>
-    <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.bindingcontext.dialog" name="In Dialogs"/>
+    <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
   <commands xmi:id="_oHxDAPJKEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.new" commandName="New"/>
   <commands xmi:id="_VVIqQPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.open" commandName="Open"/>
