@@ -32,7 +32,7 @@
 	<parent>
 		<groupId>ru.arsysop.passage.loc</groupId>
 		<artifactId>ru.arsysop.passage.loc.parent</artifactId>
-		<version>0.3.1-SNAPSHOT</version>
+		<version>0.3.1</version>
 		<relativePath>../../releng/ru.arsysop.passage.loc.parent</relativePath>
 	</parent>
 
