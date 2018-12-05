@@ -22,4 +22,4 @@ Require-Bundle: org.eclipse.jface;bundle-version="0.0.0",
  ru.arsysop.passage.loc.workbench;bundle-version="0.0.0",
  ru.arsysop.passage.loc.licenses.core;bundle-version="0.0.0"
 Import-Package: javax.inject;version="1.0.0"
-Provide-Capability: licensing.feature;licensing.feature="loc.licenses.ui.export";version=0.3.0;rule="equivalent"
+Provide-Capability: licensing.feature;licensing.feature="loc.licenses.ui.export";version=0.3.1;rule="equivalent"
