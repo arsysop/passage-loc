@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: ru.arsysop.passage.loc.products.emfforms;singleton:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.1.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.e4.core.di,
  org.eclipse.e4.ui.model.workbench;bundle-version="0.0.0",
