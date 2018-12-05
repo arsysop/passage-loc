@@ -33,18 +33,19 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class ExitWorkbenchHandler {
+	private static final String TITLE_DIALOG = "Exit dialog";
+	private static final String DIALOG_MSG = "Do you want to exit the product?";
 
 	@Inject
 	private IEclipseContext context;
 
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, EPartService partService) throws ExecutionException {
+	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, EPartService partService)
+			throws ExecutionException {
 		if (!partService.saveAll(true)) {
 			return;
 		}
-		String title = "Exit";
-		String message = "Do you want to exit the product?";
-		if (MessageDialog.openQuestion(shell, title, message)) {
+		if (MessageDialog.openQuestion(shell, TITLE_DIALOG, DIALOG_MSG)) {
 			Object workbench = context.get(IWorkbench.class.getName());
 			if (workbench != null && workbench instanceof IWorkbench) {
 				((IWorkbench) workbench).close();
