@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Automatic-Module-Name: ru.arsysop.passage.loc.licenses.emfforms
 Bundle-SymbolicName: ru.arsysop.passage.loc.licenses.emfforms;singleto
  n:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.1.qualifier
 Bundle-Name: %Bundle-Name
 Require-Bundle: javax.inject;bundle-version="0.0.0",org.eclipse.e4.cor
  e.di;bundle-version="0.0.0",org.eclipse.e4.core.services;bundle-versi
