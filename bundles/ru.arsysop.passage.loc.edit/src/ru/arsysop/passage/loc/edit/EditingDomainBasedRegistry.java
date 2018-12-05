@@ -1,0 +1,156 @@
+/*******************************************************************************
+ * Copyright (c) 2018 ArSysOp
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Contributors:
+ *     ArSysOp - initial API and implementation
+ *******************************************************************************/
+package ru.arsysop.passage.loc.edit;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.osgi.service.environment.EnvironmentInfo;
+
+import ru.arsysop.passage.lic.registry.DescriptorRegistry;
+
+public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
+	
+	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
+	
+	protected EnvironmentInfo environmentInfo;
+
+	private ComposedAdapterFactory composedAdapterFactory;
+
+	private AdapterFactoryEditingDomain editingDomain;
+
+	private final List<String> sources = new ArrayList<>();
+
+	public EditingDomainBasedRegistry() {
+		BasicCommandStack commandStack = new BasicCommandStack();
+		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack, new HashMap<Resource, Boolean>());
+	}
+	
+	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
+		this.environmentInfo = environmentInfo;
+	}
+
+	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
+		this.environmentInfo = null;
+	}
+	
+	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
+		this.composedAdapterFactory = factoryProvider.getComposedAdapterFactory();
+		editingDomain.setAdapterFactory(composedAdapterFactory);
+	}
+	
+	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
+		this.composedAdapterFactory = null;
+		editingDomain.setAdapterFactory(composedAdapterFactory);
+	}
+	
+	@Override
+	public Path getBasePath() {
+		String areaValue = environmentInfo.getProperty("osgi.instance.area");
+		Path instance = Paths.get(java.net.URI.create(areaValue));
+		Path passagePath = instance.resolve(".passage");
+		try {
+			Files.createDirectories(passagePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return passagePath;
+	}
+	
+	public void activate() {
+	}
+	
+	public void deactivate() {
+	}
+
+	@Override
+	public ComposedAdapterFactory getComposedAdapterFactory() {
+		return composedAdapterFactory;
+	}
+	
+	@Override
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
+	}
+	
+	protected Map<?, ?> getLoadOptions() {
+		return new HashMap<>();
+	}
+
+	protected Map<?, ?> getSaveOptions() {
+		return new HashMap<>();
+	}
+
+	public void loadSource(String source) throws Exception {
+		URI uri = createURI(source);
+		ResourceSet resourceSet = editingDomain.getResourceSet();
+		Resource resource = resourceSet.createResource(uri);
+		resource.load(getLoadOptions());
+	}
+
+	public void unloadSource(String source) throws Exception {
+		URI uri = createURI(source);
+		ResourceSet resourceSet = editingDomain.getResourceSet();
+		Resource resource = resourceSet.getResource(uri, false);
+		resource.unload();
+	}
+
+	protected URI createURI(String source) {
+		return URI.createFileURI(source);
+	}
+
+	@Override
+	public void registerSource(String source) {
+		sources.add(source);
+		try {
+			loadSource(source);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void unregisterSource(String source) {
+		sources.remove(source);
+	}
+	
+	@Override
+	public Iterable<String> getSources() {
+		return Collections.unmodifiableList(sources);
+	}
+
+}
