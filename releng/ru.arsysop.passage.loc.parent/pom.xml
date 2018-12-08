@@ -28,7 +28,7 @@
 
 	<groupId>ru.arsysop.passage.loc</groupId>
 	<artifactId>ru.arsysop.passage.loc.parent</artifactId>
-	<version>0.3.1</version>
+	<version>0.3.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<prerequisites>
