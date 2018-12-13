@@ -74,8 +74,9 @@ public class LicensingStatusToolControl {
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String contacts = "Passage Licensing Integration Components \nhttps://github.com/arsysop/passage-lic";
 				Shell activeShell = button.getDisplay().getActiveShell();
-				LicensingInspectorDialog dialog = new LicensingInspectorDialog(activeShell, images, verdicts);
+				LicensingInspectorDialog dialog = new LicensingInspectorDialog(activeShell, images, verdicts, contacts);
 				dialog.setHardwareInspector(hardwareInspector);
 				dialog.open();
 			}
@@ -88,7 +89,7 @@ public class LicensingStatusToolControl {
 		String key = RestrictionVerdictLabels.resolveImageKey(last);
 		button.setImage(images.getImage(key));
 		button.setText(RestrictionVerdictLabels.resolveLabel(last));
-		button.setToolTipText(RestrictionVerdictLabels.resolveTooltip(last));
+		button.setToolTipText(RestrictionVerdictLabels.resolveSummary(last));
 	}
 
 }

@@ -25,7 +25,8 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.osgi.service.environment.EnvironmentInfo;
+import org.eclipse.equinox.app.IApplicationContext;
+import org.osgi.framework.Version;
 import org.osgi.service.event.Event;
 
 import ru.arsysop.passage.lic.base.LicensingConfigurations;
@@ -33,20 +34,26 @@ import ru.arsysop.passage.lic.runtime.AccessManager;
 
 public class LicensingAddon {
 
-	private final EnvironmentInfo environmentInfo;
+	private final IApplicationContext applicationContext;
 	private final AccessManager accessManager;
 
 	@Inject
-	public LicensingAddon(EnvironmentInfo environmentInfo, AccessManager accessManager) {
-		this.environmentInfo = environmentInfo;
+	public LicensingAddon(IApplicationContext applicationContext, AccessManager accessManager) {
+		this.applicationContext = applicationContext;
 		this.accessManager = accessManager;
 	}
 
 	@Inject
 	@Optional
 	public void applicationStarted(@UIEventTopic(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE) Event event) {
-		String[] args = environmentInfo.getNonFrameworkArgs();
-		Object configuration = LicensingConfigurations.findProductIdentifier(args);
+		String productId = applicationContext.getBrandingId();
+		Version version = applicationContext.getBrandingBundle().getVersion();
+		StringBuilder sb = new StringBuilder();
+		sb.append(version.getMajor()).append('.');
+		sb.append(version.getMinor()).append('.');
+		sb.append(version.getMicro());
+		String productVersion = sb.toString();
+		Object configuration = LicensingConfigurations.createProductConfiguration(productId, productVersion);
 		accessManager.executeAccessRestrictions(configuration);
 	}
 
