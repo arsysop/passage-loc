@@ -31,6 +31,7 @@ import org.osgi.service.event.Event;
 
 import ru.arsysop.passage.lic.base.LicensingConfigurations;
 import ru.arsysop.passage.lic.runtime.AccessManager;
+import ru.arsysop.passage.lic.runtime.LicensingConfiguration;
 
 public class LicensingAddon {
 
@@ -53,7 +54,7 @@ public class LicensingAddon {
 		sb.append(version.getMinor()).append('.');
 		sb.append(version.getMicro());
 		String productVersion = sb.toString();
-		Object configuration = LicensingConfigurations.createProductConfiguration(productId, productVersion);
+		LicensingConfiguration configuration = LicensingConfigurations.create(productId, productVersion);
 		accessManager.executeAccessRestrictions(configuration);
 	}
 
