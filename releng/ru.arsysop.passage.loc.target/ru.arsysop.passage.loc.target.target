@@ -32,15 +32,26 @@
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.slf4j.api" version="0.0.0"/>
-			<repository location="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
+			<unit id="org.slf4j.api.source" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpg" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpg.source" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpkix" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpkix.source" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcprov" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcprov.source" version="0.0.0"/>
+			<unit id="com.sun.jna" version="4.5.1.v20180403-1933"/>
+			<unit id="com.sun.jna.platform" version="4.5.1.v20180403-1933"/>
+			<unit id="com.sun.jna.platform.source" version="4.5.1.v20180403-1933"/>
+			<unit id="com.sun.jna.source" version="4.5.1.v20180403-1933"/>
+			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
 		</location>
+
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emf.ecp.sdk.feature.feature.group" version="0.0.0"/>
 			<repository location="http://download.eclipse.org/releases/photon/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="ru.arsysop.passage.brc.license.feature.feature.group" version="0.0.0"/>
-			<unit id="ru.arsysop.passage.brc.bc.feature.feature.group" version="0.0.0"/>
 			<unit id="ru.arsysop.passage.brc.oshi.feature.feature.group" version="0.0.0"/>
 			<repository location="http://dl.bintray.com/arsysop/passage-brc/0.3.1/"/>
 		</location>
