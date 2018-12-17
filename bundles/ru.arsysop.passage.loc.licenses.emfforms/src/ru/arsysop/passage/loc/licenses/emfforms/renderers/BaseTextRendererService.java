@@ -53,6 +53,7 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
+		
 		@SuppressWarnings("rawtypes")
 		IValueProperty valueProperty;
 		try {
