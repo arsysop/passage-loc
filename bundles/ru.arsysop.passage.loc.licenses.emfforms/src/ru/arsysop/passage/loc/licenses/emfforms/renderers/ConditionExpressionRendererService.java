@@ -1,4 +1,4 @@
-package ru.arsysop.passage.loc.licenses.emfforms.renders;
+package ru.arsysop.passage.loc.licenses.emfforms.renderers;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -14,7 +14,7 @@ import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 
-public class ConditionTypeRendererService implements EMFFormsDIRendererService<VControl> {
+public class ConditionExpressionRendererService implements EMFFormsDIRendererService<VControl> {
 
 	private EMFFormsDatabinding databindingService;
 	private ReportService reportService;
@@ -44,7 +44,7 @@ public class ConditionTypeRendererService implements EMFFormsDIRendererService<V
 		}
 		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueProperty.getValueType());
 
-		if (LicPackage.eINSTANCE.getLicenseGrant_ConditionType().equals(eStructuralFeature)) {
+		if (LicPackage.eINSTANCE.getLicenseGrant_ConditionExpression().equals(eStructuralFeature)) {
 			return 10;
 		}
 
@@ -59,7 +59,7 @@ public class ConditionTypeRendererService implements EMFFormsDIRendererService<V
 	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return ConditionTypeRender.class;
+		return ConditionExpressionRenderer.class;
 	}
 
 	public void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
@@ -77,5 +77,4 @@ public class ConditionTypeRendererService implements EMFFormsDIRendererService<V
 	public void unbindReportService(ReportService reportService) {
 		this.reportService = null;
 	}
-
 }

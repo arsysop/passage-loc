@@ -1,4 +1,4 @@
-package ru.arsysop.passage.loc.licenses.emfforms.renders;
+package ru.arsysop.passage.loc.licenses.emfforms.renderers;
 
 import java.util.Arrays;
 
@@ -25,12 +25,12 @@ import org.eclipse.swt.widgets.Display;
 
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
-public class ConditionTypeRender extends SimpleControlSWTControlSWTRenderer {
+public class ConditionTypeRenderer extends SimpleControlSWTControlSWTRenderer {
 	String[] preDefinedValues = new String[] { "hardware", "time" };
 	Combo combo;
 
 	@Inject
-	public ConditionTypeRender(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ConditionTypeRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);

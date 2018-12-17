@@ -1,4 +1,4 @@
-package ru.arsysop.passage.loc.licenses.emfforms.renders;
+package ru.arsysop.passage.loc.licenses.emfforms.renderers;
 
 import javax.inject.Inject;
 
@@ -28,14 +28,14 @@ import org.eclipse.swt.widgets.Text;
 
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
-public class ExpressionConditionRenderer extends SimpleControlSWTControlSWTRenderer {
+public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	ExpresisonConditionDialog dialog;
+	ConditionExpresisonDialog dialog;
 	Composite base;
 	Text txtConditionExpression;
 
 	@Inject
-	public ExpressionConditionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ConditionExpressionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
@@ -78,7 +78,7 @@ public class ExpressionConditionRenderer extends SimpleControlSWTControlSWTRende
 		btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dialog = new ExpresisonConditionDialog(Display.getDefault().getActiveShell(), getCurrentValue());
+				dialog = new ConditionExpresisonDialog(Display.getDefault().getActiveShell(), getCurrentValue());
 				if (dialog.open() == Dialog.OK) {
 					txtConditionExpression.setText(dialog.getResultValues());
 				}

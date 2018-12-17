@@ -1,4 +1,4 @@
-package ru.arsysop.passage.loc.licenses.emfforms.renders;
+package ru.arsysop.passage.loc.licenses.emfforms.renderers;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -14,14 +14,14 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class ExpresisonConditionDialog extends Dialog {
+public class ConditionExpresisonDialog extends Dialog {
 	List lstItems;
 	String expressionValues;
 	Text txtEditItem;
 	Button btnAddItem;
 	String resultExpressionValues;
 
-	protected ExpresisonConditionDialog(Shell parentShell, String values) {
+	protected ConditionExpresisonDialog(Shell parentShell, String values) {
 		super(parentShell);
 		this.expressionValues = values;
 	}
