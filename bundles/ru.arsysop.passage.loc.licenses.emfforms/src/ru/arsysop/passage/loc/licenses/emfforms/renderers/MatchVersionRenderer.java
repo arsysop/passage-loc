@@ -60,7 +60,6 @@ public class MatchVersionRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.selection().observe(control),
 				getModelValue(), withPreSetValidation(new UpdateValueStrategy()), null);
-
 		return new Binding[] { binding };
 	}
 

@@ -87,4 +87,22 @@ public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry impleme
 		return null;
 	}
 
+	@Override
+	public Iterable<UserOriginDescriptor> getUserOrigins() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<UserDescriptor> getUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<UserDescriptor> getUsers(String userOriginId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -30,6 +30,7 @@ import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
@@ -83,6 +84,42 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 
 	@Override
 	public FeatureDescriptor getFeature(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<FeatureSetDescriptor> getFeatureSets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<FeatureDescriptor> getFeatures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<FeatureDescriptor> getFeatures(String featureSetId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<FeatureVersionDescriptor> getFeatureVersions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<FeatureVersionDescriptor> getFeatureVersions(String featureId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FeatureVersionDescriptor getFeatureVersion(String featureId, String version) {
 		// TODO Auto-generated method stub
 		return null;
 	}

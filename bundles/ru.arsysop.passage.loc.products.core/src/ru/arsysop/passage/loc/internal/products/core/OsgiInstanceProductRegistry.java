@@ -31,6 +31,7 @@ import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
+import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -136,6 +137,18 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 
 	@Override
 	public ProductVersionDescriptor getProductVersion(String product, String version) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures(String productId, String version) {
 		// TODO Auto-generated method stub
 		return null;
 	}
