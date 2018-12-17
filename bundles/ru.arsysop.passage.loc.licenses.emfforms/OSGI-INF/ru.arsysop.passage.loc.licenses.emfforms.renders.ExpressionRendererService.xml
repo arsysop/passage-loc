@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.loc.licenses.emfforms.renders.LicenseProductIdRendererService">
-   <implementation class="ru.arsysop.passage.loc.licenses.emfforms.renders.LicenseExpressionRendererService"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.loc.licenses.emfforms.renders.ExpressionRendererService">
+   <implementation class="ru.arsysop.passage.loc.licenses.emfforms.renders.ExpressionRendererService"/>
    <service>
       <provide interface="org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService"/>
    </service>

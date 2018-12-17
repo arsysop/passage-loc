@@ -28,14 +28,14 @@ import org.eclipse.swt.widgets.Text;
 
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
-public class LicenseExpressionRenderer extends SimpleControlSWTControlSWTRenderer {
+public class ExpressionConditionRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	LicenseExpresisonDialog dialog;
+	ExpresisonConditionDialog dialog;
 	Composite base;
 	Text txtConditionExpression;
 
 	@Inject
-	public LicenseExpressionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ExpressionConditionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
@@ -78,7 +78,7 @@ public class LicenseExpressionRenderer extends SimpleControlSWTControlSWTRendere
 		btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dialog = new LicenseExpresisonDialog(Display.getDefault().getActiveShell(), getCurrentValue());
+				dialog = new ExpresisonConditionDialog(Display.getDefault().getActiveShell(), getCurrentValue());
 				if (dialog.open() == Dialog.OK) {
 					txtConditionExpression.setText(dialog.getResultValues());
 				}

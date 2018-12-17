@@ -14,7 +14,7 @@ import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 
-public class LicenseExpressionRendererService implements EMFFormsDIRendererService<VControl> {
+public class ExpressionRendererService implements EMFFormsDIRendererService<VControl> {
 
 	private EMFFormsDatabinding databindingService;
 	private ReportService reportService;
@@ -59,7 +59,7 @@ public class LicenseExpressionRendererService implements EMFFormsDIRendererServi
 	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return LicenseExpressionRenderer.class;
+		return ExpressionConditionRenderer.class;
 	}
 
 	public void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
