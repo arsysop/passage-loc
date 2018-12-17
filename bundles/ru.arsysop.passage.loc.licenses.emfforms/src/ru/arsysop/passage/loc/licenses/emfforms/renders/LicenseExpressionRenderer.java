@@ -24,18 +24,15 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
 public class LicenseExpressionRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	ExpressionDioalog dialog;
+	LicenseExpresisonDialog dialog;
 	Composite base;
 	Text txtConditionExpression;
-	String result;
 
 	@Inject
 	public LicenseExpressionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
@@ -60,24 +57,28 @@ public class LicenseExpressionRenderer extends SimpleControlSWTControlSWTRendere
 	@Override
 	protected Control createSWTControl(Composite parent) {
 		base = new Composite(parent, SWT.NONE);
-		base.setLayout(new GridLayout(2, false));
+		GridLayout layout = new GridLayout(2, false);
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		base.setLayout(layout);
 		base.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		GridData txtGD = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData txtGD = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		txtConditionExpression = new Text(base, SWT.BORDER);
 		txtConditionExpression.setLayoutData(txtGD);
 		txtConditionExpression.setText(getCurrentValue());
 		txtConditionExpression.setEditable(false);
+
 		GridData btnGD = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		btnGD.heightHint = 28;
-		btnGD.widthHint = 48;
+		btnGD.widthHint = 60;
 		Button btnConditionExpressionEdit = new Button(base, SWT.PUSH);
 		btnConditionExpressionEdit.setText("Edit");
 		btnConditionExpressionEdit.setLayoutData(btnGD);
 		btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dialog = new ExpressionDioalog(Display.getDefault().getActiveShell(), getCurrentValue());
+				dialog = new LicenseExpresisonDialog(Display.getDefault().getActiveShell(), getCurrentValue());
 				if (dialog.open() == Dialog.OK) {
 					txtConditionExpression.setText(dialog.getResultValues());
 				}
@@ -97,7 +98,6 @@ public class LicenseExpressionRenderer extends SimpleControlSWTControlSWTRendere
 				}
 			}
 		}
-
 	}
 
 	protected String getCurrentValue() {
@@ -117,104 +117,4 @@ public class LicenseExpressionRenderer extends SimpleControlSWTControlSWTRendere
 		return "";
 	}
 
-	class ExpressionDioalog extends Dialog {
-		List lstItems;
-		String values;
-		Text editItem;
-		Button addItem;
-
-		protected ExpressionDioalog(Shell parentShell, String values) {
-			super(parentShell);
-			this.values = values;
-		}
-
-		public String getResultValues() {
-			return result;
-		}
-
-		private String prepareResultValues() {
-			StringBuilder builder = new StringBuilder();
-			for (String item : lstItems.getItems()) {
-				if (builder.length() > 0) {
-					builder.append(";");
-				}
-				builder.append(item);
-			}
-			return builder.toString();
-		}
-
-		@Override
-		protected void buttonPressed(int buttonId) {
-			if (buttonId == Dialog.OK) {
-				result = prepareResultValues();
-			}
-			super.buttonPressed(buttonId);
-		}
-
-		@Override
-		protected Control createDialogArea(Composite parent) {
-			parent.setLayout(new GridLayout(1, false));
-			Composite base = new Composite(parent, SWT.BORDER);
-			base.setLayout(new GridLayout(3, false));
-			base.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-			GridData text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-			Text txtExpressionItem = new Text(base, SWT.BORDER);
-			txtExpressionItem.setLayoutData(text);
-			txtExpressionItem.setText("");
-			GridData btn = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-			btn.heightHint = 28;
-			btn.widthHint = 48;
-
-			Button btnConditionExpressionEdit = new Button(base, SWT.PUSH);
-			btnConditionExpressionEdit.setText("Add");
-			btnConditionExpressionEdit.setLayoutData(btn);
-			btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					String textExpression = txtExpressionItem.getText();
-					if (!textExpression.isEmpty()) {
-						lstItems.add(textExpression);
-						txtExpressionItem.setText("");
-					}
-				}
-			});
-			Button btnConditionExpressionRemove = new Button(base, SWT.PUSH);
-			btnConditionExpressionRemove.setText("Remove");
-			btnConditionExpressionRemove.setLayoutData(btn);
-			btnConditionExpressionRemove.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					int selectionIndex = lstItems.getSelectionIndex();
-					if (selectionIndex > -1) {
-						lstItems.remove(selectionIndex);
-						txtExpressionItem.setText("");
-					}
-				}
-			});
-
-			lstItems = new List(base, SWT.BORDER);
-			lstItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-
-			if (values != null && !values.isEmpty()) {
-				String[] splitedVAlues = values.split(";");
-				lstItems.setItems(splitedVAlues);
-			}
-
-			lstItems.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					String selectedValue = lstItems.getItems()[lstItems.getSelectionIndex()];
-					txtExpressionItem.setText(selectedValue);
-				}
-			});
-
-			return parent;
-		}
-
-		@Override
-		protected boolean isResizable() {
-			return true;
-		}
-	}
 }
