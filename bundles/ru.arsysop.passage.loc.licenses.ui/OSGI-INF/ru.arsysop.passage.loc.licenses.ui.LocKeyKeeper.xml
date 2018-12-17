@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" name="ru.arsysop.passage.loc.licenses.ui.LocKeyKeeper">
+   <implementation class="ru.arsysop.passage.lic.equinox.BundleKeyKeeper"/>
+   <service>
+      <provide interface="ru.arsysop.passage.lic.runtime.io.KeyKeeper"/>
+   </service>
+   <property name="licensing.product.identifier" type="String" value="ru.arsysop.passage.loc.workbench.product"/>
+   <property name="licensing.product.version" type="String" value="0.3.2"/>
+</scr:component>

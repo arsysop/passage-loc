@@ -75,7 +75,25 @@ public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry impl
 	}
 
 	@Override
-	public LicensePackDescriptor getLicensPack(String identifier) {
+	public LicensePackDescriptor getLicensePack(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<LicensePackDescriptor> getLicensePacks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<LicensePackDescriptor> getUserLicensePacks(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<LicensePackDescriptor> getProductVersionLicensePacks(String productId, String version) {
 		// TODO Auto-generated method stub
 		return null;
 	}

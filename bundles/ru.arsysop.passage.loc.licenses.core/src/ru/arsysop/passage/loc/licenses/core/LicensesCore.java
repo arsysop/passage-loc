@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.Status;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.model.api.LicensePack;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.LocEdit;
@@ -62,12 +63,12 @@ public class LicensesCore {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
 			throw new CoreException(error);
 		}
-		String identifier = licensePack.getProductIdentifier();
-		String version = licensePack.getProductVersion();
+		String productIdentifier = licensePack.getProductIdentifier();
+		String productVersion = licensePack.getProductVersion();
 		Path basePath = licenseRegistry.getBasePath();
-		Path path = basePath.resolve(identifier).resolve(version);
+		Path path = basePath.resolve(productIdentifier).resolve(productVersion);
 		String storageKeyFolder = path.toFile().getAbsolutePath();
-		String keyFileName = identifier + '_' + version;
+		String keyFileName = productIdentifier + '_' + productVersion;
 		String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 		File privateProductToken = new File(privateKeyPath);
 		if (!privateProductToken.exists()) {
@@ -84,8 +85,9 @@ public class LicensesCore {
 		File licenseEncoded = new File(licenseOut);
 		try (FileInputStream licenseInput = new FileInputStream(licenseFile);
 				FileOutputStream licenseOutput = new FileOutputStream(licenseEncoded); FileInputStream keyStream = new FileInputStream(privateProductToken)) {
-			String username = identifier;
-			String password = productRegistry.createPassword(identifier, version);
+			String username = productIdentifier;
+			ProductVersionDescriptor pvd = productRegistry.getProductVersion(productIdentifier, productVersion);
+			String password = productRegistry.createPassword(pvd);
 			streamCodec.encodeStream(licenseInput, licenseOutput, keyStream, username, password);
 			licensePack.setIdentifier(uuid);;
 			licensePack.setIssueDate(value);;

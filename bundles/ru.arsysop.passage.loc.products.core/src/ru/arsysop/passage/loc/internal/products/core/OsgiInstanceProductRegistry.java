@@ -30,6 +30,8 @@ import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
+import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -71,8 +73,19 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 	}
 
 	@Override
-	public String createPassword(String identifier, String version) {
-		return identifier + "###" + version; //$NON-NLS-1$
+	public String createPassword(ProductVersionDescriptor descriptor) {
+		String id = null;
+		String version = null;
+		if (descriptor != null) {
+			ProductDescriptor product = descriptor.getProduct();
+			if (product != null) {
+				id = product.getIdentifier();
+			}
+			version = descriptor.getVersion();
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(id).append("###").append(version); //$NON-NLS-1$
+		return sb.toString();
 	}
 
 	@Override
@@ -81,13 +94,61 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 	}
 
 	@Override
-	public ProductLineDescriptor getProductSet(String identifier) {
+	public ProductLineDescriptor getProductLine(String identifier) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ProductDescriptor getProduct(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductLineDescriptor> getProductLines() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductDescriptor> getProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductDescriptor> getProducts(String productLineId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductVersionDescriptor> getProductVersions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductVersionDescriptor> getProductVersions(String productId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductVersionDescriptor getProductVersion(String product, String version) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures(String productId, String version) {
 		// TODO Auto-generated method stub
 		return null;
 	}

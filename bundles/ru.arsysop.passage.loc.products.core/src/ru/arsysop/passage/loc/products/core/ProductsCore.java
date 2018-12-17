@@ -82,7 +82,7 @@ public class ProductsCore {
 					+ LicensingPaths.EXTENSION_PRODUCT_PUBLIC;
 			String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 			streamCodec.createKeyPair(publicKeyPath, privateKeyPath, identifier,
-					registry.createPassword(identifier, version), 1024);
+					registry.createPassword(productVersion));
 			productVersion.setInstallationToken(publicKeyPath);
 			productVersion.setSecureToken(privateKeyPath);
 

@@ -22,7 +22,10 @@ package ru.arsysop.passage.loc.edit;
 
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 
 public interface ProductDomainRegistry extends ProductRegistry, EditingDomainRegistry, DescriptorRegistry {
+
+	String createPassword(ProductVersionDescriptor productVersion);
 
 }
