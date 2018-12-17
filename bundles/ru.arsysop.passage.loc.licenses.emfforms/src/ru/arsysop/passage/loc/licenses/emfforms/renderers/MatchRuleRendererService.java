@@ -34,7 +34,7 @@ import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 
-public class MatchVersionRendererService implements EMFFormsDIRendererService<VControl> {
+public class MatchRuleRendererService implements EMFFormsDIRendererService<VControl> {
 
 	private EMFFormsDatabinding databindingService;
 	private ReportService reportService;
@@ -64,7 +64,7 @@ public class MatchVersionRendererService implements EMFFormsDIRendererService<VC
 		}
 		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueProperty.getValueType());
 
-		if (LicPackage.eINSTANCE.getLicenseGrant_MatchVersion().equals(eStructuralFeature)) {
+		if (LicPackage.eINSTANCE.getLicenseGrant_MatchRule().equals(eStructuralFeature)) {
 			return 10;
 		}
 
@@ -79,7 +79,7 @@ public class MatchVersionRendererService implements EMFFormsDIRendererService<VC
 	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return MatchVersionRenderer.class;
+		return MatchRuleRenderer.class;
 	}
 
 	public void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {

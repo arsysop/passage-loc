@@ -45,11 +45,12 @@ import org.eclipse.swt.widgets.Display;
 import ru.arsysop.passage.lic.base.LicensingVersions;
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
-public class MatchVersionRenderer extends SimpleControlSWTControlSWTRenderer {
+public class MatchRuleRenderer extends SimpleControlSWTControlSWTRenderer {
+
 	Combo combo;
 
 	@Inject
-	public MatchVersionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public MatchRuleRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
@@ -92,22 +93,21 @@ public class MatchVersionRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	protected String[] getDefinedValues() {
-		return new String[] { LicensingVersions.VERSION_DEFAULT, LicensingVersions.RULE_DEFAULT,
-				LicensingVersions.RULE_COMPATIBLE, LicensingVersions.RULE_EQUIVALENT,
+		return new String[] { LicensingVersions.RULE_COMPATIBLE, LicensingVersions.RULE_EQUIVALENT,
 				LicensingVersions.RULE_GREATER_OR_EQUAL, LicensingVersions.RULE_PERFECT };
 	}
 
 	protected String getCurrentValue() {
-		String conditionType = "";
+		String matchRule = LicensingVersions.RULE_DEFAULT;
 		EObject domainModel = getViewModelContext().getDomainModel();
 		if (domainModel instanceof LicenseGrant) {
-			conditionType = ((LicenseGrant) domainModel).getConditionType();
+			matchRule = ((LicenseGrant) domainModel).getMatchRule();
 		}
-		return conditionType;
+		return matchRule;
 	}
 
 	@Override
 	protected String getUnsetText() {
-		return "";
+		return LicensingVersions.RULE_DEFAULT;
 	}
 }
