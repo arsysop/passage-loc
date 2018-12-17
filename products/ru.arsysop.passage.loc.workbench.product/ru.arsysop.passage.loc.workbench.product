@@ -65,7 +65,6 @@
       <feature id="org.eclipse.emf.ecore"/>
       <feature id="org.eclipse.e4.rcp"/>
       <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature"/>
-      <feature id="ru.arsysop.passage.brc.bc.feature"/>
       <feature id="ru.arsysop.passage.brc.oshi.feature"/>
       <feature id="ru.arsysop.passage.lic.feature"/>
       <feature id="ru.arsysop.passage.loc.workbench.feature"/>
