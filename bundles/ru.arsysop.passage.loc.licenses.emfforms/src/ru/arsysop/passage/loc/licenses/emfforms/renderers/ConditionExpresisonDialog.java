@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class ConditionExpresisonDialog extends Dialog {
+	private static final String SPLITTER = ";";
 	List lstItems;
 	String expressionValues;
 	Text txtEditItem;
@@ -54,7 +55,7 @@ public class ConditionExpresisonDialog extends Dialog {
 		StringBuilder builder = new StringBuilder();
 		for (String item : lstItems.getItems()) {
 			if (builder.length() > 0) {
-				builder.append(";");
+				builder.append(SPLITTER);
 			}
 			builder.append(item);
 		}
@@ -120,7 +121,7 @@ public class ConditionExpresisonDialog extends Dialog {
 		});
 
 		if (expressionValues != null && !expressionValues.isEmpty()) {
-			String[] splitedVAlues = expressionValues.split(";");
+			String[] splitedVAlues = expressionValues.split(SPLITTER);
 			lstItems.setItems(splitedVAlues);
 		}
 

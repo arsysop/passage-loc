@@ -19,17 +19,14 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
-public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer {
+public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer implements ColorValidationSWTRenderer {
 	Text text;
-	Color wrapedValidationColorError = new Color(Display.getDefault(), new RGB(250, 194, 180));
-	Color wrapedValidationColorSuccess = new Color(Display.getDefault(), new RGB(250, 250, 250));
 
 	@Inject
 	public BaseTextRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
@@ -54,12 +51,11 @@ public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (control instanceof Text) {
 			Text textControl = ((Text) control);
 			if (textControl.getText().isEmpty()) {
-				control.setBackground(wrapedValidationColorError);
+				control.setBackground(COLOR_VALIDATION_ERROR);
 			} else {
-				control.setBackground(wrapedValidationColorSuccess);
+				control.setBackground(COLOR_VALIDATION_SUCCESS);
 			}
 		}
-
 	}
 
 	@Override
@@ -78,8 +74,6 @@ public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer {
 		super.dispose();
 		if (text != null) {
 			text.dispose();
-			wrapedValidationColorError.dispose();
-			wrapedValidationColorSuccess.dispose();
 		}
 	}
 

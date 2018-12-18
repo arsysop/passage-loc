@@ -38,6 +38,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -48,7 +49,8 @@ import org.eclipse.swt.widgets.Text;
 
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
-public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer {
+public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer
+		implements ColorValidationSWTRenderer {
 
 	ConditionExpresisonDialog dialog;
 	Composite base;
@@ -135,6 +137,18 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 	@Override
 	protected String getUnsetText() {
 		return "";
+	}
+
+	@Override
+	protected void setValidationColor(Control control, Color validationColor) {
+		if (control instanceof Text) {
+			Text textControl = ((Text) control);
+			if (textControl.getText().isEmpty()) {
+				control.setBackground(COLOR_VALIDATION_ERROR);
+			} else {
+				control.setBackground(COLOR_VALIDATION_SUCCESS);
+			}
+		}
 	}
 
 }

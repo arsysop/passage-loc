@@ -53,7 +53,7 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
-		
+
 		@SuppressWarnings("rawtypes")
 		IValueProperty valueProperty;
 		try {
@@ -73,7 +73,11 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 				|| LicPackage.eINSTANCE.getProductLine_Identifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProduct_Identifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProduct_Name().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getProductVersion_Version().equals(eStructuralFeature)) {
+				|| LicPackage.eINSTANCE.getProductVersion_Version().equals(eStructuralFeature)
+				|| LicPackage.eINSTANCE.getProductVersionFeature_FeatureIdentifier().equals(eStructuralFeature)
+				|| LicPackage.eINSTANCE.getProductVersionFeature_FeatureVersion().equals(eStructuralFeature)
+				|| LicPackage.eINSTANCE.getFeatureSet_Identifier().equals(eStructuralFeature)
+				|| LicPackage.eINSTANCE.getFeature_Identifier().equals(eStructuralFeature)) {
 			return 10;
 		}
 
