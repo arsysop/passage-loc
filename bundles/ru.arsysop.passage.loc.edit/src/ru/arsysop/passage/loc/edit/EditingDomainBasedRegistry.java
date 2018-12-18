@@ -31,7 +31,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -90,10 +92,10 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		return passagePath;
 	}
 	
-	public void activate() {
+	public void activate(Map<String, Object> properties) {
 	}
 	
-	public void deactivate() {
+	public void deactivate(Map<String, Object> properties) {
 	}
 
 	@Override
@@ -119,14 +121,20 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		ResourceSet resourceSet = editingDomain.getResourceSet();
 		Resource resource = resourceSet.createResource(uri);
 		resource.load(getLoadOptions());
+		afterLoad(resource.getContents());
 	}
+
+	protected abstract void afterLoad(EList<EObject> contents);
 
 	public void unloadSource(String source) throws Exception {
 		URI uri = createURI(source);
 		ResourceSet resourceSet = editingDomain.getResourceSet();
 		Resource resource = resourceSet.getResource(uri, false);
+		beforeUnload(resource.getContents());
 		resource.unload();
 	}
+
+	protected abstract void beforeUnload(EList<EObject> contents);
 
 	protected URI createURI(String source) {
 		return URI.createFileURI(source);

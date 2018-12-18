@@ -20,12 +20,24 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.products.core;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import ru.arsysop.passage.lic.model.api.Product;
+import ru.arsysop.passage.lic.model.api.ProductLine;
+import ru.arsysop.passage.lic.model.api.ProductVersion;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
@@ -39,6 +51,10 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 @Component
 public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry implements ProductRegistry, ProductDomainRegistry {
 	
+	private final Map<String, ProductLine> productLineIndex = new HashMap<>();
+	private final Map<String, Product> productIndex = new HashMap<>();
+	private final Map<String, Map<String, ProductVersion>> productVersionIndex = new HashMap<>();
+
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
@@ -62,14 +78,21 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 	}
 	
 	@Activate
-	public void activate() {
-		super.activate();
+	public void activate(Map<String, Object> properties) {
+		super.activate(properties);
 	}
 
 	@Deactivate
 	@Override
-	public void deactivate() {
-		super.deactivate();
+	public void deactivate(Map<String, Object> properties) {
+		Collection<Map<String, ProductVersion>> values = productVersionIndex.values();
+		for (Map<String, ProductVersion> map : values) {
+			map.clear();
+		}
+		productVersionIndex.clear();
+		productIndex.clear();
+		productLineIndex.clear();
+		super.deactivate(properties);
 	}
 
 	@Override
@@ -94,63 +117,157 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 	}
 
 	@Override
-	public ProductLineDescriptor getProductLine(String identifier) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ProductDescriptor getProduct(String identifier) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Iterable<ProductLineDescriptor> getProductLines() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>(productLineIndex.values());
+	}
+
+	@Override
+	public ProductLineDescriptor getProductLine(String identifier) {
+		return productLineIndex.get(identifier);
 	}
 
 	@Override
 	public Iterable<ProductDescriptor> getProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>(productIndex.values());
 	}
 
 	@Override
 	public Iterable<ProductDescriptor> getProducts(String productLineId) {
-		// TODO Auto-generated method stub
-		return null;
+		ProductLine productLine = productLineIndex.get(productLineId);
+		if (productLine == null) {
+			return Collections.emptyList();
+		}
+		return new ArrayList<>(productLine.getProducts());
+	}
+
+	@Override
+	public ProductDescriptor getProduct(String productId) {
+		return productIndex.get(productId);
 	}
 
 	@Override
 	public Iterable<ProductVersionDescriptor> getProductVersions() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductVersionDescriptor> list = new ArrayList<>();
+		Collection<Map<String, ProductVersion>> values = productVersionIndex.values();
+		for (Map<String, ProductVersion> map : values) {
+			list.addAll(map.values());
+		}
+		return list;
 	}
 
 	@Override
 	public Iterable<ProductVersionDescriptor> getProductVersions(String productId) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, ProductVersion> map = productVersionIndex.get(productId);
+		if (map == null) {
+			return Collections.emptyList();
+		}
+		return new ArrayList<>(map.values());
 	}
 
 	@Override
 	public ProductVersionDescriptor getProductVersion(String product, String version) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, ProductVersion> map = productVersionIndex.get(product);
+		if (map == null) {
+			return null;
+		}
+		return map.get(version);
 	}
 
 	@Override
 	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductVersionFeatureDescriptor> productVersionFeatures = new ArrayList<>();
+		Iterable<ProductVersionDescriptor> productVersions = getProductVersions();
+		for (ProductVersionDescriptor productVersion : productVersions) {
+			Iterable<? extends ProductVersionFeatureDescriptor> features = productVersion.getProductVersionFeatures();
+			features.forEach(productVersionFeatures::add);
+		}
+		return productVersionFeatures;
 	}
 
 	@Override
 	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures(String productId, String version) {
-		// TODO Auto-generated method stub
-		return null;
+		ProductVersionDescriptor productVersion = getProductVersion(productId, version);
+		if (productVersion == null) {
+			return Collections.emptyList();
+		}
+		List<ProductVersionFeatureDescriptor> result = new ArrayList<>();
+		productVersion.getProductVersionFeatures().forEach(result::add);
+		return result;
+	}
+
+	@Override
+	protected void afterLoad(EList<EObject> contents) {
+		for (EObject eObject : contents) {
+			if (eObject instanceof ProductLine) {
+				ProductLine productLine = (ProductLine) eObject;
+				addedProductLine(productLine);
+			}
+		}
+	}
+
+	protected void addedProductLine(ProductLine productLine) {
+		String identifier = productLine.getIdentifier();
+		productLineIndex.put(identifier, productLine);
+		EList<Product> products = productLine.getProducts();
+		for (Product product : products) {
+			addedProduct(product);
+		}
+	}
+
+	protected void addedProduct(Product product) {
+		String identifier = product.getIdentifier();
+		productIndex.put(identifier, product);
+		EList<ProductVersion> productVersions = product.getProductVersions();
+		for (ProductVersion productVersion : productVersions) {
+			addedProductVersion(product, productVersion);
+		}
+	}
+
+	protected void addedProductVersion(Product product, ProductVersion productVersion) {
+		String identifier = product.getIdentifier();
+		Map<String, ProductVersion> map = productVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
+		String version = productVersion.getVersion();
+		map.put(version, productVersion);
+	}
+
+	@Override
+	protected void beforeUnload(EList<EObject> contents) {
+		for (EObject eObject : contents) {
+			if (eObject instanceof ProductLine) {
+				ProductLine productLine = (ProductLine) eObject;
+				removedProductLine(productLine);
+			}
+		}
+	}
+
+	protected void removedProductLine(ProductLine productLine) {
+		String identifier = productLine.getIdentifier();
+		productLineIndex.remove(identifier);
+		EList<Product> products = productLine.getProducts();
+		for (Product product : products) {
+			removedProduct(product);
+		}
+	}
+
+	protected void removedProduct(Product product) {
+		String identifier = product.getIdentifier();
+		productIndex.remove(identifier);
+		EList<ProductVersion> productVersions = product.getProductVersions();
+		for (ProductVersion productVersion : productVersions) {
+			removedProductVersion(product, productVersion);
+		}
+	}
+
+	protected void removedProductVersion(Product product, ProductVersion productVersion) {
+		String identifier = product.getIdentifier();
+		Map<String, ProductVersion> map = productVersionIndex.get(identifier);
+		if (map != null) {
+			String version = productVersion.getVersion();
+			map.remove(version);
+			if (map.isEmpty()) {
+				productVersionIndex.remove(identifier);
+			}
+		}
 	}
 
 }
