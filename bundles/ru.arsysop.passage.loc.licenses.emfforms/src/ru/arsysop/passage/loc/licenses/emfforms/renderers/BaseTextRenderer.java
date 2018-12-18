@@ -26,7 +26,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
 public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer implements ColorValidationSWTRenderer {
-	Text text;
+
+	private Text text;
 
 	@Inject
 	public BaseTextRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
@@ -38,6 +39,7 @@ public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer impleme
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		if (control instanceof Text) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Binding binding = getDataBindingContext().bindValue(WidgetProperties.text(SWT.Modify).observe(text),
 					getModelValue(), withPreSetValidation(new UpdateValueStrategy()), null);
 			return new Binding[] { binding };
@@ -71,10 +73,10 @@ public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer impleme
 
 	@Override
 	protected void dispose() {
-		super.dispose();
 		if (text != null) {
 			text.dispose();
 		}
+		super.dispose();
 	}
 
 	protected String getTextMessage() {
