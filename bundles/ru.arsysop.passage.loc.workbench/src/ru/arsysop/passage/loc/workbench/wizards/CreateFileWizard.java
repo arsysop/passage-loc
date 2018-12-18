@@ -38,12 +38,14 @@ public class CreateFileWizard extends Wizard {
 
 	protected final EditingDomainRegistry editingDomainRegistry;
 	protected final EObject eObject;
+	protected final String userDir;
 
 	private CreateFileWizardPage filePage;
 
-	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject) {
+	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, String userDir) {
 		this.editingDomainRegistry = registry;
 		this.eObject = eObject;
+		this.userDir = userDir;
 	}
 
 	@Override
@@ -53,7 +55,8 @@ public class CreateFileWizard extends Wizard {
 	}
 
 	protected CreateFileWizardPage createFilePage() {
-		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension());
+		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
+				userDir);
 	}
 
 	@Override
@@ -64,8 +67,7 @@ public class CreateFileWizard extends Wizard {
 			if (file.exists()) {
 				String absolutePath = file.getAbsolutePath();
 				String message = String.format(
-						"The file \"%s\" already exists.  Do you want to replace the existing file?",
-						absolutePath);
+						"The file \"%s\" already exists.  Do you want to replace the existing file?", absolutePath);
 				if (!MessageDialog.openQuestion(getShell(), "Question", message)) {
 					filePage.selectFileField();
 					return false;

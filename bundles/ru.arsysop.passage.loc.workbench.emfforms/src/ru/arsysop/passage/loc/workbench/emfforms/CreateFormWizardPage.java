@@ -11,14 +11,15 @@ import org.eclipse.swt.widgets.Composite;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 
 public class CreateFormWizardPage extends CreateFileWizardPage {
-	
+
 	private final EObject eObject;
 
-	public CreateFormWizardPage(String pageName, String extension, EObject object) {
-		super(pageName, extension);
+	public CreateFormWizardPage(String pageName, String extension, EObject object, String userDir) {
+		super(pageName, extension, userDir);
 		this.eObject = object;
+		
 	}
-	
+
 	@Override
 	protected void createOtherControls(Composite composite) {
 		// TODO Auto-generated method stub
@@ -32,5 +33,5 @@ public class CreateFormWizardPage extends CreateFileWizardPage {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

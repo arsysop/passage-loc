@@ -42,8 +42,8 @@ public class CreateUserOriginHandler {
 		String newText = "New User Origin";
 		String newTitle = "User Origin";
 		String newMessage = "Please specify a file name to store user data";
-
-		Wizard wizard = new CreateFormWizard(registry, eObject);
+		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
+		Wizard wizard = new CreateFormWizard(registry, eObject, userDir);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);

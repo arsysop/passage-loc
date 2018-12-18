@@ -1,4 +1,4 @@
- 
+
 package ru.arsysop.passage.loc.products.emfforms;
 
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -14,7 +14,7 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.workbench.emfforms.CreateFormWizard;
 
 public class CreateProductLineHandler {
-	
+
 	@Execute
 	public void execute(Shell shell, LicensingImages images, ProductDomainRegistry registry) {
 		LicPackage ePackage = LicPackage.eINSTANCE;
@@ -23,16 +23,17 @@ public class CreateProductLineHandler {
 		String newText = "New Product Line";
 		String newTitle = "Product Line";
 		String newMessage = "Please specify a file name to store product data";
-
-		Wizard wizard = new CreateFormWizard(registry, eObject);
+		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
+		Wizard wizard = new CreateFormWizard(registry, eObject, userDir);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);
-		dialog.setMessage(newMessage);;
+		dialog.setMessage(newMessage);
+		;
 		Shell createdShell = dialog.getShell();
 		createdShell.setText(newText);
 		createdShell.setImage(images.getImage(eClass.getName()));
 		dialog.open();
 	}
-		
+
 }

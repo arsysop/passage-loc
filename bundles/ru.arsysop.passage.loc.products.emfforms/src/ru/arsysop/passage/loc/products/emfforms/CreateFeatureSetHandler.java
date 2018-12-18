@@ -1,4 +1,4 @@
- 
+
 package ru.arsysop.passage.loc.products.emfforms;
 
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -23,16 +23,17 @@ public class CreateFeatureSetHandler {
 		String newText = "New Feature Set";
 		String newTitle = "Feature Set";
 		String newMessage = "Please specify a file name to store feature data";
-
-		Wizard wizard = new CreateFormWizard(registry, eObject);
+		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
+		Wizard wizard = new CreateFormWizard(registry, eObject, userDir);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);
-		dialog.setMessage(newMessage);;
+		dialog.setMessage(newMessage);
+		;
 		Shell createdShell = dialog.getShell();
 		createdShell.setText(newText);
 		createdShell.setImage(images.getImage(eClass.getName()));
 		dialog.open();
 	}
-		
+
 }

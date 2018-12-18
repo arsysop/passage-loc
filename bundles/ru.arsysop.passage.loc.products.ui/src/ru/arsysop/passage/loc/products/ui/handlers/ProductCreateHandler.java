@@ -34,7 +34,8 @@ public class ProductCreateHandler {
 	@Execute
 	public void execute(Shell shell, ProductDomainRegistry registry) {
 		EClass eClass = LicPackage.Literals.PRODUCT;
-		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass));
+		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
+		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass, userDir));
 		dialog.create();
 		dialog.setTitle("Product Line");
 		dialog.setMessage("Please specify a file name to store product data");;

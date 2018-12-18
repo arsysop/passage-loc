@@ -42,8 +42,8 @@ public class CreateLicensePackHandler {
 		String newText = "New License Pack";
 		String newTitle = "License Pack";
 		String newMessage = "Please specify a file name to store license data";
-
-		Wizard wizard = new CreateFormWizard(registry, eObject);
+		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
+		Wizard wizard = new CreateFormWizard(registry, eObject, userDir);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);

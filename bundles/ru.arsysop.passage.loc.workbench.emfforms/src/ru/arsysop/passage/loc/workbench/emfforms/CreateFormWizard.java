@@ -8,13 +8,15 @@ import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 
 public class CreateFormWizard extends CreateFileWizard {
 
-	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject) {
-		super(registry, eObject);
+	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, String userDir) {
+		super(registry, eObject, userDir);
 	}
-	
+
 	@Override
 	protected CreateFileWizardPage createFilePage() {
-		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(), eObject);
+
+		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
+				eObject, userDir);
 	}
 
 }

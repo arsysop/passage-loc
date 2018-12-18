@@ -38,7 +38,10 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
 
+	private static final String PATH_TEMPLATE_DEF = "%s/%s.%s";
+	private static final String NEW_FILE_DEF = "newFile";
 	protected Text fileField;
+	private String userDir;
 
 	protected ModifyListener validator = new ModifyListener() {
 		public void modifyText(ModifyEvent e) {
@@ -48,9 +51,10 @@ public class CreateFileWizardPage extends WizardPage {
 
 	private String extension;
 
-	public CreateFileWizardPage(String pageName, String extension) {
+	public CreateFileWizardPage(String pageName, String extension, String userDir) {
 		super(pageName);
 		this.extension = extension;
+		this.userDir = userDir;
 	}
 
 	@Override
@@ -107,6 +111,9 @@ public class CreateFileWizardPage extends WizardPage {
 			data.grabExcessHorizontalSpace = true;
 			data.horizontalSpan = 1;
 			fileField.setLayoutData(data);
+		}
+		if (userDir != null && !userDir.isEmpty()) {
+			fileField.setText(String.format(PATH_TEMPLATE_DEF, userDir, NEW_FILE_DEF, extension));
 		}
 
 		fileField.addModifyListener(validator);

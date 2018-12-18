@@ -30,14 +30,15 @@ import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
 public class FeatureCreateHandler {
-	
+
 	@Execute
 	public void execute(Shell shell, FeatureDomainRegistry registry) {
 		EClass eClass = LicPackage.Literals.FEATURE;
-		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass));
+		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
+		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass, userDir));
 		dialog.create();
 		dialog.setTitle("Feature Set");
-		dialog.setMessage("Please specify a file name to store feature data");;
+		dialog.setMessage("Please specify a file name to store feature data");
 		dialog.getShell().setText("New Feature Set");
 		dialog.open();
 	}
