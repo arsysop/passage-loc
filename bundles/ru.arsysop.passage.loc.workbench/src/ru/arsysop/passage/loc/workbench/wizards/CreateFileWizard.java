@@ -25,6 +25,7 @@ import java.io.File;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -38,14 +39,20 @@ public class CreateFileWizard extends Wizard {
 
 	protected final EditingDomainRegistry editingDomainRegistry;
 	protected final EObject eObject;
-	protected final String userDir;
+	protected final InitialValuesProvider valueProvider;
+	protected final EStructuralFeature featureIdentifier;
+	protected final EStructuralFeature featureName;
 
 	private CreateFileWizardPage filePage;
 
-	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, String userDir) {
+	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature featureIdentifier,
+			EStructuralFeature featureName, InitialValuesProvider valueProvider) {
 		this.editingDomainRegistry = registry;
 		this.eObject = eObject;
-		this.userDir = userDir;
+
+		this.featureIdentifier = featureIdentifier;
+		this.featureName = featureName;
+		this.valueProvider = valueProvider;
 	}
 
 	@Override
@@ -56,7 +63,7 @@ public class CreateFileWizard extends Wizard {
 
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				userDir);
+				valueProvider);
 	}
 
 	@Override
@@ -73,6 +80,8 @@ public class CreateFileWizard extends Wizard {
 					return false;
 				}
 			}
+			eObject.eSet(featureIdentifier, filePage.getIdentifier());
+			eObject.eSet(featureName, filePage.getName());
 
 			IRunnableWithProgress operation = new IRunnableWithProgress() {
 				public void run(IProgressMonitor progressMonitor) {

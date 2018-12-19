@@ -38,10 +38,11 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
 
-	private static final String PATH_TEMPLATE_DEF = "%s/%s.%s";
-	private static final String NEW_FILE_DEF = "newFile";
-	protected Text fileField;
-	private String userDir;
+	private static final String URI_TEMPLATE = "%s.%s";
+	protected Text txtResourceURI;
+	protected Text txtId;
+	protected Text txtName;
+	private Button resourceURIBrowseFileSystemButton;
 
 	protected ModifyListener validator = new ModifyListener() {
 		public void modifyText(ModifyEvent e) {
@@ -50,11 +51,13 @@ public class CreateFileWizardPage extends WizardPage {
 	};
 
 	private String extension;
+	private InitialValuesProvider valueProvider;
 
-	public CreateFileWizardPage(String pageName, String extension, String userDir) {
+	public CreateFileWizardPage(String pageName, String extension, InitialValuesProvider valueProvider) {
 		super(pageName);
 		this.extension = extension;
-		this.userDir = userDir;
+		this.valueProvider = valueProvider;
+
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class CreateFileWizardPage extends WizardPage {
 		Composite composite = new Composite(parent, SWT.NONE);
 		{
 			GridLayout layout = new GridLayout();
-			layout.numColumns = 1;
+			layout.numColumns = 3;
 			layout.verticalSpacing = 12;
 			composite.setLayout(layout);
 
@@ -74,89 +77,132 @@ public class CreateFileWizardPage extends WizardPage {
 		}
 
 		createFileControls(composite);
-		createOtherControls(composite);
+		initControls();
 
 		setPageComplete(validatePage());
 		setControl(composite);
 	}
 
 	protected void createFileControls(Composite composite) {
-		Label resourceURILabel = new Label(composite, SWT.LEFT);
+		Label idFieldLabel = new Label(composite, SWT.LEFT);
 		{
-			resourceURILabel.setText("&File");
-
+			idFieldLabel.setText("&Identifier:");
 			GridData data = new GridData();
 			data.horizontalAlignment = GridData.FILL;
+			data.grabExcessHorizontalSpace = false;
+			data.horizontalSpan = 1;
+			idFieldLabel.setLayoutData(data);
+		}
+
+		txtId = new Text(composite, SWT.BORDER);
+		{
+			GridData data = new GridData();
+			data.horizontalAlignment = GridData.FILL;
+			data.grabExcessHorizontalSpace = true;
+			data.horizontalSpan = 2;
+			txtId.setLayoutData(data);
+		}
+
+		Label nameFieldILabel = new Label(composite, SWT.LEFT);
+		{
+			nameFieldILabel.setText("&Name:");
+			GridData data = new GridData();
+			data.horizontalAlignment = GridData.FILL;
+			data.grabExcessHorizontalSpace = false;
+			data.horizontalSpan = 1;
+			nameFieldILabel.setLayoutData(data);
+		}
+
+		txtName = new Text(composite, SWT.BORDER);
+		{
+			GridData data = new GridData();
+			data.horizontalAlignment = GridData.FILL;
+			data.grabExcessHorizontalSpace = true;
+			data.horizontalSpan = 2;
+			txtName.setLayoutData(data);
+		}
+
+		Label resourceURILabel = new Label(composite, SWT.LEFT);
+		{
+			resourceURILabel.setText("&File:");
+			GridData data = new GridData();
+			data.horizontalAlignment = GridData.FILL;
+			data.grabExcessHorizontalSpace = false;
+			data.horizontalSpan = 1;
 			resourceURILabel.setLayoutData(data);
 		}
 
-		Composite fileComposite = new Composite(composite, SWT.NONE);
-		{
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.END;
-			fileComposite.setLayoutData(data);
-
-			GridLayout layout = new GridLayout();
-			data.horizontalAlignment = GridData.FILL;
-			layout.marginHeight = 0;
-			layout.marginWidth = 0;
-			layout.numColumns = 2;
-			fileComposite.setLayout(layout);
-		}
-
-		fileField = new Text(fileComposite, SWT.BORDER);
+		txtResourceURI = new Text(composite, SWT.BORDER);
 		{
 			GridData data = new GridData();
 			data.horizontalAlignment = GridData.FILL;
 			data.grabExcessHorizontalSpace = true;
 			data.horizontalSpan = 1;
-			fileField.setLayoutData(data);
+			txtResourceURI.setLayoutData(data);
 		}
-		if (userDir != null && !userDir.isEmpty()) {
-			fileField.setText(String.format(PATH_TEMPLATE_DEF, userDir, NEW_FILE_DEF, extension));
-		}
-
-		fileField.addModifyListener(validator);
-
-		Button resourceURIBrowseFileSystemButton = new Button(fileComposite, SWT.PUSH);
+		resourceURIBrowseFileSystemButton = new Button(composite, SWT.PUSH);
 		resourceURIBrowseFileSystemButton.setText("Browse ...");
-
+		txtResourceURI.addModifyListener(validator);
 		resourceURIBrowseFileSystemButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				String selected = LocWokbench.selectSavePath(getShell(), extension);
 				if (selected != null) {
-					fileField.setText(selected);
+					txtResourceURI.setText(selected);
 				}
 			}
 		});
 	}
 
-	protected void createOtherControls(Composite composite) {
+	private void initControls() {
+		String resourceURI = String.format(URI_TEMPLATE, valueProvider.getInitialFilePath(), extension);
+		txtResourceURI.setText(resourceURI);
+		txtId.setText(valueProvider.getInitialIdentifierValue());
+		txtName.setText(valueProvider.getInitialNameValue());
 	}
 
 	protected boolean validatePage() {
 		URI fileURI = getFileURI();
+		boolean validationResult = true;
 		if (fileURI == null || fileURI.isEmpty()) {
 			setMessage("Please specify a file path");
-			return false;
+			validationResult = false;
 		}
-		setMessage(null);
-		setErrorMessage(null);
-		return true;
+
+		String textId = getIdentifier();
+		if (textId == null || textId.isEmpty()) {
+			setMessage("Please specify the identifier");
+			validationResult = false;
+		}
+
+		String textName = getName();
+		if (textName == null || textName.isEmpty()) {
+			setMessage("Please specify the name");
+			validationResult = false;
+		}
+
+		return validationResult;
+	}
+
+	public String getIdentifier() {
+		return txtId.getText();
+	}
+
+	public String getName() {
+		return txtName.getText();
 	}
 
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible) {
-			fileField.setFocus();
+			txtResourceURI.setFocus();
 		}
 	}
 
 	public URI getFileURI() {
 		try {
-			String text = fileField.getText();
+			String text = txtResourceURI.getText();
 			if (text != null && !text.endsWith('.' + extension)) {
 				text = text + '.' + extension;
 			}
@@ -168,8 +214,8 @@ public class CreateFileWizardPage extends WizardPage {
 	}
 
 	public void selectFileField() {
-		fileField.selectAll();
-		fileField.setFocus();
+		txtResourceURI.selectAll();
+		txtResourceURI.setFocus();
 	}
 
 }

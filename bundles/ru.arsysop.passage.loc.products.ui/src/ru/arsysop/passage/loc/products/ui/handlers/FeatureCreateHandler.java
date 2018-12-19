@@ -22,24 +22,50 @@ package ru.arsysop.passage.loc.products.ui.handlers;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
+import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class FeatureCreateHandler {
 
 	@Execute
 	public void execute(Shell shell, FeatureDomainRegistry registry) {
 		EClass eClass = LicPackage.Literals.FEATURE;
-		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
-		WizardDialog dialog = new WizardDialog(shell, new CreateFileWizard(registry, eClass, userDir));
+
+		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getFeature_Identifier();
+		EStructuralFeature featureName = LicPackage.eINSTANCE.getFeature_Name();
+		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
+		WizardDialog dialog = new WizardDialog(shell,
+				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider));
 		dialog.create();
 		dialog.setTitle("Feature Set");
 		dialog.setMessage("Please specify a file name to store feature data");
 		dialog.getShell().setText("New Feature Set");
 		dialog.open();
+	}
+
+	private InitialValuesProvider createInitialValueProvider(EClass eClass) {
+		return new InitialValuesProvider() {
+
+			@Override
+			public String getInitialNameValue() {
+				return "New Feature"; //$NON-NLS-1$ ;
+			}
+
+			@Override
+			public String getInitialIdentifierValue() {
+				return "new.feature.id"; //$NON-NLS-1$ ;
+			}
+
+			@Override
+			public String getInitialFilePath() {
+				return System.getProperty("user.home") + "/new_feature_id"; //$NON-NLS-1$ ;
+			}
+		};
 	}
 }

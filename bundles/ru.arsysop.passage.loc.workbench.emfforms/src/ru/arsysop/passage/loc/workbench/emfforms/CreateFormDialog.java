@@ -71,15 +71,14 @@ public class CreateFormDialog extends TitleAreaDialog {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.
+	 * Composite)
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		setTitle(dialogTitle);
-
-		final GridData parentData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		parent.setLayout(new GridLayout(1, true));
-//		parent.setLayoutData(parentData);
 
 		final ScrolledComposite wrapper = new ScrolledComposite(parent, SWT.V_SCROLL);
 		wrapper.setExpandHorizontal(true);
@@ -97,10 +96,10 @@ public class CreateFormDialog extends TitleAreaDialog {
 		try {
 			final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 			properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
-				EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
+					EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
 			ecpswtView = ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, createdObject, properties);
 			final ValidationService validationService = ecpswtView.getViewModelContext()
-				.getService(ValidationService.class);
+					.getService(ValidationService.class);
 			validationService.registerValidationListener(new ViewValidationListener() {
 				@Override
 				public void onNewValidation(Set<Diagnostic> validationResults) {
@@ -117,6 +116,7 @@ public class CreateFormDialog extends TitleAreaDialog {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.dialogs.Dialog#okPressed()
 	 */
 	@Override
@@ -151,8 +151,8 @@ public class CreateFormDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * Gets the created instance or the updated one, if it was passed in the constructor.
-	 * All fields are initialized with user inputs
+	 * Gets the created instance or the updated one, if it was passed in the
+	 * constructor. All fields are initialized with user inputs
 	 *
 	 * @return the created instance
 	 */

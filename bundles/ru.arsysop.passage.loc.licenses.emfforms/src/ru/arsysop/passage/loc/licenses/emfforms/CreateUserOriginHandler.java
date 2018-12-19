@@ -23,6 +23,7 @@ package ru.arsysop.passage.loc.licenses.emfforms;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -31,6 +32,7 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.workbench.emfforms.CreateFormWizard;
+import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class CreateUserOriginHandler {
 
@@ -42,17 +44,39 @@ public class CreateUserOriginHandler {
 		String newText = "New User Origin";
 		String newTitle = "User Origin";
 		String newMessage = "Please specify a file name to store user data";
-		String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
-		Wizard wizard = new CreateFormWizard(registry, eObject, userDir);
+		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
+		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getUserOrigin_Identifier();
+		EStructuralFeature featureName = LicPackage.eINSTANCE.getUserOrigin_Name();
+		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName, valueProvider);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);
 		dialog.setMessage(newMessage);
-		;
+
 		Shell createdShell = dialog.getShell();
 		createdShell.setText(newText);
 		createdShell.setImage(images.getImage(eClass.getName()));
 		dialog.open();
+	}
+
+	private InitialValuesProvider createInitialValueProvider(EClass eClass) {
+		return new InitialValuesProvider() {
+
+			@Override
+			public String getInitialNameValue() {
+				return "New User origin"; //$NON-NLS-1$ ;
+			}
+
+			@Override
+			public String getInitialIdentifierValue() {
+				return "new.user.origin"; //$NON-NLS-1$ ;
+			}
+
+			@Override
+			public String getInitialFilePath() {
+				return System.getProperty("user.home") + "/new_user_origin"; //$NON-NLS-1$ ;
+			}
+		};
 	}
 
 }
