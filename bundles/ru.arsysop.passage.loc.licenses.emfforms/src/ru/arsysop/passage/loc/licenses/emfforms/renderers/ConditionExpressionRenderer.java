@@ -45,23 +45,27 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
+import ru.arsysop.passage.loc.workbench.dialogs.ManageTextValuesDialog;
 
 public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer
 		implements ColorValidationSWTRenderer {
 
-	ConditionExpresisonDialog dialog;
-	Composite base;
-	Text txtConditionExpression;
+	private final LicensingImages licensingImages;
+
+	private Composite base;
+	private Text txtConditionExpression;
 
 	@Inject
 	public ConditionExpressionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
-
+		this.licensingImages = viewContext.getService(LicensingImages.class);
 	}
 
 	@Override
@@ -85,8 +89,8 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 		base.setLayout(layout);
 		base.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		GridData txtGD = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		txtConditionExpression = new Text(base, SWT.BORDER);
+		GridData txtGD = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		txtConditionExpression = new Text(base, SWT.BORDER | SWT.MULTI | SWT.WRAP);
 		txtConditionExpression.setLayoutData(txtGD);
 		txtConditionExpression.setText(getCurrentValue());
 		txtConditionExpression.setEditable(false);
@@ -100,9 +104,14 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 		btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dialog = new ConditionExpresisonDialog(Display.getDefault().getActiveShell(), getCurrentValue());
+				Shell shell = Display.getDefault().getActiveShell();
+				ManageTextValuesDialog dialog = new ManageTextValuesDialog(shell, getCurrentValue(), ";");
+				dialog.create();
+				Shell dialogShell = dialog.getShell();
+				dialogShell.setText("Condition Expession");
+				dialogShell.setImage(licensingImages.getImage(LicensingImages.IMG_DEFAULT));
 				if (dialog.open() == Dialog.OK) {
-					txtConditionExpression.setText(dialog.getResultValues());
+					txtConditionExpression.setText(dialog.getResultValue());
 				}
 			}
 		});
@@ -123,7 +132,7 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 	}
 
 	protected String getCurrentValue() {
-		String conditionType = "";
+		String conditionType = null;
 		EObject domainModel = getViewModelContext().getDomainModel();
 		if (domainModel instanceof LicenseGrant) {
 			conditionType = ((LicenseGrant) domainModel).getConditionExpression();

@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.emfforms.renderers;
+package ru.arsysop.passage.loc.workbench.dialogs;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class ConditionExpresisonDialog extends Dialog {
+public class ManageListValuesDialog extends Dialog {
 
 	private static final String SPLITTER = ";";
 	
@@ -44,9 +44,16 @@ public class ConditionExpresisonDialog extends Dialog {
 	Button btnAddItem;
 	String resultExpressionValues;
 
-	protected ConditionExpresisonDialog(Shell parentShell, String values) {
+	public ManageListValuesDialog(Shell parentShell, String values) {
 		super(parentShell);
 		this.expressionValues = values;
+	}
+
+	@Override
+	protected void configureShell(Shell shell) {
+		super.configureShell(shell);
+		shell.setText("Condition Expession");
+		shell.setSize(400, 500);
 	}
 
 	public String getResultValues() {
@@ -141,11 +148,5 @@ public class ConditionExpresisonDialog extends Dialog {
 	@Override
 	protected boolean isResizable() {
 		return true;
-	}
-
-	@Override
-	protected void configureShell(Shell shell) {
-		super.configureShell(shell);
-		shell.setSize(400, 500);
 	}
 }
