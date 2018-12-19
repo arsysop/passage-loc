@@ -20,16 +20,18 @@
       </children>
     </children>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_O8aNAAOREemTl7jmLgGAOg">
-    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_936KNgOQEemTl7jmLgGAOg" name="Control validFrom">
-      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_936KNwOQEemTl7jmLgGAOg">
-        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.arsysop.ru/passage/lic/0.3.2#//LicenseGrant/validFrom"/>
-      </domainModelReference>
-    </children>
-    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_936KOAOQEemTl7jmLgGAOg" name="Control validUntil">
-      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_936KOQOQEemTl7jmLgGAOg">
-        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.arsysop.ru/passage/lic/0.3.2#//LicenseGrant/validUntil"/>
-      </domainModelReference>
+  <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_WeLtoAOXEemTl7jmLgGAOg" name="Period">
+    <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_O8aNAAOREemTl7jmLgGAOg">
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_936KNgOQEemTl7jmLgGAOg" name="Control validFrom">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_936KNwOQEemTl7jmLgGAOg">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.arsysop.ru/passage/lic/0.3.2#//LicenseGrant/validFrom"/>
+        </domainModelReference>
+      </children>
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_936KOAOQEemTl7jmLgGAOg" name="Control validUntil">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_936KOQOQEemTl7jmLgGAOg">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.arsysop.ru/passage/lic/0.3.2#//LicenseGrant/validUntil"/>
+        </domainModelReference>
+      </children>
     </children>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_7o7UsAOREemTl7jmLgGAOg" name="Condition">
