@@ -1,4 +1,4 @@
-package ru.arsysop.passage.loc.licenses.emfforms.renderers;
+package ru.arsysop.passage.loc.workbench.emfforms.renderers;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Text;
 import ru.arsysop.passage.lic.base.ui.LicensingColors;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
-public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer {
+public class ValidatedTextRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private static final String TEXT_MESSAGE_DEFAULT = ""; //$NON-NLS-1$
 	private static final String UNSET_TEXT_DEFAULT = ""; //$NON-NLS-1$
@@ -37,7 +37,7 @@ public class BaseTextRenderer extends SimpleControlSWTControlSWTRenderer {
 	private Text text;
 
 	@Inject
-	public BaseTextRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ValidatedTextRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);

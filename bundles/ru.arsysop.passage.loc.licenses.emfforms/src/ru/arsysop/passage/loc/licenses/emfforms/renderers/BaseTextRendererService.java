@@ -33,6 +33,7 @@ import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.loc.workbench.emfforms.renderers.ValidatedTextRenderer;
 
 public class BaseTextRendererService implements EMFFormsDIRendererService<VControl> {
 
@@ -63,7 +64,8 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 			reportService.report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueProperty.getValueType());
+		Object valueType = valueProperty.getValueType();
+		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueType);
 
 		if (LicPackage.eINSTANCE.getLicensePack_ProductIdentifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getLicensePack_ProductVersion().equals(eStructuralFeature)
@@ -92,7 +94,7 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return BaseTextRenderer.class;
+		return ValidatedTextRenderer.class;
 	}
 
 	public void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {

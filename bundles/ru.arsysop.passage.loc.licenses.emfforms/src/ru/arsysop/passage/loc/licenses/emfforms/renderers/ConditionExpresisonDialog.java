@@ -35,7 +35,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class ConditionExpresisonDialog extends Dialog {
+
 	private static final String SPLITTER = ";";
+	
 	List lstItems;
 	String expressionValues;
 	Text txtEditItem;
@@ -91,11 +93,11 @@ public class ConditionExpresisonDialog extends Dialog {
 		btnGridLayout.heightHint = 30;
 		btnGridLayout.widthHint = 70;
 
-		Button btnConditionExpressionEdit = new Button(base, SWT.PUSH);
-		btnConditionExpressionEdit.setText("Add");
-		btnConditionExpressionEdit.setLayoutData(btnGridLayout);
-		btnConditionExpressionEdit.getFont().getFontData()[0].setHeight(10);
-		btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
+		Button btnAdd = new Button(base, SWT.PUSH);
+		btnAdd.setText("Add");
+		btnAdd.setLayoutData(btnGridLayout);
+		btnAdd.getFont().getFontData()[0].setHeight(10);
+		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String textExpression = txtExpressionItem.getText();
@@ -105,11 +107,11 @@ public class ConditionExpresisonDialog extends Dialog {
 				}
 			}
 		});
-		Button btnConditionExpressionRemove = new Button(base, SWT.PUSH);
-		btnConditionExpressionRemove.setText("Remove");
-		btnConditionExpressionRemove.setLayoutData(btnGridLayout);
-		btnConditionExpressionRemove.getFont().getFontData()[0].setHeight(10);
-		btnConditionExpressionRemove.addSelectionListener(new SelectionAdapter() {
+		Button btnRemove = new Button(base, SWT.PUSH);
+		btnRemove.setText("Remove");
+		btnRemove.setLayoutData(btnGridLayout);
+		btnRemove.getFont().getFontData()[0].setHeight(10);
+		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int selectionIndex = lstItems.getSelectionIndex();
