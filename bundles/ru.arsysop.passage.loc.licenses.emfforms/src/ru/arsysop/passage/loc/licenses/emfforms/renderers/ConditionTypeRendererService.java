@@ -33,6 +33,7 @@ import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.loc.workbench.emfforms.renderers.ConditionTypeRenderer;
 
 public class ConditionTypeRendererService implements EMFFormsDIRendererService<VControl> {
 

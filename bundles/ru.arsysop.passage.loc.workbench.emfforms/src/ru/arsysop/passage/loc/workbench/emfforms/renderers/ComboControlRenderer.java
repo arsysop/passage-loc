@@ -18,21 +18,22 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.emfforms.renderers;
+package ru.arsysop.passage.loc.workbench.emfforms.renderers;
 
-import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -42,15 +43,13 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import ru.arsysop.passage.lic.base.LicensingVersions;
-import ru.arsysop.passage.lic.model.api.LicenseGrant;
 
-public class MatchRuleRenderer extends SimpleControlSWTControlSWTRenderer {
+public abstract class ComboControlRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	Combo combo;
+	private Combo combo;
 
 	@Inject
-	public MatchRuleRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ComboControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
@@ -59,7 +58,8 @@ public class MatchRuleRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
-		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.selection().observe(control),
+		DataBindingContext context = getDataBindingContext();
+		final Binding binding = context.bindValue(WidgetProperties.selection().observe(control),
 				getModelValue(), withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding };
 	}
@@ -67,16 +67,15 @@ public class MatchRuleRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected Control createSWTControl(Composite parent) {
 		combo = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
-		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(false, false).span(2,
-				1);
-		gdf.applyTo(combo);
-		String[] definedValues = getDefinedValues();
-		combo.setItems(definedValues);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(false, false).span(2,1).applyTo(combo);
+		List<String> definedValues = getDefinedValues();
+		String[] array = (String[]) definedValues.toArray(new String[definedValues.size()]);
+		combo.setItems(array);
 		String currentValue = getCurrentValue();
 		if (currentValue == null || currentValue.isEmpty()) {
 			combo.select(0);
 		} else {
-			int curIndex = Arrays.asList(definedValues).indexOf(currentValue);
+			int curIndex = definedValues.indexOf(currentValue);
 			combo.select(curIndex);
 		}
 
@@ -86,28 +85,24 @@ public class MatchRuleRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected void dispose() {
-		super.dispose();
 		if (combo != null) {
 			combo.dispose();
 		}
+		super.dispose();
 	}
 
-	protected String[] getDefinedValues() {
-		return new String[] { LicensingVersions.RULE_COMPATIBLE, LicensingVersions.RULE_EQUIVALENT,
-				LicensingVersions.RULE_GREATER_OR_EQUAL, LicensingVersions.RULE_PERFECT };
-	}
-
+	protected abstract List<String> getDefinedValues();
+	
 	protected String getCurrentValue() {
-		String matchRule = LicensingVersions.RULE_DEFAULT;
-		EObject domainModel = getViewModelContext().getDomainModel();
-		if (domainModel instanceof LicenseGrant) {
-			matchRule = ((LicenseGrant) domainModel).getMatchRule();
+		try {
+			Object value = getModelValue().getValue();
+			if (value instanceof String) {
+				return (String) value;
+			}
+		} catch (DatabindingFailedException e) {
+			getReportService().report(new DatabindingFailedReport(e));
 		}
-		return matchRule;
+		return getUnsetText();
 	}
 
-	@Override
-	protected String getUnsetText() {
-		return LicensingVersions.RULE_DEFAULT;
-	}
 }
