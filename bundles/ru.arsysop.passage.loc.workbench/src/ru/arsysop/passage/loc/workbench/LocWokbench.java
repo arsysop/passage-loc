@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Shell;
 
 public class LocWokbench {
 
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.workbench"; //$NON-NLS-1$
+
 	public static String selectSavePath(Shell shell, String extension) {
 		String[] array = maskFilters(extension);
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
