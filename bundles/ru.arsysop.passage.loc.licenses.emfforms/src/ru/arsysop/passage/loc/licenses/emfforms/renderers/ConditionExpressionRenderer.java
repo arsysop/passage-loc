@@ -50,12 +50,14 @@ import org.eclipse.swt.widgets.Text;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
+import ru.arsysop.passage.loc.jface.LocImages;
 import ru.arsysop.passage.loc.workbench.dialogs.ManageTextValuesDialog;
 
 public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer
 		implements ColorValidationSWTRenderer {
 
 	private final LicensingImages licensingImages;
+	private final LocImages locImages;
 
 	private Composite base;
 	private Text txtConditionExpression;
@@ -66,6 +68,7 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.licensingImages = viewContext.getService(LicensingImages.class);
+		this.locImages = viewContext.getService(LocImages.class);
 	}
 
 	@Override
@@ -99,7 +102,8 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 		btnGD.heightHint = 28;
 		btnGD.widthHint = 60;
 		Button btnConditionExpressionEdit = new Button(base, SWT.PUSH);
-		btnConditionExpressionEdit.setText("Edit");
+		btnConditionExpressionEdit.setText("Edit...");
+		btnConditionExpressionEdit.setImage(locImages.getImage(LocImages.IMG_TOOL_EDIT));
 		btnConditionExpressionEdit.setLayoutData(btnGD);
 		btnConditionExpressionEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
