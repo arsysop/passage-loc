@@ -41,7 +41,7 @@ public class FeatureCreateHandler {
 		EStructuralFeature featureName = LicPackage.eINSTANCE.getFeature_Name();
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		WizardDialog dialog = new WizardDialog(shell,
-				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider));
+				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider,false));
 		dialog.create();
 		dialog.setTitle("Feature Set");
 		dialog.setMessage("Please specify a file name to store feature data");

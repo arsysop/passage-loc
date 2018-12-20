@@ -41,7 +41,7 @@ public class ProductCreateHandler {
 		EStructuralFeature featureName = LicPackage.eINSTANCE.getProduct_Name();
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		WizardDialog dialog = new WizardDialog(shell,
-				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider));
+				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider, false));
 		dialog.create();
 		dialog.setTitle("Product Line");
 		dialog.setMessage("Please specify a file name to store product data");

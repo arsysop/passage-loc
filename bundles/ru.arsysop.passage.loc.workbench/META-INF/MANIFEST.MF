@@ -32,7 +32,10 @@ Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
  ru.arsysop.passage.lic.model.edit;bundle-version="0.0.0",
  ru.arsysop.passage.lic.inspector;bundle-version="0.0.0",
  ru.arsysop.passage.lic.inspector.ui;bundle-version="0.0.0",
- ru.arsysop.passage.loc.edit;bundle-version="0.0.0";visibility:=reexport
+ ru.arsysop.passage.loc.edit;bundle-version="0.0.0";visibility:=reexport,
+ org.eclipse.emf.ecp.view.model,
+ org.eclipse.emfforms.swt.core,
+ org.eclipse.emf.ecp.ui.view.swt
 Import-Package: javax.inject;version="1.0.0"
 Export-Package: ru.arsysop.passage.lic.base.ui,
  ru.arsysop.passage.lic.inspector,

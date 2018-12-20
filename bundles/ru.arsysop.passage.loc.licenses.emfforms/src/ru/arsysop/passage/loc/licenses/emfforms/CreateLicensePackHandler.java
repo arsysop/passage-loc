@@ -48,7 +48,7 @@ public class CreateLicensePackHandler {
 		//TODO: SK
 		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getLicensePack_Identifier();
 
-		Wizard wizard = new CreateFormWizard(registry, eObject, null, null, valueProvider);
+		Wizard wizard = new CreateFormWizard(registry, eObject, null, null, valueProvider ,true);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);

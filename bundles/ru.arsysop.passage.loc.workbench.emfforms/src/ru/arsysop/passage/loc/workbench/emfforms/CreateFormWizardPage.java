@@ -8,8 +8,8 @@ import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 public class CreateFormWizardPage extends CreateFileWizardPage {
 
 	public CreateFormWizardPage(String pageName, String extension, EObject object, InitialValuesProvider valueProvider,
-			boolean createId, boolean createName) {
-		super(pageName, extension, valueProvider, createId, createName);
+			boolean createId, boolean createName, boolean createForm) {
+		super(object, pageName, extension, valueProvider, createId, createName, createForm);
 	}
 
 }

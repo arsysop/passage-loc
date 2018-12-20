@@ -28,7 +28,7 @@ public class CreateProductLineHandler {
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		EStructuralFeature featureIdentifier = ePackage.getProductLine_Identifier();
 		EStructuralFeature featureName = ePackage.getProductLine_Name();
-		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName ,valueProvider);
+		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName ,valueProvider ,false);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);

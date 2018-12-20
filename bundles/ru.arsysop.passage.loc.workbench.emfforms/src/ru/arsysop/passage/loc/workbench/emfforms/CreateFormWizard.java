@@ -11,8 +11,8 @@ import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 public class CreateFormWizard extends CreateFileWizard {
 
 	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature featureIdentifier,
-			EStructuralFeature featureName, InitialValuesProvider valueProvider) {
-		super(registry, eObject, featureIdentifier, featureName, valueProvider);
+			EStructuralFeature featureName, InitialValuesProvider valueProvider, boolean createForm) {
+		super(registry, eObject, featureIdentifier, featureName, valueProvider, createForm);
 
 	}
 
@@ -20,7 +20,6 @@ public class CreateFormWizard extends CreateFileWizard {
 	protected CreateFileWizardPage createFilePage() {
 
 		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				eObject, valueProvider, featureIdentifier != null, featureName != null);
+				eObject, valueProvider, featureIdentifier != null, featureName != null, createForm);
 	}
-
 }

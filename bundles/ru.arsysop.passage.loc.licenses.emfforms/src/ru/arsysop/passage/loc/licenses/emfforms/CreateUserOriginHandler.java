@@ -47,7 +47,7 @@ public class CreateUserOriginHandler {
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getUserOrigin_Identifier();
 		EStructuralFeature featureName = LicPackage.eINSTANCE.getUserOrigin_Name();
-		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName, valueProvider);
+		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName, valueProvider, false);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);

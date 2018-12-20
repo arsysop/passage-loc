@@ -29,7 +29,7 @@ public class CreateFeatureSetHandler {
 		EStructuralFeature featureIdentifier = ePackage.getFeatureSet_Identifier();
 		EStructuralFeature featureName = ePackage.getFeatureSet_Name();
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
-		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName, valueProvider);
+		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName, valueProvider,false);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);
