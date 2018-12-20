@@ -45,11 +45,10 @@ public class CreateLicensePackHandler {
 		String newTitle = "License Pack";
 		String newMessage = "Please specify a file name to store license data";
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
-		
+		//TODO: SK
 		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getLicensePack_Identifier();
-		EStructuralFeature featureName = LicPackage.eINSTANCE.getLicensePack_Identifier();
-		
-		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier,featureName, valueProvider);
+
+		Wizard wizard = new CreateFormWizard(registry, eObject, null, null, valueProvider);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(newTitle);

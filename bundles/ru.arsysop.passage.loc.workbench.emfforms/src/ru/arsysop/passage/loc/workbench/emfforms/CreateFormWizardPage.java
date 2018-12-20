@@ -1,16 +1,15 @@
 package ru.arsysop.passage.loc.workbench.emfforms;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class CreateFormWizardPage extends CreateFileWizardPage {
 
-	public CreateFormWizardPage(String pageName, String extension, EObject object, EStructuralFeature featureIdentifier,
-			InitialValuesProvider valueProvider) {
-		super(pageName, extension, valueProvider);
+	public CreateFormWizardPage(String pageName, String extension, EObject object, InitialValuesProvider valueProvider,
+			boolean createId, boolean createName) {
+		super(pageName, extension, valueProvider, createId, createName);
 	}
 
 }

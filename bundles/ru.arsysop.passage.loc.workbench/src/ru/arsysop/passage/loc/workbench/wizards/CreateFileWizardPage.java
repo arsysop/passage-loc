@@ -52,11 +52,16 @@ public class CreateFileWizardPage extends WizardPage {
 
 	private String extension;
 	private InitialValuesProvider valueProvider;
+	private boolean createName;
+	private boolean createId;
 
-	public CreateFileWizardPage(String pageName, String extension, InitialValuesProvider valueProvider) {
+	public CreateFileWizardPage(String pageName, String extension, InitialValuesProvider valueProvider,
+			boolean createId, boolean createName) {
 		super(pageName);
 		this.extension = extension;
 		this.valueProvider = valueProvider;
+		this.createId = createId;
+		this.createName = createName;
 
 	}
 
@@ -84,44 +89,47 @@ public class CreateFileWizardPage extends WizardPage {
 	}
 
 	protected void createFileControls(Composite composite) {
-		Label idFieldLabel = new Label(composite, SWT.LEFT);
-		{
-			idFieldLabel.setText("&Identifier:");
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = false;
-			data.horizontalSpan = 1;
-			idFieldLabel.setLayoutData(data);
+		if (createId) { 
+			Label idFieldLabel = new Label(composite, SWT.LEFT);
+			{
+				idFieldLabel.setText("&Identifier:");
+				GridData data = new GridData();
+				data.horizontalAlignment = GridData.FILL;
+				data.grabExcessHorizontalSpace = false;
+				data.horizontalSpan = 1;
+				idFieldLabel.setLayoutData(data);
+			}
+
+			txtId = new Text(composite, SWT.BORDER);
+			{
+				GridData data = new GridData();
+				data.horizontalAlignment = GridData.FILL;
+				data.grabExcessHorizontalSpace = true;
+				data.horizontalSpan = 2;
+				txtId.setLayoutData(data);
+			}
 		}
 
-		txtId = new Text(composite, SWT.BORDER);
-		{
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = true;
-			data.horizontalSpan = 2;
-			txtId.setLayoutData(data);
-		}
+		if (createName) {
+			Label nameFieldILabel = new Label(composite, SWT.LEFT);
+			{
+				nameFieldILabel.setText("&Name:");
+				GridData data = new GridData();
+				data.horizontalAlignment = GridData.FILL;
+				data.grabExcessHorizontalSpace = false;
+				data.horizontalSpan = 1;
+				nameFieldILabel.setLayoutData(data);
+			}
 
-		Label nameFieldILabel = new Label(composite, SWT.LEFT);
-		{
-			nameFieldILabel.setText("&Name:");
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = false;
-			data.horizontalSpan = 1;
-			nameFieldILabel.setLayoutData(data);
+			txtName = new Text(composite, SWT.BORDER);
+			{
+				GridData data = new GridData();
+				data.horizontalAlignment = GridData.FILL;
+				data.grabExcessHorizontalSpace = true;
+				data.horizontalSpan = 2;
+				txtName.setLayoutData(data);
+			}
 		}
-
-		txtName = new Text(composite, SWT.BORDER);
-		{
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = true;
-			data.horizontalSpan = 2;
-			txtName.setLayoutData(data);
-		}
-
 		Label resourceURILabel = new Label(composite, SWT.LEFT);
 		{
 			resourceURILabel.setText("&File:");
@@ -157,8 +165,12 @@ public class CreateFileWizardPage extends WizardPage {
 	private void initControls() {
 		String resourceURI = String.format(URI_TEMPLATE, valueProvider.getInitialFilePath(), extension);
 		txtResourceURI.setText(resourceURI);
-		txtId.setText(valueProvider.getInitialIdentifierValue());
-		txtName.setText(valueProvider.getInitialNameValue());
+		if (txtId != null) {
+			txtId.setText(valueProvider.getInitialIdentifierValue());
+		}
+		if (txtName != null) {
+			txtName.setText(valueProvider.getInitialNameValue());
+		}
 	}
 
 	protected boolean validatePage() {
@@ -168,27 +180,34 @@ public class CreateFileWizardPage extends WizardPage {
 			setMessage("Please specify a file path");
 			validationResult = false;
 		}
-
-		String textId = getIdentifier();
-		if (textId == null || textId.isEmpty()) {
-			setMessage("Please specify the identifier");
-			validationResult = false;
+		if (createId) {
+			String textId = getIdentifier();
+			if (textId == null || textId.isEmpty()) {
+				setMessage("Please specify the identifier");
+				validationResult = false;
+			}
 		}
-
-		String textName = getName();
-		if (textName == null || textName.isEmpty()) {
-			setMessage("Please specify the name");
-			validationResult = false;
+		if (createName) {
+			String textName = getName();
+			if (textName == null || textName.isEmpty()) {
+				setMessage("Please specify the name");
+				validationResult = false;
+			}
 		}
-
 		return validationResult;
 	}
 
 	public String getIdentifier() {
+		if (txtId == null) {
+			return "";
+		}
 		return txtId.getText();
 	}
 
 	public String getName() {
+		if (txtName == null) {
+			return "";
+		}
 		return txtName.getText();
 	}
 

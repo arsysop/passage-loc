@@ -53,6 +53,7 @@ public class CreateFileWizard extends Wizard {
 		this.featureIdentifier = featureIdentifier;
 		this.featureName = featureName;
 		this.valueProvider = valueProvider;
+
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class CreateFileWizard extends Wizard {
 
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				valueProvider);
+				valueProvider, featureIdentifier != null, featureName != null);
 	}
 
 	@Override
@@ -80,8 +81,13 @@ public class CreateFileWizard extends Wizard {
 					return false;
 				}
 			}
-			eObject.eSet(featureIdentifier, filePage.getIdentifier());
-			eObject.eSet(featureName, filePage.getName());
+			if (featureIdentifier != null) {
+				eObject.eSet(featureIdentifier, filePage.getIdentifier());
+			}
+
+			if (featureName != null) {
+				eObject.eSet(featureName, filePage.getName());
+			}
 
 			IRunnableWithProgress operation = new IRunnableWithProgress() {
 				public void run(IProgressMonitor progressMonitor) {

@@ -20,7 +20,7 @@ public class CreateFormWizard extends CreateFileWizard {
 	protected CreateFileWizardPage createFilePage() {
 
 		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				eObject, featureIdentifier, valueProvider);
+				eObject, valueProvider, featureIdentifier != null, featureName != null);
 	}
 
 }
