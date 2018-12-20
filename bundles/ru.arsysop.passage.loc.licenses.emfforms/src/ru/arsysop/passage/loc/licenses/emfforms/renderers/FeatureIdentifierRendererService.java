@@ -28,13 +28,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.loc.products.emfforms.renderers.FeatureIdentifierRenderer;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRendererService;
 
 @Component
-public class ConditionExpressionRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
+public class FeatureIdentifierRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
 
-	public ConditionExpressionRendererService() {
-		super(ConditionExpressionRenderer.class, LicPackage.eINSTANCE.getLicenseGrant_ConditionExpression());
+	public FeatureIdentifierRendererService() {
+		super(FeatureIdentifierRenderer.class, LicPackage.eINSTANCE.getLicenseGrant_FeatureIdentifier());
 	}
 
 	@Reference
