@@ -1,24 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2018 ArSysOp
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Contributors:
- *     ArSysOp - initial API and implementation
- *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.emfforms.renderers;
+package ru.arsysop.passage.loc.workbench.emfforms.renderers;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -32,13 +12,21 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.loc.workbench.emfforms.renderers.ConditionTypeRenderer;
+public class StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
 
-public class ConditionTypeRendererService implements EMFFormsDIRendererService<VControl> {
+	private final Class<? extends AbstractSWTRenderer<VControl>> renderer;
+	private final EStructuralFeature feature;
+
+	private double priority = 10;
 
 	private EMFFormsDatabinding databindingService;
 	private ReportService reportService;
+
+	protected StructuredFeatureRendererService(Class<? extends AbstractSWTRenderer<VControl>> renderer,
+			EStructuralFeature feature) {
+		this.renderer = renderer;
+		this.feature = feature;
+	}
 
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
@@ -58,33 +46,34 @@ public class ConditionTypeRendererService implements EMFFormsDIRendererService<V
 			reportService.report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueProperty.getValueType());
-
-		if (LicPackage.eINSTANCE.getLicenseGrant_ConditionType().equals(eStructuralFeature)) {
-			return 10;
+		Object valueType = valueProperty.getValueType();
+		if (valueType instanceof EStructuralFeature) {
+			EStructuralFeature structuralFeature = (EStructuralFeature) valueType;
+			if (structuralFeature.equals(feature)) {
+				return priority;
+			}
 		}
-
 		return NOT_APPLICABLE;
 	}
 
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return ConditionTypeRenderer.class;
+		return renderer;
 	}
 
-	public void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
+	protected void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
 
-	public void unbindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
+	protected void unbindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = null;
 	}
 
-	public void bindReportService(ReportService reportService) {
+	protected void bindReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
 
-	public void unbindReportService(ReportService reportService) {
+	protected void unbindReportService(ReportService reportService) {
 		this.reportService = null;
 	}
 

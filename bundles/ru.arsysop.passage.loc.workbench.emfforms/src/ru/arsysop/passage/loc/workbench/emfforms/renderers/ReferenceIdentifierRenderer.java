@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.emfforms.renderers;
+package ru.arsysop.passage.loc.workbench.emfforms.renderers;
 
 import javax.inject.Inject;
 
@@ -41,13 +41,13 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.loc.workbench.dialogs.ManageTextValuesDialog;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;
 
-public class ConditionExpressionRenderer extends TextWithButtonRenderer {
+public class ReferenceIdentifierRenderer extends TextWithButtonRenderer {
 
 	private static final String EXPRESSION_EMPTY = ""; //$NON-NLS-1$
 	private static final String EXPRESSION_SEPARATOR = ";"; //$NON-NLS-1$
 	
 	@Inject
-	public ConditionExpressionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ReferenceIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
