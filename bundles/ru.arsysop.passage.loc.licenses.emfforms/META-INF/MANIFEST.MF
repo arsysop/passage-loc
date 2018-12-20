@@ -25,7 +25,8 @@ Require-Bundle: javax.inject;bundle-version="0.0.0",
  ru.arsysop.passage.lic.base;bundle-version="0.0.0",
  ru.arsysop.passage.lic.model;bundle-version="0.0.0",
  ru.arsysop.passage.loc.workbench.emfforms;bundle-version="0.0.0",
- ru.arsysop.passage.loc.products.emfforms;bundle-version="0.0.0"
+ ru.arsysop.passage.loc.products.emfforms;bundle-version="0.0.0",
+ ru.arsysop.passage.loc.licenses.ui;bundle-version="0.0.0"
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Copyright: %Bundle-Copyright

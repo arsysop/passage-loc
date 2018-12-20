@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.products.emfforms.renderers;
+package ru.arsysop.passage.loc.licenses.emfforms.renderers;
 
 import javax.inject.Inject;
 
@@ -38,23 +38,23 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
-import ru.arsysop.passage.loc.products.ui.dialogs.FeatureSelectionDialog;
+import ru.arsysop.passage.lic.registry.UserDescriptor;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
+import ru.arsysop.passage.loc.licenses.ui.dialogs.UserSelectionDialog;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;
 
-public class FeatureIdentifierRenderer extends TextWithButtonRenderer {
+public class UserIdentifierRenderer extends TextWithButtonRenderer {
 
 	private static final String IDENTIFIER_EMPTY = ""; //$NON-NLS-1$
 
-	private final FeatureDomainRegistry featureRegistry;
+	private final UserDomainRegistry userRegistry;
 	
 	@Inject
-	public FeatureIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public UserIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
-		featureRegistry = viewContext.getService(FeatureDomainRegistry.class);
+		userRegistry = viewContext.getService(UserDomainRegistry.class);
 	}
 
 	@Override
@@ -78,21 +78,21 @@ public class FeatureIdentifierRenderer extends TextWithButtonRenderer {
 
 	protected void selectIdentifier() {
 		Shell shell = Display.getDefault().getActiveShell();
-		FeatureSelectionDialog dialog = new FeatureSelectionDialog(shell, getLicensingImages(), featureRegistry);
+		UserSelectionDialog dialog = new UserSelectionDialog(shell, getLicensingImages(), userRegistry);
 		try {
 			Object value = getModelValue().getValue();
 			if (value instanceof String) {
 				String id = (String) value;
-				dialog.setInitial(featureRegistry.getFeature(id));
+				dialog.setInitial(userRegistry.getUser(id));
 			}
 		} catch (DatabindingFailedException e) {
 			getReportService().report(new DatabindingFailedReport(e));
 		}
 		if (dialog.open() == Dialog.OK) {
 			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof FeatureDescriptor) {
-				FeatureDescriptor feature = (FeatureDescriptor) firstResult;
-				String identifier = feature.getIdentifier();
+			if (firstResult instanceof UserDescriptor) {
+				UserDescriptor user = (UserDescriptor) firstResult;
+				String identifier = user.getEmail();
 				if (identifier != null) {
 					text.setText(identifier);
 				}

@@ -18,29 +18,28 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.products.ui.dialogs;
+package ru.arsysop.passage.loc.licenses.ui.dialogs;
 
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
-public class FeatureSelectionDialog extends FilteredSelectionDialog {
+public class UserSelectionDialog extends FilteredSelectionDialog {
 
-	public FeatureSelectionDialog(Shell parent, LicensingImages licensingImages, FeatureDomainRegistry registry) {
+	public UserSelectionDialog(Shell parent, LicensingImages licensingImages, UserDomainRegistry registry) {
 		super(parent, licensingImages, false);
-
-		setTitle("Select Feature");
-		setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeature().getName()));
+		setTitle("Select User");
+		setImage(licensingImages.getImage(LicPackage.eINSTANCE.getUser().getName()));
 
 		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
 		setLabelProvider(new DomainRegistryLabelProvider(licensingImages, factory));
 
-		setInput(registry.getFeatures());
+		setInput(registry.getUsers());
 	}
 
 }

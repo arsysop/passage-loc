@@ -110,14 +110,14 @@ public class ObjectSelectionDialog extends TrayDialog {
 		}
 	}
 
-	public void setInitial(List<Object> objects) {
+	public void setInitial(Iterable<?> objects) {
 		initial.clear();
-		initial.addAll(objects);
+		objects.forEach(initial::add);
 	}
 
-	protected void setResult(List<Object> objects) {
+	protected void setResult(Iterable<?> objects) {
 		result.clear();
-		result.addAll(objects);
+		objects.forEach(result::add);
 	}
 
 	protected void setResult(Object... objects) {

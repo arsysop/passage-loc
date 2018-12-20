@@ -33,6 +33,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -82,9 +83,10 @@ public abstract class TextWithButtonRenderer extends SimpleControlSWTControlSWTR
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		if (control instanceof Text) {
-			final Binding binding = getDataBindingContext().bindValue(
-					WidgetProperties.text(SWT.Modify).observe(text), getModelValue(),
-					withPreSetValidation(new UpdateValueStrategy()), null);
+			ISWTObservableValue observe = WidgetProperties.text(SWT.Modify).observe(control);
+			UpdateValueStrategy target2model = withPreSetValidation(new UpdateValueStrategy());
+			final Binding binding = getDataBindingContext().bindValue(observe, getModelValue(),
+					target2model, null);
 			return new Binding[] { binding };
 		}
 
@@ -103,7 +105,7 @@ public abstract class TextWithButtonRenderer extends SimpleControlSWTControlSWTR
 
 		text = createText(base);
 		button = createButton(base);
-		return base;
+		return text;
 	}
 
 	protected Text createText(Composite parent) {
