@@ -48,15 +48,19 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import ru.arsysop.passage.lic.base.ui.LicensingColors;
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.api.LicenseGrant;
 import ru.arsysop.passage.loc.jface.LocImages;
 import ru.arsysop.passage.loc.workbench.dialogs.ManageTextValuesDialog;
 
-public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer
-		implements ColorValidationSWTRenderer {
+public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	private static final String EXPRESSION_EMPTY = ""; //$NON-NLS-1$
+	private static final String EXPRESSION_SEPARATOR = ";"; //$NON-NLS-1$
+	
 	private final LicensingImages licensingImages;
+	private final LicensingColors licensingColors;
 	private final LocImages locImages;
 
 	private Composite base;
@@ -68,6 +72,7 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.licensingImages = viewContext.getService(LicensingImages.class);
+		this.licensingColors = viewContext.getService(LicensingColors.class);
 		this.locImages = viewContext.getService(LocImages.class);
 	}
 
@@ -109,7 +114,7 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Shell shell = Display.getDefault().getActiveShell();
-				ManageTextValuesDialog dialog = new ManageTextValuesDialog(shell, getCurrentValue(), ";");
+				ManageTextValuesDialog dialog = new ManageTextValuesDialog(shell, getCurrentValue(), EXPRESSION_SEPARATOR);
 				dialog.create();
 				Shell dialogShell = dialog.getShell();
 				dialogShell.setText("Condition Expession");
@@ -142,14 +147,14 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 			conditionType = ((LicenseGrant) domainModel).getConditionExpression();
 		}
 		if (conditionType == null) {
-			conditionType = "";
+			conditionType = EXPRESSION_EMPTY;
 		}
 		return conditionType;
 	}
 
 	@Override
 	protected String getUnsetText() {
-		return "";
+		return EXPRESSION_EMPTY;
 	}
 
 	@Override
@@ -157,9 +162,9 @@ public class ConditionExpressionRenderer extends SimpleControlSWTControlSWTRende
 		if (control instanceof Text) {
 			Text textControl = ((Text) control);
 			if (textControl.getText().isEmpty()) {
-				control.setBackground(COLOR_VALIDATION_ERROR);
+				control.setBackground(licensingColors.getColor(LicensingColors.COLOR_VALIDATION_ERROR));
 			} else {
-				control.setBackground(COLOR_VALIDATION_SUCCESS);
+				control.setBackground(licensingColors.getColor(LicensingColors.COLOR_VALIDATION_OK));
 			}
 		}
 	}
