@@ -22,6 +22,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: ru.arsysop.passage.loc.products.ui
 Import-Package: javax.inject;version="1.0.0"
 Export-Package: ru.arsysop.passage.loc.products.ui,
- ru.arsysop.passage.loc.products.ui.dialogs,
  ru.arsysop.passage.loc.products.ui.handlers,
  ru.arsysop.passage.loc.products.ui.viewers

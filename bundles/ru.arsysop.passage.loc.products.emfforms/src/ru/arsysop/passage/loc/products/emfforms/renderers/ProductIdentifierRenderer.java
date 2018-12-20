@@ -37,23 +37,23 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.lic.registry.ProductDescriptor;
+import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.products.ui.ProductsUi;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;
 
-public class FeatureIdentifierRenderer extends TextWithButtonRenderer {
+public class ProductIdentifierRenderer extends TextWithButtonRenderer {
 
 	private static final String IDENTIFIER_EMPTY = ""; //$NON-NLS-1$
 
-	private final FeatureDomainRegistry registry;
+	private final ProductDomainRegistry registry;
 	
 	@Inject
-	public FeatureIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public ProductIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
-		registry = viewContext.getService(FeatureDomainRegistry.class);
+		registry = viewContext.getService(ProductDomainRegistry.class);
 	}
 
 	@Override
@@ -77,17 +77,17 @@ public class FeatureIdentifierRenderer extends TextWithButtonRenderer {
 
 	protected void selectIdentifier() {
 		Shell shell = Display.getDefault().getActiveShell();
-		FeatureDescriptor initial = null;
+		ProductDescriptor initial = null;
 		try {
 			Object value = getModelValue().getValue();
 			if (value instanceof String) {
 				String id = (String) value;
-				initial = registry.getFeature(id);
+				initial = registry.getProduct(id);
 			}
 		} catch (DatabindingFailedException e) {
 			getReportService().report(new DatabindingFailedReport(e));
 		}
-		FeatureDescriptor descriptor = ProductsUi.selectFeatureDescriptor(shell, getLicensingImages(), registry, initial);
+		ProductDescriptor descriptor = ProductsUi.selectProductDescriptor(shell, getLicensingImages(), registry, initial);
 		if (descriptor != null) {
 			String identifier = descriptor.getIdentifier();
 			if (identifier != null) {
