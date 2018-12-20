@@ -30,7 +30,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -40,21 +39,21 @@ import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
-import ru.arsysop.passage.loc.licenses.ui.dialogs.UserSelectionDialog;
+import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;
 
 public class UserIdentifierRenderer extends TextWithButtonRenderer {
 
 	private static final String IDENTIFIER_EMPTY = ""; //$NON-NLS-1$
 
-	private final UserDomainRegistry userRegistry;
+	private final UserDomainRegistry registry;
 	
 	@Inject
 	public UserIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
-		userRegistry = viewContext.getService(UserDomainRegistry.class);
+		registry = viewContext.getService(UserDomainRegistry.class);
 	}
 
 	@Override
@@ -78,24 +77,21 @@ public class UserIdentifierRenderer extends TextWithButtonRenderer {
 
 	protected void selectIdentifier() {
 		Shell shell = Display.getDefault().getActiveShell();
-		UserSelectionDialog dialog = new UserSelectionDialog(shell, getLicensingImages(), userRegistry);
+		UserDescriptor initial = null;
 		try {
 			Object value = getModelValue().getValue();
 			if (value instanceof String) {
 				String id = (String) value;
-				dialog.setInitial(userRegistry.getUser(id));
+				initial = registry.getUser(id);
 			}
 		} catch (DatabindingFailedException e) {
 			getReportService().report(new DatabindingFailedReport(e));
 		}
-		if (dialog.open() == Dialog.OK) {
-			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof UserDescriptor) {
-				UserDescriptor user = (UserDescriptor) firstResult;
-				String identifier = user.getEmail();
-				if (identifier != null) {
-					text.setText(identifier);
-				}
+		UserDescriptor descriptor = LicensesUi.selectUserDescriptor(shell, getLicensingImages(), registry, initial);
+		if (descriptor != null) {
+			String identifier = descriptor.getEmail();
+			if (identifier != null) {
+				text.setText(identifier);
 			}
 		}
 	}

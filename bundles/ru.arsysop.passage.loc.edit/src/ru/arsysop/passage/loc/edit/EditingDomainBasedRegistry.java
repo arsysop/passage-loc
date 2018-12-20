@@ -23,7 +23,6 @@ package ru.arsysop.passage.loc.edit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,6 +40,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 
+import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
@@ -81,8 +81,7 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	@Override
 	public Path getBasePath() {
 		String areaValue = environmentInfo.getProperty("osgi.instance.area");
-		Path instance = Paths.get(java.net.URI.create(areaValue));
-		Path passagePath = instance.resolve(".passage");
+		Path passagePath = LicensingPaths.getBasePath(areaValue);
 		try {
 			Files.createDirectories(passagePath);
 		} catch (IOException e) {
