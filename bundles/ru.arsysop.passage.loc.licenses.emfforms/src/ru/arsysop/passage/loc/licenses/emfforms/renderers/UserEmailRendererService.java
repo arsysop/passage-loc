@@ -29,12 +29,13 @@ import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRendererService;
+import ru.arsysop.passage.loc.workbench.emfforms.renderers.ValidatedTextRenderer;
 
 @Component
-public class ConditionExpressionRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
+public class UserEmailRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
 
-	public ConditionExpressionRendererService() {
-		super(ConditionExpressionRenderer.class, LicPackage.eINSTANCE.getLicenseGrant_ConditionExpression());
+	public UserEmailRendererService() {
+		super(ValidatedTextRenderer.class, LicPackage.eINSTANCE.getUser_Email());
 	}
 
 	@Reference

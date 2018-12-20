@@ -67,11 +67,7 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 		Object valueType = valueProperty.getValueType();
 		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueType);
 
-		if (LicPackage.eINSTANCE.getLicensePack_ProductIdentifier().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getLicensePack_ProductVersion().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getLicensePack_UserIdentifier().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getLicenseGrant_FeatureIdentifier().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getLicenseGrant_FeatureIdentifier().equals(eStructuralFeature)
+		if (LicPackage.eINSTANCE.getLicensePack_ProductVersion().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProductLine_Identifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProduct_Identifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProduct_Name().equals(eStructuralFeature)

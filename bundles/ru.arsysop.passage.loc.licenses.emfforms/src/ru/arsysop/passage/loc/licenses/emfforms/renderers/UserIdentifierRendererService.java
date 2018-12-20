@@ -31,10 +31,10 @@ import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRendererService;
 
 @Component
-public class ConditionExpressionRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
+public class UserIdentifierRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
 
-	public ConditionExpressionRendererService() {
-		super(ConditionExpressionRenderer.class, LicPackage.eINSTANCE.getLicenseGrant_ConditionExpression());
+	public UserIdentifierRendererService() {
+		super(UserIdentifierRenderer.class, LicPackage.eINSTANCE.getLicensePack_UserIdentifier());
 	}
 
 	@Reference

@@ -26,49 +26,45 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
-import ru.arsysop.passage.loc.workbench.dialogs.ManageTextValuesDialog;
+import ru.arsysop.passage.lic.registry.UserDescriptor;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
+import ru.arsysop.passage.loc.licenses.ui.dialogs.UserSelectionDialog;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;
 
-public class ConditionExpressionRenderer extends TextWithButtonRenderer {
+public class UserIdentifierRenderer extends TextWithButtonRenderer {
 
-	private static final String EXPRESSION_EMPTY = ""; //$NON-NLS-1$
-	private static final String EXPRESSION_SEPARATOR = ";"; //$NON-NLS-1$
+	private static final String IDENTIFIER_EMPTY = ""; //$NON-NLS-1$
+
+	private final UserDomainRegistry userRegistry;
 	
 	@Inject
-	public ConditionExpressionRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public UserIdentifierRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 			VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		userRegistry = viewContext.getService(UserDomainRegistry.class);
 	}
 
 	@Override
 	protected Control createSWTControl(Composite parent) {
 		Control control = super.createSWTControl(parent);
+		text.setEditable(true);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Shell shell = Display.getDefault().getActiveShell();
-				ManageTextValuesDialog dialog = new ManageTextValuesDialog(shell, getCurrentValue(), EXPRESSION_SEPARATOR);
-				dialog.create();
-				Shell dialogShell = dialog.getShell();
-				dialogShell.setText("Condition Expession");
-				Image image = getLicensingImages().getImage(LicensingImages.IMG_DEFAULT);
-				dialogShell.setImage(image);
-				if (dialog.open() == Dialog.OK) {
-					text.setText(dialog.getResultValue());
-				}
+				selectIdentifier();
 			}
 		});
 
@@ -77,7 +73,31 @@ public class ConditionExpressionRenderer extends TextWithButtonRenderer {
 	
 	@Override
 	protected String getUnsetText() {
-		return EXPRESSION_EMPTY;
+		return IDENTIFIER_EMPTY;
+	}
+
+	protected void selectIdentifier() {
+		Shell shell = Display.getDefault().getActiveShell();
+		UserSelectionDialog dialog = new UserSelectionDialog(shell, getLicensingImages(), userRegistry);
+		try {
+			Object value = getModelValue().getValue();
+			if (value instanceof String) {
+				String id = (String) value;
+				dialog.setInitial(userRegistry.getUser(id));
+			}
+		} catch (DatabindingFailedException e) {
+			getReportService().report(new DatabindingFailedReport(e));
+		}
+		if (dialog.open() == Dialog.OK) {
+			Object firstResult = dialog.getFirstResult();
+			if (firstResult instanceof UserDescriptor) {
+				UserDescriptor user = (UserDescriptor) firstResult;
+				String identifier = user.getEmail();
+				if (identifier != null) {
+					text.setText(identifier);
+				}
+			}
+		}
 	}
 
 }
