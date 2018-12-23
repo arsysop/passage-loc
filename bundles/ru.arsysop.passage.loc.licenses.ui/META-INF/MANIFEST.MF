@@ -27,5 +27,3 @@ Export-Package: ru.arsysop.passage.loc.licenses.ui,
  ru.arsysop.passage.loc.licenses.ui.handlers,
  ru.arsysop.passage.loc.licenses.ui.viewers
 Bundle-ActivationPolicy: lazy
-Provide-Capability: licensing.feature;licensing.feature="loc.licenses.ui.export";version=0.3.2;name="License Export";rule="equivalent"
-Service-Component: OSGI-INF/*.xml

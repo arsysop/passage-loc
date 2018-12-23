@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.emfforms.renderers;
+package ru.arsysop.passage.loc.features.emfforms.renderers;
 
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -32,10 +32,10 @@ import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRend
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.ValidatedTextRenderer;
 
 @Component
-public class UserEmailRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
+public class FeatureIdentifierRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
 
-	public UserEmailRendererService() {
-		super(ValidatedTextRenderer.class, LicPackage.eINSTANCE.getUser_Email());
+	public FeatureIdentifierRendererService() {
+		super(ValidatedTextRenderer.class, LicPackage.eINSTANCE.getFeature_Identifier());
 	}
 
 	@Reference

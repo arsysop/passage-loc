@@ -71,8 +71,6 @@ public class BaseTextRendererService implements EMFFormsDIRendererService<VContr
 				|| LicPackage.eINSTANCE.getProduct_Identifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProduct_Name().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getProductVersion_Version().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getFeatureSet_Identifier().equals(eStructuralFeature)
-				|| LicPackage.eINSTANCE.getFeature_Identifier().equals(eStructuralFeature)
 				|| LicPackage.eINSTANCE.getFeatureVersion_Version().equals(eStructuralFeature)
 				) {
 			return 10;

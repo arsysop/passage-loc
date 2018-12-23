@@ -22,6 +22,13 @@
 <plugin>
 
    <extension
+         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+      <file
+            filePath="viewmodels/FeatureSet.view">
+      </file>
+   </extension>
+
+   <extension
          id="ru.arsysop.passage.loc.features.ui.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment

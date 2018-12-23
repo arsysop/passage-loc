@@ -24,16 +24,6 @@
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
-            filePath="viewmodels/UserOrigin.view">
-      </file>
-      <file
-            filePath="viewmodels/User.view">
-      </file>
-   </extension>
-
-   <extension
-         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
-      <file
             filePath="viewmodels/LicensePack.view">
       </file>
       <file
