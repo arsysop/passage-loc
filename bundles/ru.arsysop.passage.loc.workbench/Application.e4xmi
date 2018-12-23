@@ -25,6 +25,7 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_7WOgYPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.save" label="Save" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/save.png" command="_qIUC4PGkEei3isMrv8wWOw"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_IvR-YPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.fie"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_LJ9REPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.export" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" command="_Us_jAPJjEeiO9ZCh0caXIg"/>
+        <children xsi:type="menu:ToolBarSeparator" xmi:id="_1tnR8Aa0EemNz8l9BTvo0A" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.view"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_i1VvsPPBEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.trimbar.0" side="Bottom">

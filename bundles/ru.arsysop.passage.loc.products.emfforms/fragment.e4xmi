@@ -7,9 +7,6 @@
       <children xsi:type="basic:Part" xmi:id="_I9u50PJTEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.products.emfforms.part.details" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench.emfforms/ru.arsysop.passage.loc.workbench.emfforms.DetailsView" label="Details" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/edit.png"/>
     </elements>
   </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_43mcYPTGEeiI64G0mnmT3g" featurename="handlers" parentElementId="ru.arsysop.passage.loc.products.ui.part.features">
-    <elements xsi:type="commands:Handler" xmi:id="_-VclIPTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.featureset.create" contributionURI="bundleclass://ru.arsysop.passage.loc.products.emfforms/ru.arsysop.passage.loc.products.emfforms.CreateFeatureSetHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
-  </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Fx69wPTHEeiI64G0mnmT3g" featurename="handlers" parentElementId="ru.arsysop.passage.loc.products.ui.part.products">
     <elements xsi:type="commands:Handler" xmi:id="_KkPdQPTHEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.productline.create" contributionURI="bundleclass://ru.arsysop.passage.loc.products.emfforms/ru.arsysop.passage.loc.products.emfforms.CreateProductLineHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
   </fragments>

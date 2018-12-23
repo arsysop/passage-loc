@@ -16,10 +16,6 @@
               <children xsi:type="menu:HandledToolItem" xmi:id="_hgWWMPJiEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handledtoolitem.license.export" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" command="_B0LYAPJlEeiO9ZCh0caXIg"/>
             </toolbar>
           </children>
-          <children xsi:type="basic:Part" xmi:id="_pHumYOjiEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.licenses.ui.part.users" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.viewers.UserExplorer" label="Users" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png" tooltip="Manage Users">
-            <handlers xmi:id="_vKXGkPJLEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.user.open" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.UserOpenHandler" command="_LEzGEPIpEeiO9ZCh0caXIg"/>
-            <toolbar xmi:id="_Ich44PCgEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.licenses.ui.toolbar.crud"/>
-          </children>
         </children>
       </children>
     </elements>

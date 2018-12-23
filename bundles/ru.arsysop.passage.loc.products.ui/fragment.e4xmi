@@ -16,9 +16,6 @@
               <children xsi:type="menu:HandledToolItem" xmi:id="_G80u8PDHEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.products.ui.handledtoolitem.product.export" accessibilityPhrase="" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" tooltip="Export Product" command="_co724PMIEeiuJLGN-praBQ"/>
             </toolbar>
           </children>
-          <children xsi:type="basic:Part" xmi:id="_ejjFsOjREeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.part.features" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.viewers.FeatureExplorer" label="Features" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/feature.png">
-            <handlers xmi:id="_lxXeMPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.feature.open" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.FeatureOpenHandler" command="_RzFcwPMKEeiuJLGN-praBQ"/>
-          </children>
         </children>
       </children>
     </elements>

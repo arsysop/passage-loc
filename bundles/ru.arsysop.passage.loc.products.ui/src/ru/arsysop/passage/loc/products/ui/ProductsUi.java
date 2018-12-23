@@ -36,6 +36,8 @@ import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class ProductsUi {
 
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.ui"; //$NON-NLS-1$
+
 	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductDescriptor initial) {
 		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
@@ -77,29 +79,6 @@ public class ProductsUi {
 			if (firstResult instanceof ProductVersionDescriptor) {
 				ProductVersionDescriptor productVersion = (ProductVersionDescriptor) firstResult;
 				return productVersion;
-			}
-		}
-		return null;
-	}
-
-	public static FeatureDescriptor selectFeatureDescriptor(Shell shell, LicensingImages images,
-			FeatureDomainRegistry registry, FeatureDescriptor initial) {
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
-		dialog.setTitle("Select Feature");
-		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getFeature().getName()));
-
-		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
-		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-
-		dialog.setInput(registry.getFeatures());
-		if (initial != null) {
-			dialog.setInitial(initial);
-		}
-		if (dialog.open() == Dialog.OK) {
-			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof FeatureDescriptor) {
-				FeatureDescriptor feature = (FeatureDescriptor) firstResult;
-				return feature;
 			}
 		}
 		return null;

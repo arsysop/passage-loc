@@ -41,7 +41,7 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 public class LicensesCore {
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.core"; //$NON-NLS-1$
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.licenses.core"; //$NON-NLS-1$
 
 	public static String exportLicensePack(LicensePack licensePack, ProductDomainRegistry productRegistry, LicenseDomainRegistry licenseRegistry, StreamCodec streamCodec) throws CoreException {
 		String packIdentifier = licensePack.getIdentifier();
