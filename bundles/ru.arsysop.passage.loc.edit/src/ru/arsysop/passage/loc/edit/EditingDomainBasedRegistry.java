@@ -23,6 +23,7 @@ package ru.arsysop.passage.loc.edit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,8 +81,8 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	
 	@Override
 	public Path getBasePath() {
-		String areaValue = environmentInfo.getProperty("osgi.instance.area");
-		Path passagePath = LicensingPaths.getBasePath(areaValue);
+		String areaValue = environmentInfo.getProperty("user.home");
+		Path passagePath = Paths.get(areaValue, LicensingPaths.FOLDER_LICENSING_BASE);
 		try {
 			Files.createDirectories(passagePath);
 		} catch (IOException e) {

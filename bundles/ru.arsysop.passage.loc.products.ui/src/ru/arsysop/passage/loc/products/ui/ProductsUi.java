@@ -28,6 +28,7 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
@@ -53,6 +54,29 @@ public class ProductsUi {
 			if (firstResult instanceof ProductDescriptor) {
 				ProductDescriptor product = (ProductDescriptor) firstResult;
 				return product;
+			}
+		}
+		return null;
+	}
+
+	public static ProductVersionDescriptor selectProductVersionDescriptor(Shell shell, LicensingImages images,
+			ProductDomainRegistry registry, ProductVersionDescriptor initial) {
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
+		dialog.setTitle("Select Product Version");
+		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProductVersion().getName()));
+
+		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
+		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
+
+		dialog.setInput(registry.getProductVersions());
+		if (initial != null) {
+			dialog.setInitial(initial);
+		}
+		if (dialog.open() == Dialog.OK) {
+			Object firstResult = dialog.getFirstResult();
+			if (firstResult instanceof ProductVersionDescriptor) {
+				ProductVersionDescriptor productVersion = (ProductVersionDescriptor) firstResult;
+				return productVersion;
 			}
 		}
 		return null;
