@@ -63,8 +63,8 @@ public class FeatureCreateHandler {
 			}
 
 			@Override
-			public String getInitialFilePath() {
-				return System.getProperty("user.home") + "/new_feature_id"; //$NON-NLS-1$ ;
+			public String getInitialFileName() {
+				return "new_feature_id"; //$NON-NLS-1$ ;
 			}
 		};
 	}

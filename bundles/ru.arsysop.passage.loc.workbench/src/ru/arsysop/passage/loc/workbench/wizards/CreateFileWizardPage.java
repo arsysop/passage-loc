@@ -20,6 +20,8 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.wizards;
 
+import java.io.File;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -44,7 +46,6 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
 
-	private static final String URI_TEMPLATE = "%s.%s";
 	protected Text txtResourceURI;
 	protected Text txtId;
 	protected Text txtName;
@@ -57,7 +58,7 @@ public class CreateFileWizardPage extends WizardPage {
 	};
 
 	private String extension;
-	private InitialValuesProvider valueProvider;
+	private InitialValuesProvider valuesProvider;
 	private boolean createName;
 	private boolean createId;
 	private EObject eObject;
@@ -68,7 +69,7 @@ public class CreateFileWizardPage extends WizardPage {
 		super(pageName);
 
 		this.extension = extension;
-		this.valueProvider = valueProvider;
+		this.valuesProvider = valueProvider;
 		this.createId = createId;
 		this.createName = createName;
 		this.eObject = eObject;
@@ -94,7 +95,7 @@ public class CreateFileWizardPage extends WizardPage {
 
 		createFileControls(composite);
 		createOtherControls(composite);
-		initControls();
+		initControls(valuesProvider);
 
 		setPageComplete(validatePage());
 		setControl(composite);
@@ -174,15 +175,21 @@ public class CreateFileWizardPage extends WizardPage {
 		});
 	}
 
-	private void initControls() {
-		String resourceURI = String.format(URI_TEMPLATE, valueProvider.getInitialFilePath(), extension);
+	protected void initControls(InitialValuesProvider valuesProvider) {
+		String basePath = getBasePath();
+		String fileName = valuesProvider.getInitialFileName();
+		String resourceURI = basePath + File.separator + fileName + '.' + extension;
 		txtResourceURI.setText(resourceURI);
 		if (txtId != null) {
-			txtId.setText(valueProvider.getInitialIdentifierValue());
+			txtId.setText(valuesProvider.getInitialIdentifierValue());
 		}
 		if (txtName != null) {
-			txtName.setText(valueProvider.getInitialNameValue());
+			txtName.setText(valuesProvider.getInitialNameValue());
 		}
+	}
+
+	protected String getBasePath() {
+		return System.getProperty("user.home");
 	}
 
 	protected boolean validatePage() {

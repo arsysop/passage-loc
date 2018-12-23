@@ -54,8 +54,8 @@ public class CreateProductLineHandler {
 			}
 
 			@Override
-			public String getInitialFilePath() {
-				return System.getProperty("user.home") + "/new_product_line"; //$NON-NLS-1$ ;
+			public String getInitialFileName() {
+				return "new_product_line"; //$NON-NLS-1$ ;
 			}
 		};
 	}

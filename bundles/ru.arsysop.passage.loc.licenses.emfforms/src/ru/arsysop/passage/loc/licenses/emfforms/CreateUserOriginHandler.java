@@ -73,8 +73,8 @@ public class CreateUserOriginHandler {
 			}
 
 			@Override
-			public String getInitialFilePath() {
-				return System.getProperty("user.home") + "/new_user_origin"; //$NON-NLS-1$ ;
+			public String getInitialFileName() {
+				return "new_user_origin"; //$NON-NLS-1$ ;
 			}
 		};
 	}
