@@ -108,14 +108,16 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				filter.setFilteringText(getfilteringField());
-				tableViewItems.refresh();
-				Table table = tableViewItems.getTable();
-				if (table.getItemCount() > 0) {
-					TableItem item = table.getItem(0);
-					if (item != null) {
-						resultingField.setText(item.getText());
-						table.setSelection(0);
+				if (filter != null) {
+					filter.setFilteringText(getfilteringField());
+					tableViewItems.refresh();
+					Table table = tableViewItems.getTable();
+					if (table.getItemCount() > 0) {
+						TableItem item = table.getItem(0);
+						if (item != null) {
+							resultingField.setText(item.getText());
+							table.setSelection(0);
+						}
 					}
 				}
 			}
@@ -154,7 +156,9 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 				}
 			}
 		});
-		tableViewItems.setFilters(filter);
+		if (filter != null) {
+			tableViewItems.setFilters(filter);
+		}
 
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		applyDialogFont(tableViewItems.getTable());
@@ -163,6 +167,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 		tableViewItems.addDoubleClickListener(event -> handleDoubleClick());
 
 		resultingField = new Text(content, SWT.BORDER);
+		resultingField.setEditable(false);
 		{
 			GridData data = new GridData(SWT.FILL, SWT.FILL, true, false);
 			resultingField.setLayoutData(data);
