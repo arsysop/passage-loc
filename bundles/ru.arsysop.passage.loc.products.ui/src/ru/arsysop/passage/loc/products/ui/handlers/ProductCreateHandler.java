@@ -41,11 +41,10 @@ public class ProductCreateHandler {
 		EStructuralFeature featureName = LicPackage.eINSTANCE.getProduct_Name();
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		WizardDialog dialog = new WizardDialog(shell,
-				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider, false));
+				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider));
 		dialog.create();
 		dialog.setTitle("Product Line");
 		dialog.setMessage("Please specify a file name to store product data");
-		;
 		dialog.getShell().setText("New Product Line");
 		dialog.open();
 	}
@@ -64,8 +63,8 @@ public class ProductCreateHandler {
 			}
 
 			@Override
-			public String getInitialFilePath() {
-				return System.getProperty("user.home") + "/new_product"; //$NON-NLS-1$ ;
+			public String getInitialFileName() {
+				return "new_product"; //$NON-NLS-1$ ;
 			}
 		};
 	}

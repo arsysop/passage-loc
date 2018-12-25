@@ -20,13 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.wizards;
 
+import java.io.File;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -44,7 +41,8 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
 
-	private static final String URI_TEMPLATE = "%s.%s";
+	protected final EObject eObject;
+
 	protected Text txtResourceURI;
 	protected Text txtId;
 	protected Text txtName;
@@ -57,23 +55,19 @@ public class CreateFileWizardPage extends WizardPage {
 	};
 
 	private String extension;
-	private InitialValuesProvider valueProvider;
+	private InitialValuesProvider valuesProvider;
 	private boolean createName;
 	private boolean createId;
-	private EObject eObject;
-	private boolean createForm;
 
 	public CreateFileWizardPage(EObject eObject, String pageName, String extension, InitialValuesProvider valueProvider,
-			boolean createId, boolean createName, boolean createForm) {
+			boolean createId, boolean createName) {
 		super(pageName);
 
 		this.extension = extension;
-		this.valueProvider = valueProvider;
+		this.valuesProvider = valueProvider;
 		this.createId = createId;
 		this.createName = createName;
 		this.eObject = eObject;
-		this.createForm = createForm;
-
 	}
 
 	@Override
@@ -94,7 +88,7 @@ public class CreateFileWizardPage extends WizardPage {
 
 		createFileControls(composite);
 		createOtherControls(composite);
-		initControls();
+		initControls(valuesProvider);
 
 		setPageComplete(validatePage());
 		setControl(composite);
@@ -174,15 +168,21 @@ public class CreateFileWizardPage extends WizardPage {
 		});
 	}
 
-	private void initControls() {
-		String resourceURI = String.format(URI_TEMPLATE, valueProvider.getInitialFilePath(), extension);
+	protected void initControls(InitialValuesProvider valuesProvider) {
+		String basePath = getBasePath();
+		String fileName = valuesProvider.getInitialFileName();
+		String resourceURI = basePath + File.separator + fileName + '.' + extension;
 		txtResourceURI.setText(resourceURI);
 		if (txtId != null) {
-			txtId.setText(valueProvider.getInitialIdentifierValue());
+			txtId.setText(valuesProvider.getInitialIdentifierValue());
 		}
 		if (txtName != null) {
-			txtName.setText(valueProvider.getInitialNameValue());
+			txtName.setText(valuesProvider.getInitialNameValue());
 		}
+	}
+
+	protected String getBasePath() {
+		return System.getProperty("user.home");
 	}
 
 	protected boolean validatePage() {
@@ -250,24 +250,6 @@ public class CreateFileWizardPage extends WizardPage {
 	}
 
 	protected void createOtherControls(Composite composite) {
-		if (createForm) {
-			Composite base = new Composite(composite, SWT.NONE);
-
-			GridLayout layout = new GridLayout(1, false);
-			base.setLayout(layout);
-
-			GridData data = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-			base.setLayoutData(data);
-
-			final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-			properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
-					EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
-			try {
-				ECPSWTViewRenderer.INSTANCE.render(base, eObject, properties);
-			} catch (ECPRendererException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		//nothing by default
 	}
 }

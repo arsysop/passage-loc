@@ -29,7 +29,7 @@
             application="org.eclipse.e4.ui.workbench.swt.E4Application">
          <property
                name="appName"
-               value="Passage Licensing Operator Workbench">
+               value="%application.name">
          </property>
          <property
                name="windowImages"

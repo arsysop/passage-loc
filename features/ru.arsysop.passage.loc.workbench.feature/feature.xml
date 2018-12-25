@@ -23,7 +23,9 @@
       id="ru.arsysop.passage.loc.workbench.feature"
       label="%featureName"
       version="0.3.2.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      license-feature="ru.arsysop.passage.brc.license.feature"
+      license-feature-version="0.3.2">
 
    <description>
       %description

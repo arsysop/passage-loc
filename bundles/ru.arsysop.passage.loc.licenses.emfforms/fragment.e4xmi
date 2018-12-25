@@ -9,7 +9,4 @@
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_TPVnwPbNEei8_cVTxm7o5w" featurename="handlers" parentElementId="ru.arsysop.passage.loc.licenses.ui.part.licenses">
     <elements xsi:type="commands:Handler" xmi:id="_XcBDkPbNEei8_cVTxm7o5w" elementId="ru.arsysop.passage.loc.licenses.emfforms.handler.licensepack.create" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.CreateLicensePackHandler" command="_rAKYoPbNEei8_cVTxm7o5w"/>
   </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_z9p4EPbNEei8_cVTxm7o5w" featurename="handlers" parentElementId="ru.arsysop.passage.loc.licenses.ui.part.users">
-    <elements xsi:type="commands:Handler" xmi:id="_3TImIPbNEei8_cVTxm7o5w" elementId="ru.arsysop.passage.loc.licenses.emfforms.handler.userorigin" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.CreateUserOriginHandler" command="_rAKYoPbNEei8_cVTxm7o5w"/>
-  </fragments>
 </fragment:ModelFragments>

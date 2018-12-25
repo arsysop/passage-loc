@@ -27,14 +27,32 @@
 		<category name="ru.arsysop.passage.loc.category" />
 	</feature>
 	<feature
+		url="features/ru.arsysop.passage.loc.features.feature_0.3.2.qualifier.jar"
+		id="ru.arsysop.passage.loc.features.feature"
+		version="0.3.2.qualifier">
+		<category name="ru.arsysop.passage.loc.category" />
+	</feature>
+	<feature
 		url="features/ru.arsysop.passage.loc.products.feature_0.3.2.qualifier.jar"
 		id="ru.arsysop.passage.loc.products.feature"
 		version="0.3.2.qualifier">
 		<category name="ru.arsysop.passage.loc.category" />
 	</feature>
 	<feature
+		url="features/ru.arsysop.passage.loc.users.feature_0.3.2.qualifier.jar"
+		id="ru.arsysop.passage.loc.users.feature"
+		version="0.3.2.qualifier">
+		<category name="ru.arsysop.passage.loc.category" />
+	</feature>
+	<feature
 		url="features/ru.arsysop.passage.loc.licenses.feature_0.3.2.qualifier.jar"
 		id="ru.arsysop.passage.loc.licenses.feature"
+		version="0.3.2.qualifier">
+		<category name="ru.arsysop.passage.loc.category" />
+	</feature>
+	<feature
+		url="features/ru.arsysop.passage.loc.dashboard.feature_0.3.2.qualifier.jar"
+		id="ru.arsysop.passage.loc.dashboard.feature"
 		version="0.3.2.qualifier">
 		<category name="ru.arsysop.passage.loc.category" />
 	</feature>

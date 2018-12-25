@@ -28,6 +28,7 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
@@ -35,6 +36,8 @@ import ru.arsysop.passage.loc.jface.dialogs.ViewerIdentifierFilter;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class ProductsUi {
+
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.ui"; //$NON-NLS-1$
 
 	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductDescriptor initial) {
@@ -61,26 +64,26 @@ public class ProductsUi {
 		return null;
 	}
 
-	public static FeatureDescriptor selectFeatureDescriptor(Shell shell, LicensingImages images,
-			FeatureDomainRegistry registry, FeatureDescriptor initial) {
+	public static ProductVersionDescriptor selectProductVersionDescriptor(Shell shell, LicensingImages images,
+			ProductDomainRegistry registry, ProductVersionDescriptor initial) {
 		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
-		dialog.setTitle("Select Feature");
-		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getFeature().getName()));
+		dialog.setTitle("Select Product Version");
+		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProductVersion().getName()));
 
 		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
 		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-		dialog.setInput(registry.getFeatures());
+
+		dialog.setInput(registry.getProductVersions());
 		ViewerIdentifierFilter viewerFilter = new ViewerIdentifierFilter();
 		dialog.setFilter(viewerFilter);
-
 		if (initial != null) {
 			dialog.setInitial(initial);
 		}
 		if (dialog.open() == Dialog.OK) {
 			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof FeatureDescriptor) {
-				FeatureDescriptor feature = (FeatureDescriptor) firstResult;
-				return feature;
+			if (firstResult instanceof ProductVersionDescriptor) {
+				ProductVersionDescriptor productVersion = (ProductVersionDescriptor) firstResult;
+				return productVersion;
 			}
 		}
 		return null;

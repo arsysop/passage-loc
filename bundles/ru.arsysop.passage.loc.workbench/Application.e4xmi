@@ -18,6 +18,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
       </children>
     </mainMenu>
+    <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_iK-aoAgmEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore" containerData="3"/>
     <trimBars xmi:id="_6wlLlcgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.trimbars.top">
       <children xsi:type="menu:ToolBar" xmi:id="_52QqQOTyEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.toolbar.main">
         <children xsi:type="menu:HandledToolItem" xmi:id="_tTSiIPJJEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.new" label="New..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/new.png" command="_oHxDAPJKEeiO9ZCh0caXIg"/>
@@ -25,6 +26,7 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_7WOgYPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.save" label="Save" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/save.png" command="_qIUC4PGkEei3isMrv8wWOw"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_IvR-YPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.fie"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_LJ9REPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.export" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" command="_Us_jAPJjEeiO9ZCh0caXIg"/>
+        <children xsi:type="menu:ToolBarSeparator" xmi:id="_1tnR8Aa0EemNz8l9BTvo0A" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.view"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_i1VvsPPBEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.trimbar.0" side="Bottom">

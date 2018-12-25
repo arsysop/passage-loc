@@ -73,8 +73,8 @@ public class CreateLicensePackHandler {
 			}
 
 			@Override
-			public String getInitialFilePath() {
-				return System.getProperty("user.home") + "/new_license_pack"; //$NON-NLS-1$ ;
+			public String getInitialFileName() {
+				return "new_license_pack"; //$NON-NLS-1$ ;
 			}
 		};
 	}

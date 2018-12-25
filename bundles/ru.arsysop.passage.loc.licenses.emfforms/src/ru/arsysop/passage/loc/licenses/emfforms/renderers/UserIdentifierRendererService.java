@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.loc.users.emfforms.renderers.UserIdentifierRenderer;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRendererService;
 
 @Component

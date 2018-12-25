@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.translation.TranslationService;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -51,25 +52,28 @@ public class AboutDialog extends Dialog {
 	private static final String ABOUT_IMAGE = "%aboutImage"; //$NON-NLS-1$
 	private static final String ABOUT_TITLE = "%aboutTitle"; //$NON-NLS-1$
 
-	private static final String PRODUCT_BUNDLE_URL = "platform:/plugin/ru.arsysop.passage.loc.workbench"; //$NON-NLS-1$
+	private static final String PRODUCT_BUNDLE_URL = "platform:/plugin/%s"; //$NON-NLS-1$
 	private static final String PRODUCT_BUNDLE_ABOUT_IMAGE = "%s//%s"; //$NON-NLS-1$
 	private Image productLogo;
 
 	private final TranslationService translations;
 	private final LicensingImages licensingImages;
+	private final IApplicationContext applicationContext;
+	private final String bundleUrl;
 
 	public AboutDialog(Shell parentShell, IEclipseContext context) {
 		super(parentShell);
-//		setShellStyle(SWT.TITLE);
 		translations = context.get(TranslationService.class);
 		licensingImages = context.get(LicensingImages.class);
+		applicationContext = context.get(IApplicationContext.class);
+		bundleUrl = String.format(PRODUCT_BUNDLE_URL, applicationContext.getBrandingBundle().getSymbolicName());
 	}
 
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		String pattern = translations.translate(ABOUT_TITLE, PRODUCT_BUNDLE_URL);
-		String name = translations.translate(PRODUCT_NAME, PRODUCT_BUNDLE_URL);
+		String pattern = translations.translate(ABOUT_TITLE, bundleUrl);
+		String name = translations.translate(PRODUCT_NAME, bundleUrl);
 		newShell.setText(NLS.bind(pattern, name));
 		newShell.setImage(licensingImages.getImage(LicensingImages.IMG_DEFAULT));;
 	}
@@ -81,7 +85,7 @@ public class AboutDialog extends Dialog {
 		base.setLayout(workLayout);
 		base.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		String productImg = translations.translate(ABOUT_IMAGE, PRODUCT_BUNDLE_URL);
+		String productImg = translations.translate(ABOUT_IMAGE, bundleUrl);
 
 		if (productImg != null) {
 			URL url = getUrl(productImg);
@@ -102,7 +106,7 @@ public class AboutDialog extends Dialog {
 		lblProductLogo.setLayoutData(lblGridData);
 
 		GridData txtData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		String productDesription = translations.translate(ABOUT_TEXT, PRODUCT_BUNDLE_URL);
+		String productDesription = translations.translate(ABOUT_TEXT, bundleUrl);
 
 		StyledText txtProductDescription = new StyledText(base, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 		txtProductDescription.setLayoutData(txtData);
@@ -125,7 +129,7 @@ public class AboutDialog extends Dialog {
 	private URL getUrl(String productImg) {
 		URL url = null;
 		try {
-			url = new URL(String.format(PRODUCT_BUNDLE_ABOUT_IMAGE, PRODUCT_BUNDLE_URL, productImg));
+			url = new URL(String.format(PRODUCT_BUNDLE_ABOUT_IMAGE, bundleUrl, productImg));
 		} catch (MalformedURLException e) {
 			Logger.getLogger(AboutDialog.class.getName()).log(Level.INFO, e.getMessage(), e);
 		}

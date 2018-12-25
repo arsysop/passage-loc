@@ -6,5 +6,5 @@ public interface InitialValuesProvider {
 
 	String getInitialIdentifierValue();
 
-	String getInitialFilePath();
+	String getInitialFileName();
 }

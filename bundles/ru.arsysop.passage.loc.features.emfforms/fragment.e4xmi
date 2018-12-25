@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_Nvg8QOjbEeirQd2CUcYMjQ">
+  <imports xsi:type="commands:Command" xmi:id="_1CB5APTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_43mcYPTGEeiI64G0mnmT3g" featurename="handlers" parentElementId="ru.arsysop.passage.loc.products.ui.part.features">
+    <elements xsi:type="commands:Handler" xmi:id="_-VclIPTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.featureset.create" contributionURI="bundleclass://ru.arsysop.passage.loc.features.emfforms/ru.arsysop.passage.loc.features.emfforms.CreateFeatureSetHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
+  </fragments>
+</fragment:ModelFragments>
