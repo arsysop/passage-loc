@@ -17,11 +17,14 @@ public class ProductSearchFilter extends ViewerSearchFilter {
 		}
 		if (element instanceof Product) {
 			String name = ((Product) element).getName();
-			Pattern pattern = Pattern.compile(".*" + searchText + ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-			Matcher matcher = pattern.matcher(name);
-			if (matcher.matches()) {
+			String identifier = ((Product) element).getIdentifier();
+			Pattern pattern = getSearchPattern();
+			Matcher matcherByName = pattern.matcher(name);
+			Matcher matcherById = pattern.matcher(identifier);
+			if (matcherByName.matches() || matcherById.matches()) {
 				return true;
 			}
+			
 		}
 
 		return false;
