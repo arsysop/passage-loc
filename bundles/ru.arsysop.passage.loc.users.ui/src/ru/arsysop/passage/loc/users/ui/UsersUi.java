@@ -35,9 +35,9 @@ public class UsersUi {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.users.ui"; //$NON-NLS-1$
 
-	public static UserDescriptor selectUserDescriptor(Shell shell, LicensingImages images,
-			UserDomainRegistry registry, UserDescriptor initial) {
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
+	public static UserDescriptor selectUserDescriptor(Shell shell, LicensingImages images, UserDomainRegistry registry,
+			UserDescriptor initial) {
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new UserSearchFilter());
 		dialog.setTitle("Select User");
 		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getUser().getName()));
 

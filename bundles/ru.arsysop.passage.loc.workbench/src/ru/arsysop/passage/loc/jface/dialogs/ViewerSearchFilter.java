@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jface.viewers.ViewerFilter;
 
-public abstract class ViewerSearchFilter extends ViewerFilter {
+public abstract class ViewerSearchFilter<T> extends ViewerFilter {
 
 	protected String searchText = "";
 

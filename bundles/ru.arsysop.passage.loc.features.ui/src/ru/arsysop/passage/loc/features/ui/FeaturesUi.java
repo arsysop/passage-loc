@@ -37,7 +37,8 @@ public class FeaturesUi {
 
 	public static FeatureDescriptor selectFeatureDescriptor(Shell shell, LicensingImages images,
 			FeatureDomainRegistry registry, FeatureDescriptor initial) {
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
+
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new FeatureSearchFilter());
 		dialog.setTitle("Select Feature");
 		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getFeature().getName()));
 

@@ -55,11 +55,13 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 	private final List<Object> input = new ArrayList<>();
 
 	private LabelProvider labelProvider = new LabelProvider();
-	private ViewerSearchFilter filter;
+	private ViewerSearchFilter<?> filter;
 
-	public FilteredSelectionDialog(Shell parent, LicensingImages licensingImages, boolean multi) {
+	public FilteredSelectionDialog(Shell parent, LicensingImages licensingImages, boolean multi,
+			ViewerSearchFilter<?> filter) {
 		super(parent, licensingImages);
 		this.multi = multi;
+		this.filter = filter;
 
 	}
 
@@ -67,10 +69,6 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 		input.clear();
 		objects.forEach(input::add);
 
-	}
-
-	public void setFilter(ViewerSearchFilter filter) {
-		this.filter = filter;
 	}
 
 	public void setLabelProvider(LabelProvider labelProvider) {

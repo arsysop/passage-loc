@@ -39,9 +39,8 @@ public class ProductsUi {
 
 	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductDescriptor initial) {
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
-		ProductSearchFilter productrFilter = new ProductSearchFilter();
-		dialog.setFilter(productrFilter);
+
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new ProductSearchFilter());
 		dialog.setTitle("Select Product");
 		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProduct().getName()));
 
@@ -64,7 +63,8 @@ public class ProductsUi {
 
 	public static ProductVersionDescriptor selectProductVersionDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductVersionDescriptor initial) {
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
+
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new ProductSearchFilter());
 		dialog.setTitle("Select Product Version");
 		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProductVersion().getName()));
 
@@ -72,8 +72,6 @@ public class ProductsUi {
 		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
 
 		dialog.setInput(registry.getProductVersions());
-		ProductSearchFilter productrFilter = new ProductSearchFilter();
-		dialog.setFilter(productrFilter);
 		if (initial != null) {
 			dialog.setInitial(initial);
 		}
