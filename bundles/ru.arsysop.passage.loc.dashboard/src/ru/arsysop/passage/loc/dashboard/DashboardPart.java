@@ -59,7 +59,8 @@ public class DashboardPart {
 	}
 	
 	@PostConstruct
-	public void postConstruct(Composite parent) {
+	public void postConstruct(Composite parent, IEclipseContext context) {
+		dashboardAdvisor.init(context);
 		Composite area = new Composite(parent, SWT.NONE);
 		area.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 		area.setLayout(GridLayoutFactory.swtDefaults().create());
@@ -96,8 +97,8 @@ public class DashboardPart {
 	}
 
 	@PreDestroy
-	public void preDestroy() {
-		
+	public void preDestroy(IEclipseContext context) {
+		dashboardAdvisor.dispose(context);
 	}
 	
 	@Focus

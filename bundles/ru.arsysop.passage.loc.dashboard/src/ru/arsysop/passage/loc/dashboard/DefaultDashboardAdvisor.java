@@ -20,19 +20,33 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.dashboard;
 
+import java.util.stream.StreamSupport;
+
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
 public class DefaultDashboardAdvisor implements DashboardAdvisor {
+	
+	private LicensingImages licensingImages;
+
+	@Override
+	public void init(IEclipseContext context) {
+		licensingImages = context.get(LicensingImages.class);
+	}
 
 	@Override
 	public void createHeaderInfo(Composite parent) {
@@ -45,9 +59,19 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void createFeatureInfo(Composite parent, FeatureDomainRegistry featureRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Features");
-	}
+		Label labelImage = new Label(group, SWT.NONE);
+		labelImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureSet().getName()));
+		Label labelText = new Label(group, SWT.NONE);
+		labelText.setText("Feature Sets:");
+		Text text = new Text(group, SWT.READ_ONLY);
+		final ControlDecoration decoration =  new ControlDecoration(text, SWT.TOP | SWT.RIGHT);
+
+		long fsCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
+		text.setText(String.valueOf(fsCount));
+		DashboardDecorators.decorateFeatureSets(fsCount, decoration);
+}
 
 	@Override
 	public void createProductInfo(Composite parent, ProductDomainRegistry productRegistry) {
@@ -78,6 +102,11 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		label.setText("Licensing data summary");
+	}
+
+	@Override
+	public void dispose(IEclipseContext context) {
+		licensingImages = null;
 	}
 
 }

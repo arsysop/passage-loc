@@ -20,30 +20,23 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.dashboard;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.swt.graphics.Image;
 
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
-import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
-import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
-import ru.arsysop.passage.loc.edit.UserDomainRegistry;
+public class DashboardDecorators {
 
-public interface DashboardAdvisor {
-
-	void init(IEclipseContext context);
-
-	void createHeaderInfo(Composite parent);
-
-	void createFeatureInfo(Composite parent, FeatureDomainRegistry featureRegistry);
-
-	void createProductInfo(Composite parent, ProductDomainRegistry productRegistry);
-
-	void createUserInfo(Composite parent, UserDomainRegistry userRegistry);
-
-	void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry);
-
-	void createFooterInfo(Composite parent);
-
-	void dispose(IEclipseContext context);
+	public static void decorateFeatureSets(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have Feature Set(s) defined");
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("Please define Feature Set(s)");
+		}
+	}
 
 }
