@@ -116,7 +116,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 						TableItem item = table.getItem(0);
 						if (item != null) {
 							resultingField.setText(item.getText());
-							table.setSelection(0);
+							table.setSelection(item);
 						}
 					}
 				}
@@ -175,7 +175,6 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 		}
 
 		applyDialogFont(content);
-
 		return dialogArea;
 	}
 
