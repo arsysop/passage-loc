@@ -30,7 +30,7 @@ import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
-import ru.arsysop.passage.loc.jface.dialogs.ViewerIdentifierFilter;
+
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class ProductsUi {
@@ -40,8 +40,8 @@ public class ProductsUi {
 	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductDescriptor initial) {
 		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false);
-		ViewerIdentifierFilter viewerFilter = new ViewerIdentifierFilter();
-		dialog.setFilter(viewerFilter);
+		ProductSearchFilter productrFilter = new ProductSearchFilter();
+		dialog.setFilter(productrFilter);
 		dialog.setTitle("Select Product");
 		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProduct().getName()));
 
@@ -72,8 +72,8 @@ public class ProductsUi {
 		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
 
 		dialog.setInput(registry.getProductVersions());
-		ViewerIdentifierFilter viewerFilter = new ViewerIdentifierFilter();
-		dialog.setFilter(viewerFilter);
+		ProductSearchFilter productrFilter = new ProductSearchFilter();
+		dialog.setFilter(productrFilter);
 		if (initial != null) {
 			dialog.setInitial(initial);
 		}

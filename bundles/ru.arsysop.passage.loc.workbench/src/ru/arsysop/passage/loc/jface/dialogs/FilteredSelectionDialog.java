@@ -55,7 +55,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 	private final List<Object> input = new ArrayList<>();
 
 	private LabelProvider labelProvider = new LabelProvider();
-	private ViewerIdentifierFilter filter;
+	private ViewerSearchFilter filter;
 
 	public FilteredSelectionDialog(Shell parent, LicensingImages licensingImages, boolean multi) {
 		super(parent, licensingImages);
@@ -69,7 +69,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 
 	}
 
-	public void setFilter(ViewerIdentifierFilter filter) {
+	public void setFilter(ViewerSearchFilter filter) {
 		this.filter = filter;
 	}
 
