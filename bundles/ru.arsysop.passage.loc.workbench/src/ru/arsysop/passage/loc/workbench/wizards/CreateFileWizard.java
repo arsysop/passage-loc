@@ -32,8 +32,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
+import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
-import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
 
 public class CreateFileWizard extends Wizard {
 

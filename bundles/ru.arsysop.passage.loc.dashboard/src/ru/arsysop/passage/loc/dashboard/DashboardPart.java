@@ -25,13 +25,17 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
+import ru.arsysop.passage.lic.model.api.FeatureSet;
+import ru.arsysop.passage.lic.registry.FeaturesEvents;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -94,6 +98,12 @@ public class DashboardPart {
 
 	protected void createFooterInfo(Composite parent) {
 		dashboardAdvisor.createFooterInfo(parent);
+	}
+
+	@Inject
+	@Optional
+	public void readFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_READ) FeatureSet input) {
+		dashboardAdvisor.updateFeatureInfo(featureRegistry);
 	}
 
 	@PreDestroy

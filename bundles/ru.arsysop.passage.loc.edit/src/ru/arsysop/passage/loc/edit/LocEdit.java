@@ -30,6 +30,8 @@ public class LocEdit {
 	
 	public static final String EXTENSION_KEY_PRIVATE = ".scr"; //$NON-NLS-1$
 	
+	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
+
 	public static Resource extractResource(Object object) {
 		if (object instanceof EObject) {
 			EObject eObject = (EObject) object;

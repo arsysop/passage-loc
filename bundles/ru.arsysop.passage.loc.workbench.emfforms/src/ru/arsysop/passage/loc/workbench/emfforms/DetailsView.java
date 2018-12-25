@@ -30,6 +30,7 @@ import javax.inject.Named;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -62,7 +63,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
+import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.lic.registry.FeaturesEvents;
 import ru.arsysop.passage.loc.edit.LocEdit;
 
 public class DetailsView {
@@ -96,6 +99,16 @@ public class DetailsView {
 	@Inject
 	@Optional
 	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) Notifier input) {
+		show(input);
+	}
+
+	@Inject
+	@Optional
+	public void showFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_READ) FeatureSet input) {
+		show(input);
+	}
+
+	protected void show(Notifier input) {
 		if (content == null || content.isDisposed()) {
 			return;
 		}

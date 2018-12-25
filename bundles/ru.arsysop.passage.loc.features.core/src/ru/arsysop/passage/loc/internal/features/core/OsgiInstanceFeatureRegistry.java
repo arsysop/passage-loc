@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.model.api.Feature;
 import ru.arsysop.passage.lic.model.api.FeatureSet;
@@ -63,6 +64,17 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
+	}
+	
+	@Reference
+	@Override
+	public void bindEventAdmin(EventAdmin eventAdmin) {
+		super.bindEventAdmin(eventAdmin);
+	}
+	
+	@Override
+	public void unbindEventAdmin(EventAdmin eventAdmin) {
+		super.unbindEventAdmin(eventAdmin);
 	}
 	
 	@Reference
@@ -161,30 +173,33 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 		for (EObject eObject : contents) {
 			if (eObject instanceof FeatureSet) {
 				FeatureSet featureSet = (FeatureSet) eObject;
-				addedFeatureSet(featureSet);
+				registerFeatureSet(featureSet);
 			}
 		}
 	}
 
-	protected void addedFeatureSet(FeatureSet featureSet) {
+	@Override
+	public void registerFeatureSet(FeatureSet featureSet) {
 		String identifier = featureSet.getIdentifier();
 		featureSetIndex.put(identifier, featureSet);
 		EList<Feature> features = featureSet.getFeatures();
 		for (Feature feature : features) {
-			addedFeature(feature);
+			registerFeature(feature);
 		}
 	}
 
-	protected void addedFeature(Feature feature) {
+	@Override
+	public void registerFeature(Feature feature) {
 		String identifier = feature.getIdentifier();
 		featureIndex.put(identifier, feature);
 		EList<FeatureVersion> featureVersions = feature.getFeatureVersions();
 		for (FeatureVersion featureVersion : featureVersions) {
-			addedFeatureVersion(feature, featureVersion);
+			registerFeatureVersion(feature, featureVersion);
 		}
 	}
 
-	protected void addedFeatureVersion(Feature feature, FeatureVersion featureVersion) {
+	@Override
+	public void registerFeatureVersion(Feature feature, FeatureVersion featureVersion) {
 		String identifier = feature.getIdentifier();
 		Map<String, FeatureVersion> map = featureVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
 		String version = featureVersion.getVersion();

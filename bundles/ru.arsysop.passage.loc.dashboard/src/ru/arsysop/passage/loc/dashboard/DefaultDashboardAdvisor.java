@@ -42,6 +42,8 @@ import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	
 	private LicensingImages licensingImages;
+	private Text featureSetText;
+	private ControlDecoration featureSetDecoration;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -65,12 +67,9 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		labelImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureSet().getName()));
 		Label labelText = new Label(group, SWT.NONE);
 		labelText.setText("Feature Sets:");
-		Text text = new Text(group, SWT.READ_ONLY);
-		final ControlDecoration decoration =  new ControlDecoration(text, SWT.TOP | SWT.RIGHT);
-
-		long fsCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
-		text.setText(String.valueOf(fsCount));
-		DashboardDecorators.decorateFeatureSets(fsCount, decoration);
+		featureSetText = new Text(group, SWT.READ_ONLY);
+		featureSetDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
+		updateFeatureInfo(featureRegistry);
 }
 
 	@Override
@@ -107,6 +106,13 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	@Override
 	public void dispose(IEclipseContext context) {
 		licensingImages = null;
+	}
+
+	@Override
+	public void updateFeatureInfo(FeatureDomainRegistry featureRegistry) {
+		long fsCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
+		featureSetText.setText(String.valueOf(fsCount));
+		DashboardDecorators.decorateFeatureSets(fsCount, featureSetDecoration);
 	}
 
 }

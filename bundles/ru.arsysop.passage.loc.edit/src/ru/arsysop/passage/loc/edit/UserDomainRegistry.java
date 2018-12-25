@@ -20,6 +20,7 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 

@@ -23,7 +23,7 @@ package ru.arsysop.passage.loc.workbench.emfforms;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;

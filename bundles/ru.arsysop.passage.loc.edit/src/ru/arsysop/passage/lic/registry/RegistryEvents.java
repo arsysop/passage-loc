@@ -18,16 +18,39 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.edit;
+package ru.arsysop.passage.lic.registry;
 
-import java.nio.file.Path;
+public class RegistryEvents {
 
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+	/**
+	 * Topic separator character
+	 */
+	public static final String TOPIC_SEP = "/"; //$NON-NLS-1$
 
-public interface EditingDomainRegistry extends IEditingDomainProvider, ComposedAdapterFactoryProvider {
-	
-	String getFileExtension();
-	
-	Path getBasePath();
+	/**
+	 * Wild card character for matching all sub topics
+	 */
+	public static final String ALL_SUB_TOPICS = "*"; //$NON-NLS-1$
+
+
+	/**
+	 * Segment for events of type <code>create</code> 
+	 */
+	public static final String CREATE = "create"; //$NON-NLS-1$
+
+	/**
+	 * Segment for events of type <code>read</code> 
+	 */
+	public static final String READ = "read"; //$NON-NLS-1$
+
+	/**
+	 * Segment for events of type <code>update</code> 
+	 */
+	public static final String UPDATE = "update"; //$NON-NLS-1$
+
+	/**
+	 * Segment for events of type <code>delete</code> 
+	 */
+	public static final String DELETE = "delete"; //$NON-NLS-1$
 
 }

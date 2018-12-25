@@ -40,15 +40,17 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
+import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
+import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
 	
-	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
-	
 	protected EnvironmentInfo environmentInfo;
+
+	protected EventAdmin eventAdmin;
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
@@ -61,27 +63,35 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
 	
-	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
+	protected void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		this.environmentInfo = environmentInfo;
 	}
 
-	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
+	protected void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		this.environmentInfo = null;
 	}
 	
-	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
+	protected void bindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = eventAdmin;
+	}
+
+	protected void unbindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = null;
+	}
+	
+	protected void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		this.composedAdapterFactory = factoryProvider.getComposedAdapterFactory();
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
 	
-	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
+	protected void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		this.composedAdapterFactory = null;
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
 	
 	@Override
 	public Path getBasePath() {
-		String areaValue = environmentInfo.getProperty("user.home");
+		String areaValue = environmentInfo.getProperty("user.home"); //$NON-NLS-1$
 		Path passagePath = Paths.get(areaValue, LicensingPaths.FOLDER_LICENSING_BASE);
 		try {
 			Files.createDirectories(passagePath);
@@ -92,10 +102,10 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		return passagePath;
 	}
 	
-	public void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) {
 	}
 	
-	public void deactivate(Map<String, Object> properties) {
+	protected void deactivate(Map<String, Object> properties) {
 	}
 
 	@Override

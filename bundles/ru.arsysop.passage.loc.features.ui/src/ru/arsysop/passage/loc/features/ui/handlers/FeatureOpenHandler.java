@@ -21,13 +21,14 @@
 package ru.arsysop.passage.loc.features.ui.handlers;
 
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class FeatureOpenHandler {
-
+	
 	@Execute
 	public void execute(Shell shell, FeatureDomainRegistry registry) {
 		String selected = LocWokbench.selectLoadPath(shell, registry.getFileExtension());
@@ -35,5 +36,9 @@ public class FeatureOpenHandler {
 			registry.registerSource(selected);
 		}
 	}
+	
+	protected void selectLoaded(ESelectionService service) {
 		
+	}
+
 }

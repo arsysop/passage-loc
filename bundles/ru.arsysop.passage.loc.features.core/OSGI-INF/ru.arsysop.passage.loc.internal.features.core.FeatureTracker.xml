@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="ru.arsysop.passage.loc.internal.features.core.FeatureTracker">
+   <reference bind="bindEventAdmin" interface="org.osgi.service.event.EventAdmin" name="EventAdmin" unbind="unbindEventAdmin"/>
+   <reference bind="bindFeatureDomainRegistry" interface="ru.arsysop.passage.loc.edit.FeatureDomainRegistry" name="FeatureDomainRegistry" unbind="unbindFeatureDomainRegistry"/>
+   <implementation class="ru.arsysop.passage.loc.internal.features.core.FeatureTracker"/>
+</scr:component>
