@@ -18,21 +18,27 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.licenses.ui.viewers;
+package ru.arsysop.passage.loc.dashboard;
 
-import javax.inject.Inject;
+import org.eclipse.swt.widgets.Composite;
 
-import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
-import ru.arsysop.passage.loc.workbench.parts.DomainRegistryExplorer;
+import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
+import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-public class LicenseExplorer extends DomainRegistryExplorer {
+public interface DashboardAdvisor {
 
-	@Inject
-	public LicenseExplorer(LicenseDomainRegistry registry, ESelectionService selectionService, LicensingImages images) {
-		super(registry, selectionService, images);
-	}
+	void createHeaderInfo(Composite parent);
+
+	void createFeatureInfo(Composite parent, FeatureDomainRegistry featureRegistry);
+
+	void createProductInfo(Composite parent, ProductDomainRegistry productRegistry);
+
+	void createUserInfo(Composite parent, UserDomainRegistry userRegistry);
+
+	void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry);
+
+	void createFooterInfo(Composite parent);
 
 }

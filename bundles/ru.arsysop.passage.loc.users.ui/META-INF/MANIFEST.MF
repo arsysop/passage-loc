@@ -27,4 +27,3 @@ Export-Package: ru.arsysop.passage.loc.users.ui,
  ru.arsysop.passage.loc.users.ui.handlers,
  ru.arsysop.passage.loc.users.ui.viewers
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/*.xml

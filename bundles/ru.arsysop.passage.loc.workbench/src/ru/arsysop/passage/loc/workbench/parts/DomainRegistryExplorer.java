@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.viewers;
+package ru.arsysop.passage.loc.workbench.parts;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -43,6 +43,9 @@ import org.eclipse.swt.widgets.Composite;
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.EditingDomainRegistry;
+import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
+import ru.arsysop.passage.loc.workbench.viewers.ResourceSetAdapter;
+import ru.arsysop.passage.loc.workbench.viewers.StructuredSelectionListener;
 
 public class DomainRegistryExplorer {
 

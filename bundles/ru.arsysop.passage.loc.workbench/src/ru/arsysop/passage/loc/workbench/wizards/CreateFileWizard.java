@@ -42,20 +42,16 @@ public class CreateFileWizard extends Wizard {
 	protected final InitialValuesProvider valueProvider;
 	protected final EStructuralFeature featureIdentifier;
 	protected final EStructuralFeature featureName;
-	protected final boolean createForm ;
 	private CreateFileWizardPage filePage;
 
 	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature featureIdentifier,
-			EStructuralFeature featureName, InitialValuesProvider valueProvider, boolean createForm) {
+			EStructuralFeature featureName, InitialValuesProvider valueProvider) {
 		this.editingDomainRegistry = registry;
 		this.eObject = eObject;
 
 		this.featureIdentifier = featureIdentifier;
 		this.featureName = featureName;
 		this.valueProvider = valueProvider;
-		this.createForm = createForm;
-		
-
 	}
 
 	@Override
@@ -66,7 +62,7 @@ public class CreateFileWizard extends Wizard {
 
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFileWizardPage(eObject, CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				valueProvider, featureIdentifier != null, featureName != null ,createForm);
+				valueProvider, featureIdentifier != null, featureName != null);
 	}
 
 	@Override

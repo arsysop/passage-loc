@@ -72,6 +72,7 @@
       <feature id="ru.arsysop.passage.loc.products.feature"/>
       <feature id="ru.arsysop.passage.loc.users.feature"/>
       <feature id="ru.arsysop.passage.loc.licenses.feature"/>
+      <feature id="ru.arsysop.passage.loc.dashboard.feature"/>
    </features>
 
    <configurations>

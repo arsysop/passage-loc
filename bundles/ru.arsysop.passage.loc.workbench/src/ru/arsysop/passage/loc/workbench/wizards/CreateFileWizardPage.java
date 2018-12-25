@@ -24,11 +24,6 @@ import java.io.File;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -46,6 +41,8 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
 
+	protected final EObject eObject;
+
 	protected Text txtResourceURI;
 	protected Text txtId;
 	protected Text txtName;
@@ -61,11 +58,9 @@ public class CreateFileWizardPage extends WizardPage {
 	private InitialValuesProvider valuesProvider;
 	private boolean createName;
 	private boolean createId;
-	private EObject eObject;
-	private boolean createForm;
 
 	public CreateFileWizardPage(EObject eObject, String pageName, String extension, InitialValuesProvider valueProvider,
-			boolean createId, boolean createName, boolean createForm) {
+			boolean createId, boolean createName) {
 		super(pageName);
 
 		this.extension = extension;
@@ -73,8 +68,6 @@ public class CreateFileWizardPage extends WizardPage {
 		this.createId = createId;
 		this.createName = createName;
 		this.eObject = eObject;
-		this.createForm = createForm;
-
 	}
 
 	@Override
@@ -257,24 +250,6 @@ public class CreateFileWizardPage extends WizardPage {
 	}
 
 	protected void createOtherControls(Composite composite) {
-		if (createForm) {
-			Composite base = new Composite(composite, SWT.NONE);
-
-			GridLayout layout = new GridLayout(1, false);
-			base.setLayout(layout);
-
-			GridData data = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-			base.setLayoutData(data);
-
-			final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-			properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
-					EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
-			try {
-				ECPSWTViewRenderer.INSTANCE.render(base, eObject, properties);
-			} catch (ECPRendererException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		//nothing by default
 	}
 }

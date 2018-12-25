@@ -18,6 +18,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
       </children>
     </mainMenu>
+    <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_iK-aoAgmEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore" containerData="3"/>
     <trimBars xmi:id="_6wlLlcgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.trimbars.top">
       <children xsi:type="menu:ToolBar" xmi:id="_52QqQOTyEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.toolbar.main">
         <children xsi:type="menu:HandledToolItem" xmi:id="_tTSiIPJJEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.new" label="New..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/new.png" command="_oHxDAPJKEeiO9ZCh0caXIg"/>
