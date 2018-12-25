@@ -17,7 +17,7 @@ public class ProductSearchFilter extends ViewerSearchFilter {
 		}
 		if (element instanceof Product) {
 			String name = ((Product) element).getName();
-			Pattern pattern = Pattern.compile(".*" + searchText + ".*");
+			Pattern pattern = Pattern.compile(".*" + searchText + ".*"); //$NON-NLS-1$ //$NON-NLS-2$
 			Matcher matcher = pattern.matcher(name);
 			if (matcher.matches()) {
 				return true;
