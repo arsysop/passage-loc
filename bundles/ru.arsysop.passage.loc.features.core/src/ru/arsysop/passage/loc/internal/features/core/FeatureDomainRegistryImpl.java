@@ -27,10 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +41,6 @@ import ru.arsysop.passage.lic.model.api.Feature;
 import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.FeatureVersion;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
@@ -53,50 +51,51 @@ import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
 @Component
-public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry implements FeatureRegistry, FeatureDomainRegistry {
-	
+public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
+		implements FeatureRegistry, FeatureDomainRegistry {
+
 	private final Map<String, FeatureSet> featureSetIndex = new HashMap<>();
 	private final Map<String, Feature> featureIndex = new HashMap<>();
 	private final Map<String, Map<String, FeatureVersion>> featureVersionIndex = new HashMap<>();
-	
+
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.bindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Reference
 	@Override
 	public void bindEventAdmin(EventAdmin eventAdmin) {
 		super.bindEventAdmin(eventAdmin);
 	}
-	
+
 	@Override
 	public void unbindEventAdmin(EventAdmin eventAdmin) {
 		super.unbindEventAdmin(eventAdmin);
 	}
-	
+
 	@Reference
 	@Override
 	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.bindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Override
 	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.unbindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Activate
 	public void activate(Map<String, Object> properties) {
 		super.activate(properties);
 	}
-	
+
 	@Deactivate
 	@Override
 	public void deactivate(Map<String, Object> properties) {
@@ -119,7 +118,7 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	public Iterable<FeatureSetDescriptor> getFeatureSets() {
 		return new ArrayList<>(featureSetIndex.values());
 	}
-	
+
 	@Override
 	public FeatureSetDescriptor getFeatureSet(String identifier) {
 		return featureSetIndex.get(identifier);
@@ -143,7 +142,7 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	public FeatureDescriptor getFeature(String identifier) {
 		return featureIndex.get(identifier);
 	}
-	
+
 	@Override
 	public Iterable<FeatureVersionDescriptor> getFeatureVersions() {
 		List<FeatureVersionDescriptor> list = new ArrayList<>();
@@ -173,6 +172,11 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	}
 
 	@Override
+	protected EContentAdapter createContentAdapter() {
+		return new FeatureDomainRegistryTracker(this);
+	}
+
+	@Override
 	protected void afterLoad(EList<EObject> contents) {
 		for (EObject eObject : contents) {
 			if (eObject instanceof FeatureSet) {
@@ -185,7 +189,10 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	@Override
 	public void registerFeatureSet(FeatureSet featureSet) {
 		String identifier = featureSet.getIdentifier();
-		featureSetIndex.put(identifier, featureSet);
+		FeatureSet existing = featureSetIndex.put(identifier, featureSet);
+		if (existing != null) {
+			// FIXME: warning
+		}
 		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_CREATE, featureSet));
 		EList<Feature> features = featureSet.getFeatures();
 		for (Feature feature : features) {
@@ -196,7 +203,10 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	@Override
 	public void registerFeature(Feature feature) {
 		String identifier = feature.getIdentifier();
-		featureIndex.put(identifier, feature);
+		Feature existing = featureIndex.put(identifier, feature);
+		if (existing != null) {
+			// FIXME: warning
+		}
 		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_CREATE, feature));
 		EList<FeatureVersion> featureVersions = feature.getFeatureVersions();
 		for (FeatureVersion featureVersion : featureVersions) {
@@ -257,54 +267,6 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 				featureVersionIndex.remove(identifier);
 			}
 		}
-	}
-	
-	@Override
-	public void notifyChanged(Notification notification) {
-		Object oldValue = notification.getOldValue();
-		Object newValue = notification.getNewValue();
-		if (Resource.RESOURCE__CONTENTS == notification.getFeatureID(Resource.class)) {
-			//FIXME: handled by parent class for now, needs to be reworked
-		} else if (LicPackage.FEATURE_SET__FEATURES == notification.getFeatureID(FeatureSet.class)) {
-			switch (notification.getEventType()) {
-			case Notification.ADD:
-				if (newValue instanceof Feature) {
-					Feature feature = (Feature) newValue;
-					registerFeature(feature);
-				}
-				break;
-			case Notification.REMOVE:
-				if (oldValue instanceof Feature) {
-					Feature feature = (Feature) oldValue;
-					unregisterFeature(feature);
-				}
-				break;
-
-			default:
-				break;
-			}
-		} else if (LicPackage.FEATURE__FEATURE_VERSIONS == notification.getFeatureID(Feature.class)) {
-			switch (notification.getEventType()) {
-			case Notification.ADD:
-				if (newValue instanceof FeatureVersion) {
-					FeatureVersion version = (FeatureVersion) newValue;
-					Feature feature = (Feature) notification.getNotifier();
-					registerFeatureVersion(feature, version);
-				}
-				break;
-			case Notification.REMOVE:
-				if (oldValue instanceof FeatureVersion) {
-					FeatureVersion version = (FeatureVersion) oldValue;
-					Feature feature = (Feature) notification.getNotifier();
-					unregisterFeatureVersion(feature, version);
-				}
-				break;
-
-			default:
-				break;
-			}
-		}
-		super.notifyChanged(notification);
 	}
 
 }

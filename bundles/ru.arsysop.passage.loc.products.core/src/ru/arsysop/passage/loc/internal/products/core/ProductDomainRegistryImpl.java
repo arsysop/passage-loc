@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,7 +50,7 @@ import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 @Component
-public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry implements ProductRegistry, ProductDomainRegistry {
+public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry implements ProductRegistry, ProductDomainRegistry {
 	
 	private final Map<String, ProductLine> productLineIndex = new HashMap<>();
 	private final Map<String, Product> productIndex = new HashMap<>();
@@ -193,6 +194,11 @@ public class OsgiInstanceProductRegistry extends EditingDomainBasedRegistry impl
 		List<ProductVersionFeatureDescriptor> result = new ArrayList<>();
 		productVersion.getProductVersionFeatures().forEach(result::add);
 		return result;
+	}
+
+	@Override
+	protected EContentAdapter createContentAdapter() {
+		return new ProductDomainRegistryTracker(this);
 	}
 
 	@Override

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,7 +45,7 @@ import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
 @Component
-public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry implements UserRegistry, UserDomainRegistry {
+public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implements UserRegistry, UserDomainRegistry {
 	
 	private final Map<String, UserOrigin> userOriginIndex = new HashMap<>();
 	private final Map<String, User> userIndex = new HashMap<>();
@@ -116,6 +117,11 @@ public class OsgiInstanceUserRegistry extends EditingDomainBasedRegistry impleme
 	@Override
 	public UserDescriptor getUser(String identifier) {
 		return userIndex.get(identifier);
+	}
+	
+	@Override
+	protected EContentAdapter createContentAdapter() {
+		return new UserDomainRegistryTracker(this);
 	}
 
 	@Override

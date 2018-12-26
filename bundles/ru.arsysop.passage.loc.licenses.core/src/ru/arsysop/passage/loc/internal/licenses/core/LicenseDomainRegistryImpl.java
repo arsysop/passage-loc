@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,7 +45,7 @@ import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 
 @Component
-public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry implements LicenseRegistry, LicenseDomainRegistry {
+public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry implements LicenseRegistry, LicenseDomainRegistry {
 	
 	private final Map<String, LicensePack> licensePackIndex = new HashMap<>();
 	private final Map<String, List<LicensePack>> userPackIndex = new HashMap<>();
@@ -133,6 +134,11 @@ public class OsgiInstanceLicenseRegistry extends EditingDomainBasedRegistry impl
 			return Collections.emptyList();
 		}
 		return Collections.unmodifiableList(list);
+	}
+
+	@Override
+	protected EContentAdapter createContentAdapter() {
+		return new LicenseDomainRegistryTracker(this);
 	}
 
 	@Override

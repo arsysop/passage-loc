@@ -48,7 +48,7 @@ import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
-public abstract class EditingDomainBasedRegistry extends EContentAdapter implements DescriptorRegistry, EditingDomainRegistry {
+public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
 	
 	//@see org.eclipse.e4.core.services.events.IEventBroker.DATA
 	protected static final String PROPERTY_DATA = "org.eclipse.e4.data"; //$NON-NLS-1$
@@ -62,6 +62,8 @@ public abstract class EditingDomainBasedRegistry extends EContentAdapter impleme
 	private AdapterFactoryEditingDomain editingDomain;
 
 	private final List<String> sources = new ArrayList<>();
+
+	private EContentAdapter contentAdapter;
 
 	public EditingDomainBasedRegistry() {
 		BasicCommandStack commandStack = new BasicCommandStack();
@@ -108,11 +110,14 @@ public abstract class EditingDomainBasedRegistry extends EContentAdapter impleme
 	}
 	
 	protected void activate(Map<String, Object> properties) {
-		editingDomain.getResourceSet().eAdapters().add(this);
+		contentAdapter = createContentAdapter();
+		editingDomain.getResourceSet().eAdapters().add(contentAdapter);
 	}
 	
+	protected abstract EContentAdapter createContentAdapter();
+
 	protected void deactivate(Map<String, Object> properties) {
-		editingDomain.getResourceSet().eAdapters().remove(this);
+		editingDomain.getResourceSet().eAdapters().remove(contentAdapter);
 	}
 
 	@Override
