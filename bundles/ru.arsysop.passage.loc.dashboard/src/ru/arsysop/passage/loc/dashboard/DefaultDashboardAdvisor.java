@@ -40,7 +40,7 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
 public class DefaultDashboardAdvisor implements DashboardAdvisor {
-	
+
 	private LicensingImages licensingImages;
 
 	private Text featureSetText;
@@ -49,6 +49,13 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	private ControlDecoration featureDecoration;
 	private Text featureVersionText;
 	private ControlDecoration featureVersionDecoration;
+
+	private Text productLinesText;
+	private ControlDecoration productLinesDecoration;
+	private Text productsText;
+	private ControlDecoration productsDecoration;
+	private Text productVersionsText;
+	private ControlDecoration productVersionsDecoration;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -91,14 +98,37 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		featureVersionDecoration = new ControlDecoration(featureVersionText, SWT.TOP | SWT.RIGHT);
 
 		updateFeatureInfo(featureRegistry);
-}
+	}
 
 	@Override
 	public void createProductInfo(Composite parent, ProductDomainRegistry productRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Products");
+
+		Label productLinesImage = new Label(group, SWT.NONE);
+		productLinesImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getProductLine().getName()));
+		Label productLinesLabel = new Label(group, SWT.NONE);
+		productLinesLabel.setText("Product Lines:");
+		productLinesText = new Text(group, SWT.READ_ONLY);
+		productLinesDecoration = new ControlDecoration(productLinesText, SWT.TOP | SWT.RIGHT);
+
+		Label productsImage = new Label(group, SWT.NONE);
+		productsImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getProduct().getName()));
+		Label productLabel = new Label(group, SWT.NONE);
+		productLabel.setText("Products:");
+		productsText = new Text(group, SWT.READ_ONLY);
+		productsDecoration = new ControlDecoration(productsText, SWT.TOP | SWT.RIGHT);
+
+		Label productVersionsImage = new Label(group, SWT.NONE);
+		productVersionsImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getProductVersion().getName()));
+		Label productVersionsLabel = new Label(group, SWT.NONE);
+		productVersionsLabel.setText("Product Versions:");
+		productVersionsText = new Text(group, SWT.READ_ONLY);
+		productVersionsDecoration = new ControlDecoration(productVersionsText, SWT.TOP | SWT.RIGHT);
+		
+		updateProductInfo(productRegistry);
 	}
 
 	@Override
@@ -139,9 +169,26 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		featureText.setText(String.valueOf(featureCount));
 		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
 
-		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false).count();
+		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false)
+				.count();
 		featureVersionText.setText(String.valueOf(featureVersionCount));
 		DashboardDecorators.decorateFeatureVersions(featureVersionCount, featureVersionDecoration);
+	}
+
+	@Override
+	public void updateProductInfo(ProductDomainRegistry productRegistry) {
+		long productLinesCount = StreamSupport.stream(productRegistry.getProductLines().spliterator(), false).count();
+		productLinesText.setText(String.valueOf(productLinesCount));
+		DashboardDecorators.decorateFeatureSets(productLinesCount, productLinesDecoration);
+
+		long productsCount = StreamSupport.stream(productRegistry.getProducts().spliterator(), false).count();
+		productsText.setText(String.valueOf(productsCount));
+		DashboardDecorators.decorateFeatureSets(productsCount, productsDecoration);
+
+		long productVersionsCount = StreamSupport.stream(productRegistry.getProductVersions().spliterator(), false)
+				.count();
+		productVersionsText.setText(String.valueOf(productVersionsCount));
+		DashboardDecorators.decorateFeatureSets(productVersionsCount, productVersionsDecoration);
 
 	}
 
