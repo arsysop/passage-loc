@@ -16,9 +16,11 @@ public class FeatureSearchFilter extends ViewerSearchFilter<Feature> {
 			return true;
 		}
 		if (element instanceof Feature) {
-			String name = ((Feature) element).getName();
-			String identifier = ((Feature) element).getIdentifier();
+			Feature feature = (Feature) element;
+			String name = feature.getName() == null ? "" : feature.getName();
+			String identifier = feature.getIdentifier() == null ? "" : feature.getIdentifier();
 			Pattern pattern = getSearchPattern();
+
 			Matcher matcherByName = pattern.matcher(name);
 			Matcher matcherById = pattern.matcher(identifier);
 			if (matcherByName.matches() || matcherById.matches()) {
