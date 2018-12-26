@@ -5,10 +5,11 @@
   <imports xsi:type="commands:Command" xmi:id="_co724PMIEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.workbench.command.file.export"/>
   <imports xsi:type="commands:Command" xmi:id="_-FL1kOjTEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
   <imports xsi:type="commands:CommandParameter" xmi:id="_KydZcOjUEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
+  <imports xsi:type="basic:PartSashContainer" xmi:id="_d9Y_AAkaEemiMscYRYKkWw" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_m0kyoOjPEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.perspectivestack.main">
     <elements xsi:type="advanced:Perspective" xmi:id="__OHwYOjPEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.perspective.main" label="Products" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_sUDdoOjQEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.partsashcontainer.main" containerData="3" selectedElement="__DQuwOjQEeirQd2CUcYMjQ" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_QXbioAj5EemmM9IATLmVRA" elementId="ru.arsysop.passage.loc.products.ui.partstack.dashboard"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_VpEYYAkaEemiMscYRYKkWw" elementId="ru.arsysop.passage.loc.products.ui.placeholder.0" ref="_d9Y_AAkaEemiMscYRYKkWw"/>
         <children xsi:type="basic:PartStack" xmi:id="__DQuwOjQEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.partstack.explorers" containerData="" selectedElement="_UvOr8OjREeirQd2CUcYMjQ">
           <children xsi:type="basic:Part" xmi:id="_UvOr8OjREeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.part.products" containerData="" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.viewers.ProductExplorer" label="Products" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png">
             <handlers xmi:id="_bF72QPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.open" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductOpenHandler" command="_RzFcwPMKEeiuJLGN-praBQ"/>

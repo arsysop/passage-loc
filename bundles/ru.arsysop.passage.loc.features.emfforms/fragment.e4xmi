@@ -2,14 +2,10 @@
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_Nvg8QOjbEeirQd2CUcYMjQ">
   <imports xsi:type="commands:Command" xmi:id="_1CB5APTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
   <imports xsi:type="commands:Command" xmi:id="_qu_wsAhTEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.workbench.command.file.open"/>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_43mcYPTGEeiI64G0mnmT3g" featurename="handlers" parentElementId="ru.arsysop.passage.loc.products.ui.part.features">
-    <elements xsi:type="commands:Handler" xmi:id="_-VclIPTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.featureset.create" contributionURI="bundleclass://ru.arsysop.passage.loc.features.emfforms/ru.arsysop.passage.loc.features.emfforms.CreateFeatureSetHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_dxhDEAhSEemX0JS0sOPu6Q" featurename="children" parentElementId="ru.arsysop.passage.loc.features.ui.partsashcontainer.main">
-    <elements xsi:type="basic:PartStack" xmi:id="_i2Cs4AhSEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.features.emfforms.partstack.details" containerData="70" selectedElement="_uCIx4AhSEemX0JS0sOPu6Q">
-      <children xsi:type="basic:Part" xmi:id="_uCIx4AhSEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.features.emfforms.part.details" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench.emfforms/ru.arsysop.passage.loc.workbench.emfforms.DetailsView" label="Details" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/edit.png">
-        <handlers xmi:id="_tCigoAhTEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.features.emfforms.handler.open" contributionURI="bundleclass://ru.arsysop.passage.loc.features.ui/ru.arsysop.passage.loc.features.ui.handlers.FeatureOpenHandler" command="_qu_wsAhTEemX0JS0sOPu6Q"/>
-      </children>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_dxhDEAhSEemX0JS0sOPu6Q" featurename="children" parentElementId="ru.arsysop.passage.loc.features.ui.partstack.details">
+    <elements xsi:type="basic:Part" xmi:id="_uCIx4AhSEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.features.emfforms.part.details" containerData="70" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench.emfforms/ru.arsysop.passage.loc.workbench.emfforms.DetailsView" label="Details" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/edit.png">
+      <handlers xmi:id="_-VclIPTGEeiI64G0mnmT3g" elementId="ru.arsysop.passage.loc.products.emfforms.handler.featureset.create" contributionURI="bundleclass://ru.arsysop.passage.loc.features.emfforms/ru.arsysop.passage.loc.features.emfforms.CreateFeatureSetHandler" command="_1CB5APTGEeiI64G0mnmT3g"/>
+      <handlers xmi:id="_tCigoAhTEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.features.emfforms.handler.open" contributionURI="bundleclass://ru.arsysop.passage.loc.features.ui/ru.arsysop.passage.loc.features.ui.handlers.FeatureOpenHandler" command="_qu_wsAhTEemX0JS0sOPu6Q"/>
     </elements>
   </fragments>
 </fragment:ModelFragments>
