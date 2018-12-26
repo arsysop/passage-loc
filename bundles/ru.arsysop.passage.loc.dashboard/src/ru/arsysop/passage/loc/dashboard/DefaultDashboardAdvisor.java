@@ -42,8 +42,11 @@ import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	
 	private LicensingImages licensingImages;
+
 	private Text featureSetText;
 	private ControlDecoration featureSetDecoration;
+	private Text featureText;
+	private ControlDecoration featureDecoration;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -63,12 +66,21 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Features");
-		Label labelImage = new Label(group, SWT.NONE);
-		labelImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureSet().getName()));
-		Label labelText = new Label(group, SWT.NONE);
-		labelText.setText("Feature Sets:");
+
+		Label featureSetImage = new Label(group, SWT.NONE);
+		featureSetImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureSet().getName()));
+		Label featureSetLabel = new Label(group, SWT.NONE);
+		featureSetLabel.setText("Feature Sets:");
 		featureSetText = new Text(group, SWT.READ_ONLY);
 		featureSetDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
+
+		Label featureImage = new Label(group, SWT.NONE);
+		featureImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeature().getName()));
+		Label featureLabel = new Label(group, SWT.NONE);
+		featureLabel.setText("Features:");
+		featureText = new Text(group, SWT.READ_ONLY);
+		featureDecoration = new ControlDecoration(featureText, SWT.TOP | SWT.RIGHT);
+
 		updateFeatureInfo(featureRegistry);
 }
 
@@ -110,9 +122,13 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 
 	@Override
 	public void updateFeatureInfo(FeatureDomainRegistry featureRegistry) {
-		long fsCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
-		featureSetText.setText(String.valueOf(fsCount));
-		DashboardDecorators.decorateFeatureSets(fsCount, featureSetDecoration);
+		long featureSetCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
+		featureSetText.setText(String.valueOf(featureSetCount));
+		DashboardDecorators.decorateFeatureSets(featureSetCount, featureSetDecoration);
+
+		long featureCount = StreamSupport.stream(featureRegistry.getFeatures().spliterator(), false).count();
+		featureText.setText(String.valueOf(featureCount));
+		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
 	}
 
 }

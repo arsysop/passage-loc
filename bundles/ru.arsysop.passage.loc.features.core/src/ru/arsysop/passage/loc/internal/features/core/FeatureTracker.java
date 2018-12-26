@@ -59,7 +59,7 @@ public class FeatureTracker extends EContentAdapter {
 		if (Resource.RESOURCE__CONTENTS == notification.getFeatureID(Resource.class)) {
 			Object newValue = notification.getNewValue();
 			if (newValue instanceof FeatureSet) {
-				eventAdmin.sendEvent(createEvent(FeaturesEvents.FEATURE_SET_READ, newValue));
+				eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_READ, newValue));
 			}
 			return;
 		}

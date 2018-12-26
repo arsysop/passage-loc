@@ -31,11 +31,26 @@ public class DashboardDecorators {
 		if (count > 0) {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
 			decoration.setImage(image);
-			decoration.setDescriptionText("You have Feature Set(s) defined");
+			String pattern = "You have %s Feature Set(s) defined.\nUse it define the Features";
+			decoration.setDescriptionText(String.format(pattern, count));
 		} else {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
 			decoration.setImage(image);
-			decoration.setDescriptionText("Please define Feature Set(s)");
+			decoration.setDescriptionText("You have no Feature Set defined.\nPlease create or load Feature Set(s)");
+		}
+	}
+
+	public static void decorateFeatures(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s Feature(s) defined.\nUse it define the Feature Version(s)";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no Features defined.\nPlease create it in the Feature Set");
 		}
 	}
 
