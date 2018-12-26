@@ -104,6 +104,22 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	}
 
 	@Override
+	public void updateFeatureInfo(FeatureDomainRegistry featureRegistry) {
+		long featureSetCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
+		featureSetText.setText(String.valueOf(featureSetCount));
+		DashboardDecorators.decorateFeatureSets(featureSetCount, featureSetDecoration);
+	
+		long featureCount = StreamSupport.stream(featureRegistry.getFeatures().spliterator(), false).count();
+		featureText.setText(String.valueOf(featureCount));
+		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
+	
+		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false)
+				.count();
+		featureVersionText.setText(String.valueOf(featureVersionCount));
+		DashboardDecorators.decorateFeatureVersions(featureVersionCount, featureVersionDecoration);
+	}
+
+	@Override
 	public void createProductInfo(Composite parent, ProductDomainRegistry productRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
@@ -134,6 +150,23 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	}
 
 	@Override
+	public void updateProductInfo(ProductDomainRegistry productRegistry) {
+		long productLinesCount = StreamSupport.stream(productRegistry.getProductLines().spliterator(), false).count();
+		productLinesText.setText(String.valueOf(productLinesCount));
+		DashboardDecorators.decorateFeatureSets(productLinesCount, productLinesDecoration);
+	
+		long productsCount = StreamSupport.stream(productRegistry.getProducts().spliterator(), false).count();
+		productsText.setText(String.valueOf(productsCount));
+		DashboardDecorators.decorateFeatureSets(productsCount, productsDecoration);
+	
+		long productVersionsCount = StreamSupport.stream(productRegistry.getProductVersions().spliterator(), false)
+				.count();
+		productVersionsText.setText(String.valueOf(productVersionsCount));
+		DashboardDecorators.decorateFeatureSets(productVersionsCount, productVersionsDecoration);
+	
+	}
+
+	@Override
 	public void createUserInfo(Composite parent, UserDomainRegistry userRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
@@ -151,11 +184,25 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	}
 
 	@Override
+	public void updateUserInfo(UserDomainRegistry userRegistry) {
+		long usersCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
+		userText.setText(String.valueOf(usersCount));
+		DashboardDecorators.decorateFeatureSets(usersCount, userDecoration);
+	
+	}
+
+	@Override
 	public void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		group.setLayout(GridLayoutFactory.swtDefaults().create());
 		group.setText("Licenses");
+	}
+
+	@Override
+	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
+		// TODO Auto-generated method stub
+	
 	}
 
 	@Override
@@ -168,53 +215,6 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	@Override
 	public void dispose(IEclipseContext context) {
 		licensingImages = null;
-	}
-
-	@Override
-	public void updateFeatureInfo(FeatureDomainRegistry featureRegistry) {
-		long featureSetCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
-		featureSetText.setText(String.valueOf(featureSetCount));
-		DashboardDecorators.decorateFeatureSets(featureSetCount, featureSetDecoration);
-
-		long featureCount = StreamSupport.stream(featureRegistry.getFeatures().spliterator(), false).count();
-		featureText.setText(String.valueOf(featureCount));
-		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
-
-		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false)
-				.count();
-		featureVersionText.setText(String.valueOf(featureVersionCount));
-		DashboardDecorators.decorateFeatureVersions(featureVersionCount, featureVersionDecoration);
-	}
-
-	@Override
-	public void updateProductInfo(ProductDomainRegistry productRegistry) {
-		long productLinesCount = StreamSupport.stream(productRegistry.getProductLines().spliterator(), false).count();
-		productLinesText.setText(String.valueOf(productLinesCount));
-		DashboardDecorators.decorateFeatureSets(productLinesCount, productLinesDecoration);
-
-		long productsCount = StreamSupport.stream(productRegistry.getProducts().spliterator(), false).count();
-		productsText.setText(String.valueOf(productsCount));
-		DashboardDecorators.decorateFeatureSets(productsCount, productsDecoration);
-
-		long productVersionsCount = StreamSupport.stream(productRegistry.getProductVersions().spliterator(), false)
-				.count();
-		productVersionsText.setText(String.valueOf(productVersionsCount));
-		DashboardDecorators.decorateFeatureSets(productVersionsCount, productVersionsDecoration);
-
-	}
-
-	@Override
-	public void updateUserInfo(UserDomainRegistry userRegistry) {
-		long usersCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
-		userText.setText(String.valueOf(usersCount));
-		DashboardDecorators.decorateFeatureSets(usersCount, userDecoration);
-
-	}
-
-	@Override
-	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -68,4 +68,18 @@ public class DashboardDecorators {
 		}
 	}
 
+	public static void decorateProductLines(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s Product Line(s) defined.\nUse it define the Products";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no Product Lines defined.\nPlease create or load Product Line(s)");
+		}
+	}
+
 }

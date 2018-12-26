@@ -38,6 +38,11 @@ import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
+import ru.arsysop.passage.lic.registry.ProductDescriptor;
+import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
+import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
+import ru.arsysop.passage.lic.registry.ProductsEvents;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -136,6 +141,54 @@ public class DashboardPart {
 	@Optional
 	public void deletedFeatureVersion(@UIEventTopic(FeaturesEvents.FEATURE_VERSION_DELETE) FeatureVersionDescriptor input) {
 		dashboardAdvisor.updateFeatureInfo(featureRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void createdProductLine(@UIEventTopic(ProductsEvents.PRODUCT_LINE_CREATE) ProductLineDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedProductLine(@UIEventTopic(ProductsEvents.PRODUCT_LINE_DELETE) ProductLineDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void createdProduct(@UIEventTopic(ProductsEvents.PRODUCT_CREATE) ProductDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedProduct(@UIEventTopic(ProductsEvents.PRODUCT_DELETE) ProductDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void createdProductVersion(@UIEventTopic(ProductsEvents.PRODUCT_VERSION_CREATE) ProductVersionDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedProductVersion(@UIEventTopic(ProductsEvents.PRODUCT_VERSION_DELETE) ProductVersionDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void createdProductVersionFeature(@UIEventTopic(ProductsEvents.PRODUCT_VERSION_FEATURE_CREATE) ProductVersionFeatureDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedProductVersionFeature(@UIEventTopic(ProductsEvents.PRODUCT_VERSION_FEATURE_DELETE) ProductVersionFeatureDescriptor input) {
+		dashboardAdvisor.updateProductInfo(productRegistry);
 	}
 
 	@PreDestroy
