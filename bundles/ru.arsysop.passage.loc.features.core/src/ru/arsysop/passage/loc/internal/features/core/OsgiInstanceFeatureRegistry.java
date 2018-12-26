@@ -27,8 +27,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -40,10 +42,12 @@ import ru.arsysop.passage.lic.model.api.Feature;
 import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.FeatureVersion;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
+import ru.arsysop.passage.lic.registry.FeaturesEvents;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
@@ -182,6 +186,7 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	public void registerFeatureSet(FeatureSet featureSet) {
 		String identifier = featureSet.getIdentifier();
 		featureSetIndex.put(identifier, featureSet);
+		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_CREATE, featureSet));
 		EList<Feature> features = featureSet.getFeatures();
 		for (Feature feature : features) {
 			registerFeature(feature);
@@ -192,6 +197,7 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 	public void registerFeature(Feature feature) {
 		String identifier = feature.getIdentifier();
 		featureIndex.put(identifier, feature);
+		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_CREATE, feature));
 		EList<FeatureVersion> featureVersions = feature.getFeatureVersions();
 		for (FeatureVersion featureVersion : featureVersions) {
 			registerFeatureVersion(feature, featureVersion);
@@ -204,6 +210,7 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 		Map<String, FeatureVersion> map = featureVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
 		String version = featureVersion.getVersion();
 		map.put(version, featureVersion);
+		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_CREATE, featureVersion));
 	}
 
 	@Override
@@ -211,39 +218,93 @@ public class OsgiInstanceFeatureRegistry extends EditingDomainBasedRegistry impl
 		for (EObject eObject : contents) {
 			if (eObject instanceof FeatureSet) {
 				FeatureSet featureSet = (FeatureSet) eObject;
-				removedFeatureSet(featureSet);
+				unregisterFeatureSet(featureSet);
 			}
 		}
 	}
 
-	protected void removedFeatureSet(FeatureSet featureSet) {
+	@Override
+	public void unregisterFeatureSet(FeatureSet featureSet) {
 		String identifier = featureSet.getIdentifier();
 		featureSetIndex.remove(identifier);
+		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_DELETE, featureSet));
 		EList<Feature> features = featureSet.getFeatures();
 		for (Feature feature : features) {
-			removedFeature(feature);
+			unregisterFeature(feature);
 		}
 	}
 
-	protected void removedFeature(Feature feature) {
+	@Override
+	public void unregisterFeature(Feature feature) {
 		String identifier = feature.getIdentifier();
 		featureIndex.remove(identifier);
+		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_DELETE, feature));
 		EList<FeatureVersion> featureVersions = feature.getFeatureVersions();
 		for (FeatureVersion featureVersion : featureVersions) {
-			removedFeatureVersion(feature, featureVersion);
+			unregisterFeatureVersion(feature, featureVersion);
 		}
 	}
 
-	protected void removedFeatureVersion(Feature feature, FeatureVersion featureVersion) {
+	@Override
+	public void unregisterFeatureVersion(Feature feature, FeatureVersion featureVersion) {
 		String identifier = feature.getIdentifier();
 		Map<String, FeatureVersion> map = featureVersionIndex.get(identifier);
 		if (map != null) {
 			String version = featureVersion.getVersion();
 			map.remove(version);
+			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_DELETE, featureVersion));
 			if (map.isEmpty()) {
 				featureVersionIndex.remove(identifier);
 			}
 		}
+	}
+	
+	@Override
+	public void notifyChanged(Notification notification) {
+		Object oldValue = notification.getOldValue();
+		Object newValue = notification.getNewValue();
+		if (Resource.RESOURCE__CONTENTS == notification.getFeatureID(Resource.class)) {
+			//FIXME: handled by parent class for now, needs to be reworked
+		} else if (LicPackage.FEATURE_SET__FEATURES == notification.getFeatureID(FeatureSet.class)) {
+			switch (notification.getEventType()) {
+			case Notification.ADD:
+				if (newValue instanceof Feature) {
+					Feature feature = (Feature) newValue;
+					registerFeature(feature);
+				}
+				break;
+			case Notification.REMOVE:
+				if (oldValue instanceof Feature) {
+					Feature feature = (Feature) oldValue;
+					unregisterFeature(feature);
+				}
+				break;
+
+			default:
+				break;
+			}
+		} else if (LicPackage.FEATURE__FEATURE_VERSIONS == notification.getFeatureID(Feature.class)) {
+			switch (notification.getEventType()) {
+			case Notification.ADD:
+				if (newValue instanceof FeatureVersion) {
+					FeatureVersion version = (FeatureVersion) newValue;
+					Feature feature = (Feature) notification.getNotifier();
+					registerFeatureVersion(feature, version);
+				}
+				break;
+			case Notification.REMOVE:
+				if (oldValue instanceof FeatureVersion) {
+					FeatureVersion version = (FeatureVersion) oldValue;
+					Feature feature = (Feature) notification.getNotifier();
+					unregisterFeatureVersion(feature, version);
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
+		super.notifyChanged(notification);
 	}
 
 }

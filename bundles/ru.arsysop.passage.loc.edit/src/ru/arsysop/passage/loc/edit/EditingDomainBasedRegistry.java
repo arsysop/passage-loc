@@ -36,18 +36,23 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
+import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
-public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
+public abstract class EditingDomainBasedRegistry extends EContentAdapter implements DescriptorRegistry, EditingDomainRegistry {
 	
+	//@see org.eclipse.e4.core.services.events.IEventBroker.DATA
+	protected static final String PROPERTY_DATA = "org.eclipse.e4.data"; //$NON-NLS-1$
+
 	protected EnvironmentInfo environmentInfo;
 
 	protected EventAdmin eventAdmin;
@@ -103,9 +108,11 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	}
 	
 	protected void activate(Map<String, Object> properties) {
+		editingDomain.getResourceSet().eAdapters().add(this);
 	}
 	
 	protected void deactivate(Map<String, Object> properties) {
+		editingDomain.getResourceSet().eAdapters().remove(this);
 	}
 
 	@Override
@@ -169,6 +176,13 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	@Override
 	public Iterable<String> getSources() {
 		return Collections.unmodifiableList(sources);
+	}
+	
+	protected static Event createEvent(String topic, Object data) {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(PROPERTY_DATA, data);
+		Event event = new Event(topic, properties);
+		return event;
 	}
 
 }

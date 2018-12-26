@@ -35,4 +35,10 @@ public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainReg
 
 	void registerFeatureVersion(Feature feature, FeatureVersion featureVersion);
 
+	void unregisterFeatureSet(FeatureSet featureSet);
+
+	void unregisterFeature(Feature feature);
+
+	void unregisterFeatureVersion(Feature feature, FeatureVersion featureVersion);
+
 }

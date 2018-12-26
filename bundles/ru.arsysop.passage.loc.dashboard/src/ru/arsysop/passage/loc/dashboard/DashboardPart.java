@@ -34,7 +34,9 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import ru.arsysop.passage.lic.model.api.FeatureSet;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
@@ -102,7 +104,37 @@ public class DashboardPart {
 
 	@Inject
 	@Optional
-	public void readFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_READ) FeatureSet input) {
+	public void createdFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_CREATE) FeatureSetDescriptor input) {
+		dashboardAdvisor.updateFeatureInfo(featureRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_DELETE) FeatureSetDescriptor input) {
+		dashboardAdvisor.updateFeatureInfo(featureRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void createdFeature(@UIEventTopic(FeaturesEvents.FEATURE_CREATE) FeatureDescriptor input) {
+		dashboardAdvisor.updateFeatureInfo(featureRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedFeature(@UIEventTopic(FeaturesEvents.FEATURE_DELETE) FeatureDescriptor input) {
+		dashboardAdvisor.updateFeatureInfo(featureRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void createdFeatureVersion(@UIEventTopic(FeaturesEvents.FEATURE_VERSION_CREATE) FeatureVersionDescriptor input) {
+		dashboardAdvisor.updateFeatureInfo(featureRegistry);
+	}
+
+	@Inject
+	@Optional
+	public void deletedFeatureVersion(@UIEventTopic(FeaturesEvents.FEATURE_VERSION_DELETE) FeatureVersionDescriptor input) {
 		dashboardAdvisor.updateFeatureInfo(featureRegistry);
 	}
 

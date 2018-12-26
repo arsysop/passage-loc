@@ -104,7 +104,7 @@ public class DetailsView {
 
 	@Inject
 	@Optional
-	public void showFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_READ) FeatureSet input) {
+	public void showFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_CREATE) FeatureSet input) {
 		show(input);
 	}
 
