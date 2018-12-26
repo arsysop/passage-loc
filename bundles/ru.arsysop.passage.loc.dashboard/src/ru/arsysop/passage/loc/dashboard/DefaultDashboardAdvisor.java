@@ -59,10 +59,10 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	private Text productVersionsText;
 	private ControlDecoration productVersionsDecoration;
 
-	private Text userText;
 	private Text userOriginsText;
-	private ControlDecoration userDecoration;
 	private ControlDecoration userOriginsDecoration;
+	private Text userText;
+	private ControlDecoration userDecoration;
 
 	private Text licensePacks;
 	private ControlDecoration licensePacksDecoration;
@@ -164,9 +164,21 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		userDecoration = new ControlDecoration(userText, SWT.TOP | SWT.RIGHT);
 
 		userOriginsText = createDashBoardTextItem(group, "User origins:", LicPackage.eINSTANCE.getUserOrigin());
-		userOriginsDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
+		userOriginsDecoration = new ControlDecoration(userOriginsText, SWT.TOP | SWT.RIGHT);
 
 		updateUserInfo(userRegistry);
+	}
+
+	@Override
+	public void updateUserInfo(UserDomainRegistry userRegistry) {
+		long userOriginsCount = StreamSupport.stream(userRegistry.getUserOrigins().spliterator(), false).count();
+		userOriginsText.setText(String.valueOf(userOriginsCount));
+		DashboardDecorators.decorateUserOrigins(userOriginsCount, userOriginsDecoration);
+		
+		long userCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
+		userText.setText(String.valueOf(userCount));
+		DashboardDecorators.decorateUsers(userCount, userDecoration);
+	
 	}
 
 	@Override
@@ -185,7 +197,22 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		updateLicenseInfo(licenseRegistry);
 	}
 
-	private Text createDashBoardTextItem(Group group, String label, EClass object) {
+	@Override
+	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
+		long licensePacksCount = StreamSupport.stream(licenseRegistry.getLicensePacks().spliterator(), false).count();
+		licensePacks.setText(String.valueOf(licensePacksCount));
+		DashboardDecorators.decorateLicensePacks(licensePacksCount, licensePacksDecoration);
+	
+	}
+
+	@Override
+	public void createFooterInfo(Composite parent) {
+		Label label = new Label(parent, SWT.NONE);
+		label.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
+		label.setText("Licensing data summary");
+	}
+
+	protected Text createDashBoardTextItem(Group group, String label, EClass object) {
 		Label userImage = new Label(group, SWT.NONE);
 		userImage.setImage(licensingImages.getImage(object.getName()));
 		Label userLabel = new Label(group, SWT.NONE);
@@ -202,33 +229,6 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 			text.setLayoutData(data);
 		}
 		return text;
-	}
-
-	@Override
-	public void updateUserInfo(UserDomainRegistry userRegistry) {
-		long usersCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
-		userText.setText(String.valueOf(usersCount));
-		DashboardDecorators.decorateFeatureSets(usersCount, userDecoration);
-
-		long userOriginsCount = StreamSupport.stream(userRegistry.getUserOrigins().spliterator(), false).count();
-		userOriginsText.setText(String.valueOf(usersCount));
-		DashboardDecorators.decorateFeatureSets(userOriginsCount, userOriginsDecoration);
-
-	}
-
-	@Override
-	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
-		long licensePacksCount = StreamSupport.stream(licenseRegistry.getLicensePacks().spliterator(), false).count();
-		licensePacks.setText(String.valueOf(licensePacksCount));
-		DashboardDecorators.decorateFeatureSets(licensePacksCount, licensePacksDecoration);
-
-	}
-
-	@Override
-	public void createFooterInfo(Composite parent) {
-		Label label = new Label(parent, SWT.NONE);
-		label.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		label.setText("Licensing data summary");
 	}
 
 	@Override

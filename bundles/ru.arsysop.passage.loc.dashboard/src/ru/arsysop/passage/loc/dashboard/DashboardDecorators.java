@@ -36,7 +36,7 @@ public class DashboardDecorators {
 		} else {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
 			decoration.setImage(image);
-			decoration.setDescriptionText("You have no Feature Sets defined.\nPlease create or load Feature Set(s)");
+			decoration.setDescriptionText("You have no Feature Sets defined.\nPlease create or load Feature Set definitions");
 		}
 	}
 
@@ -78,7 +78,7 @@ public class DashboardDecorators {
 		} else {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
 			decoration.setImage(image);
-			decoration.setDescriptionText("You have no Product Lines defined.\nPlease create or load Product Line(s)");
+			decoration.setDescriptionText("You have no Product Lines defined.\nPlease create or load Product Line definitions");
 		}
 	}
 
@@ -107,6 +107,48 @@ public class DashboardDecorators {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
 			decoration.setImage(image);
 			decoration.setDescriptionText("You have no Product Versions defined.\nPlease create it for the Product(s)");
+		}
+	}
+
+	public static void decorateUserOrigins(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s User Origin(s) defined.\nUse it define the Users";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no User Origins defined.\nPlease create or load User Origin definitions");
+		}
+	}
+
+	public static void decorateUsers(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s User(s) defined.\nUse it define the License Packs";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no Users defined.\nPlease create it for the User Origin(s)");
+		}
+	}
+
+	public static void decorateLicensePacks(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s License Pack(s) defined.\nUse it define the License Grants";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no License Packs defined.\nPlease create or load License Pack definitions");
 		}
 	}
 
