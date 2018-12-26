@@ -190,8 +190,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		userImage.setImage(licensingImages.getImage(object.getName()));
 		Label userLabel = new Label(group, SWT.NONE);
 		{
-			GridData data = new GridData(SWT.FILL, SWT.FILL, false, false);
-			data.widthHint = 150;
+			GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+			data.widthHint = 100;
 			userLabel.setLayoutData(data);
 		}
 		userLabel.setText(label);
