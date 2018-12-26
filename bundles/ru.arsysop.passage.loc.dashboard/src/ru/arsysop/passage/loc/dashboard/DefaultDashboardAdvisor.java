@@ -47,6 +47,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	private ControlDecoration featureSetDecoration;
 	private Text featureText;
 	private ControlDecoration featureDecoration;
+	private Text featureVersionText;
+	private ControlDecoration featureVersionDecoration;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -80,6 +82,13 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		featureLabel.setText("Features:");
 		featureText = new Text(group, SWT.READ_ONLY);
 		featureDecoration = new ControlDecoration(featureText, SWT.TOP | SWT.RIGHT);
+
+		Label featureVersionImage = new Label(group, SWT.NONE);
+		featureVersionImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureVersion().getName()));
+		Label featureVersionLabel = new Label(group, SWT.NONE);
+		featureVersionLabel.setText("Feature Versions:");
+		featureVersionText = new Text(group, SWT.READ_ONLY);
+		featureVersionDecoration = new ControlDecoration(featureVersionText, SWT.TOP | SWT.RIGHT);
 
 		updateFeatureInfo(featureRegistry);
 }
@@ -129,6 +138,11 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		long featureCount = StreamSupport.stream(featureRegistry.getFeatures().spliterator(), false).count();
 		featureText.setText(String.valueOf(featureCount));
 		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
+
+		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false).count();
+		featureVersionText.setText(String.valueOf(featureVersionCount));
+		DashboardDecorators.decorateFeatureVersions(featureVersionCount, featureVersionDecoration);
+
 	}
 
 }

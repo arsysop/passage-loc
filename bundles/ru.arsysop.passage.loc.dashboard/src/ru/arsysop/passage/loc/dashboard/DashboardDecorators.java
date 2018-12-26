@@ -36,7 +36,7 @@ public class DashboardDecorators {
 		} else {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
 			decoration.setImage(image);
-			decoration.setDescriptionText("You have no Feature Set defined.\nPlease create or load Feature Set(s)");
+			decoration.setDescriptionText("You have no Feature Sets defined.\nPlease create or load Feature Set(s)");
 		}
 	}
 
@@ -50,7 +50,21 @@ public class DashboardDecorators {
 		} else {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
 			decoration.setImage(image);
-			decoration.setDescriptionText("You have no Features defined.\nPlease create it in the Feature Set");
+			decoration.setDescriptionText("You have no Features defined.\nPlease create it for the Feature Set(s)");
+		}
+	}
+
+	public static void decorateFeatureVersions(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s Feature Version(s) defined.\nUse it define the Product Version(s)";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no Feature Versions defined.\nPlease create it for the Feature(s)");
 		}
 	}
 
