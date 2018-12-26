@@ -82,4 +82,32 @@ public class DashboardDecorators {
 		}
 	}
 
+	public static void decorateProducts(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s Product(s) defined.\nUse it define the Product Versions";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no Products defined.\nPlease create it for the Product Line(s)");
+		}
+	}
+
+	public static void decorateProductVersions(long count, ControlDecoration decoration) {
+		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+		if (count > 0) {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+			decoration.setImage(image);
+			String pattern = "You have %s Product Version (s) defined.\nUse it define the Product Version Features";
+			decoration.setDescriptionText(String.format(pattern, count));
+		} else {
+			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+			decoration.setImage(image);
+			decoration.setDescriptionText("You have no Product Versions defined.\nPlease create it for the Product(s)");
+		}
+	}
+
 }

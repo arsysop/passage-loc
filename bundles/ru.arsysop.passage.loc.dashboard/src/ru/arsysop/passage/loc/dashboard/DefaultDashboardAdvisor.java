@@ -153,16 +153,16 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void updateProductInfo(ProductDomainRegistry productRegistry) {
 		long productLinesCount = StreamSupport.stream(productRegistry.getProductLines().spliterator(), false).count();
 		productLinesText.setText(String.valueOf(productLinesCount));
-		DashboardDecorators.decorateFeatureSets(productLinesCount, productLinesDecoration);
+		DashboardDecorators.decorateProductLines(productLinesCount, productLinesDecoration);
 	
 		long productsCount = StreamSupport.stream(productRegistry.getProducts().spliterator(), false).count();
 		productsText.setText(String.valueOf(productsCount));
-		DashboardDecorators.decorateFeatureSets(productsCount, productsDecoration);
+		DashboardDecorators.decorateProducts(productsCount, productsDecoration);
 	
 		long productVersionsCount = StreamSupport.stream(productRegistry.getProductVersions().spliterator(), false)
 				.count();
 		productVersionsText.setText(String.valueOf(productVersionsCount));
-		DashboardDecorators.decorateFeatureSets(productVersionsCount, productVersionsDecoration);
+		DashboardDecorators.decorateProductVersions(productVersionsCount, productVersionsDecoration);
 	
 	}
 
