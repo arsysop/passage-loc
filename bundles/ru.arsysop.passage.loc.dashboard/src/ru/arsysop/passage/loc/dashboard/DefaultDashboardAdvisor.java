@@ -57,6 +57,9 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	private Text productVersionsText;
 	private ControlDecoration productVersionsDecoration;
 
+	private Text userText;
+	private ControlDecoration userDecoration;
+
 	@Override
 	public void init(IEclipseContext context) {
 		licensingImages = context.get(LicensingImages.class);
@@ -127,7 +130,6 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		productVersionsLabel.setText("Product Versions:");
 		productVersionsText = new Text(group, SWT.READ_ONLY);
 		productVersionsDecoration = new ControlDecoration(productVersionsText, SWT.TOP | SWT.RIGHT);
-		
 		updateProductInfo(productRegistry);
 	}
 
@@ -135,8 +137,17 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void createUserInfo(Composite parent, UserDomainRegistry userRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Users");
+
+		Label userImage = new Label(group, SWT.NONE);
+		userImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getUser().getName()));
+		Label userLabel = new Label(group, SWT.NONE);
+		userLabel.setText("Users:");
+		userText = new Text(group, SWT.READ_ONLY);
+		userDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
+
+		updateUserInfo(userRegistry);
 	}
 
 	@Override
@@ -189,6 +200,20 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 				.count();
 		productVersionsText.setText(String.valueOf(productVersionsCount));
 		DashboardDecorators.decorateFeatureSets(productVersionsCount, productVersionsDecoration);
+
+	}
+
+	@Override
+	public void updateUserInfo(UserDomainRegistry userRegistry) {
+		long usersCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
+		userText.setText(String.valueOf(usersCount));
+		DashboardDecorators.decorateFeatureSets(usersCount, userDecoration);
+
+	}
+
+	@Override
+	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
+		// TODO Auto-generated method stub
 
 	}
 

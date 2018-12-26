@@ -39,6 +39,10 @@ public interface DashboardAdvisor {
 	void updateFeatureInfo(FeatureDomainRegistry featureRegistry);
 
 	void updateProductInfo(ProductDomainRegistry productRegistry);
+	
+	void updateUserInfo(UserDomainRegistry userRegistry);
+	
+	void updateLicenseInfo(LicenseDomainRegistry licenseRegistry);
 
 	void createProductInfo(Composite parent, ProductDomainRegistry productRegistry);
 
