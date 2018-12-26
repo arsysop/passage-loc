@@ -228,43 +228,45 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		for (EObject eObject : contents) {
 			if (eObject instanceof FeatureSet) {
 				FeatureSet featureSet = (FeatureSet) eObject;
-				unregisterFeatureSet(featureSet);
+				unregisterFeatureSet(featureSet.getIdentifier());
 			}
 		}
 	}
 
 	@Override
-	public void unregisterFeatureSet(FeatureSet featureSet) {
-		String identifier = featureSet.getIdentifier();
-		featureSetIndex.remove(identifier);
-		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_DELETE, featureSet));
-		EList<Feature> features = featureSet.getFeatures();
-		for (Feature feature : features) {
-			unregisterFeature(feature);
+	public void unregisterFeatureSet(String featureSetId) {
+		FeatureSet removed = featureSetIndex.remove(featureSetId);
+		if (removed != null) {
+			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_DELETE, removed));
+			EList<Feature> features = removed.getFeatures();
+			for (Feature feature : features) {
+				unregisterFeature(feature.getIdentifier());
+			}
 		}
 	}
 
 	@Override
-	public void unregisterFeature(Feature feature) {
-		String identifier = feature.getIdentifier();
-		featureIndex.remove(identifier);
-		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_DELETE, feature));
-		EList<FeatureVersion> featureVersions = feature.getFeatureVersions();
-		for (FeatureVersion featureVersion : featureVersions) {
-			unregisterFeatureVersion(feature, featureVersion);
+	public void unregisterFeature(String featureId) {
+		Feature removed = featureIndex.remove(featureId);
+		if (removed != null) {
+			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_DELETE, removed));
+			EList<FeatureVersion> featureVersions = removed.getFeatureVersions();
+			for (FeatureVersion featureVersion : featureVersions) {
+				unregisterFeatureVersion(featureId, featureVersion.getVersion());
+			}
 		}
 	}
 
 	@Override
-	public void unregisterFeatureVersion(Feature feature, FeatureVersion featureVersion) {
-		String identifier = feature.getIdentifier();
-		Map<String, FeatureVersion> map = featureVersionIndex.get(identifier);
+	public void unregisterFeatureVersion(String featureId, String version) {
+		Map<String, FeatureVersion> map = featureVersionIndex.get(featureId);
 		if (map != null) {
-			String version = featureVersion.getVersion();
-			map.remove(version);
-			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_DELETE, featureVersion));
+			FeatureVersion removed = map.remove(version);
+			if (removed != null) {
+				eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_DELETE, removed));
+			}
 			if (map.isEmpty()) {
-				featureVersionIndex.remove(identifier);
+				featureVersionIndex.remove(featureId);
 			}
 		}
 	}

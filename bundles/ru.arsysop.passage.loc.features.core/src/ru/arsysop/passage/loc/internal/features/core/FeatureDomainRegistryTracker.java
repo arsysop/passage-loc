@@ -73,7 +73,7 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 		switch (notification.getEventType()) {
 		case Notification.SET:
 			if (oldValue != null) {
-				registry.unregisterFeatureSet(featureSet);
+				registry.unregisterFeatureSet(oldValue);
 			}
 			if (newValue != null) {
 				registry.registerFeatureSet(featureSet);
@@ -99,7 +99,7 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 			if (oldValue instanceof Feature) {
 				Feature feature = (Feature) oldValue;
 				if (feature.getIdentifier() != null) {
-					registry.unregisterFeature(feature);
+					registry.unregisterFeature(feature.getIdentifier());
 				}
 			}
 			break;
@@ -115,7 +115,7 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 		switch (notification.getEventType()) {
 		case Notification.SET:
 			if (oldValue != null) {
-				registry.unregisterFeature(feature);
+				registry.unregisterFeature(oldValue);
 			}
 			if (newValue != null) {
 				registry.registerFeature(feature);
@@ -131,14 +131,14 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 		switch (notification.getEventType()) {
 		case Notification.ADD:
 			if (newValue instanceof FeatureVersion) {
-				FeatureVersion version = (FeatureVersion) newValue;
-				registry.registerFeatureVersion(feature, version);
+				FeatureVersion featureVersion = (FeatureVersion) newValue;
+				registry.registerFeatureVersion(feature, featureVersion);
 			}
 			break;
 		case Notification.REMOVE:
 			if (oldValue instanceof FeatureVersion) {
-				FeatureVersion version = (FeatureVersion) oldValue;
-				registry.unregisterFeatureVersion(feature, version);
+				FeatureVersion featureVersion = (FeatureVersion) oldValue;
+				registry.unregisterFeatureVersion(feature.getIdentifier(), featureVersion.getVersion());
 			}
 			break;
 	

@@ -31,14 +31,14 @@ public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainReg
 
 	void registerFeatureSet(FeatureSet featureSet);
 
+	void unregisterFeatureSet(String featureSetId);
+	
 	void registerFeature(Feature feature);
 
+	void unregisterFeature(String featureId);
+	
 	void registerFeatureVersion(Feature feature, FeatureVersion featureVersion);
 
-	void unregisterFeatureSet(FeatureSet featureSet);
-
-	void unregisterFeature(Feature feature);
-
-	void unregisterFeatureVersion(Feature feature, FeatureVersion featureVersion);
+	void unregisterFeatureVersion(String featureId, String version);
 
 }
