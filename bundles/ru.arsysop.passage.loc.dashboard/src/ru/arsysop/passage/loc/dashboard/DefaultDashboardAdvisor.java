@@ -23,10 +23,12 @@ package ru.arsysop.passage.loc.dashboard;
 import java.util.stream.StreamSupport;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -58,7 +60,14 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	private ControlDecoration productVersionsDecoration;
 
 	private Text userText;
+	private Text userOriginsText;
 	private ControlDecoration userDecoration;
+	private ControlDecoration userOriginsDecoration;
+
+	private Text licensePacks;
+	private ControlDecoration licensePacksDecoration;
+	private Text licenseGrants;
+	private ControlDecoration licenseGrantsDecoration;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -79,25 +88,14 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Features");
 
-		Label featureSetImage = new Label(group, SWT.NONE);
-		featureSetImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureSet().getName()));
-		Label featureSetLabel = new Label(group, SWT.NONE);
-		featureSetLabel.setText("Feature Sets:");
-		featureSetText = new Text(group, SWT.READ_ONLY);
+		featureSetText = createDashBoardTextItem(group, "Feature Sets:", LicPackage.eINSTANCE.getFeatureSet());
 		featureSetDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
 
-		Label featureImage = new Label(group, SWT.NONE);
-		featureImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeature().getName()));
-		Label featureLabel = new Label(group, SWT.NONE);
-		featureLabel.setText("Features:");
-		featureText = new Text(group, SWT.READ_ONLY);
+		featureText = createDashBoardTextItem(group, "Features:", LicPackage.eINSTANCE.getFeature());
 		featureDecoration = new ControlDecoration(featureText, SWT.TOP | SWT.RIGHT);
 
-		Label featureVersionImage = new Label(group, SWT.NONE);
-		featureVersionImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getFeatureVersion().getName()));
-		Label featureVersionLabel = new Label(group, SWT.NONE);
-		featureVersionLabel.setText("Feature Versions:");
-		featureVersionText = new Text(group, SWT.READ_ONLY);
+		featureVersionText = createDashBoardTextItem(group, "Feature Versions:",
+				LicPackage.eINSTANCE.getFeatureVersion());
 		featureVersionDecoration = new ControlDecoration(featureVersionText, SWT.TOP | SWT.RIGHT);
 
 		updateFeatureInfo(featureRegistry);
@@ -108,11 +106,11 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		long featureSetCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
 		featureSetText.setText(String.valueOf(featureSetCount));
 		DashboardDecorators.decorateFeatureSets(featureSetCount, featureSetDecoration);
-	
+
 		long featureCount = StreamSupport.stream(featureRegistry.getFeatures().spliterator(), false).count();
 		featureText.setText(String.valueOf(featureCount));
 		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
-	
+
 		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false)
 				.count();
 		featureVersionText.setText(String.valueOf(featureVersionCount));
@@ -126,25 +124,14 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Products");
 
-		Label productLinesImage = new Label(group, SWT.NONE);
-		productLinesImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getProductLine().getName()));
-		Label productLinesLabel = new Label(group, SWT.NONE);
-		productLinesLabel.setText("Product Lines:");
-		productLinesText = new Text(group, SWT.READ_ONLY);
+		productLinesText = createDashBoardTextItem(group, "Product Lines:", LicPackage.eINSTANCE.getProductLine());
 		productLinesDecoration = new ControlDecoration(productLinesText, SWT.TOP | SWT.RIGHT);
 
-		Label productsImage = new Label(group, SWT.NONE);
-		productsImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getProduct().getName()));
-		Label productLabel = new Label(group, SWT.NONE);
-		productLabel.setText("Products:");
-		productsText = new Text(group, SWT.READ_ONLY);
+		productsText = createDashBoardTextItem(group, "Products:", LicPackage.eINSTANCE.getProduct());
 		productsDecoration = new ControlDecoration(productsText, SWT.TOP | SWT.RIGHT);
 
-		Label productVersionsImage = new Label(group, SWT.NONE);
-		productVersionsImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getProductVersion().getName()));
-		Label productVersionsLabel = new Label(group, SWT.NONE);
-		productVersionsLabel.setText("Product Versions:");
-		productVersionsText = new Text(group, SWT.READ_ONLY);
+		productVersionsText = createDashBoardTextItem(group, "Product Versions:",
+				LicPackage.eINSTANCE.getProductVersion());
 		productVersionsDecoration = new ControlDecoration(productVersionsText, SWT.TOP | SWT.RIGHT);
 		updateProductInfo(productRegistry);
 	}
@@ -154,16 +141,16 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		long productLinesCount = StreamSupport.stream(productRegistry.getProductLines().spliterator(), false).count();
 		productLinesText.setText(String.valueOf(productLinesCount));
 		DashboardDecorators.decorateProductLines(productLinesCount, productLinesDecoration);
-	
+
 		long productsCount = StreamSupport.stream(productRegistry.getProducts().spliterator(), false).count();
 		productsText.setText(String.valueOf(productsCount));
 		DashboardDecorators.decorateProducts(productsCount, productsDecoration);
-	
+
 		long productVersionsCount = StreamSupport.stream(productRegistry.getProductVersions().spliterator(), false)
 				.count();
 		productVersionsText.setText(String.valueOf(productVersionsCount));
 		DashboardDecorators.decorateProductVersions(productVersionsCount, productVersionsDecoration);
-	
+
 	}
 
 	@Override
@@ -173,14 +160,48 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Users");
 
-		Label userImage = new Label(group, SWT.NONE);
-		userImage.setImage(licensingImages.getImage(LicPackage.eINSTANCE.getUser().getName()));
-		Label userLabel = new Label(group, SWT.NONE);
-		userLabel.setText("Users:");
-		userText = new Text(group, SWT.READ_ONLY);
-		userDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
+		userText = createDashBoardTextItem(group, "Users:", LicPackage.eINSTANCE.getUser());
+		userDecoration = new ControlDecoration(userText, SWT.TOP | SWT.RIGHT);
+
+		userOriginsText = createDashBoardTextItem(group, "User origins:", LicPackage.eINSTANCE.getUserOrigin());
+		userOriginsDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
 
 		updateUserInfo(userRegistry);
+	}
+
+	@Override
+	public void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
+		group.setText("Licenses");
+
+		licensePacks = createDashBoardTextItem(group, "License pack:", LicPackage.eINSTANCE.getLicensePack());
+		licensePacksDecoration = new ControlDecoration(licensePacks, SWT.TOP | SWT.RIGHT);
+
+		licenseGrants = createDashBoardTextItem(group, "License grants:", LicPackage.eINSTANCE.getLicenseGrant());
+		licenseGrantsDecoration = new ControlDecoration(licenseGrants, SWT.TOP | SWT.RIGHT);
+
+		updateLicenseInfo(licenseRegistry);
+	}
+
+	private Text createDashBoardTextItem(Group group, String label, EClass object) {
+		Label userImage = new Label(group, SWT.NONE);
+		userImage.setImage(licensingImages.getImage(object.getName()));
+		Label userLabel = new Label(group, SWT.NONE);
+		{
+			GridData data = new GridData(SWT.FILL, SWT.FILL, false, false);
+			data.widthHint = 150;
+			userLabel.setLayoutData(data);
+		}
+		userLabel.setText(label);
+		Text text = new Text(group, SWT.READ_ONLY);
+		{
+			GridData data = new GridData(SWT.FILL, SWT.FILL, false, false);
+			data.widthHint = 50;
+			text.setLayoutData(data);
+		}
+		return text;
 	}
 
 	@Override
@@ -188,21 +209,19 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		long usersCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
 		userText.setText(String.valueOf(usersCount));
 		DashboardDecorators.decorateFeatureSets(usersCount, userDecoration);
-	
-	}
 
-	@Override
-	public void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry) {
-		Group group = new Group(parent, SWT.NONE);
-		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().create());
-		group.setText("Licenses");
+		long userOriginsCount = StreamSupport.stream(userRegistry.getUserOrigins().spliterator(), false).count();
+		userOriginsText.setText(String.valueOf(usersCount));
+		DashboardDecorators.decorateFeatureSets(userOriginsCount, userOriginsDecoration);
+
 	}
 
 	@Override
 	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
-		// TODO Auto-generated method stub
-	
+		long licensePacksCount = StreamSupport.stream(licenseRegistry.getLicensePacks().spliterator(), false).count();
+		licensePacks.setText(String.valueOf(licensePacksCount));
+		DashboardDecorators.decorateFeatureSets(licensePacksCount, licensePacksDecoration);
+
 	}
 
 	@Override
