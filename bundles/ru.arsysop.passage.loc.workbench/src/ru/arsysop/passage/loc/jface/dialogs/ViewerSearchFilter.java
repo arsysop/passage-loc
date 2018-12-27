@@ -16,4 +16,11 @@ public abstract class ViewerSearchFilter<T> extends ViewerFilter {
 		Pattern pattern = Pattern.compile(".*" + searchText + ".*"); //$NON-NLS-1$ //$NON-NLS-2$
 		return pattern;
 	}
+
+	protected String getNotNullValue(String text) {
+		if (text == null) {
+			return "";
+		}
+		return text;
+	}
 }

@@ -16,8 +16,8 @@ public class UserSearchFilter extends ViewerSearchFilter<User> {
 			return true;
 		}
 		if (element instanceof User) {
-			String name = ((User) element).getFullName();
-			String identifier = ((User) element).getIdentifier();
+			String name = getNotNullValue(((User) element).getFullName());
+			String identifier = getNotNullValue(((User) element).getIdentifier());
 			Pattern pattern = getSearchPattern();
 			Matcher matcherByName = pattern.matcher(name);
 			Matcher matcherById = pattern.matcher(identifier);

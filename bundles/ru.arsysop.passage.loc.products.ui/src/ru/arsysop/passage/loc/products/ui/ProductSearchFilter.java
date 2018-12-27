@@ -16,8 +16,8 @@ public class ProductSearchFilter extends ViewerSearchFilter<Product> {
 			return true;
 		}
 		if (element instanceof Product) {
-			String name = ((Product) element).getName();
-			String identifier = ((Product) element).getIdentifier();
+			String name = getNotNullValue(((Product) element).getName());
+			String identifier = getNotNullValue(((Product) element).getIdentifier());
 			Pattern pattern = getSearchPattern();
 			Matcher matcherByName = pattern.matcher(name);
 			Matcher matcherById = pattern.matcher(identifier);
