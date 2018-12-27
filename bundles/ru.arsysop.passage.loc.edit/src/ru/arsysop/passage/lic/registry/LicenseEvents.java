@@ -35,22 +35,22 @@ public class LicenseEvents extends RegistryEvents {
 	/**
 	 * License Pack <code>create</code> event
 	 */
-	public static final String LICENSE_PACK_ORIGIN_CREATE = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + CREATE;
+	public static final String LICENSE_PACK_CREATE = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + CREATE;
 
 	/**
 	 * License Pack <code>read</code> event
 	 */
-	public static final String LICENSE_PACK_ORIGIN_READ = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + READ;
+	public static final String LICENSE_PACK_READ = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + READ;
 
 	/**
 	 * License Pack <code>update</code> event
 	 */
-	public static final String LICENSE_PACK_ORIGIN_UPDATE = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + UPDATE;
+	public static final String LICENSE_PACK_UPDATE = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + UPDATE;
 
 	/**
 	 * License Pack <code>delete</code> event
 	 */
-	public static final String LICENSE_PACK_ORIGIN_DELETE = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + DELETE;
+	public static final String LICENSE_PACK_DELETE = LICENSE_PACK_TOPIC_BASE + TOPIC_SEP + DELETE;
 
 	/**
 	 * Base name of all License Grant events

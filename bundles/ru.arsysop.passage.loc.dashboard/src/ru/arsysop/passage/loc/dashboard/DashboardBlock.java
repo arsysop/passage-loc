@@ -29,6 +29,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 
 public class DashboardBlock {
@@ -38,6 +39,8 @@ public class DashboardBlock {
 
 	private Text text;
 	private ControlDecoration decoration;
+	private Link create;
+	private Link edit;
 
 	public static Text createTextBlock(Composite parent, String label, Image image) {
 		Label imageLabel = new Label(parent, SWT.NONE);
@@ -53,6 +56,7 @@ public class DashboardBlock {
 		{
 			GridData data = new GridData(SWT.FILL, SWT.FILL, false, false);
 			data.widthHint = 50;
+			data.horizontalIndent = 5;
 			text.setLayoutData(data);
 		}
 		return text;
@@ -73,7 +77,11 @@ public class DashboardBlock {
 
 	public void createControl(Composite parent, String label, Image image) {
 		text = createTextBlock(parent, label, image);
-		decoration = new ControlDecoration(text, SWT.TOP | SWT.RIGHT);
+		decoration = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
+		create = new Link(parent, SWT.NONE);
+		create.setText("<a>Create</a>");
+		edit = new Link(parent, SWT.NONE);
+		edit.setText("<a>Edit</a>");
 	}
 
 	public void setInfo(String info) {
@@ -94,6 +102,7 @@ public class DashboardBlock {
 			return;
 		}
 		text.setText(value);
+		edit.setEnabled(count > 0);
 		decorateTextBlock(warning, info, count, decoration);
 	}
 

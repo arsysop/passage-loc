@@ -29,7 +29,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
@@ -72,7 +71,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void createFeatureInfo(Composite parent, FeatureDomainRegistry featureRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
 		group.setText("Features");
 		
 		featureSets = createFeatureSetBlock(group);
@@ -129,7 +128,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void createProductInfo(Composite parent, ProductDomainRegistry productRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
 		group.setText("Products");
 		
 		productLines = createProductLineBlock(group);
@@ -200,7 +199,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void createUserInfo(Composite parent, UserDomainRegistry userRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
 		group.setText("Users");
 		
 		userOrigins = createUserOriginBlock(group);
@@ -243,7 +242,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	public void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
 		group.setText("Licenses");
 
 		licensePacks = createLicensePackBlock(group);
@@ -276,11 +275,6 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 
 	protected Image getImage(EClass eClass) {
 		return licensingImages.getImage(eClass.getName());
-	}
-
-	protected Text createDashBoardTextItem(Group group, String label, EClass object) {
-		Image image = getImage(object);
-		return DashboardBlock.createTextBlock(group, label, image);
 	}
 
 	@Override
