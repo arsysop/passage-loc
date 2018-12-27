@@ -20,11 +20,8 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.dashboard;
 
-import java.util.stream.StreamSupport;
-
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -45,26 +42,17 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 
 	private LicensingImages licensingImages;
 
-	private Text featureSetText;
-	private ControlDecoration featureSetDecoration;
+	private DashboardBlock featureSets;
+	private DashboardBlock features;
+	private DashboardBlock featureVersions;
 
-	private Text featureText;
-	private ControlDecoration featureDecoration;
+	private DashboardBlock productLines;
+	private DashboardBlock products;
+	private DashboardBlock productVersions;
+	private DashboardBlock productVersionFeatures;
 
-	private Text featureVersionText;
-	private ControlDecoration featureVersionDecoration;
-
-	private Text productLinesText;
-	private ControlDecoration productLinesDecoration;
-	private Text productsText;
-	private ControlDecoration productsDecoration;
-	private Text productVersionsText;
-	private ControlDecoration productVersionsDecoration;
-
-	private Text userOriginsText;
-	private ControlDecoration userOriginsDecoration;
-	private Text userText;
-	private ControlDecoration userDecoration;
+	private DashboardBlock userOrigins;
+	private DashboardBlock users;
 
 	private DashboardBlock licensePacks;
 
@@ -86,34 +74,55 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Features");
-
-		featureSetText = createDashBoardTextItem(group, "Feature Sets:", LicPackage.eINSTANCE.getFeatureSet());
-		featureSetDecoration = new ControlDecoration(featureSetText, SWT.TOP | SWT.RIGHT);
-
-		featureText = createDashBoardTextItem(group, "Features:", LicPackage.eINSTANCE.getFeature());
-		featureDecoration = new ControlDecoration(featureText, SWT.TOP | SWT.RIGHT);
-
-		featureVersionText = createDashBoardTextItem(group, "Feature Versions:",
-				LicPackage.eINSTANCE.getFeatureVersion());
-		featureVersionDecoration = new ControlDecoration(featureVersionText, SWT.TOP | SWT.RIGHT);
-
+		
+		featureSets = createFeatureSetBlock(group);
+		features = createFeatureBlock(group);
+		featureVersions = createFeatureVersionBlock(group);
+		
 		updateFeatureInfo(featureRegistry);
+	}
+
+	protected DashboardBlock createFeatureSetBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Feature Sets:";
+		Image image = getImage(LicPackage.eINSTANCE.getFeatureSet());
+		block.createControl(parent, label, image);
+		String info = "You have %s Feature Set(s) defined.\nUse it define the Features";
+		String warning = "You have no Feature Sets defined.\nPlease create or load Feature Set definitions";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
+	protected DashboardBlock createFeatureBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Features:";
+		Image image = getImage(LicPackage.eINSTANCE.getFeature());
+		block.createControl(parent, label, image);
+		String info = "You have %s Feature(s) defined.\nUse it define the Feature Version(s)";
+		String warning = "You have no Features defined.\nPlease create it for the Feature Set(s)";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
+	protected DashboardBlock createFeatureVersionBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Feature Versions:";
+		Image image = getImage(LicPackage.eINSTANCE.getFeatureVersion());
+		block.createControl(parent, label, image);
+		String info = "You have %s Feature Version(s) defined.\nUse it define the Product Version(s)";
+		String warning = "You have no Feature Versions defined.\nPlease create it for the Feature(s)";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
 	}
 
 	@Override
 	public void updateFeatureInfo(FeatureDomainRegistry featureRegistry) {
-		long featureSetCount = StreamSupport.stream(featureRegistry.getFeatureSets().spliterator(), false).count();
-		featureSetText.setText(String.valueOf(featureSetCount));
-		DashboardDecorators.decorateFeatureSets(featureSetCount, featureSetDecoration);
-
-		long featureCount = StreamSupport.stream(featureRegistry.getFeatures().spliterator(), false).count();
-		featureText.setText(String.valueOf(featureCount));
-		DashboardDecorators.decorateFeatures(featureCount, featureDecoration);
-
-		long featureVersionCount = StreamSupport.stream(featureRegistry.getFeatureVersions().spliterator(), false)
-				.count();
-		featureVersionText.setText(String.valueOf(featureVersionCount));
-		DashboardDecorators.decorateFeatureVersions(featureVersionCount, featureVersionDecoration);
+		featureSets.update(featureRegistry.getFeatureSets());
+		features.update(featureRegistry.getFeatures());
+		featureVersions.update(featureRegistry.getFeatureVersions());
 	}
 
 	@Override
@@ -122,34 +131,69 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Products");
+		
+		productLines = createProductLineBlock(group);
+		products = createProductBlock(group);
+		productVersions = createProductVersionBlock(group);
+		productVersionFeatures = createProductVersionFeatureBlock(group);
 
-		productLinesText = createDashBoardTextItem(group, "Product Lines:", LicPackage.eINSTANCE.getProductLine());
-		productLinesDecoration = new ControlDecoration(productLinesText, SWT.TOP | SWT.RIGHT);
-
-		productsText = createDashBoardTextItem(group, "Products:", LicPackage.eINSTANCE.getProduct());
-		productsDecoration = new ControlDecoration(productsText, SWT.TOP | SWT.RIGHT);
-
-		productVersionsText = createDashBoardTextItem(group, "Product Versions:",
-				LicPackage.eINSTANCE.getProductVersion());
-		productVersionsDecoration = new ControlDecoration(productVersionsText, SWT.TOP | SWT.RIGHT);
 		updateProductInfo(productRegistry);
+	}
+
+	protected DashboardBlock createProductLineBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Product Lines:";
+		Image image = getImage(LicPackage.eINSTANCE.getProductLine());
+		block.createControl(parent, label, image);
+		String info = "You have %s Product Line(s) defined.\nUse it define the Products";
+		String warning = "You have no Product Lines defined.\nPlease create or load Product Line definitions";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
+	protected DashboardBlock createProductBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Products:";
+		Image image = getImage(LicPackage.eINSTANCE.getProduct());
+		block.createControl(parent, label, image);
+		String info = "You have %s Product(s) defined.\nUse it define the Product Versions";
+		String warning = "You have no Products defined.\nPlease create it for the Product Line(s)";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
+	protected DashboardBlock createProductVersionBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Product Versions:";
+		Image image = getImage(LicPackage.eINSTANCE.getProductVersion());
+		block.createControl(parent, label, image);
+		String info = "You have %s Product Version (s) defined.\nUse it define the Product Version Features";
+		String warning = "You have no Product Versions defined.\nPlease create it for the Product(s)";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
+	protected DashboardBlock createProductVersionFeatureBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Product Features:";
+		Image image = getImage(LicPackage.eINSTANCE.getProductVersionFeature());
+		block.createControl(parent, label, image);
+		String info = "You have %s Product Version Feature(s) defined.\nUse it define License Grants";
+		String warning = "You have no Product Version Features defined.\nPlease create it for the Product Verion(s)";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
 	}
 
 	@Override
 	public void updateProductInfo(ProductDomainRegistry productRegistry) {
-		long productLinesCount = StreamSupport.stream(productRegistry.getProductLines().spliterator(), false).count();
-		productLinesText.setText(String.valueOf(productLinesCount));
-		DashboardDecorators.decorateProductLines(productLinesCount, productLinesDecoration);
-
-		long productsCount = StreamSupport.stream(productRegistry.getProducts().spliterator(), false).count();
-		productsText.setText(String.valueOf(productsCount));
-		DashboardDecorators.decorateProducts(productsCount, productsDecoration);
-
-		long productVersionsCount = StreamSupport.stream(productRegistry.getProductVersions().spliterator(), false)
-				.count();
-		productVersionsText.setText(String.valueOf(productVersionsCount));
-		DashboardDecorators.decorateProductVersions(productVersionsCount, productVersionsDecoration);
-
+		productLines.update(productRegistry.getProductLines());
+		products.update(productRegistry.getProducts());
+		productVersions.update(productRegistry.getProductVersions());
+		productVersionFeatures.update(productRegistry.getProductVersionFeatures());
 	}
 
 	@Override
@@ -158,26 +202,41 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Users");
-
-		userText = createDashBoardTextItem(group, "Users:", LicPackage.eINSTANCE.getUser());
-		userDecoration = new ControlDecoration(userText, SWT.TOP | SWT.RIGHT);
-
-		userOriginsText = createDashBoardTextItem(group, "User origins:", LicPackage.eINSTANCE.getUserOrigin());
-		userOriginsDecoration = new ControlDecoration(userOriginsText, SWT.TOP | SWT.RIGHT);
+		
+		userOrigins = createUserOriginBlock(group);
+		users = createUserBlock(group);
 
 		updateUserInfo(userRegistry);
 	}
 
+	protected DashboardBlock createUserOriginBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "User Origins:";
+		Image image = getImage(LicPackage.eINSTANCE.getUserOrigin());
+		block.createControl(parent, label, image);
+		String info = "You have %s User Origin(s) defined.\nUse it define the Users";
+		String warning = "You have no User Origins defined.\nPlease create or load User Origin definitions";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
+	protected DashboardBlock createUserBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "Users:";
+		Image image = getImage(LicPackage.eINSTANCE.getUser());
+		block.createControl(parent, label, image);
+		String info = "You have %s User(s) defined.\nUse it define the License Packs";
+		String warning = "You have no Users defined.\nPlease create it for the User Origin(s)";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
+	}
+
 	@Override
 	public void updateUserInfo(UserDomainRegistry userRegistry) {
-		long userOriginsCount = StreamSupport.stream(userRegistry.getUserOrigins().spliterator(), false).count();
-		userOriginsText.setText(String.valueOf(userOriginsCount));
-		DashboardDecorators.decorateUserOrigins(userOriginsCount, userOriginsDecoration);
-
-		long userCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
-		userText.setText(String.valueOf(userCount));
-		DashboardDecorators.decorateUsers(userCount, userDecoration);
-
+		userOrigins.update(userRegistry.getUserOrigins());
+		users.update(userRegistry.getUsers());
 	}
 
 	@Override
@@ -187,21 +246,20 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Licenses");
 
-		DashboardBlock licensePacks = new DashboardBlock();
-		String label = "License pack:";
-		Image image = getImage(LicPackage.eINSTANCE.getLicensePack());
-		licensePacks.createControl(group, label, image);
-
-		String info = "You have %s License Pack(s) defined.\nUse it define the License Grants";
-		String warning = "You have no License Packs defined.\nPlease create or load License Pack definitions";
-		licensePacks.setInfo(info);
-		licensePacks.setWarning(warning);
-
+		licensePacks = createLicensePackBlock(group);
 		updateLicenseInfo(licenseRegistry);
 	}
 
-	protected Image getImage(EClass eClass) {
-		return licensingImages.getImage(eClass.getName());
+	protected DashboardBlock createLicensePackBlock(Composite parent) {
+		DashboardBlock block = new DashboardBlock();
+		String label = "License Packs:";
+		Image image = getImage(LicPackage.eINSTANCE.getLicensePack());
+		block.createControl(parent, label, image);
+		String info = "You have %s License Pack(s) defined.\nUse it define the License Grants";
+		String warning = "You have no License Packs defined.\nPlease create or load License Pack definitions";
+		block.setInfo(info);
+		block.setWarning(warning);
+		return block;
 	}
 
 	@Override
@@ -214,6 +272,10 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 		label.setText("Licensing data summary");
+	}
+
+	protected Image getImage(EClass eClass) {
+		return licensingImages.getImage(eClass.getName());
 	}
 
 	protected Text createDashBoardTextItem(Group group, String label, EClass object) {

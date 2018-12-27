@@ -93,6 +93,7 @@ public class DashboardBlock {
 		if (value.equals(text.getText())) {
 			return;
 		}
+		text.setText(value);
 		decorateTextBlock(warning, info, count, decoration);
 	}
 
