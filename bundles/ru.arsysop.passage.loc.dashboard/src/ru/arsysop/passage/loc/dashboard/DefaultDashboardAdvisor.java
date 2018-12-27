@@ -28,7 +28,7 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -47,8 +47,10 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 
 	private Text featureSetText;
 	private ControlDecoration featureSetDecoration;
+
 	private Text featureText;
 	private ControlDecoration featureDecoration;
+
 	private Text featureVersionText;
 	private ControlDecoration featureVersionDecoration;
 
@@ -64,10 +66,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	private Text userText;
 	private ControlDecoration userDecoration;
 
-	private Text licensePacks;
-	private ControlDecoration licensePacksDecoration;
-	private Text licenseGrants;
-	private ControlDecoration licenseGrantsDecoration;
+	private DashboardBlock licensePacks;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -174,11 +173,11 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		long userOriginsCount = StreamSupport.stream(userRegistry.getUserOrigins().spliterator(), false).count();
 		userOriginsText.setText(String.valueOf(userOriginsCount));
 		DashboardDecorators.decorateUserOrigins(userOriginsCount, userOriginsDecoration);
-		
+
 		long userCount = StreamSupport.stream(userRegistry.getUsers().spliterator(), false).count();
 		userText.setText(String.valueOf(userCount));
 		DashboardDecorators.decorateUsers(userCount, userDecoration);
-	
+
 	}
 
 	@Override
@@ -188,11 +187,15 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(3).create());
 		group.setText("Licenses");
 
-		licensePacks = createDashBoardTextItem(group, "License pack:", LicPackage.eINSTANCE.getLicensePack());
-		licensePacksDecoration = new ControlDecoration(licensePacks, SWT.TOP | SWT.RIGHT);
-
-		licenseGrants = createDashBoardTextItem(group, "License grants:", LicPackage.eINSTANCE.getLicenseGrant());
-		licenseGrantsDecoration = new ControlDecoration(licenseGrants, SWT.TOP | SWT.RIGHT);
+		DashboardBlock licensePacks = new DashboardBlock();
+		String label = "License pack:";
+		Image image = licensingImages.getImage(LicPackage.eINSTANCE.getLicensePack().getName());
+		licensePacks.createControl(group, label, image);
+		String info = "You have %s License Pack(s) defined.\nUse it define the License Grants";
+		String warning = "You have no License Packs defined.\nPlease create or load License Pack definitions";
+		licensePacks.setInfo(info);
+		licensePacks.setWarning(warning);
+		;
 
 		updateLicenseInfo(licenseRegistry);
 	}
@@ -200,9 +203,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	@Override
 	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
 		long licensePacksCount = StreamSupport.stream(licenseRegistry.getLicensePacks().spliterator(), false).count();
-		licensePacks.setText(String.valueOf(licensePacksCount));
-		DashboardDecorators.decorateLicensePacks(licensePacksCount, licensePacksDecoration);
-	
+		licensePacks.update(licensePacksCount);
 	}
 
 	@Override
@@ -213,22 +214,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	}
 
 	protected Text createDashBoardTextItem(Group group, String label, EClass object) {
-		Label userImage = new Label(group, SWT.NONE);
-		userImage.setImage(licensingImages.getImage(object.getName()));
-		Label userLabel = new Label(group, SWT.NONE);
-		{
-			GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
-			data.widthHint = 100;
-			userLabel.setLayoutData(data);
-		}
-		userLabel.setText(label);
-		Text text = new Text(group, SWT.READ_ONLY);
-		{
-			GridData data = new GridData(SWT.FILL, SWT.FILL, false, false);
-			data.widthHint = 50;
-			text.setLayoutData(data);
-		}
-		return text;
+		Image image = licensingImages.getImage(object.getName());
+		return DashboardBlock.createTextBlock(group, label, image);
 	}
 
 	@Override
