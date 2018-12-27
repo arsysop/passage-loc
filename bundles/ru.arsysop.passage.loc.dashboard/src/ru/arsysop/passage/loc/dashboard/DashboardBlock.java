@@ -20,6 +20,8 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.dashboard;
 
+import java.util.stream.StreamSupport;
+
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
@@ -82,6 +84,10 @@ public class DashboardBlock {
 		this.warning = warning;
 	}
 	
+	public void update(Iterable<?> iterable) {
+		update(StreamSupport.stream(iterable.spliterator(), false).count());
+	}
+
 	public void update(long count) {
 		String value = String.valueOf(count);
 		if (value.equals(text.getText())) {

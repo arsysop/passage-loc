@@ -189,21 +189,24 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 
 		DashboardBlock licensePacks = new DashboardBlock();
 		String label = "License pack:";
-		Image image = licensingImages.getImage(LicPackage.eINSTANCE.getLicensePack().getName());
+		Image image = getImage(LicPackage.eINSTANCE.getLicensePack());
 		licensePacks.createControl(group, label, image);
+
 		String info = "You have %s License Pack(s) defined.\nUse it define the License Grants";
 		String warning = "You have no License Packs defined.\nPlease create or load License Pack definitions";
 		licensePacks.setInfo(info);
 		licensePacks.setWarning(warning);
-		;
 
 		updateLicenseInfo(licenseRegistry);
 	}
 
+	protected Image getImage(EClass eClass) {
+		return licensingImages.getImage(eClass.getName());
+	}
+
 	@Override
 	public void updateLicenseInfo(LicenseDomainRegistry licenseRegistry) {
-		long licensePacksCount = StreamSupport.stream(licenseRegistry.getLicensePacks().spliterator(), false).count();
-		licensePacks.update(licensePacksCount);
+		licensePacks.update(licenseRegistry.getLicensePacks());
 	}
 
 	@Override
@@ -214,7 +217,7 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 	}
 
 	protected Text createDashBoardTextItem(Group group, String label, EClass object) {
-		Image image = licensingImages.getImage(object.getName());
+		Image image = getImage(object);
 		return DashboardBlock.createTextBlock(group, label, image);
 	}
 
