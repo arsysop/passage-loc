@@ -21,6 +21,7 @@
 package ru.arsysop.passage.loc.workbench.handlers;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.inject.Named;
 
@@ -31,14 +32,23 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.equinox.app.IApplicationContext;
 
 public class OpenPerspectiveHandler {
 
 	private static final String PERSPECTIVE_ID = "ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"; //$NON-NLS-1$
 
 	@Execute
-	public void execute(MWindow window, EPartService partService, @Named(PERSPECTIVE_ID) String perspectiveId) {
-		partService.switchPerspective(perspectiveId);
+	public void execute(IApplicationContext applicationContext, MWindow window, EPartService partService, @Named(PERSPECTIVE_ID) String perspectiveId) {
+		String brandingName = applicationContext.getBrandingName();
+		Optional<MPerspective> switched = partService.switchPerspective(perspectiveId);
+		if (switched.isPresent()) {
+			MPerspective perspective = switched.get();
+			String label = perspective.getLocalizedLabel();
+			String title = brandingName + ' ' + '-' + ' ' + label;
+			window.setLabel(title);
+		}
+		
 	}
 
 	@CanExecute
