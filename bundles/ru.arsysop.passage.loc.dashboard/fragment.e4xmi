@@ -6,7 +6,7 @@
       <children xsi:type="basic:PartSashContainer" xmi:id="_yd-qsAp5EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.partsashcontainer.main" horizontal="true">
         <children xsi:type="advanced:Placeholder" xmi:id="_Kcy0QAp6EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.placeholder.explorer" containerData="30" ref="_egO04AjvEemmM9IATLmVRA"/>
         <children xsi:type="basic:PartStack" xmi:id="_6UKuYAp6EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.partstack.welcome" containerData="70">
-          <children xsi:type="basic:Part" xmi:id="_pKuhMAp6EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.part.welcome" label="Welcome" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" tooltip=""/>
+          <children xsi:type="basic:Part" xmi:id="_pKuhMAp6EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.part.welcome" contributionURI="bundleclass://ru.arsysop.passage.loc.dashboard/ru.arsysop.passage.loc.dashboard.details.DashboardDetailsPart" label="Welcome" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" tooltip=""/>
         </children>
       </children>
     </elements>

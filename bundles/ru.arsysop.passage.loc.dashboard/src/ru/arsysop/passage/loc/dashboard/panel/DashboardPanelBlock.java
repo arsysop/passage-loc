@@ -39,7 +39,6 @@ public class DashboardPanelBlock {
 
 	private Text text;
 	private ControlDecoration decoration;
-	private Link create;
 	private Link edit;
 
 	public static Text createTextBlock(Composite parent, String label, Image image) {
@@ -78,8 +77,6 @@ public class DashboardPanelBlock {
 	public void createControl(Composite parent, String label, Image image) {
 		text = createTextBlock(parent, label, image);
 		decoration = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
-		create = new Link(parent, SWT.NONE);
-		create.setText("<a>Create</a>");
 		edit = new Link(parent, SWT.NONE);
 		edit.setText("<a>Edit</a>");
 	}

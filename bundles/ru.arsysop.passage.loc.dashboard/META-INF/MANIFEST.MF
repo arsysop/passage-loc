@@ -5,6 +5,7 @@ Bundle-SymbolicName: ru.arsysop.passage.loc.dashboard;singleton:=true
 Bundle-Version: 0.3.2.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
+ org.eclipse.equinox.app;bundle-version="0.0.0",
  org.eclipse.swt,
  org.eclipse.jface,
  org.eclipse.e4.core.di.annotations,

@@ -24,11 +24,13 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
@@ -63,7 +65,9 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	@Override
 	public void createHeaderInfo(Composite parent) {
 		Label label = new Label(parent, SWT.NONE);
-		label.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
+		label.setLayoutData(
+				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.TOP).indent(0, 10).grab(true, false).create());
+		label.setFont(JFaceResources.getBannerFont());
 		label.setText("Licensing data overview");
 	}
 
@@ -71,13 +75,15 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	public void createFeatureInfo(Composite parent, FeatureDomainRegistry featureRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Features");
-		
+
+		createLinks(group);
+
 		featureSets = createFeatureSetBlock(group);
 		features = createFeatureBlock(group);
 		featureVersions = createFeatureVersionBlock(group);
-		
+
 		updateFeatureInfo(featureRegistry);
 	}
 
@@ -128,9 +134,11 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	public void createProductInfo(Composite parent, ProductDomainRegistry productRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Products");
-		
+
+		createLinks(group);
+
 		productLines = createProductLineBlock(group);
 		products = createProductBlock(group);
 		productVersions = createProductVersionBlock(group);
@@ -199,9 +207,11 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	public void createUserInfo(Composite parent, UserDomainRegistry userRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Users");
-		
+
+		createLinks(group);
+
 		userOrigins = createUserOriginBlock(group);
 		users = createUserBlock(group);
 
@@ -242,8 +252,10 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	public void createLicenseInfo(Composite parent, LicenseDomainRegistry licenseRegistry) {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(5).create());
+		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Licenses");
+
+		createLinks(group);
 
 		licensePacks = createLicensePackBlock(group);
 		updateLicenseInfo(licenseRegistry);
@@ -269,8 +281,18 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	@Override
 	public void createFooterInfo(Composite parent) {
 		Label label = new Label(parent, SWT.NONE);
-		label.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
+		label.setLayoutData(
+				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.TOP).indent(0, 10).grab(true, false).create());
 		label.setText("Licensing data summary");
+	}
+
+	protected void createLinks(Group group) {
+		Link create = new Link(group, SWT.NONE);
+		create.setText("<a>Create</a>");
+		create.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).span(2, 1).create());
+		Link open = new Link(group, SWT.NONE);
+		open.setText("<a>Open</a>");
+		open.setLayoutData(GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).span(2, 1).create());
 	}
 
 	protected Image getImage(EClass eClass) {
