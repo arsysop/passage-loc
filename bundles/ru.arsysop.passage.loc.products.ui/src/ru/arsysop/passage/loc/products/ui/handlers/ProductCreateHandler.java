@@ -37,11 +37,11 @@ public class ProductCreateHandler {
 	public void execute(Shell shell, ProductDomainRegistry registry) {
 		EClass eClass = LicPackage.Literals.PRODUCT;
 
-		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getProduct_Identifier();
-		EStructuralFeature featureName = LicPackage.eINSTANCE.getProduct_Name();
+		EStructuralFeature identifierFeature = LicPackage.eINSTANCE.getProduct_Identifier();
+		EStructuralFeature nameFeature = LicPackage.eINSTANCE.getProduct_Name();
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		WizardDialog dialog = new WizardDialog(shell,
-				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider));
+				new CreateFileWizard(registry, eClass, identifierFeature, nameFeature, valueProvider));
 		dialog.create();
 		dialog.setTitle("Product Line");
 		dialog.setMessage("Please specify a file name to store product data");

@@ -64,8 +64,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
 import ru.arsysop.passage.lic.model.api.FeatureSet;
+import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
+import ru.arsysop.passage.lic.registry.UserEvents;
 import ru.arsysop.passage.loc.edit.LocEdit;
 
 public class DetailsView {
@@ -105,6 +107,12 @@ public class DetailsView {
 	@Inject
 	@Optional
 	public void showFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_CREATE) FeatureSet input) {
+		show(input);
+	}
+
+	@Inject
+	@Optional
+	public void showUserOrigin(@UIEventTopic(UserEvents.USER_ORIGIN_CREATE) UserOrigin input) {
 		show(input);
 	}
 

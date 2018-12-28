@@ -90,7 +90,8 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 		case Notification.ADD:
 			if (newValue instanceof Feature) {
 				Feature feature = (Feature) newValue;
-				if (feature.getIdentifier() != null) {
+				String identifier = feature.getIdentifier();
+				if (identifier != null) {
 					registry.registerFeature(feature);
 				}
 			}
@@ -98,8 +99,9 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 		case Notification.REMOVE:
 			if (oldValue instanceof Feature) {
 				Feature feature = (Feature) oldValue;
-				if (feature.getIdentifier() != null) {
-					registry.unregisterFeature(feature.getIdentifier());
+				String identifier = feature.getIdentifier();
+				if (identifier != null) {
+					registry.unregisterFeature(identifier);
 				}
 			}
 			break;

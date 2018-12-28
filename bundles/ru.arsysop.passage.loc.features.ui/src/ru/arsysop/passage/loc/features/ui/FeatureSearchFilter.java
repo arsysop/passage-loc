@@ -3,8 +3,6 @@ package ru.arsysop.passage.loc.features.ui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.text.View;
-
 import org.eclipse.jface.viewers.Viewer;
 
 import ru.arsysop.passage.lic.model.api.Feature;

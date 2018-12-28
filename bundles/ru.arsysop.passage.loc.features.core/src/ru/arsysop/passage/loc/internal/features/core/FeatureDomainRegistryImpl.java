@@ -219,7 +219,10 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		String identifier = feature.getIdentifier();
 		Map<String, FeatureVersion> map = featureVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
 		String version = featureVersion.getVersion();
-		map.put(version, featureVersion);
+		FeatureVersion existing = map.put(version, featureVersion);
+		if (existing != null) {
+			// FIXME: warning
+		}
 		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_CREATE, featureVersion));
 	}
 

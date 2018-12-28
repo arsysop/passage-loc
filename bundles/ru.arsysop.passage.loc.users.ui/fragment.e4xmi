@@ -11,6 +11,7 @@
         <children xsi:type="advanced:Placeholder" xmi:id="_s3_2cAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.placeholder.explore" containerData="30" ref="_OeOboAp1EemYD4Lz_PRA6A"/>
         <children xsi:type="basic:PartStack" xmi:id="_xXoDcAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.partstack.details" containerData="70"/>
       </children>
+      <handlers xmi:id="_z3QbEArXEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.users.ui/ru.arsysop.passage.loc.users.ui.handlers.UserOpenHandler" command="_DTJDQAp1EemYD4Lz_PRA6A"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UtWa4Ap2EemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.view">

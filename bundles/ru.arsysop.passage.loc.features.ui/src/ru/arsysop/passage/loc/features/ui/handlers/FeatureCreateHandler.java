@@ -37,11 +37,11 @@ public class FeatureCreateHandler {
 	public void execute(Shell shell, FeatureDomainRegistry registry) {
 		EClass eClass = LicPackage.Literals.FEATURE;
 
-		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getFeature_Identifier();
-		EStructuralFeature featureName = LicPackage.eINSTANCE.getFeature_Name();
+		EStructuralFeature identifierFeature = LicPackage.eINSTANCE.getFeature_Identifier();
+		EStructuralFeature nameFeature = LicPackage.eINSTANCE.getFeature_Name();
 		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
 		WizardDialog dialog = new WizardDialog(shell,
-				new CreateFileWizard(registry, eClass, featureIdentifier, featureName, valueProvider));
+				new CreateFileWizard(registry, eClass, identifierFeature, nameFeature, valueProvider));
 		dialog.create();
 		dialog.setTitle("Feature Set");
 		dialog.setMessage("Please specify a file name to store feature data");

@@ -32,9 +32,9 @@ public class CreateFormWizard extends CreateFileWizard {
 
 	private final boolean createForm;
 
-	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature featureIdentifier,
-			EStructuralFeature featureName, InitialValuesProvider valueProvider, boolean createForm) {
-		super(registry, eObject, featureIdentifier, featureName, valueProvider);
+	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
+			EStructuralFeature nameFeature, InitialValuesProvider valueProvider, boolean createForm) {
+		super(registry, eObject, identifierFeature, nameFeature, valueProvider);
 		this.createForm = createForm;
 
 	}
@@ -42,6 +42,6 @@ public class CreateFormWizard extends CreateFileWizard {
 	@Override
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				eObject, valueProvider, featureIdentifier != null, featureName != null, createForm);
+				eObject, valueProvider, identifierFeature != null, nameFeature != null, createForm);
 	}
 }

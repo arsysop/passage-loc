@@ -40,17 +40,17 @@ public class CreateFileWizard extends Wizard {
 	protected final EditingDomainRegistry editingDomainRegistry;
 	protected final EObject eObject;
 	protected final InitialValuesProvider valueProvider;
-	protected final EStructuralFeature featureIdentifier;
-	protected final EStructuralFeature featureName;
+	protected final EStructuralFeature identifierFeature;
+	protected final EStructuralFeature nameFeature;
 	private CreateFileWizardPage filePage;
 
-	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature featureIdentifier,
-			EStructuralFeature featureName, InitialValuesProvider valueProvider) {
+	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
+			EStructuralFeature nameFeature, InitialValuesProvider valueProvider) {
 		this.editingDomainRegistry = registry;
 		this.eObject = eObject;
 
-		this.featureIdentifier = featureIdentifier;
-		this.featureName = featureName;
+		this.identifierFeature = identifierFeature;
+		this.nameFeature = nameFeature;
 		this.valueProvider = valueProvider;
 	}
 
@@ -62,7 +62,7 @@ public class CreateFileWizard extends Wizard {
 
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFileWizardPage(eObject, CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				valueProvider, featureIdentifier != null, featureName != null);
+				valueProvider, identifierFeature != null, nameFeature != null);
 	}
 
 	@Override
@@ -79,12 +79,12 @@ public class CreateFileWizard extends Wizard {
 					return false;
 				}
 			}
-			if (featureIdentifier != null) {
-				eObject.eSet(featureIdentifier, filePage.getIdentifier());
+			if (identifierFeature != null) {
+				eObject.eSet(identifierFeature, filePage.getIdentifier());
 			}
 
-			if (featureName != null) {
-				eObject.eSet(featureName, filePage.getName());
+			if (nameFeature != null) {
+				eObject.eSet(nameFeature, filePage.getName());
 			}
 
 			IRunnableWithProgress operation = new IRunnableWithProgress() {

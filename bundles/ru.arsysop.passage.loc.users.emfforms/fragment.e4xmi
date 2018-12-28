@@ -4,4 +4,7 @@
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_z9p4EPbNEei8_cVTxm7o5w" featurename="handlers" parentElementId="ru.arsysop.passage.loc.users.ui.part.users">
     <elements xsi:type="commands:Handler" xmi:id="_3TImIPbNEei8_cVTxm7o5w" elementId="ru.arsysop.passage.loc.licenses.emfforms.handler.userorigin" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.emfforms/ru.arsysop.passage.loc.licenses.emfforms.CreateUserOriginHandler" command="_rAKYoPbNEei8_cVTxm7o5w"/>
   </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DT0FIArXEemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.users.ui.partstack.details">
+    <elements xsi:type="basic:Part" xmi:id="_KLa2IArXEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.emfforms.part.details" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench.emfforms/ru.arsysop.passage.loc.workbench.emfforms.DetailsView" label="Details" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/edit.png"/>
+  </fragments>
 </fragment:ModelFragments>

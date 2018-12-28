@@ -33,11 +33,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
+import ru.arsysop.passage.lic.registry.UserEvents;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
@@ -59,6 +61,17 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
+	}
+	
+	@Reference
+	@Override
+	public void bindEventAdmin(EventAdmin eventAdmin) {
+		super.bindEventAdmin(eventAdmin);
+	}
+	
+	@Override
+	public void unbindEventAdmin(EventAdmin eventAdmin) {
+		super.unbindEventAdmin(eventAdmin);
 	}
 	
 	@Reference
@@ -137,7 +150,11 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	@Override
 	public void registerUserOrigin(UserOrigin userOrigin) {
 		String identifier = userOrigin.getIdentifier();
-		userOriginIndex.put(identifier, userOrigin);
+		UserOrigin existing = userOriginIndex.put(identifier, userOrigin);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(UserEvents.USER_ORIGIN_CREATE, userOrigin));
 		EList<User> users = userOrigin.getUsers();
 		for (User user : users) {
 			registerUser(user);
@@ -147,7 +164,11 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	@Override
 	public void registerUser(User user) {
 		String identifier = user.getEmail();
-		userIndex.put(identifier, user);
+		User existing = userIndex.put(identifier, user);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(UserEvents.USER_CREATE, user));
 	}
 
 	@Override
@@ -164,6 +185,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	public void unregisterUserOrigin(String userOriginId) {
 		UserOrigin removed = userOriginIndex.remove(userOriginId);
 		if (removed != null) {
+			eventAdmin.postEvent(createEvent(UserEvents.USER_ORIGIN_DELETE, removed));
 			EList<User> users = removed.getUsers();
 			for (User user : users) {
 				unregisterUser(user.getEmail());
@@ -173,7 +195,10 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 
 	@Override
 	public void unregisterUser(String userId) {
-		userIndex.remove(userId);
+		User removed = userIndex.remove(userId);
+		if (removed != null) {
+			eventAdmin.postEvent(createEvent(UserEvents.USER_DELETE, removed));
+		}
 	}
 
 }
