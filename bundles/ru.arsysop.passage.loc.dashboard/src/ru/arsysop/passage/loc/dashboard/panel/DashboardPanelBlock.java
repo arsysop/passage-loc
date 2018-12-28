@@ -46,10 +46,10 @@ public class DashboardPanelBlock {
 		text = createTextBlock(parent, label, image);
 		decoration = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
 		edit = new Link(parent, SWT.NONE);
+		edit.setText("<a>Edit</a>"); //$NON-NLS-1$
 	}
 
-	public void configureEdit(String label, String tooltip, SelectionListener listener) {
-		edit.setText("<a>" + label+ "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+	public void configureEdit(String tooltip, SelectionListener listener) {
 		edit.setToolTipText(tooltip);
 		edit.addSelectionListener(listener);
 	}

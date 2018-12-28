@@ -115,7 +115,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Features defined.\nPlease create it for the Feature Set(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
-		block.configureEdit("Edit", "Select Feature to edit", new SelectionAdapter() {
+		block.configureEdit("Select Feature to edit", new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Shell activeShell = e.widget.getDisplay().getActiveShell();
@@ -186,7 +186,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Products defined.\nPlease create it for the Product Line(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
-		block.configureEdit("Edit", "Select Product to edit", new SelectionAdapter() {
+		block.configureEdit("Select Product to edit", new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Shell activeShell = e.widget.getDisplay().getActiveShell();
