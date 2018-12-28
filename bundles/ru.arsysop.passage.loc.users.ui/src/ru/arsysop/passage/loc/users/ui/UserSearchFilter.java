@@ -10,6 +10,10 @@ import ru.arsysop.passage.loc.jface.dialogs.ViewerSearchFilter;
 
 public class UserSearchFilter extends ViewerSearchFilter<User> {
 
+	public UserSearchFilter() {
+		super(User.class);
+	}
+
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		if (searchText.isEmpty()) {
@@ -17,7 +21,7 @@ public class UserSearchFilter extends ViewerSearchFilter<User> {
 		}
 		if (element instanceof User) {
 			String name = getNotNullValue(((User) element).getFullName());
-			String identifier = getNotNullValue(((User) element).getIdentifier());
+			String identifier = getNotNullValue(((User) element).getEmail());
 			Pattern pattern = getSearchPattern();
 			Matcher matcherByName = pattern.matcher(name);
 			Matcher matcherById = pattern.matcher(identifier);

@@ -10,6 +10,10 @@ import ru.arsysop.passage.loc.jface.dialogs.ViewerSearchFilter;
 
 public class ProductSearchFilter extends ViewerSearchFilter<Product> {
 
+	public ProductSearchFilter() {
+		super(Product.class);
+	}
+
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		if (searchText.isEmpty()) {

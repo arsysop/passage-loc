@@ -3,12 +3,18 @@ package ru.arsysop.passage.loc.features.ui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.text.View;
+
 import org.eclipse.jface.viewers.Viewer;
 
 import ru.arsysop.passage.lic.model.api.Feature;
 import ru.arsysop.passage.loc.jface.dialogs.ViewerSearchFilter;
 
 public class FeatureSearchFilter extends ViewerSearchFilter<Feature> {
+
+	public FeatureSearchFilter() {
+		super(Feature.class);
+	}
 
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {

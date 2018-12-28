@@ -129,22 +129,24 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 		for (EObject eObject : contents) {
 			if (eObject instanceof UserOrigin) {
 				UserOrigin userOrigin = (UserOrigin) eObject;
-				addedUserOrigin(userOrigin);
+				registerUserOrigin(userOrigin);
 			}
 		}
 	}
 
-	protected void addedUserOrigin(UserOrigin userOrigin) {
+	@Override
+	public void registerUserOrigin(UserOrigin userOrigin) {
 		String identifier = userOrigin.getIdentifier();
 		userOriginIndex.put(identifier, userOrigin);
 		EList<User> users = userOrigin.getUsers();
 		for (User user : users) {
-			addedUser(user);
+			registerUser(user);
 		}
 	}
 
-	protected void addedUser(User user) {
-		String identifier = user.getIdentifier();
+	@Override
+	public void registerUser(User user) {
+		String identifier = user.getEmail();
 		userIndex.put(identifier, user);
 	}
 
@@ -153,23 +155,25 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 		for (EObject eObject : contents) {
 			if (eObject instanceof UserOrigin) {
 				UserOrigin userOrigin = (UserOrigin) eObject;
-				removedUserOrigin(userOrigin);
+				unregisterUserOrigin(userOrigin.getIdentifier());
 			}
 		}
 	}
 
-	protected void removedUserOrigin(UserOrigin userOrigin) {
-		String identifier = userOrigin.getIdentifier();
-		userOriginIndex.remove(identifier);
-		EList<User> users = userOrigin.getUsers();
-		for (User user : users) {
-			removedUser(user);
+	@Override
+	public void unregisterUserOrigin(String userOriginId) {
+		UserOrigin removed = userOriginIndex.remove(userOriginId);
+		if (removed != null) {
+			EList<User> users = removed.getUsers();
+			for (User user : users) {
+				unregisterUser(user.getEmail());
+			}
 		}
 	}
 
-	protected void removedUser(User user) {
-		String identifier = user.getIdentifier();
-		userIndex.remove(identifier);
+	@Override
+	public void unregisterUser(String userId) {
+		userIndex.remove(userId);
 	}
 
 }

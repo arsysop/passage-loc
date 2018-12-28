@@ -21,9 +21,19 @@
 package ru.arsysop.passage.loc.edit;
 
 import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.model.api.User;
+import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 
 public interface UserDomainRegistry extends UserRegistry, EditingDomainRegistry, DescriptorRegistry {
 
+	void registerUserOrigin(UserOrigin userOrigin);
+
+	void unregisterUserOrigin(String userOriginId);
+	
+	void registerUser(User user);
+
+	void unregisterUser(String userId);
+	
 }
