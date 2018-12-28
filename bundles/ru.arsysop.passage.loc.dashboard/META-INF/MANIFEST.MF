@@ -21,7 +21,9 @@ Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
  ru.arsysop.passage.lic.model.edit;bundle-version="0.0.0",
  ru.arsysop.passage.lic.inspector;bundle-version="0.0.0",
  ru.arsysop.passage.lic.inspector.ui;bundle-version="0.0.0",
- ru.arsysop.passage.loc.edit;bundle-version="0.0.0";visibility:=reexport
+ ru.arsysop.passage.loc.edit;bundle-version="0.0.0";visibility:=reexport,
+ ru.arsysop.passage.loc.features.ui;bundle-version="0.0.0",
+ ru.arsysop.passage.loc.products.ui;bundle-version="0.0.0"
 Bundle-Copyright: %Bundle-Copyright
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: ru.arsysop.passage.loc.dashboard

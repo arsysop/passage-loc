@@ -25,6 +25,7 @@ import java.util.stream.StreamSupport;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -41,7 +42,19 @@ public class DashboardPanelBlock {
 	private ControlDecoration decoration;
 	private Link edit;
 
-	public static Text createTextBlock(Composite parent, String label, Image image) {
+	public void createControl(Composite parent, String label, Image image) {
+		text = createTextBlock(parent, label, image);
+		decoration = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
+		edit = new Link(parent, SWT.NONE);
+	}
+
+	public void configureEdit(String label, String tooltip, SelectionListener listener) {
+		edit.setText("<a>" + label+ "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+		edit.setToolTipText(tooltip);
+		edit.addSelectionListener(listener);
+	}
+
+	protected Text createTextBlock(Composite parent, String label, Image image) {
 		Label imageLabel = new Label(parent, SWT.NONE);
 		imageLabel.setImage(image);
 		Label textLabel = new Label(parent, SWT.NONE);
@@ -61,7 +74,7 @@ public class DashboardPanelBlock {
 		return text;
 	}
 
-	public static void decorateTextBlock(String warning, String info, long count, ControlDecoration decoration) {
+	protected void decorateTextBlock(String warning, String info, long count, ControlDecoration decoration) {
 		FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
 		if (count > 0) {
 			Image image = registry.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
@@ -72,13 +85,6 @@ public class DashboardPanelBlock {
 			decoration.setImage(image);
 			decoration.setDescriptionText(String.format(warning, count));
 		}
-	}
-
-	public void createControl(Composite parent, String label, Image image) {
-		text = createTextBlock(parent, label, image);
-		decoration = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
-		edit = new Link(parent, SWT.NONE);
-		edit.setText("<a>Edit</a>");
 	}
 
 	public void setInfo(String info) {

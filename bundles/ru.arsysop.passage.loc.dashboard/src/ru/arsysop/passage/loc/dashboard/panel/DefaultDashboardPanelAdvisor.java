@@ -26,18 +26,25 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
+import ru.arsysop.passage.loc.features.ui.FeaturesUi;
+import ru.arsysop.passage.loc.products.ui.ProductsUi;
 
 public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 
@@ -81,7 +88,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		createLinks(group);
 
 		featureSets = createFeatureSetBlock(group);
-		features = createFeatureBlock(group);
+		features = createFeatureBlock(group, featureRegistry);
 		featureVersions = createFeatureVersionBlock(group);
 
 		updateFeatureInfo(featureRegistry);
@@ -99,7 +106,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		return block;
 	}
 
-	protected DashboardPanelBlock createFeatureBlock(Composite parent) {
+	protected DashboardPanelBlock createFeatureBlock(Composite parent, FeatureDomainRegistry registry) {
 		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Features:";
 		Image image = getImage(LicPackage.eINSTANCE.getFeature());
@@ -108,6 +115,17 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Features defined.\nPlease create it for the Feature Set(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		block.configureEdit("Edit", "Select Feature to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Shell activeShell = e.widget.getDisplay().getActiveShell();
+				FeatureDescriptor descriptor = FeaturesUi.selectFeatureDescriptor(activeShell, licensingImages, registry, null);
+				if (descriptor != null) {
+					//switch perspective
+					//select product
+				}
+			}
+		});
 		return block;
 	}
 
@@ -140,7 +158,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		createLinks(group);
 
 		productLines = createProductLineBlock(group);
-		products = createProductBlock(group);
+		products = createProductBlock(group, productRegistry);
 		productVersions = createProductVersionBlock(group);
 		productVersionFeatures = createProductVersionFeatureBlock(group);
 
@@ -159,7 +177,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		return block;
 	}
 
-	protected DashboardPanelBlock createProductBlock(Composite parent) {
+	protected DashboardPanelBlock createProductBlock(Composite parent, ProductDomainRegistry registry) {
 		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Products:";
 		Image image = getImage(LicPackage.eINSTANCE.getProduct());
@@ -168,6 +186,17 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Products defined.\nPlease create it for the Product Line(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		block.configureEdit("Edit", "Select Product to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Shell activeShell = e.widget.getDisplay().getActiveShell();
+				ProductDescriptor descriptor = ProductsUi.selectProductDescriptor(activeShell, licensingImages, registry, null);
+				if (descriptor != null) {
+					//switch perspective
+					//select product
+				}
+			}
+		});
 		return block;
 	}
 

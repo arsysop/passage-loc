@@ -50,7 +50,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 	private static final int DIALOG_WIDTH = 400;
 	private final boolean multi;
 	private Text filteringField;
-	private Text resultingField;
+	private Label resultingField;
 	private TableViewer tableViewItems;
 	private final List<Object> input = new ArrayList<>();
 
@@ -164,8 +164,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 		tableViewItems.getTable().setLayoutData(gd);
 		tableViewItems.addDoubleClickListener(event -> handleDoubleClick());
 
-		resultingField = new Text(content, SWT.BORDER);
-		resultingField.setEditable(false);
+		resultingField = new Label(content, SWT.BORDER);
 		{
 			GridData data = new GridData(SWT.FILL, SWT.FILL, true, false);
 			resultingField.setLayoutData(data);
