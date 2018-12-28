@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_ihqaUAg8EemX0JS0sOPu6Q">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_ihqaUAg8EemX0JS0sOPu6Q">
   <imports xsi:type="basic:PartSashContainer" xmi:id="_egO04AjvEemmM9IATLmVRA" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore"/>
+  <imports xsi:type="commands:Command" xmi:id="_qx5wAAqeEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
+  <imports xsi:type="commands:CommandParameter" xmi:id="_tAtw8AqeEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_kZSn8Ap5EemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.perspectivestack.main" positionInList="first">
     <elements xsi:type="advanced:Perspective" xmi:id="_rrOkgAp5EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.perspective.main" selectedElement="_yd-qsAp5EemYD4Lz_PRA6A" label="Dashboard" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_yd-qsAp5EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.partsashcontainer.main" horizontal="true">
@@ -13,5 +15,10 @@
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Q_gowAkZEemiMscYRYKkWw" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore">
     <elements xsi:type="basic:Part" xmi:id="_XGd_8AkZEemiMscYRYKkWw" elementId="ru.arsysop.passage.loc.dashboard.part.dashboard" containerData="30" contributionURI="bundleclass://ru.arsysop.passage.loc.dashboard/ru.arsysop.passage.loc.dashboard.panel.DashboardPanelPart" label="Dashboard" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_wOQD8AqeEemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.view" positionInList="first">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_2kAFEAqeEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.handledmenuitem.dashboard" label="Dashboard" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" command="_qx5wAAqeEemYD4Lz_PRA6A">
+      <parameters xmi:id="_63SfMAqeEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.dashboard.parameter.view.perspective" name="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id" value="ru.arsysop.passage.loc.dashboard.perspective.main"/>
+    </elements>
   </fragments>
 </fragment:ModelFragments>

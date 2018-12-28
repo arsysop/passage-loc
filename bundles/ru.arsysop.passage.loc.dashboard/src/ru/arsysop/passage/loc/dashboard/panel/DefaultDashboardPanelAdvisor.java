@@ -291,7 +291,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		create.setText("<a>Create</a>");
 		create.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).span(2, 1).create());
 		Link open = new Link(group, SWT.NONE);
-		open.setText("<a>Open</a>");
+		open.setText("<a>Load</a>");
 		open.setLayoutData(GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).span(2, 1).create());
 	}
 
