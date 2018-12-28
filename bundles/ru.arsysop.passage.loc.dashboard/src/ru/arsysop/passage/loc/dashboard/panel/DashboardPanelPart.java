@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard;
+package ru.arsysop.passage.loc.dashboard.panel;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -53,23 +53,23 @@ import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-public class DashboardPart {
+public class DashboardPanelPart {
 	
 	private final FeatureDomainRegistry featureRegistry;
 	private final ProductDomainRegistry productRegistry;
 	private final UserDomainRegistry userRegistry;
 	private final LicenseDomainRegistry licenseRegistry;
-	private final DashboardAdvisor dashboardAdvisor;
+	private final DashboardPanelAdvisor dashboardAdvisor;
 	
 	@Inject
-	public DashboardPart(IEclipseContext context) {
+	public DashboardPanelPart(IEclipseContext context) {
 		this.featureRegistry = context.get(FeatureDomainRegistry.class);
 		this.productRegistry = context.get(ProductDomainRegistry.class);
 		this.userRegistry = context.get(UserDomainRegistry.class);
 		this.licenseRegistry = context.get(LicenseDomainRegistry.class);
-		DashboardAdvisor advisor = context.get(DashboardAdvisor.class);
+		DashboardPanelAdvisor advisor = context.get(DashboardPanelAdvisor.class);
 		if (advisor == null) {
-			advisor = new DefaultDashboardAdvisor();
+			advisor = new DefaultDashboardPanelAdvisor();
 		}
 		this.dashboardAdvisor = advisor;
 	}

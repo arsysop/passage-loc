@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard;
+package ru.arsysop.passage.loc.dashboard.panel;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
@@ -37,23 +37,23 @@ import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-public class DefaultDashboardAdvisor implements DashboardAdvisor {
+public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 
 	private LicensingImages licensingImages;
 
-	private DashboardBlock featureSets;
-	private DashboardBlock features;
-	private DashboardBlock featureVersions;
+	private DashboardPanelBlock featureSets;
+	private DashboardPanelBlock features;
+	private DashboardPanelBlock featureVersions;
 
-	private DashboardBlock productLines;
-	private DashboardBlock products;
-	private DashboardBlock productVersions;
-	private DashboardBlock productVersionFeatures;
+	private DashboardPanelBlock productLines;
+	private DashboardPanelBlock products;
+	private DashboardPanelBlock productVersions;
+	private DashboardPanelBlock productVersionFeatures;
 
-	private DashboardBlock userOrigins;
-	private DashboardBlock users;
+	private DashboardPanelBlock userOrigins;
+	private DashboardPanelBlock users;
 
-	private DashboardBlock licensePacks;
+	private DashboardPanelBlock licensePacks;
 
 	@Override
 	public void init(IEclipseContext context) {
@@ -81,8 +81,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		updateFeatureInfo(featureRegistry);
 	}
 
-	protected DashboardBlock createFeatureSetBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createFeatureSetBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Feature Sets:";
 		Image image = getImage(LicPackage.eINSTANCE.getFeatureSet());
 		block.createControl(parent, label, image);
@@ -93,8 +93,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		return block;
 	}
 
-	protected DashboardBlock createFeatureBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createFeatureBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Features:";
 		Image image = getImage(LicPackage.eINSTANCE.getFeature());
 		block.createControl(parent, label, image);
@@ -105,8 +105,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		return block;
 	}
 
-	protected DashboardBlock createFeatureVersionBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createFeatureVersionBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Feature Versions:";
 		Image image = getImage(LicPackage.eINSTANCE.getFeatureVersion());
 		block.createControl(parent, label, image);
@@ -139,8 +139,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		updateProductInfo(productRegistry);
 	}
 
-	protected DashboardBlock createProductLineBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createProductLineBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Product Lines:";
 		Image image = getImage(LicPackage.eINSTANCE.getProductLine());
 		block.createControl(parent, label, image);
@@ -151,8 +151,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		return block;
 	}
 
-	protected DashboardBlock createProductBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createProductBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Products:";
 		Image image = getImage(LicPackage.eINSTANCE.getProduct());
 		block.createControl(parent, label, image);
@@ -163,8 +163,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		return block;
 	}
 
-	protected DashboardBlock createProductVersionBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createProductVersionBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Product Versions:";
 		Image image = getImage(LicPackage.eINSTANCE.getProductVersion());
 		block.createControl(parent, label, image);
@@ -175,8 +175,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		return block;
 	}
 
-	protected DashboardBlock createProductVersionFeatureBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createProductVersionFeatureBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Product Features:";
 		Image image = getImage(LicPackage.eINSTANCE.getProductVersionFeature());
 		block.createControl(parent, label, image);
@@ -208,8 +208,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		updateUserInfo(userRegistry);
 	}
 
-	protected DashboardBlock createUserOriginBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createUserOriginBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "User Origins:";
 		Image image = getImage(LicPackage.eINSTANCE.getUserOrigin());
 		block.createControl(parent, label, image);
@@ -220,8 +220,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		return block;
 	}
 
-	protected DashboardBlock createUserBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createUserBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Users:";
 		Image image = getImage(LicPackage.eINSTANCE.getUser());
 		block.createControl(parent, label, image);
@@ -249,8 +249,8 @@ public class DefaultDashboardAdvisor implements DashboardAdvisor {
 		updateLicenseInfo(licenseRegistry);
 	}
 
-	protected DashboardBlock createLicensePackBlock(Composite parent) {
-		DashboardBlock block = new DashboardBlock();
+	protected DashboardPanelBlock createLicensePackBlock(Composite parent) {
+		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "License Packs:";
 		Image image = getImage(LicPackage.eINSTANCE.getLicensePack());
 		block.createControl(parent, label, image);

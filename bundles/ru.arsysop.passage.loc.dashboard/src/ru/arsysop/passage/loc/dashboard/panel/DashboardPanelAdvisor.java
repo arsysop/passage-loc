@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard;
+package ru.arsysop.passage.loc.dashboard.panel;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.swt.widgets.Composite;
@@ -28,7 +28,7 @@ import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-public interface DashboardAdvisor {
+public interface DashboardPanelAdvisor {
 
 	void init(IEclipseContext context);
 

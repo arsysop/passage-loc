@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard;
+package ru.arsysop.passage.loc.dashboard.panel;
 
 import java.util.stream.StreamSupport;
 
@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 
-public class DashboardBlock {
+public class DashboardPanelBlock {
 
 	private String warning;
 	private String info;

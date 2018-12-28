@@ -12,6 +12,6 @@
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Q_gowAkZEemiMscYRYKkWw" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore">
-    <elements xsi:type="basic:Part" xmi:id="_XGd_8AkZEemiMscYRYKkWw" elementId="ru.arsysop.passage.loc.dashboard.part.dashboard" containerData="30" contributionURI="bundleclass://ru.arsysop.passage.loc.dashboard/ru.arsysop.passage.loc.dashboard.DashboardPart" label="Dashboard" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png"/>
+    <elements xsi:type="basic:Part" xmi:id="_XGd_8AkZEemiMscYRYKkWw" elementId="ru.arsysop.passage.loc.dashboard.part.dashboard" containerData="30" contributionURI="bundleclass://ru.arsysop.passage.loc.dashboard/ru.arsysop.passage.loc.dashboard.panel.DashboardPanelPart" label="Dashboard" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png"/>
   </fragments>
 </fragment:ModelFragments>
