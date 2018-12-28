@@ -53,7 +53,7 @@ public class DashboardDetailsPart {
 		StringBuilder sb = new StringBuilder();
 		sb.append('\n');
 		sb.append("1. Create Feature Set").append('\n');
-		sb.append("The 'Feature Set' groups the related functionality that may be dsitributed via several 'Products'");
+		sb.append("The 'Feature Set' groups the related functionality that may be distributed via several 'Products'");
 		sb.append('\n');
 		sb.append('\n');
 		sb.append("2. Create Features").append('\n');
@@ -69,7 +69,7 @@ public class DashboardDetailsPart {
 		sb.append('\n');
 		sb.append('\n');
 		sb.append("4. Create Product Line").append('\n');
-		sb.append("The 'Product Line' groups the related 'Products' in your offering. It may be different editions of the related functionality. ");
+		sb.append("The 'Product Line' groups the related 'Products' in your offering. It may be different editions of the related functionality.");
 		sb.append('\n');
 		sb.append('\n');
 		sb.append("5. Create Product").append('\n');
@@ -80,13 +80,29 @@ public class DashboardDetailsPart {
 		sb.append("6. Create Product Version").append('\n');
 		sb.append("The 'Product Version' corresponds to the binaries you are planning to release or already released for the 'Product'. ");
 		sb.append("It is recommended to create the 'Product Version' for each external 'Product' shipment. ");
-		sb.append("The 'version' attribute of the 'Product Version' is important for the licensing configuration.");
-		sb.append("The 'Product Version' completes the definition of licensing configuration that will be checked in the user environment. ");
+		sb.append("The 'version' attribute of the 'Product Version' is important for the licensing configuration. ");
+		sb.append("The 'Product Version' completes the definition of licensing configuration that will be checked in the user environment.");
 		sb.append('\n');
 		sb.append('\n');
 		sb.append("7. Create Product Version Feature").append('\n');
 		sb.append("The 'Product Version Feature' describes the state of functionality included to the 'Product Version'. ");
-		sb.append("It is used as a reference to formulate 'License Pack'. ");
+		sb.append("It is used as a reference to formulate 'License Pack'.");
+		sb.append('\n');
+		sb.append('\n');
+		sb.append("8. Create User Origin").append('\n');
+		sb.append("The 'User Origin' provides access to 'User' descriptors. ");
+		sb.append("The typical example of the 'User Origin' is the list of users registered on your web site to download 'Product Version'.");
+		sb.append('\n');
+		sb.append('\n');
+		sb.append("9. Create User").append('\n');
+		sb.append("The 'User' describes the licensee of your functionality. ");
+		sb.append("The 'identifier' of the 'User' is a part of the 'License Pack' definition.");
+		sb.append('\n');
+		sb.append('\n');
+		sb.append("10. Create License Pack").append('\n');
+		sb.append("The 'License Pack' is a container for 'License Grant' descriptors. ");
+		sb.append("It has references to the 'Product Version' that is licensed to 'User'. ");
+		sb.append("The 'License Pack' is intended to be delivered to the 'User' environment to allow usage of restricted functionality.");
 		return sb.toString();
 	}
 
