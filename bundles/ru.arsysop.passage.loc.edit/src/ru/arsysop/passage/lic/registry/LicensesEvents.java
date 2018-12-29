@@ -20,7 +20,7 @@
  *******************************************************************************/
 package ru.arsysop.passage.lic.registry;
 
-public class LicenseEvents extends RegistryEvents {
+public class LicensesEvents extends RegistryEvents {
 
 	/**
 	 * Base name of all Licenses events

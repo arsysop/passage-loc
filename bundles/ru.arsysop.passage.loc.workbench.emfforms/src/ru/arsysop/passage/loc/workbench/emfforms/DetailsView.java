@@ -69,9 +69,9 @@ import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
-import ru.arsysop.passage.lic.registry.LicenseEvents;
+import ru.arsysop.passage.lic.registry.LicensesEvents;
 import ru.arsysop.passage.lic.registry.ProductsEvents;
-import ru.arsysop.passage.lic.registry.UserEvents;
+import ru.arsysop.passage.lic.registry.UsersEvents;
 import ru.arsysop.passage.loc.edit.LocEdit;
 
 public class DetailsView {
@@ -122,13 +122,13 @@ public class DetailsView {
 
 	@Inject
 	@Optional
-	public void showUserOrigin(@UIEventTopic(UserEvents.USER_ORIGIN_CREATE) UserOrigin input) {
+	public void showUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_CREATE) UserOrigin input) {
 		show(input);
 	}
 
 	@Inject
 	@Optional
-	public void showLicensePack(@UIEventTopic(LicenseEvents.LICENSE_PACK_CREATE) LicensePack input) {
+	public void showLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_CREATE) LicensePack input) {
 		show(input);
 	}
 

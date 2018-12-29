@@ -45,7 +45,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
-import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {

@@ -18,18 +18,15 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.lic.edit;
+package ru.arsysop.passage.lic.emf.edit;
 
-import java.nio.file.Path;
-
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
-
-public interface EditingDomainRegistry extends IEditingDomainProvider, ComposedAdapterFactoryProvider {
+public interface DomainRegistryAccess {
 	
-	String getFileExtension();
+	String PROPERTY_DOMAIN_NAME = "ru.arsysop.passage.lic.emf.edit.domain.name"; //$NON-NLS-1$
+	String PROPERTY_FILE_EXTENSION = "ru.arsysop.passage.lic.emf.edit.file.extension"; //$NON-NLS-1$
 	
-	Path getBasePath();
+	EditingDomainRegistry getDomainRegistry(String name);
+
+	String getFileExtension(String name);
 
 }

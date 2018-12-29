@@ -18,22 +18,11 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.edit;
+package ru.arsysop.passage.lic.registry;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.api.User;
-import ru.arsysop.passage.lic.model.api.UserOrigin;
-import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.UserRegistry;
-
-public interface UserDomainRegistry extends UserRegistry, EditingDomainRegistry, DescriptorRegistry {
-
-	void registerUserOrigin(UserOrigin userOrigin);
-
-	void unregisterUserOrigin(String userOriginId);
+public class ProductsRegistry {
 	
-	void registerUser(User user);
+	public static final String DOMAIN_NAME = "products"; //$NON-NLS-1$
+	public static final String FILE_EXTENSION_XMI = "lic_products"; //$NON-NLS-1$
 
-	void unregisterUser(String userId);
-	
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.loc.internal.workbench.LocDomainRegistryAccess">
+   <service>
+      <provide interface="ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess"/>
+   </service>
+   <implementation class="ru.arsysop.passage.loc.internal.workbench.LocDomainRegistryAccess"/>
+</scr:component>

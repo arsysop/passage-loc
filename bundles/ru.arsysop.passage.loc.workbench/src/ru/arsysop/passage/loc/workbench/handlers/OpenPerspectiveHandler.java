@@ -34,12 +34,12 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.equinox.app.IApplicationContext;
 
+import ru.arsysop.passage.loc.workbench.LocWokbench;
+
 public class OpenPerspectiveHandler {
 
-	private static final String PERSPECTIVE_ID = "ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"; //$NON-NLS-1$
-
 	@Execute
-	public void execute(IApplicationContext applicationContext, MWindow window, EPartService partService, @Named(PERSPECTIVE_ID) String perspectiveId) {
+	public void execute(IApplicationContext applicationContext, MWindow window, EPartService partService, @Named(LocWokbench.COMMANDPARAMETER_PERSPECTIVE_ID) String perspectiveId) {
 		String brandingName = applicationContext.getBrandingName();
 		Optional<MPerspective> switched = partService.switchPerspective(perspectiveId);
 		if (switched.isPresent()) {
@@ -52,7 +52,7 @@ public class OpenPerspectiveHandler {
 	}
 
 	@CanExecute
-	public boolean canExecute(MWindow window, EModelService modelService, @Named(PERSPECTIVE_ID) String perspectiveId) {
+	public boolean canExecute(MWindow window, EModelService modelService, @Named(LocWokbench.COMMANDPARAMETER_PERSPECTIVE_ID) String perspectiveId) {
 		MUIElement found = modelService.find(perspectiveId, window);
 		if (found instanceof MPerspective) {
 			MPerspective active = modelService.getActivePerspective(window);

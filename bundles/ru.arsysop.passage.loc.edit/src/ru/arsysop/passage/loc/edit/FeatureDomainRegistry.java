@@ -20,7 +20,7 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
-import ru.arsysop.passage.lic.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.Feature;
 import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.FeatureVersion;

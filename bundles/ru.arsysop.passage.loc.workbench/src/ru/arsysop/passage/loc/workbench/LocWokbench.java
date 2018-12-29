@@ -31,6 +31,9 @@ public class LocWokbench {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.workbench"; //$NON-NLS-1$
 
+	public static final String COMMANDPARAMETER_PERSPECTIVE_ID = "ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"; //$NON-NLS-1$
+	public static final String COMMANDPARAMETER_DOMAIN_NAME = "ru.arsysop.passage.loc.workbench.commandparameter.domain.name"; //$NON-NLS-1$
+
 	public static String selectSavePath(Shell shell, String extension) {
 		String[] array = maskFilters(extension);
 		FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);

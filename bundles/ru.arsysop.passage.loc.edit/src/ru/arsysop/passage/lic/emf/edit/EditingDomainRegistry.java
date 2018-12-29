@@ -18,22 +18,19 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.edit;
+package ru.arsysop.passage.lic.emf.edit;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.api.User;
-import ru.arsysop.passage.lic.model.api.UserOrigin;
+import java.nio.file.Path;
+
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.UserRegistry;
+import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 
-public interface UserDomainRegistry extends UserRegistry, EditingDomainRegistry, DescriptorRegistry {
-
-	void registerUserOrigin(UserOrigin userOrigin);
-
-	void unregisterUserOrigin(String userOriginId);
+public interface EditingDomainRegistry extends DescriptorRegistry, IEditingDomainProvider, ComposedAdapterFactoryProvider {
 	
-	void registerUser(User user);
-
-	void unregisterUser(String userId);
+	String getFileExtension();
 	
+	Path getBasePath();
+
 }

@@ -38,7 +38,7 @@ import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
-import ru.arsysop.passage.lic.registry.LicenseEvents;
+import ru.arsysop.passage.lic.registry.LicensesEvents;
 import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
@@ -46,7 +46,7 @@ import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
 import ru.arsysop.passage.lic.registry.ProductsEvents;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
-import ru.arsysop.passage.lic.registry.UserEvents;
+import ru.arsysop.passage.lic.registry.UsersEvents;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
@@ -198,49 +198,49 @@ public class DashboardPanelPart {
 
 	@Inject
 	@Optional
-	public void createdUserOrigin(@UIEventTopic(UserEvents.USER_ORIGIN_CREATE) UserOriginDescriptor input) {
+	public void createdUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_CREATE) UserOriginDescriptor input) {
 		dashboardAdvisor.updateUserInfo(userRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void deletedUserOrigin(@UIEventTopic(UserEvents.USER_ORIGIN_DELETE) UserOriginDescriptor input) {
+	public void deletedUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_DELETE) UserOriginDescriptor input) {
 		dashboardAdvisor.updateUserInfo(userRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void createdUser(@UIEventTopic(UserEvents.USER_CREATE) UserDescriptor input) {
+	public void createdUser(@UIEventTopic(UsersEvents.USER_CREATE) UserDescriptor input) {
 		dashboardAdvisor.updateUserInfo(userRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void deletedUser(@UIEventTopic(UserEvents.USER_DELETE) UserDescriptor input) {
+	public void deletedUser(@UIEventTopic(UsersEvents.USER_DELETE) UserDescriptor input) {
 		dashboardAdvisor.updateUserInfo(userRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void createdLicensePack(@UIEventTopic(LicenseEvents.LICENSE_PACK_CREATE) LicensePackDescriptor input) {
+	public void createdLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_CREATE) LicensePackDescriptor input) {
 		dashboardAdvisor.updateLicenseInfo(licenseRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void deletedLicensePack(@UIEventTopic(LicenseEvents.LICENSE_PACK_DELETE) LicensePackDescriptor input) {
+	public void deletedLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_DELETE) LicensePackDescriptor input) {
 		dashboardAdvisor.updateLicenseInfo(licenseRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void createdLicenseGrant(@UIEventTopic(LicenseEvents.LICENSE_GRANT_CREATE) LicensePackDescriptor input) {
+	public void createdLicenseGrant(@UIEventTopic(LicensesEvents.LICENSE_GRANT_CREATE) LicensePackDescriptor input) {
 		dashboardAdvisor.updateLicenseInfo(licenseRegistry);
 	}
 
 	@Inject
 	@Optional
-	public void deletedLicenseGrant(@UIEventTopic(LicenseEvents.LICENSE_GRANT_DELETE) LicensePackDescriptor input) {
+	public void deletedLicenseGrant(@UIEventTopic(LicensesEvents.LICENSE_GRANT_DELETE) LicensePackDescriptor input) {
 		dashboardAdvisor.updateLicenseInfo(licenseRegistry);
 	}
 

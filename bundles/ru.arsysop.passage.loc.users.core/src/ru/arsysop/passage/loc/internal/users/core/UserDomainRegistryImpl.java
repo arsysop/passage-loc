@@ -39,7 +39,7 @@ import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
-import ru.arsysop.passage.lic.registry.UserEvents;
+import ru.arsysop.passage.lic.registry.UsersEvents;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
@@ -154,7 +154,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(UserEvents.USER_ORIGIN_CREATE, userOrigin));
+		eventAdmin.postEvent(createEvent(UsersEvents.USER_ORIGIN_CREATE, userOrigin));
 		EList<User> users = userOrigin.getUsers();
 		for (User user : users) {
 			registerUser(user);
@@ -168,7 +168,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(UserEvents.USER_CREATE, user));
+		eventAdmin.postEvent(createEvent(UsersEvents.USER_CREATE, user));
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	public void unregisterUserOrigin(String userOriginId) {
 		UserOrigin removed = userOriginIndex.remove(userOriginId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(UserEvents.USER_ORIGIN_DELETE, removed));
+			eventAdmin.postEvent(createEvent(UsersEvents.USER_ORIGIN_DELETE, removed));
 			EList<User> users = removed.getUsers();
 			for (User user : users) {
 				unregisterUser(user.getEmail());
@@ -197,7 +197,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	public void unregisterUser(String userId) {
 		User removed = userIndex.remove(userId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(UserEvents.USER_DELETE, removed));
+			eventAdmin.postEvent(createEvent(UsersEvents.USER_DELETE, removed));
 		}
 	}
 
