@@ -35,49 +35,65 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.model.api.Product;
 import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
+import ru.arsysop.passage.lic.model.api.ProductVersionFeature;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
+import ru.arsysop.passage.lic.registry.ProductsEvents;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 @Component
-public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry implements ProductRegistry, ProductDomainRegistry {
-	
+public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
+		implements ProductRegistry, ProductDomainRegistry {
+
 	private final Map<String, ProductLine> productLineIndex = new HashMap<>();
 	private final Map<String, Product> productIndex = new HashMap<>();
 	private final Map<String, Map<String, ProductVersion>> productVersionIndex = new HashMap<>();
+	private final Map<String, Map<String, Map<String, ProductVersionFeature>>> productVersionFeatureIndex = new HashMap<>();
 
 	@Reference
 	@Override
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.bindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
 	}
+
+	@Reference
+	@Override
+	public void bindEventAdmin(EventAdmin eventAdmin) {
+		super.bindEventAdmin(eventAdmin);
+	}
 	
+	@Override
+	public void unbindEventAdmin(EventAdmin eventAdmin) {
+		super.unbindEventAdmin(eventAdmin);
+	}
+
 	@Reference
 	@Override
 	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.bindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Override
 	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.unbindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Activate
 	public void activate(Map<String, Object> properties) {
 		super.activate(properties);
@@ -177,22 +193,28 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry implem
 	@Override
 	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures() {
 		List<ProductVersionFeatureDescriptor> productVersionFeatures = new ArrayList<>();
-		Iterable<ProductVersionDescriptor> productVersions = getProductVersions();
-		for (ProductVersionDescriptor productVersion : productVersions) {
-			Iterable<? extends ProductVersionFeatureDescriptor> features = productVersion.getProductVersionFeatures();
-			features.forEach(productVersionFeatures::add);
+		Collection<Map<String, Map<String, ProductVersionFeature>>> versionValues = productVersionFeatureIndex.values();
+		for (Map<String, Map<String, ProductVersionFeature>> versions : versionValues) {
+			Collection<Map<String, ProductVersionFeature>> values = versions.values();
+			for (Map<String,ProductVersionFeature> map : values) {
+				productVersionFeatures.addAll(map.values());
+			}
 		}
 		return productVersionFeatures;
 	}
 
 	@Override
 	public Iterable<ProductVersionFeatureDescriptor> getProductVersionFeatures(String productId, String version) {
-		ProductVersionDescriptor productVersion = getProductVersion(productId, version);
-		if (productVersion == null) {
+		Map<String, Map<String, ProductVersionFeature>> versions = productVersionFeatureIndex.get(productId);
+		if (versions == null) {
+			return Collections.emptyList();
+		}
+		Map<String, ProductVersionFeature> map = versions.get(version);
+		if (map == null) {
 			return Collections.emptyList();
 		}
 		List<ProductVersionFeatureDescriptor> result = new ArrayList<>();
-		productVersion.getProductVersionFeatures().forEach(result::add);
+		map.values().forEach(result::add);
 		return result;
 	}
 
@@ -206,34 +228,65 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry implem
 		for (EObject eObject : contents) {
 			if (eObject instanceof ProductLine) {
 				ProductLine productLine = (ProductLine) eObject;
-				addedProductLine(productLine);
+				registerProductLine(productLine);
 			}
 		}
 	}
 
-	protected void addedProductLine(ProductLine productLine) {
+	@Override
+	public void registerProductLine(ProductLine productLine) {
 		String identifier = productLine.getIdentifier();
-		productLineIndex.put(identifier, productLine);
+		ProductLine existing = productLineIndex.put(identifier, productLine);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_LINE_CREATE, productLine));
 		EList<Product> products = productLine.getProducts();
 		for (Product product : products) {
-			addedProduct(product);
+			registerProduct(product);
 		}
 	}
 
-	protected void addedProduct(Product product) {
+	@Override
+	public void registerProduct(Product product) {
 		String identifier = product.getIdentifier();
-		productIndex.put(identifier, product);
+		Product existing = productIndex.put(identifier, product);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_CREATE, product));
 		EList<ProductVersion> productVersions = product.getProductVersions();
 		for (ProductVersion productVersion : productVersions) {
-			addedProductVersion(product, productVersion);
+			registerProductVersion(product, productVersion);
 		}
 	}
 
-	protected void addedProductVersion(Product product, ProductVersion productVersion) {
+	@Override
+	public void registerProductVersion(Product product, ProductVersion productVersion) {
 		String identifier = product.getIdentifier();
-		Map<String, ProductVersion> map = productVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
+		Map<String, ProductVersion> versions = productVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
 		String version = productVersion.getVersion();
-		map.put(version, productVersion);
+		ProductVersion existing = versions.put(version, productVersion);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_CREATE, productVersion));
+	}
+
+	@Override
+	public void registerProductVersionFeature(Product product, ProductVersion productVersion,
+			ProductVersionFeature productVersionFeature) {
+		String identifier = product.getIdentifier();
+		Map<String, Map<String, ProductVersionFeature>> versions = productVersionFeatureIndex
+				.computeIfAbsent(identifier, key -> new HashMap<>());
+		String version = productVersion.getVersion();
+		Map<String, ProductVersionFeature> features = versions.computeIfAbsent(version, key -> new HashMap<>());
+		String featureIdentifier = productVersionFeature.getFeatureIdentifier();
+		ProductVersionFeature existing = features.put(featureIdentifier, productVersionFeature);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_FEATURE_CREATE, productVersionFeature));
 	}
 
 	@Override
@@ -241,37 +294,65 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry implem
 		for (EObject eObject : contents) {
 			if (eObject instanceof ProductLine) {
 				ProductLine productLine = (ProductLine) eObject;
-				removedProductLine(productLine);
+				unregisterProductLine(productLine.getIdentifier());
 			}
 		}
 	}
 
-	protected void removedProductLine(ProductLine productLine) {
-		String identifier = productLine.getIdentifier();
-		productLineIndex.remove(identifier);
-		EList<Product> products = productLine.getProducts();
-		for (Product product : products) {
-			removedProduct(product);
+	@Override
+	public void unregisterProductLine(String productLineId) {
+		ProductLine removed = productLineIndex.remove(productLineId);
+		if (removed != null) {
+			eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_LINE_DELETE, removed));
+			EList<Product> products = removed.getProducts();
+			for (Product product : products) {
+				unregisterProduct(product.getIdentifier());
+			}
 		}
 	}
 
-	protected void removedProduct(Product product) {
-		String identifier = product.getIdentifier();
-		productIndex.remove(identifier);
-		EList<ProductVersion> productVersions = product.getProductVersions();
-		for (ProductVersion productVersion : productVersions) {
-			removedProductVersion(product, productVersion);
+	@Override
+	public void unregisterProduct(String productId) {
+		Product removed = productIndex.remove(productId);
+		if (removed != null) {
+			eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_DELETE, removed));
+			EList<ProductVersion> productVersions = removed.getProductVersions();
+			for (ProductVersion productVersion : productVersions) {
+				unregisterProductVersion(productId, productVersion.getVersion());
+			}
 		}
 	}
 
-	protected void removedProductVersion(Product product, ProductVersion productVersion) {
-		String identifier = product.getIdentifier();
-		Map<String, ProductVersion> map = productVersionIndex.get(identifier);
-		if (map != null) {
-			String version = productVersion.getVersion();
-			map.remove(version);
-			if (map.isEmpty()) {
-				productVersionIndex.remove(identifier);
+	@Override
+	public void unregisterProductVersion(String productId, String version) {
+		Map<String, ProductVersion> versions = productVersionIndex.get(productId);
+		if (versions != null) {
+			ProductVersion removed = versions.remove(version);
+			if (removed != null) {
+				eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_DELETE, removed));
+			}
+			if (versions.isEmpty()) {
+				productVersionIndex.remove(productId);
+			}
+		}
+	}
+
+	@Override
+	public void unregisterProductVersionFeature(String productId, String version, String featureId) {
+		Map<String, Map<String, ProductVersionFeature>> versions = productVersionFeatureIndex.get(productId);
+		if (versions != null) {
+			Map<String, ProductVersionFeature> features = versions.get(version);
+			if (features != null) {
+				ProductVersionFeature removed = features.remove(featureId);
+				if (removed != null) {
+					eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_FEATURE_DELETE, removed));
+				}
+				if (features.isEmpty()) {
+					versions.remove(version);
+				}
+			}
+			if (versions.isEmpty()) {
+				productVersionFeatureIndex.remove(productId);
 			}
 		}
 	}

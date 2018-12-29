@@ -63,6 +63,15 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 			default:
 				break;
 			}
+		} else if (notifier instanceof FeatureVersion) {
+			FeatureVersion featureVersion = (FeatureVersion) notifier;
+			switch (notification.getFeatureID(FeatureVersion.class)) {
+			case LicPackage.FEATURE_VERSION__VERSION:
+				processFeatureVersionVersion(featureVersion, notification);
+				break;
+			default:
+				break;
+			}
 		}
 		super.notifyChanged(notification);
 	}
@@ -149,5 +158,25 @@ public class FeatureDomainRegistryTracker extends EContentAdapter {
 		}
 	}
 
+	protected void processFeatureVersionVersion(FeatureVersion featureVersion, Notification notification) {
+		Feature feature = featureVersion.getFeature();
+		if (feature == null) {
+			//FIXME: warn
+			return;
+		}
+		String oldValue = notification.getOldStringValue();
+		String newValue = notification.getNewStringValue();
+		switch (notification.getEventType()) {
+		case Notification.SET:
+			if (oldValue != null) {
+				registry.unregisterFeatureVersion(feature.getIdentifier(), oldValue);;
+			}
+			if (newValue != null) {
+				registry.registerFeatureVersion(feature, featureVersion);;
+			}
+		default:
+			break;
+		}
+	}
 
 }
