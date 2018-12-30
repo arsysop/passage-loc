@@ -29,10 +29,10 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.workbench.emfforms.CreateFormWizard;
-import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class CreateLicensePackHandler {
 
@@ -44,7 +44,7 @@ public class CreateLicensePackHandler {
 		String newText = "New License Pack";
 		String newTitle = "License Pack";
 		String newMessage = "Please specify a file name to store license data";
-		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
+		ClassifierInitializer valueProvider = createInitialValueProvider(eClass);
 		//TODO: SK
 		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getLicensePack_Identifier();
 
@@ -59,22 +59,22 @@ public class CreateLicensePackHandler {
 		dialog.open();
 	}
 
-	private InitialValuesProvider createInitialValueProvider(EClass eClass) {
-		return new InitialValuesProvider() {
+	private ClassifierInitializer createInitialValueProvider(EClass eClass) {
+		return new ClassifierInitializer() {
 
 			@Override
-			public String getInitialNameValue() {
-				return "New License Pack"; //$NON-NLS-1$ ;
+			public String proposeObjectIdentifier() {
+				return "new.license.pack"; //$NON-NLS-1$
 			}
 
 			@Override
-			public String getInitialIdentifierValue() {
-				return "new.license.pack"; //$NON-NLS-1$ ;
+			public String proposeObjectName() {
+				return "New License Pack";
 			}
 
 			@Override
-			public String getInitialFileName() {
-				return "new_license_pack"; //$NON-NLS-1$ ;
+			public String proposeFileName() {
+				return "new_license_pack"; //$NON-NLS-1$
 			}
 		};
 	}

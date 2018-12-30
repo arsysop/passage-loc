@@ -37,6 +37,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
@@ -63,12 +64,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
-import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.LicensePack;
 import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
-import ru.arsysop.passage.lic.registry.FeaturesEvents;
 import ru.arsysop.passage.lic.registry.LicensesEvents;
 import ru.arsysop.passage.lic.registry.ProductsEvents;
 import ru.arsysop.passage.lic.registry.UsersEvents;
@@ -105,12 +104,6 @@ public class DetailsView {
 	@Inject
 	@Optional
 	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) Notifier input) {
-		show(input);
-	}
-
-	@Inject
-	@Optional
-	public void showFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_CREATE) FeatureSet input) {
 		show(input);
 	}
 
@@ -222,7 +215,11 @@ public class DetailsView {
 			commandStack.flush();
 		}
 		if (resource != null) {
-			part.setLabel(String.valueOf(resource.getURI()));
+			URI uri = resource.getURI();
+			if (uri != null) {
+				part.setLabel(uri.lastSegment());
+				part.setTooltip(String.valueOf(uri));
+			}
 		} else {
 			part.setLabel("Details");
 		}

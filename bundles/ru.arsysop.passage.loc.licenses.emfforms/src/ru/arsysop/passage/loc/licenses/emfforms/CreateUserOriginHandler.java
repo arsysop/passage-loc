@@ -29,10 +29,10 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.workbench.emfforms.CreateFormWizard;
-import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class CreateUserOriginHandler {
 
@@ -44,7 +44,7 @@ public class CreateUserOriginHandler {
 		String newText = "New User Origin";
 		String newTitle = "User Origin";
 		String newMessage = "Please specify a file name to store user data";
-		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
+		ClassifierInitializer valueProvider = createInitialValueProvider(eClass);
 		EStructuralFeature featureIdentifier = LicPackage.eINSTANCE.getUserOrigin_Identifier();
 		EStructuralFeature featureName = LicPackage.eINSTANCE.getUserOrigin_Name();
 		Wizard wizard = new CreateFormWizard(registry, eObject, featureIdentifier, featureName, valueProvider, false);
@@ -59,21 +59,21 @@ public class CreateUserOriginHandler {
 		dialog.open();
 	}
 
-	private InitialValuesProvider createInitialValueProvider(EClass eClass) {
-		return new InitialValuesProvider() {
+	private ClassifierInitializer createInitialValueProvider(EClass eClass) {
+		return new ClassifierInitializer() {
 
 			@Override
-			public String getInitialNameValue() {
-				return "New User origin"; //$NON-NLS-1$ ;
+			public String proposeObjectIdentifier() {
+				return "new.user.origin";
 			}
 
 			@Override
-			public String getInitialIdentifierValue() {
-				return "new.user.origin"; //$NON-NLS-1$ ;
+			public String proposeObjectName() {
+				return "New User origin";
 			}
 
 			@Override
-			public String getInitialFileName() {
+			public String proposeFileName() {
 				return "new_user_origin"; //$NON-NLS-1$ ;
 			}
 		};

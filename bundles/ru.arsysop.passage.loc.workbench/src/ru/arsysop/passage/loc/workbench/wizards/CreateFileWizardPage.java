@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizardPage extends WizardPage {
@@ -55,16 +56,16 @@ public class CreateFileWizardPage extends WizardPage {
 	};
 
 	private String extension;
-	private InitialValuesProvider valuesProvider;
+	private ClassifierInitializer initializer;
 	private boolean createName;
 	private boolean createId;
 
-	public CreateFileWizardPage(EObject eObject, String pageName, String extension, InitialValuesProvider valueProvider,
+	public CreateFileWizardPage(EObject eObject, String pageName, String extension, ClassifierInitializer initializer,
 			boolean createId, boolean createName) {
 		super(pageName);
 
 		this.extension = extension;
-		this.valuesProvider = valueProvider;
+		this.initializer = initializer;
 		this.createId = createId;
 		this.createName = createName;
 		this.eObject = eObject;
@@ -88,7 +89,7 @@ public class CreateFileWizardPage extends WizardPage {
 
 		createFileControls(composite);
 		createOtherControls(composite);
-		initControls(valuesProvider);
+		initControls(initializer);
 
 		setPageComplete(validatePage());
 		setControl(composite);
@@ -168,16 +169,16 @@ public class CreateFileWizardPage extends WizardPage {
 		});
 	}
 
-	protected void initControls(InitialValuesProvider valuesProvider) {
+	protected void initControls(ClassifierInitializer initializer) {
 		String basePath = getBasePath();
-		String fileName = valuesProvider.getInitialFileName();
+		String fileName = initializer.proposeFileName();
 		String resourceURI = basePath + File.separator + fileName + '.' + extension;
 		txtResourceURI.setText(resourceURI);
 		if (txtId != null) {
-			txtId.setText(valuesProvider.getInitialIdentifierValue());
+			txtId.setText(initializer.proposeObjectIdentifier());
 		}
 		if (txtName != null) {
-			txtName.setText(valuesProvider.getInitialNameValue());
+			txtName.setText(initializer.proposeObjectName());
 		}
 	}
 

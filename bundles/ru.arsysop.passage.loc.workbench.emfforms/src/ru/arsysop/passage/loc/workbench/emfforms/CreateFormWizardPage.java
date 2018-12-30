@@ -11,16 +11,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
-import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class CreateFormWizardPage extends CreateFileWizardPage {
 
 	private final boolean createForm;
 
-	public CreateFormWizardPage(String pageName, String extension, EObject object, InitialValuesProvider valueProvider,
+	public CreateFormWizardPage(String pageName, String extension, EObject object, ClassifierInitializer initializer,
 			boolean createId, boolean createName, boolean createForm) {
-		super(object, pageName, extension, valueProvider, createId, createName);
+		super(object, pageName, extension, initializer, createId, createName);
 		this.createForm = createForm;
 	}
 	

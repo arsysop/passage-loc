@@ -18,21 +18,14 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.features.ui.viewers;
+package ru.arsysop.passage.lic.emf.edit;
 
-import javax.inject.Inject;
+public interface ClassifierInitializer {
 
-import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+	String proposeObjectIdentifier();
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
-import ru.arsysop.passage.loc.workbench.parts.DomainRegistryExplorer;
+	String proposeObjectName();
 
-public class FeatureExplorer extends DomainRegistryExplorer {
-	
-	@Inject
-	public FeatureExplorer(FeatureDomainRegistry registry, ESelectionService selectionService, LicensingImages images) {
-		super(registry, selectionService, images);
-	}
+	String proposeFileName();
 
 }

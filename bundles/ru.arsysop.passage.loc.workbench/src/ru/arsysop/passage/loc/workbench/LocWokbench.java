@@ -34,8 +34,17 @@ public class LocWokbench {
 	public static final String COMMAND_VIEW_PERSPECTIVE = "ru.arsysop.passage.loc.workbench.command.view.perspective"; //$NON-NLS-1$
 	public static final String COMMANDPARAMETER_VIEW_PERSPECTIVE_ID = "ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"; //$NON-NLS-1$
 
+	public static final String COMMAND_RESOURCE_CREATE = "ru.arsysop.passage.loc.workbench.command.resource.create"; //$NON-NLS-1$
+	public static final String COMMANDPARAMETER_RESOURCE_CREATE_DOMAIN = "ru.arsysop.passage.loc.workbench.commandparameter.resource.create.domain"; //$NON-NLS-1$
+	public static final String COMMANDPARAMETER_RESOURCE_CREATE_PERSPECTIVE = "ru.arsysop.passage.loc.workbench.commandparameter.resource.create.perspective"; //$NON-NLS-1$
+
 	public static final String COMMAND_RESOURCE_LOAD = "ru.arsysop.passage.loc.workbench.command.resource.load"; //$NON-NLS-1$
 	public static final String COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN = "ru.arsysop.passage.loc.workbench.commandparameter.resource.load.domain"; //$NON-NLS-1$
+	public static final String COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE = "ru.arsysop.passage.loc.workbench.commandparameter.resource.load.perspective"; //$NON-NLS-1$
+
+	public static final String COMMAND_RESOURCE_SAVE = "ru.arsysop.passage.loc.workbench.command.resource.save"; //$NON-NLS-1$
+
+	public static final String COMMAND_RESOURCE_DELETE = "ru.arsysop.passage.loc.workbench.command.resource.delete"; //$NON-NLS-1$
 
 	public static String selectSavePath(Shell shell, String extension) {
 		String[] array = maskFilters(extension);

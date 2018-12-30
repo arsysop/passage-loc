@@ -20,9 +20,17 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.handlers;
 
+import java.util.Optional;
+
 import javax.inject.Named;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
@@ -30,17 +38,35 @@ import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class ResourceLoadHandler {
-	
+
 	@Execute
-	public void execute(Shell shell, DomainRegistryAccess access, @Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain) {
+	public void execute(Shell shell, IEclipseContext eclipseContext, MWindow window,
+			@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain,
+			@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE) String perspectiveId) {
+		DomainRegistryAccess access = eclipseContext.get(DomainRegistryAccess.class);
 		EditingDomainRegistry registry = access.getDomainRegistry(domain);
-		if (domain != null) {
-			String fileExtension = access.getFileExtension(domain);
-			String selected = LocWokbench.selectLoadPath(shell, fileExtension);
-			if (selected != null) {
-				registry.registerSource(selected);
-			}
+		String fileExtension = access.getFileExtension(domain);
+		String selected = LocWokbench.selectLoadPath(shell, fileExtension);
+		if (selected == null) {
+			return;
 		}
+		EPartService partService = eclipseContext.get(EPartService.class);
+		Optional<MPerspective> switched = partService.switchPerspective(perspectiveId);
+		if (switched.isPresent()) {
+			MPerspective perspective = switched.get();
+			String label = perspective.getLocalizedLabel();
+			IApplicationContext applicationContext = eclipseContext.get(IApplicationContext.class);
+			String brandingName = applicationContext.getBrandingName();
+			String title = brandingName + ' ' + '-' + ' ' + label;
+			window.setLabel(title);
+		}
+		registry.registerSource(selected);
 	}
-		
+
+
+	@CanExecute
+	public boolean canExecute(@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain) {
+		return domain != null;
+	}
+
 }

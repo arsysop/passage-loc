@@ -32,6 +32,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 
@@ -39,19 +40,19 @@ public class CreateFileWizard extends Wizard {
 
 	protected final EditingDomainRegistry editingDomainRegistry;
 	protected final EObject eObject;
-	protected final InitialValuesProvider valueProvider;
+	protected final ClassifierInitializer initializer;
 	protected final EStructuralFeature identifierFeature;
 	protected final EStructuralFeature nameFeature;
 	private CreateFileWizardPage filePage;
 
 	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
-			EStructuralFeature nameFeature, InitialValuesProvider valueProvider) {
+			EStructuralFeature nameFeature, ClassifierInitializer initializer) {
 		this.editingDomainRegistry = registry;
 		this.eObject = eObject;
 
 		this.identifierFeature = identifierFeature;
 		this.nameFeature = nameFeature;
-		this.valueProvider = valueProvider;
+		this.initializer = initializer;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class CreateFileWizard extends Wizard {
 
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFileWizardPage(eObject, CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				valueProvider, identifierFeature != null, nameFeature != null);
+				initializer, identifierFeature != null, nameFeature != null);
 	}
 
 	@Override

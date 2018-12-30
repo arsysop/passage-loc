@@ -23,18 +23,18 @@ package ru.arsysop.passage.loc.workbench.emfforms;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
-import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class CreateFormWizard extends CreateFileWizard {
 
 	private final boolean createForm;
 
 	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
-			EStructuralFeature nameFeature, InitialValuesProvider valueProvider, boolean createForm) {
-		super(registry, eObject, identifierFeature, nameFeature, valueProvider);
+			EStructuralFeature nameFeature, ClassifierInitializer initializer, boolean createForm) {
+		super(registry, eObject, identifierFeature, nameFeature, initializer);
 		this.createForm = createForm;
 
 	}
@@ -42,6 +42,6 @@ public class CreateFormWizard extends CreateFileWizard {
 	@Override
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				eObject, valueProvider, identifierFeature != null, nameFeature != null, createForm);
+				eObject, initializer, identifierFeature != null, nameFeature != null, createForm);
 	}
 }

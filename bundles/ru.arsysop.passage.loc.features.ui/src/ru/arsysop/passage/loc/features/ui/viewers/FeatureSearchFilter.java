@@ -1,4 +1,4 @@
-package ru.arsysop.passage.loc.features.ui;
+package ru.arsysop.passage.loc.features.ui.viewers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

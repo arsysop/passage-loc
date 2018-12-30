@@ -33,10 +33,14 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 public class DashboardUi {
 
 	public static Object executeCommand(IEclipseContext context, String commandId, String parameterId, String parameterValue) {
-		ECommandService commandService = context.get(ECommandService.class);
-		Command command = commandService.getCommand(commandId);
 		Map<Object, Object> parameters = new HashMap<>();
 		parameters.put(parameterId, parameterValue);
+		return executeCommand(context, commandId, parameters);
+	}
+
+	public static Object executeCommand(IEclipseContext context, String commandId, Map<Object, Object> parameters) {
+		ECommandService commandService = context.get(ECommandService.class);
+		Command command = commandService.getCommand(commandId);
 		ParameterizedCommand parametrizedCommand = ParameterizedCommand.generateCommand(command, parameters );
 		EHandlerService eHandlerService = context.get(EHandlerService.class);
 		return eHandlerService.executeHandler(parametrizedCommand);

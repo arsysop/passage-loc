@@ -20,6 +20,9 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.dashboard.panel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -353,11 +356,13 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	}
 
 	protected void executeLoadCommand(String domain) {
-		DashboardUi.executeCommand(context, LocWokbench.COMMAND_RESOURCE_LOAD, LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN, domain);
+		Map<Object, Object> parameters = new HashMap<>();
+		parameters.put(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN, domain);
 		String perspectiveId = resolvePerspectiveId(domain);
 		if (perspectiveId != null) {
-			DashboardUi.executeCommand(context, LocWokbench.COMMAND_VIEW_PERSPECTIVE, LocWokbench.COMMANDPARAMETER_VIEW_PERSPECTIVE_ID, perspectiveId);
+			parameters.put(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE, perspectiveId);
 		}
+		DashboardUi.executeCommand(context, LocWokbench.COMMAND_RESOURCE_LOAD, parameters);
 	}
 
 	protected String resolvePerspectiveId(String domain) {

@@ -24,9 +24,14 @@ public interface DomainRegistryAccess {
 	
 	String PROPERTY_DOMAIN_NAME = "ru.arsysop.passage.lic.emf.edit.domain.name"; //$NON-NLS-1$
 	String PROPERTY_FILE_EXTENSION = "ru.arsysop.passage.lic.emf.edit.file.extension"; //$NON-NLS-1$
+	String PROPERTY_CONTENT_CLASSIFIER = "ru.arsysop.passage.lic.emf.edit.content.classifier"; //$NON-NLS-1$
 	
-	EditingDomainRegistry getDomainRegistry(String name);
+	EditingDomainRegistry getDomainRegistry(String domain);
 
-	String getFileExtension(String name);
+	String getFileExtension(String domain);
+
+	String getContentClassifier(String domain);
+
+	ClassifierInitializer getClassifierInitializer(String domain);
 
 }

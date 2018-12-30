@@ -26,10 +26,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
-import ru.arsysop.passage.loc.workbench.wizards.InitialValuesProvider;
 
 public class ProductCreateHandler {
 
@@ -39,9 +39,9 @@ public class ProductCreateHandler {
 
 		EStructuralFeature identifierFeature = LicPackage.eINSTANCE.getProduct_Identifier();
 		EStructuralFeature nameFeature = LicPackage.eINSTANCE.getProduct_Name();
-		InitialValuesProvider valueProvider = createInitialValueProvider(eClass);
-		WizardDialog dialog = new WizardDialog(shell,
-				new CreateFileWizard(registry, eClass, identifierFeature, nameFeature, valueProvider));
+		ClassifierInitializer initializer = createInitialValueProvider(eClass);
+		CreateFileWizard newWizard = new CreateFileWizard(registry, eClass, identifierFeature, nameFeature, initializer);
+		WizardDialog dialog = new WizardDialog(shell, newWizard);
 		dialog.create();
 		dialog.setTitle("Product Line");
 		dialog.setMessage("Please specify a file name to store product data");
@@ -49,21 +49,21 @@ public class ProductCreateHandler {
 		dialog.open();
 	}
 
-	private InitialValuesProvider createInitialValueProvider(EClass eClass) {
-		return new InitialValuesProvider() {
+	private ClassifierInitializer createInitialValueProvider(EClass eClass) {
+		return new ClassifierInitializer() {
 
 			@Override
-			public String getInitialNameValue() {
-				return "New Product "; //$NON-NLS-1$ ;
+			public String proposeObjectIdentifier() {
+				return "new.product"; //$NON-NLS-1$
 			}
 
 			@Override
-			public String getInitialIdentifierValue() {
-				return "new.product"; //$NON-NLS-1$ ;
+			public String proposeObjectName() {
+				return "New Product";
 			}
 
 			@Override
-			public String getInitialFileName() {
+			public String proposeFileName() {
 				return "new_product"; //$NON-NLS-1$ ;
 			}
 		};

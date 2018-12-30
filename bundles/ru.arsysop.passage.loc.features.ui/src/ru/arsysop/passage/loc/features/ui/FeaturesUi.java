@@ -28,6 +28,7 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.loc.features.ui.viewers.FeatureSearchFilter;
 import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
