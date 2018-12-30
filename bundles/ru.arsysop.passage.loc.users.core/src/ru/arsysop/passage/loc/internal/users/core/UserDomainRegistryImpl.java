@@ -35,20 +35,25 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
+import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
-import ru.arsysop.passage.lic.registry.UsersEvents;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
+import ru.arsysop.passage.lic.registry.UsersEvents;
+import ru.arsysop.passage.lic.registry.UsersRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-@Component
-public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implements UserRegistry, UserDomainRegistry {
-	
+@Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + UsersRegistry.DOMAIN_NAME,
+		DomainRegistryAccess.PROPERTY_FILE_EXTENSION + '=' + UsersRegistry.FILE_EXTENSION_XMI })
+public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
+		implements UserRegistry, UserDomainRegistry, EditingDomainRegistry {
+
 	private final Map<String, UserOrigin> userOriginIndex = new HashMap<>();
 	private final Map<String, User> userIndex = new HashMap<>();
 
@@ -57,34 +62,34 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.bindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Reference
 	@Override
 	public void bindEventAdmin(EventAdmin eventAdmin) {
 		super.bindEventAdmin(eventAdmin);
 	}
-	
+
 	@Override
 	public void unbindEventAdmin(EventAdmin eventAdmin) {
 		super.unbindEventAdmin(eventAdmin);
 	}
-	
+
 	@Reference
 	@Override
 	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.bindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Override
 	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.unbindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Activate
 	public void activate(Map<String, Object> properties) {
 		super.activate(properties);
@@ -131,7 +136,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry implement
 	public UserDescriptor getUser(String identifier) {
 		return userIndex.get(identifier);
 	}
-	
+
 	@Override
 	protected EContentAdapter createContentAdapter() {
 		return new UserDomainRegistryTracker(this);

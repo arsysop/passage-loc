@@ -36,17 +36,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.LicensePack;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
+import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 
-@Component
-public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry implements LicenseRegistry, LicenseDomainRegistry {
-	
+@Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + LicensesRegistry.DOMAIN_NAME,
+		DomainRegistryAccess.PROPERTY_FILE_EXTENSION + '=' + LicensesRegistry.FILE_EXTENSION_XMI })
+public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
+		implements LicenseRegistry, LicenseDomainRegistry, EditingDomainRegistry {
+
 	private final Map<String, LicensePack> licensePackIndex = new HashMap<>();
 	private final Map<String, List<LicensePack>> userPackIndex = new HashMap<>();
 	private final Map<String, Map<String, List<LicensePack>>> productVersionPackIndex = new HashMap<>();
@@ -56,23 +61,23 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry implem
 	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.bindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
 	}
-	
+
 	@Reference
 	@Override
 	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.bindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Override
 	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		super.unbindFactoryProvider(factoryProvider);
 	}
-	
+
 	@Activate
 	public void activate(Map<String, Object> properties) {
 		super.activate(properties);
@@ -158,7 +163,8 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry implem
 		List<LicensePack> userPackList = userPackIndex.computeIfAbsent(userIdentifier, key -> new ArrayList<>());
 		userPackList.add(licensePack);
 		String productIdentifier = licensePack.getProductIdentifier();
-		Map<String, List<LicensePack>> map = productVersionPackIndex.computeIfAbsent(productIdentifier, key -> new HashMap<>());
+		Map<String, List<LicensePack>> map = productVersionPackIndex.computeIfAbsent(productIdentifier,
+				key -> new HashMap<>());
 		String productVersion = licensePack.getProductVersion();
 		List<LicensePack> list = map.computeIfAbsent(productVersion, key -> new ArrayList<>());
 		list.add(licensePack);
@@ -202,7 +208,7 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry implem
 				productVersionPackIndex.remove(productIdentifier);
 			}
 		}
-		
+
 	}
 
 }

@@ -37,6 +37,8 @@ public class ProductsUi {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.ui"; //$NON-NLS-1$
 
+	public static final String PERSPECTIVE_MAIN = BUNDLE_SYMBOLIC_NAME + '.' + "perspective.main"; //$NON-NLS-1$
+
 	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductDescriptor initial) {
 

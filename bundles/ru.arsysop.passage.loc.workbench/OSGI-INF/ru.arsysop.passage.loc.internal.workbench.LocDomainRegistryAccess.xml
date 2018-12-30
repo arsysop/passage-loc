@@ -3,5 +3,6 @@
    <service>
       <provide interface="ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess"/>
    </service>
+   <reference bind="registerEditingDomainRegistry" cardinality="0..n" interface="ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry" name="registerEditingDomainRegistry" unbind="unregisterEditingDomainRegistry"/>
    <implementation class="ru.arsysop.passage.loc.internal.workbench.LocDomainRegistryAccess"/>
 </scr:component>

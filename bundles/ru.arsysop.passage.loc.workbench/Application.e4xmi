@@ -37,6 +37,7 @@
       <children xsi:type="menu:ToolControl" xmi:id="_j1Rj4PPbEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.toolcontrol.licensing.status" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.internal.workbench.LicensingStatusToolControl"/>
     </trimBars>
   </children>
+  <handlers xmi:id="_JjJQgAwcEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.handler.resource.load" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.ResourceLoadHandler" command="_SbT18AwaEemxuq6DPuSYjg"/>
   <handlers xmi:id="_uPtcsOdJEeigXNdbugUBXw" elementId="ru.arsysop.passage.loc.workbench.handler.perspective.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenPerspectiveHandler" command="_5P07MOdJEeigXNdbugUBXw"/>
   <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://ru.arsysop.passage.lic.inspector.ui/ru.arsysop.passage.lic.inspector.ui.hadlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
   <handlers xmi:id="_dnVRcO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.aboutdialog.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenAboutDialogHandler" command="_V2DtgO4pEei1L9WYDuiuXw"/>
@@ -58,6 +59,9 @@
     <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
   <commands xmi:id="_oHxDAPJKEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.new" commandName="New"/>
+  <commands xmi:id="_SbT18AwaEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.command.resource.load" commandName="Load">
+    <parameters xmi:id="_ZWhUkAwaEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.commandparameter.resource.load.domain" name="Command Parameter Resource Load Domain" optional="false"/>
+  </commands>
   <commands xmi:id="_VVIqQPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.open" commandName="Open"/>
   <commands xmi:id="_Us_jAPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.export" commandName="Export"/>
   <commands xmi:id="_qIUC4PGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.command.file.save" commandName="Save"/>

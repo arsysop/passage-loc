@@ -37,6 +37,8 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
+import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.Product;
 import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
@@ -48,13 +50,15 @@ import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
 import ru.arsysop.passage.lic.registry.ProductsEvents;
+import ru.arsysop.passage.lic.registry.ProductsRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
-@Component
+@Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + ProductsRegistry.DOMAIN_NAME,
+		DomainRegistryAccess.PROPERTY_FILE_EXTENSION + '=' + ProductsRegistry.FILE_EXTENSION_XMI })
 public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
-		implements ProductRegistry, ProductDomainRegistry {
+		implements ProductRegistry, ProductDomainRegistry, EditingDomainRegistry {
 
 	private final Map<String, ProductLine> productLineIndex = new HashMap<>();
 	private final Map<String, Product> productIndex = new HashMap<>();
@@ -77,7 +81,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 	public void bindEventAdmin(EventAdmin eventAdmin) {
 		super.bindEventAdmin(eventAdmin);
 	}
-	
+
 	@Override
 	public void unbindEventAdmin(EventAdmin eventAdmin) {
 		super.unbindEventAdmin(eventAdmin);
@@ -196,7 +200,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 		Collection<Map<String, Map<String, ProductVersionFeature>>> versionValues = productVersionFeatureIndex.values();
 		for (Map<String, Map<String, ProductVersionFeature>> versions : versionValues) {
 			Collection<Map<String, ProductVersionFeature>> values = versions.values();
-			for (Map<String,ProductVersionFeature> map : values) {
+			for (Map<String, ProductVersionFeature> map : values) {
 				productVersionFeatures.addAll(map.values());
 			}
 		}

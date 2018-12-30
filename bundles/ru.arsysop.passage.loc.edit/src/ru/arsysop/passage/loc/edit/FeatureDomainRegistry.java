@@ -21,23 +21,22 @@
 package ru.arsysop.passage.loc.edit;
 
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.api.Feature;
-import ru.arsysop.passage.lic.model.api.FeatureSet;
-import ru.arsysop.passage.lic.model.api.FeatureVersion;
-import ru.arsysop.passage.lic.registry.DescriptorRegistry;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
+import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
+import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 
-public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainRegistry, DescriptorRegistry {
+public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainRegistry {
 
-	void registerFeatureSet(FeatureSet featureSet);
+	void registerFeatureSet(FeatureSetDescriptor featureSet);
 
 	void unregisterFeatureSet(String featureSetId);
 	
-	void registerFeature(Feature feature);
+	void registerFeature(FeatureDescriptor feature);
 
 	void unregisterFeature(String featureId);
 	
-	void registerFeatureVersion(Feature feature, FeatureVersion featureVersion);
+	void registerFeatureVersion(FeatureDescriptor feature, FeatureVersionDescriptor featureVersion);
 
 	void unregisterFeatureVersion(String featureId, String version);
 

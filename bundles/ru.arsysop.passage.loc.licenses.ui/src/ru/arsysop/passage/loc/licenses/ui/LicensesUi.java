@@ -24,4 +24,6 @@ public class LicensesUi {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.licenses.ui"; //$NON-NLS-1$
 
+	public static final String PERSPECTIVE_MAIN = BUNDLE_SYMBOLIC_NAME + '.' + "perspective.main"; //$NON-NLS-1$
+
 }

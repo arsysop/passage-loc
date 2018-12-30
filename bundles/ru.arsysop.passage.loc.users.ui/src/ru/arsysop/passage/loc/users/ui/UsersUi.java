@@ -35,6 +35,8 @@ public class UsersUi {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.users.ui"; //$NON-NLS-1$
 
+	public static final String PERSPECTIVE_MAIN = BUNDLE_SYMBOLIC_NAME + '.' + "perspective.main"; //$NON-NLS-1$
+
 	public static UserDescriptor selectUserDescriptor(Shell shell, LicensingImages images, UserDomainRegistry registry,
 			UserDescriptor initial) {
 		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new UserSearchFilter());

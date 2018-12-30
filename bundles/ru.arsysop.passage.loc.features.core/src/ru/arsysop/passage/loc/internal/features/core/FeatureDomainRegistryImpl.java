@@ -37,26 +37,27 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
-import ru.arsysop.passage.lic.model.api.Feature;
-import ru.arsysop.passage.lic.model.api.FeatureSet;
-import ru.arsysop.passage.lic.model.api.FeatureVersion;
+import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
+import ru.arsysop.passage.lic.registry.FeaturesRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
-@Component
+@Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + FeaturesRegistry.DOMAIN_NAME,
+		DomainRegistryAccess.PROPERTY_FILE_EXTENSION + '=' + FeaturesRegistry.FILE_EXTENSION_XMI })
 public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
-		implements FeatureRegistry, FeatureDomainRegistry {
+		implements FeatureRegistry, FeatureDomainRegistry, EditingDomainRegistry {
 
-	private final Map<String, FeatureSet> featureSetIndex = new HashMap<>();
-	private final Map<String, Feature> featureIndex = new HashMap<>();
-	private final Map<String, Map<String, FeatureVersion>> featureVersionIndex = new HashMap<>();
+	private final Map<String, FeatureSetDescriptor> featureSetIndex = new HashMap<>();
+	private final Map<String, FeatureDescriptor> featureIndex = new HashMap<>();
+	private final Map<String, Map<String, FeatureVersionDescriptor>> featureVersionIndex = new HashMap<>();
 
 	@Reference
 	@Override
@@ -99,8 +100,8 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Deactivate
 	@Override
 	public void deactivate(Map<String, Object> properties) {
-		Collection<Map<String, FeatureVersion>> values = featureVersionIndex.values();
-		for (Map<String, FeatureVersion> map : values) {
+		Collection<Map<String, FeatureVersionDescriptor>> values = featureVersionIndex.values();
+		for (Map<String, FeatureVersionDescriptor> map : values) {
 			map.clear();
 		}
 		featureVersionIndex.clear();
@@ -131,11 +132,13 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public Iterable<FeatureDescriptor> getFeatures(String featureSetId) {
-		FeatureSet featureSet = featureSetIndex.get(featureSetId);
+		FeatureSetDescriptor featureSet = featureSetIndex.get(featureSetId);
 		if (featureSet == null) {
 			return Collections.emptyList();
 		}
-		return new ArrayList<>(featureSet.getFeatures());
+		List<FeatureDescriptor> features = new ArrayList<>();
+		featureSet.getFeatures().forEach(features::add);
+		return features;
 	}
 
 	@Override
@@ -146,8 +149,8 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	public Iterable<FeatureVersionDescriptor> getFeatureVersions() {
 		List<FeatureVersionDescriptor> list = new ArrayList<>();
-		Collection<Map<String, FeatureVersion>> values = featureVersionIndex.values();
-		for (Map<String, FeatureVersion> map : values) {
+		Collection<Map<String, FeatureVersionDescriptor>> values = featureVersionIndex.values();
+		for (Map<String, FeatureVersionDescriptor> map : values) {
 			list.addAll(map.values());
 		}
 		return list;
@@ -155,7 +158,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public Iterable<FeatureVersionDescriptor> getFeatureVersions(String featureId) {
-		Map<String, FeatureVersion> map = featureVersionIndex.get(featureId);
+		Map<String, FeatureVersionDescriptor> map = featureVersionIndex.get(featureId);
 		if (map == null) {
 			return Collections.emptyList();
 		}
@@ -164,7 +167,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public FeatureVersionDescriptor getFeatureVersion(String featureId, String version) {
-		Map<String, FeatureVersion> map = featureVersionIndex.get(featureId);
+		Map<String, FeatureVersionDescriptor> map = featureVersionIndex.get(featureId);
 		if (map == null) {
 			return null;
 		}
@@ -179,47 +182,48 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	protected void afterLoad(EList<EObject> contents) {
 		for (EObject eObject : contents) {
-			if (eObject instanceof FeatureSet) {
-				FeatureSet featureSet = (FeatureSet) eObject;
+			if (eObject instanceof FeatureSetDescriptor) {
+				FeatureSetDescriptor featureSet = (FeatureSetDescriptor) eObject;
 				registerFeatureSet(featureSet);
 			}
 		}
 	}
 
 	@Override
-	public void registerFeatureSet(FeatureSet featureSet) {
+	public void registerFeatureSet(FeatureSetDescriptor featureSet) {
 		String identifier = featureSet.getIdentifier();
-		FeatureSet existing = featureSetIndex.put(identifier, featureSet);
+		FeatureSetDescriptor existing = featureSetIndex.put(identifier, featureSet);
 		if (existing != null) {
 			// FIXME: warning
 		}
 		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_CREATE, featureSet));
-		EList<Feature> features = featureSet.getFeatures();
-		for (Feature feature : features) {
+		Iterable<? extends FeatureDescriptor> features = featureSet.getFeatures();
+		for (FeatureDescriptor feature : features) {
 			registerFeature(feature);
 		}
 	}
 
 	@Override
-	public void registerFeature(Feature feature) {
+	public void registerFeature(FeatureDescriptor feature) {
 		String identifier = feature.getIdentifier();
-		Feature existing = featureIndex.put(identifier, feature);
+		FeatureDescriptor existing = featureIndex.put(identifier, feature);
 		if (existing != null) {
 			// FIXME: warning
 		}
 		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_CREATE, feature));
-		EList<FeatureVersion> featureVersions = feature.getFeatureVersions();
-		for (FeatureVersion featureVersion : featureVersions) {
+		Iterable<? extends FeatureVersionDescriptor> featureVersions = feature.getFeatureVersions();
+		for (FeatureVersionDescriptor featureVersion : featureVersions) {
 			registerFeatureVersion(feature, featureVersion);
 		}
 	}
 
 	@Override
-	public void registerFeatureVersion(Feature feature, FeatureVersion featureVersion) {
+	public void registerFeatureVersion(FeatureDescriptor feature, FeatureVersionDescriptor featureVersion) {
 		String identifier = feature.getIdentifier();
-		Map<String, FeatureVersion> map = featureVersionIndex.computeIfAbsent(identifier, key -> new HashMap<>());
+		Map<String, FeatureVersionDescriptor> map = featureVersionIndex.computeIfAbsent(identifier,
+				key -> new HashMap<>());
 		String version = featureVersion.getVersion();
-		FeatureVersion existing = map.put(version, featureVersion);
+		FeatureVersionDescriptor existing = map.put(version, featureVersion);
 		if (existing != null) {
 			// FIXME: warning
 		}
@@ -229,8 +233,8 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	protected void beforeUnload(EList<EObject> contents) {
 		for (EObject eObject : contents) {
-			if (eObject instanceof FeatureSet) {
-				FeatureSet featureSet = (FeatureSet) eObject;
+			if (eObject instanceof FeatureSetDescriptor) {
+				FeatureSetDescriptor featureSet = (FeatureSetDescriptor) eObject;
 				unregisterFeatureSet(featureSet.getIdentifier());
 			}
 		}
@@ -238,11 +242,11 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public void unregisterFeatureSet(String featureSetId) {
-		FeatureSet removed = featureSetIndex.remove(featureSetId);
+		FeatureSetDescriptor removed = featureSetIndex.remove(featureSetId);
 		if (removed != null) {
 			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_DELETE, removed));
-			EList<Feature> features = removed.getFeatures();
-			for (Feature feature : features) {
+			Iterable<? extends FeatureDescriptor> features = removed.getFeatures();
+			for (FeatureDescriptor feature : features) {
 				unregisterFeature(feature.getIdentifier());
 			}
 		}
@@ -250,11 +254,11 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public void unregisterFeature(String featureId) {
-		Feature removed = featureIndex.remove(featureId);
+		FeatureDescriptor removed = featureIndex.remove(featureId);
 		if (removed != null) {
 			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_DELETE, removed));
-			EList<FeatureVersion> featureVersions = removed.getFeatureVersions();
-			for (FeatureVersion featureVersion : featureVersions) {
+			Iterable<? extends FeatureVersionDescriptor> featureVersions = removed.getFeatureVersions();
+			for (FeatureVersionDescriptor featureVersion : featureVersions) {
 				unregisterFeatureVersion(featureId, featureVersion.getVersion());
 			}
 		}
@@ -262,9 +266,9 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public void unregisterFeatureVersion(String featureId, String version) {
-		Map<String, FeatureVersion> map = featureVersionIndex.get(featureId);
+		Map<String, FeatureVersionDescriptor> map = featureVersionIndex.get(featureId);
 		if (map != null) {
-			FeatureVersion removed = map.remove(version);
+			FeatureVersionDescriptor removed = map.remove(version);
 			if (removed != null) {
 				eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_DELETE, removed));
 			}

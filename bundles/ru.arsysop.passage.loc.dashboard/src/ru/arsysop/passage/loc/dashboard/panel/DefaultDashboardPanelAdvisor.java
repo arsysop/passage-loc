@@ -38,15 +38,25 @@ import org.eclipse.swt.widgets.Shell;
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.lic.registry.FeaturesRegistry;
+import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
+import ru.arsysop.passage.lic.registry.ProductsRegistry;
+import ru.arsysop.passage.lic.registry.UsersRegistry;
+import ru.arsysop.passage.loc.dashboard.ui.DashboardUi;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.features.ui.FeaturesUi;
+import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.products.ui.ProductsUi;
+import ru.arsysop.passage.loc.users.ui.UsersUi;
+import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
+
+	private IEclipseContext context;
 
 	private LicensingImages licensingImages;
 
@@ -66,6 +76,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 
 	@Override
 	public void init(IEclipseContext context) {
+		this.context = context;
 		licensingImages = context.get(LicensingImages.class);
 	}
 
@@ -85,7 +96,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Features");
 
-		createLinks(group);
+		createLinks(group, FeaturesRegistry.DOMAIN_NAME);
 
 		featureSets = createFeatureSetBlock(group);
 		features = createFeatureBlock(group, featureRegistry);
@@ -155,7 +166,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Products");
 
-		createLinks(group);
+		createLinks(group, ProductsRegistry.DOMAIN_NAME);
 
 		productLines = createProductLineBlock(group);
 		products = createProductBlock(group, productRegistry);
@@ -239,7 +250,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Users");
 
-		createLinks(group);
+		createLinks(group, UsersRegistry.DOMAIN_NAME);
 
 		userOrigins = createUserOriginBlock(group);
 		users = createUserBlock(group);
@@ -284,7 +295,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		group.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 		group.setText("Licenses");
 
-		createLinks(group);
+		createLinks(group, LicensesRegistry.DOMAIN_NAME);
 
 		licensePacks = createLicensePackBlock(group);
 		updateLicenseInfo(licenseRegistry);
@@ -315,13 +326,62 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		label.setText("Licensing data summary");
 	}
 
-	protected void createLinks(Group group) {
+	protected void createLinks(Group group, String domain) {
 		Link create = new Link(group, SWT.NONE);
 		create.setText("<a>Create</a>");
 		create.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).span(2, 1).create());
+		create.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeCreateCommand(domain);
+			}
+		});
 		Link open = new Link(group, SWT.NONE);
 		open.setText("<a>Load</a>");
 		open.setLayoutData(GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).span(2, 1).create());
+		open.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeLoadCommand(domain);
+			}
+		});
+	}
+
+	protected void executeCreateCommand(String domain) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void executeLoadCommand(String domain) {
+		DashboardUi.executeCommand(context, LocWokbench.COMMAND_RESOURCE_LOAD, LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN, domain);
+		String perspectiveId = resolvePerspectiveId(domain);
+		if (perspectiveId != null) {
+			DashboardUi.executeCommand(context, LocWokbench.COMMAND_VIEW_PERSPECTIVE, LocWokbench.COMMANDPARAMETER_VIEW_PERSPECTIVE_ID, perspectiveId);
+		}
+	}
+
+	protected String resolvePerspectiveId(String domain) {
+		if (domain == null) {
+			return null;
+		}
+		switch (domain) {
+		case FeaturesRegistry.DOMAIN_NAME:
+			return FeaturesUi.PERSPECTIVE_MAIN;
+		case ProductsRegistry.DOMAIN_NAME:
+			return ProductsUi.PERSPECTIVE_MAIN;
+		case UsersRegistry.DOMAIN_NAME:
+			return UsersUi.PERSPECTIVE_MAIN;
+		case LicensesRegistry.DOMAIN_NAME:
+			return LicensesUi.PERSPECTIVE_MAIN;
+		default:
+			break;
+		}
+		return null;
+	}
+
+	protected void executeEditCommand(String domain) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	protected Image getImage(EClass eClass) {
@@ -331,6 +391,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	@Override
 	public void dispose(IEclipseContext context) {
 		licensingImages = null;
+		this.context = null;
 	}
 
 }
