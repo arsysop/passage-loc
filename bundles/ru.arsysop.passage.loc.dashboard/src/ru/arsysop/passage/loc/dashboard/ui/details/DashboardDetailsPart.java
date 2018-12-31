@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard.details;
+package ru.arsysop.passage.loc.dashboard.ui.details;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

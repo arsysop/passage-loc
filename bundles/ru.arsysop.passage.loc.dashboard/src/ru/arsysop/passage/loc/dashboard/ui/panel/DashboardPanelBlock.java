@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard.panel;
+package ru.arsysop.passage.loc.dashboard.ui.panel;
 
 import java.util.stream.StreamSupport;
 

@@ -22,10 +22,19 @@ package ru.arsysop.passage.loc.workbench;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+
+import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 
 public class LocWokbench {
 
@@ -72,6 +81,28 @@ public class LocWokbench {
 
 	private static String maskExtension(String extension) {
 		return "*." + extension; //$NON-NLS-1$
+	}
+
+	public static void loadDomainResource(IEclipseContext eclipseContext, String domain, Shell shell, String perspectiveId,
+			MWindow window) {
+		DomainRegistryAccess access = eclipseContext.get(DomainRegistryAccess.class);
+		EditingDomainRegistry registry = access.getDomainRegistry(domain);
+		String fileExtension = access.getFileExtension(domain);
+		String selected = selectLoadPath(shell, fileExtension);
+		if (selected == null) {
+			return;
+		}
+		EPartService partService = eclipseContext.get(EPartService.class);
+		Optional<MPerspective> switched = partService.switchPerspective(perspectiveId);
+		if (switched.isPresent()) {
+			MPerspective perspective = switched.get();
+			String label = perspective.getLocalizedLabel();
+			IApplicationContext applicationContext = eclipseContext.get(IApplicationContext.class);
+			String brandingName = applicationContext.getBrandingName();
+			String title = brandingName + ' ' + '-' + ' ' + label;
+			window.setLabel(title);
+		}
+		registry.registerSource(selected);
 	}
 
 }

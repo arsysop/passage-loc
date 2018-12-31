@@ -37,7 +37,6 @@
       <children xsi:type="menu:ToolControl" xmi:id="_j1Rj4PPbEeidN5pWK-UnUQ" elementId="ru.arsysop.passage.loc.workbench.toolcontrol.licensing.status" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.internal.workbench.LicensingStatusToolControl"/>
     </trimBars>
   </children>
-  <handlers xmi:id="_JjJQgAwcEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.handler.resource.load" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.ResourceLoadHandler" command="_SbT18AwaEemxuq6DPuSYjg"/>
   <handlers xmi:id="_uPtcsOdJEeigXNdbugUBXw" elementId="ru.arsysop.passage.loc.workbench.handler.perspective.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenPerspectiveHandler" command="_5P07MOdJEeigXNdbugUBXw"/>
   <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://ru.arsysop.passage.lic.inspector.ui/ru.arsysop.passage.lic.inspector.ui.hadlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
   <handlers xmi:id="_dnVRcO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.aboutdialog.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenAboutDialogHandler" command="_V2DtgO4pEei1L9WYDuiuXw"/>
