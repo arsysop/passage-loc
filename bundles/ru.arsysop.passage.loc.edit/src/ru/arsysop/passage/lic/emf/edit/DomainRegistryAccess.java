@@ -31,4 +31,5 @@ public interface DomainRegistryAccess {
 
 	ClassifierInitializer getClassifierInitializer(String domain);
 
+	SelectionCommandAdvisor getSelectionCommandAdvisor(String domain);
 }

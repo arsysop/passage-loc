@@ -32,9 +32,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
+import ru.arsysop.passage.lic.emf.edit.SelectionCommandAdvisor;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 @SuppressWarnings("restriction")
@@ -70,7 +68,7 @@ public class DashboardUi {
 	public static void editDomainResource(IEclipseContext context, String domain, String classifier,
 			String perspectiveId) {
 		Iterable<?> input = resolveInput(context, domain, classifier);
-		String title = resolveTitle(classifier);
+		String title = resolveTitle(context, domain, classifier);
 		Object selectedClassifier = LocWokbench.selectClassifier(context, domain, classifier, title, input, null);
 		if (selectedClassifier != null) {
 			LocWokbench.switchPerspective(context, perspectiveId);
@@ -81,34 +79,19 @@ public class DashboardUi {
 
 	private static Iterable<?> resolveInput(IEclipseContext context, String domain, String classifier) {
 		DomainRegistryAccess registryAccess = context.get(DomainRegistryAccess.class);
-		EditingDomainRegistry domainRegistry = registryAccess.getDomainRegistry(domain);
-		if (domainRegistry instanceof FeatureDomainRegistry) {
-			FeatureDomainRegistry featureRegistry = (FeatureDomainRegistry) domainRegistry;
-			if (LicPackage.eINSTANCE.getFeatureSet().getName().equals(classifier)) {
-				return featureRegistry.getFeatureSets();
-			}
-			if (LicPackage.eINSTANCE.getFeature().getName().equals(classifier)) {
-				return featureRegistry.getFeatures();
-			}
-			if (LicPackage.eINSTANCE.getFeatureVersion().getName().equals(classifier)) {
-				return featureRegistry.getFeatureVersions();
-			}
+		SelectionCommandAdvisor advisor = registryAccess.getSelectionCommandAdvisor(domain);
+		if (advisor != null) {
+			return advisor.getSelectionInput(classifier);
 		}
-		// TODO Auto-generated method stub
 		return Collections.emptyList();
 	}
 
-	private static String resolveTitle(String classifier) {
-		if (LicPackage.eINSTANCE.getFeatureSet().getName().equals(classifier)) {
-			return "Select Feature Set";
+	private static String resolveTitle(IEclipseContext context, String domain, String classifier) {
+		DomainRegistryAccess registryAccess = context.get(DomainRegistryAccess.class);
+		SelectionCommandAdvisor advisor = registryAccess.getSelectionCommandAdvisor(domain);
+		if (advisor != null) {
+			return advisor.getSelectionTitle(classifier);
 		}
-		if (LicPackage.eINSTANCE.getFeature().getName().equals(classifier)) {
-			return "Select Feature";
-		}
-		if (LicPackage.eINSTANCE.getFeatureVersion().getName().equals(classifier)) {
-			return "Select Feature Version";
-		}
-		// TODO Auto-generated method stub
 		return null;
 	}
 

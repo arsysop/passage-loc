@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.emf.edit.SelectionCommandAdvisor;
 
 @Component
 public class LocDomainRegistryAccess implements DomainRegistryAccess {
@@ -21,31 +22,43 @@ public class LocDomainRegistryAccess implements DomainRegistryAccess {
 	private final Map<String, EditingDomainRegistry> domainRegistries = new HashMap<>();
 	private final Map<String, String> fileExtensions = new HashMap<>();
 	private final Map<String, ClassifierInitializer> classifierInitializers = new HashMap<>();
+	private final Map<String, SelectionCommandAdvisor> selectionAdvisors = new HashMap<>();
 	
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE)
-	public void registerEditingDomainRegistry(EditingDomainRegistry registry, Map<String, Object> properties) {
+	public void registerEditingDomainRegistry(EditingDomainRegistry instance, Map<String, Object> properties) {
 		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
-		registerEntry(domainRegistries, domain, registry);
+		registerEntry(domainRegistries, domain, instance);
 		String extension = String.valueOf(properties.get(PROPERTY_FILE_EXTENSION));
 		registerEntry(fileExtensions, domain, extension);
 	}
 
-	public void unregisterEditingDomainRegistry(EditingDomainRegistry registry, Map<String, Object> properties) {
+	public void unregisterEditingDomainRegistry(EditingDomainRegistry instance, Map<String, Object> properties) {
 		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
-		unregisterEntry(domainRegistries, domain, registry);
+		unregisterEntry(domainRegistries, domain, instance);
 		String extension = String.valueOf(properties.get(PROPERTY_FILE_EXTENSION));
 		unregisterEntry(fileExtensions, domain, extension);
 	}
 
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE)
-	public void registerClassifierInitializer(ClassifierInitializer registry, Map<String, Object> properties) {
+	public void registerClassifierInitializer(ClassifierInitializer instance, Map<String, Object> properties) {
 		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
-		registerEntry(classifierInitializers, domain, registry);
+		registerEntry(classifierInitializers, domain, instance);
 	}
 
-	public void unregisterClassifierInitializer(ClassifierInitializer registry, Map<String, Object> properties) {
+	public void unregisterClassifierInitializer(ClassifierInitializer instance, Map<String, Object> properties) {
 		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
-		unregisterEntry(classifierInitializers, domain, registry);
+		unregisterEntry(classifierInitializers, domain, instance);
+	}
+
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE)
+	public void registerCommandAdvisor(SelectionCommandAdvisor instance, Map<String, Object> properties) {
+		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
+		registerEntry(selectionAdvisors, domain, instance);
+	}
+
+	public void unregisterCommandAdvisor(SelectionCommandAdvisor instance, Map<String, Object> properties) {
+		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
+		unregisterEntry(selectionAdvisors, domain, instance);
 	}
 
 	protected <K, V> void registerEntry(Map<K, V> map, K key, V value) {
@@ -77,6 +90,11 @@ public class LocDomainRegistryAccess implements DomainRegistryAccess {
 	@Override
 	public ClassifierInitializer getClassifierInitializer(String domain) {
 		return classifierInitializers.get(domain);
+	}
+	
+	@Override
+	public SelectionCommandAdvisor getSelectionCommandAdvisor(String domain) {
+		return selectionAdvisors.get(domain);
 	}
 
 }
