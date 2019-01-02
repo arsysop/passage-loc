@@ -64,7 +64,7 @@
 		<module>../../bundles/ru.arsysop.passage.loc.users.emfforms</module>
 		<module>../../features/ru.arsysop.passage.loc.users.feature</module>
 
-		<module>../../bundles/ru.arsysop.passage.loc.dashboard</module>
+		<module>../../bundles/ru.arsysop.passage.loc.dashboard.ui</module>
 		<module>../../features/ru.arsysop.passage.loc.dashboard.feature</module>
 
 		<module>../../releng/ru.arsysop.passage.loc.repository</module>
