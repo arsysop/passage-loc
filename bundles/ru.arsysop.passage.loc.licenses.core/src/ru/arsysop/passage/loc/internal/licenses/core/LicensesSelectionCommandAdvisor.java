@@ -20,41 +20,48 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.licenses.core;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.Collections;
 
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
+import ru.arsysop.passage.lic.emf.edit.SelectionCommandAdvisor;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
+import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 
 @Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + LicensesRegistry.DOMAIN_NAME })
-public final class LicensePackClassifierInitializer implements ClassifierInitializer {
-	@Override
-	public String newObjectIdentifier() {
-		return "new.license.pack"; //$NON-NLS-1$
+public class LicensesSelectionCommandAdvisor implements SelectionCommandAdvisor {
+	
+	private LicenseDomainRegistry registry;
+	
+	@Reference
+	public void bindDomainRegistry(LicenseDomainRegistry registry) {
+		this.registry = registry;
+	}
+
+	public void unbindDomainRegistry(LicenseDomainRegistry registry) {
+		this.registry = null;
 	}
 
 	@Override
-	public String newObjectName() {
-		return "New License Pack";
+	public String getSelectionTitle(String classifier) {
+		if (LicPackage.eINSTANCE.getLicensePack().getName().equals(classifier)) {
+			return "Select License Pack";
+		}
+		return null;
 	}
 
 	@Override
-	public String newFileName() {
-		return "new_license_pack"; //$NON-NLS-1$
+	public Iterable<?> getSelectionInput(String classifier) {
+		if (registry == null) {
+			return Collections.emptyList();
+		}
+		if (LicPackage.eINSTANCE.getLicensePack().getName().equals(classifier)) {
+			return registry.getLicensePacks();
+		}
+		return Collections.emptyList();
 	}
 
-	@Override
-	public String newObjectTitle() {
-		return "License Pack";
-	}
-
-	@Override
-	public String newObjectMessage() {
-		return "New License Pack";
-	}
-
-	@Override
-	public String newFileMessage() {
-		return "Please specify a file name to store license data";
-	}
 }
