@@ -26,7 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
@@ -40,6 +42,7 @@ import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
@@ -204,6 +207,21 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (removed != null) {
 			eventAdmin.postEvent(createEvent(UsersEvents.USER_DELETE, removed));
 		}
+	}
+
+	@Override
+	public EClass getContentClassifier() {
+		return LicPackage.eINSTANCE.getUserOrigin();
+	}
+
+	@Override
+	public EStructuralFeature getContentIdentifierAttribute() {
+		return LicPackage.eINSTANCE.getUserOrigin_Identifier();
+	}
+
+	@Override
+	public EStructuralFeature getContentNameAttribute() {
+		return LicPackage.eINSTANCE.getUserOrigin_Name();
 	}
 
 }

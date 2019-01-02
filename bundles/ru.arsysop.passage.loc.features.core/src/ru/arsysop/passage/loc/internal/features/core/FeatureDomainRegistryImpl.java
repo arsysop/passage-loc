@@ -28,7 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
@@ -40,6 +42,7 @@ import org.osgi.service.event.EventAdmin;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
@@ -51,7 +54,7 @@ import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
 @Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + FeaturesRegistry.DOMAIN_NAME,
-		DomainRegistryAccess.PROPERTY_FILE_EXTENSION + '=' + FeaturesRegistry.FILE_EXTENSION_XMI })
+		DomainRegistryAccess.PROPERTY_FILE_EXTENSION + '=' + FeaturesRegistry.FILE_EXTENSION_XMI})
 public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		implements FeatureRegistry, FeatureDomainRegistry, EditingDomainRegistry {
 
@@ -276,6 +279,21 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 				featureVersionIndex.remove(featureId);
 			}
 		}
+	}
+
+	@Override
+	public EClass getContentClassifier() {
+		return LicPackage.eINSTANCE.getFeatureSet();
+	}
+
+	@Override
+	public EStructuralFeature getContentIdentifierAttribute() {
+		return LicPackage.eINSTANCE.getFeatureSet_Identifier();
+	}
+
+	@Override
+	public EStructuralFeature getContentNameAttribute() {
+		return LicPackage.eINSTANCE.getFeatureSet_Name();
 	}
 
 }

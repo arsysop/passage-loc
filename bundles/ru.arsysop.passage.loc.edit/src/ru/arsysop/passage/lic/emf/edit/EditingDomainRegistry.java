@@ -22,6 +22,8 @@ package ru.arsysop.passage.lic.emf.edit;
 
 import java.nio.file.Path;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
@@ -32,5 +34,11 @@ public interface EditingDomainRegistry extends DescriptorRegistry, IEditingDomai
 	String getFileExtension();
 	
 	Path getBasePath();
+	
+	EClass getContentClassifier();
+
+	EStructuralFeature getContentIdentifierAttribute();
+
+	EStructuralFeature getContentNameAttribute();
 
 }

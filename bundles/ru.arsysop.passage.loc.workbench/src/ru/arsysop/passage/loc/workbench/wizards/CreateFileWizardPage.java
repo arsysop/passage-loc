@@ -171,14 +171,14 @@ public class CreateFileWizardPage extends WizardPage {
 
 	protected void initControls(ClassifierInitializer initializer) {
 		String basePath = getBasePath();
-		String fileName = initializer.proposeFileName();
+		String fileName = initializer.newFileName();
 		String resourceURI = basePath + File.separator + fileName + '.' + extension;
 		txtResourceURI.setText(resourceURI);
 		if (txtId != null) {
-			txtId.setText(initializer.proposeObjectIdentifier());
+			txtId.setText(initializer.newObjectIdentifier());
 		}
 		if (txtName != null) {
-			txtName.setText(initializer.proposeObjectName());
+			txtName.setText(initializer.newObjectName());
 		}
 	}
 

@@ -18,29 +18,22 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.dashboard.ui.handlers;
-
-import javax.inject.Named;
+package ru.arsysop.passage.loc.users.ui.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 
+import ru.arsysop.passage.lic.registry.UsersRegistry;
+import ru.arsysop.passage.loc.users.ui.UsersUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
-public class DashboardLoadHandler {
+public class LoadUserOriginHandler {
 
 	@Execute
-	public void execute(IEclipseContext eclipseContext,
-			@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain,
-			@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE) String perspectiveId) {
+	public void execute(IEclipseContext eclipseContext) {
+		String domain = UsersRegistry.DOMAIN_NAME;
+		String perspectiveId = UsersUi.PERSPECTIVE_MAIN;
 		LocWokbench.loadDomainResource(eclipseContext, domain, perspectiveId);
 	}
-
-
-	@CanExecute
-	public boolean canExecute(@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain) {
-		return domain != null;
-	}
-
+		
 }

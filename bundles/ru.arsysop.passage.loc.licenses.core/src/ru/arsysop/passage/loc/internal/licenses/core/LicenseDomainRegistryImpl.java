@@ -28,7 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
@@ -40,6 +42,7 @@ import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.LicensePack;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
@@ -209,6 +212,21 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 			}
 		}
 
+	}
+
+	@Override
+	public EClass getContentClassifier() {
+		return LicPackage.eINSTANCE.getLicensePack();
+	}
+
+	@Override
+	public EStructuralFeature getContentIdentifierAttribute() {
+		return LicPackage.eINSTANCE.getLicensePack_Identifier();
+	}
+
+	@Override
+	public EStructuralFeature getContentNameAttribute() {
+		return LicPackage.eINSTANCE.getLicensePack_IssueDate();
 	}
 
 }

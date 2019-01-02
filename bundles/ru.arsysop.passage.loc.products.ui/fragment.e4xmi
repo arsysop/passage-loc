@@ -12,14 +12,14 @@
         <children xsi:type="advanced:Placeholder" xmi:id="_VpEYYAkaEemiMscYRYKkWw" elementId="ru.arsysop.passage.loc.products.ui.placeholder.0" ref="_d9Y_AAkaEemiMscYRYKkWw"/>
         <children xsi:type="basic:PartStack" xmi:id="__DQuwOjQEeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.partstack.explorers" containerData="" selectedElement="_UvOr8OjREeirQd2CUcYMjQ">
           <children xsi:type="basic:Part" xmi:id="_UvOr8OjREeirQd2CUcYMjQ" elementId="ru.arsysop.passage.loc.products.ui.part.products" containerData="" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.viewers.ProductExplorer" label="Products" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png">
-            <handlers xmi:id="_bF72QPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.open" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductOpenHandler" command="_RzFcwPMKEeiuJLGN-praBQ"/>
-            <handlers xmi:id="_fE4_IPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.export" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductExportHandler" command="_co724PMIEeiuJLGN-praBQ"/>
             <toolbar xmi:id="_Ft3BcPDHEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.products.ui.toolbar.0">
               <children xsi:type="menu:HandledToolItem" xmi:id="_G80u8PDHEeiZJs2LESTQDw" elementId="ru.arsysop.passage.loc.products.ui.handledtoolitem.product.export" accessibilityPhrase="" label="Export..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/export.png" tooltip="Export Product" command="_co724PMIEeiuJLGN-praBQ"/>
             </toolbar>
           </children>
         </children>
       </children>
+      <handlers xmi:id="_bF72QPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.open" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.LoadProductLineHandler" command="_RzFcwPMKEeiuJLGN-praBQ"/>
+      <handlers xmi:id="_fE4_IPMMEeiuJLGN-praBQ" elementId="ru.arsysop.passage.loc.products.ui.handler.product.export" contributionURI="bundleclass://ru.arsysop.passage.loc.products.ui/ru.arsysop.passage.loc.products.ui.handlers.ProductExportHandler" command="_co724PMIEeiuJLGN-praBQ"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_zUHfsOjTEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.view">

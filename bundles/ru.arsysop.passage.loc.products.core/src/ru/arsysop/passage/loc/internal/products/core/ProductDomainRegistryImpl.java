@@ -28,7 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
@@ -44,6 +46,7 @@ import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
 import ru.arsysop.passage.lic.model.api.ProductVersionFeature;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
@@ -359,6 +362,21 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 				productVersionFeatureIndex.remove(productId);
 			}
 		}
+	}
+
+	@Override
+	public EClass getContentClassifier() {
+		return LicPackage.eINSTANCE.getProductLine();
+	}
+
+	@Override
+	public EStructuralFeature getContentIdentifierAttribute() {
+		return LicPackage.eINSTANCE.getProductLine_Identifier();
+	}
+
+	@Override
+	public EStructuralFeature getContentNameAttribute() {
+		return LicPackage.eINSTANCE.getProductLine_Name();
 	}
 
 }

@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.emfforms;
+package ru.arsysop.passage.loc.workbench.emfforms.dialogs;
 
 import java.util.Set;
 

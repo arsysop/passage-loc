@@ -28,13 +28,21 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
 public class LocWokbench {
 
@@ -83,15 +91,45 @@ public class LocWokbench {
 		return "*." + extension; //$NON-NLS-1$
 	}
 
-	public static void loadDomainResource(IEclipseContext eclipseContext, String domain, Shell shell, String perspectiveId,
-			MWindow window) {
+	public static void createDomainContentObject(IEclipseContext context, String domain, Shell shell) {
+		DomainRegistryAccess registryAccess = context.get(DomainRegistryAccess.class);
+		LicensingImages images = context.get(LicensingImages.class);
+	
+		EditingDomainRegistry registry = registryAccess.getDomainRegistry(domain );
+		ClassifierInitializer initializer = registryAccess.getClassifierInitializer(domain);
+	
+		EClass eClass = registry.getContentClassifier();
+		EStructuralFeature featureIdentifier = registry.getContentIdentifierAttribute();
+		EStructuralFeature featureName = registry.getContentNameAttribute();
+		EObject eObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
+	
+		Wizard wizard = new CreateFileWizard(registry, eObject, featureIdentifier, featureName, initializer);
+		WizardDialog dialog = new WizardDialog(shell, wizard);
+		dialog.create();
+		dialog.setTitle(initializer.newObjectTitle());
+		dialog.setMessage(initializer.newFileMessage());
+	
+		Shell createdShell = dialog.getShell();
+		createdShell.setText(initializer.newObjectMessage());
+		createdShell.setImage(images.getImage(eClass.getName()));
+	
+		dialog.open();
+	}
+
+	public static void loadDomainResource(IEclipseContext eclipseContext, String domain, String perspectiveId) {
 		DomainRegistryAccess access = eclipseContext.get(DomainRegistryAccess.class);
 		EditingDomainRegistry registry = access.getDomainRegistry(domain);
 		String fileExtension = access.getFileExtension(domain);
+		Shell shell = eclipseContext.get(Shell.class);
 		String selected = selectLoadPath(shell, fileExtension);
 		if (selected == null) {
 			return;
 		}
+		switchPerspective(eclipseContext, perspectiveId);
+		registry.registerSource(selected);
+	}
+
+	protected static void switchPerspective(IEclipseContext eclipseContext, String perspectiveId) {
 		EPartService partService = eclipseContext.get(EPartService.class);
 		Optional<MPerspective> switched = partService.switchPerspective(perspectiveId);
 		if (switched.isPresent()) {
@@ -100,9 +138,9 @@ public class LocWokbench {
 			IApplicationContext applicationContext = eclipseContext.get(IApplicationContext.class);
 			String brandingName = applicationContext.getBrandingName();
 			String title = brandingName + ' ' + '-' + ' ' + label;
+			MWindow window = eclipseContext.get(MWindow.class);
 			window.setLabel(title);
 		}
-		registry.registerSource(selected);
 	}
 
 }

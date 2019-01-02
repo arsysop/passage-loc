@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_BK93UAa7EemNz8l9BTvo0A">
-  <imports xsi:type="commands:Command" xmi:id="_AoZ7UAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
   <imports xsi:type="commands:Command" xmi:id="_DTJDQAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.command.file.open"/>
   <imports xsi:type="commands:Command" xmi:id="_Hic8UAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.command.view.perspective"/>
   <imports xsi:type="commands:CommandParameter" xmi:id="_KXsrIAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"/>
   <imports xsi:type="basic:PartSashContainer" xmi:id="_OeOboAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore"/>
+  <imports xsi:type="commands:Command" xmi:id="_AoZ7UAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.workbench.command.file.new"/>
+  <imports xsi:type="commands:Command" xmi:id="_LRDEIA6KEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.workbench.command.resource.load"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_bDhvQAp1EemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.perspectivestack.main">
     <elements xsi:type="advanced:Perspective" xmi:id="_iE1O0Ap1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.perspective.main" label="Users" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png">
       <children xsi:type="basic:PartSashContainer" xmi:id="_rCGr0Ap1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.partsashcontainer.main" horizontal="true">
         <children xsi:type="advanced:Placeholder" xmi:id="_s3_2cAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.placeholder.explore" containerData="30" ref="_OeOboAp1EemYD4Lz_PRA6A"/>
         <children xsi:type="basic:PartStack" xmi:id="_xXoDcAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.partstack.details" containerData="70"/>
       </children>
-      <handlers xmi:id="_z3QbEArXEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.users.ui/ru.arsysop.passage.loc.users.ui.handlers.UserOpenHandler" command="_DTJDQAp1EemYD4Lz_PRA6A"/>
+      <handlers xmi:id="_z3QbEArXEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.handler.file.open" contributionURI="bundleclass://ru.arsysop.passage.loc.users.ui/ru.arsysop.passage.loc.users.ui.handlers.LoadUserOriginHandler" command="_DTJDQAp1EemYD4Lz_PRA6A"/>
+      <handlers xmi:id="_JdQyUA6KEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.users.ui.handler.resource.load" contributionURI="bundleclass://ru.arsysop.passage.loc.users.ui/ru.arsysop.passage.loc.users.ui.handlers.LoadUserOriginHandler" command="_LRDEIA6KEemZZbTGyctv6w"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UtWa4Ap2EemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.view">

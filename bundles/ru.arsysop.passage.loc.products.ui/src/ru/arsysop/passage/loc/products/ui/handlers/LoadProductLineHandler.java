@@ -20,20 +20,20 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.products.ui.handlers;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
+import ru.arsysop.passage.lic.registry.ProductsRegistry;
+import ru.arsysop.passage.loc.products.ui.ProductsUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
-public class ProductOpenHandler {
+public class LoadProductLineHandler {
 
 	@Execute
-	public void execute(Shell shell, ProductDomainRegistry registry) {
-		String selected = LocWokbench.selectLoadPath(shell, registry.getFileExtension());
-		if (selected != null) {
-			registry.registerSource(selected);
-		}
+	public void execute(IEclipseContext eclipseContext) {
+		String domain = ProductsRegistry.DOMAIN_NAME;
+		String perspectiveId = ProductsUi.PERSPECTIVE_MAIN;
+		LocWokbench.loadDomainResource(eclipseContext, domain, perspectiveId);
 	}
 		
 }

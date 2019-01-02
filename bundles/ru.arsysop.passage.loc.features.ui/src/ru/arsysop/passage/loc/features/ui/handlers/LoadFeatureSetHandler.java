@@ -22,8 +22,6 @@ package ru.arsysop.passage.loc.features.ui.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
-import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;
 import ru.arsysop.passage.loc.features.ui.FeaturesUi;
@@ -32,10 +30,10 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 public class LoadFeatureSetHandler {
 
 	@Execute
-	public void execute(Shell shell, IEclipseContext eclipseContext, MWindow window) {
+	public void execute(IEclipseContext eclipseContext) {
 		String domain = FeaturesRegistry.DOMAIN_NAME;
 		String perspectiveId = FeaturesUi.PERSPECTIVE_MAIN;
-		LocWokbench.loadDomainResource(eclipseContext, domain, shell, perspectiveId, window);
+		LocWokbench.loadDomainResource(eclipseContext, domain, perspectiveId);
 	}
 
 

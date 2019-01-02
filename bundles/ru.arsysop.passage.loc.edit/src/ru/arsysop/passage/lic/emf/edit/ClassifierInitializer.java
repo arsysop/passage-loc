@@ -22,10 +22,16 @@ package ru.arsysop.passage.lic.emf.edit;
 
 public interface ClassifierInitializer {
 
-	String proposeObjectIdentifier();
+	String newObjectIdentifier();
 
-	String proposeObjectName();
+	String newObjectName();
 
-	String proposeFileName();
+	String newFileName();
+
+	String newObjectTitle();
+
+	String newObjectMessage();
+
+	String newFileMessage();
 
 }

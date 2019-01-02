@@ -18,22 +18,21 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.users.ui.handlers;
+package ru.arsysop.passage.loc.licenses.emfforms.handlers;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.loc.edit.UserDomainRegistry;
-import ru.arsysop.passage.loc.workbench.LocWokbench;
+import ru.arsysop.passage.lic.registry.LicensesRegistry;
+import ru.arsysop.passage.loc.workbench.emfforms.LocWorkbenchEmfforms;
 
-public class UserOpenHandler {
+public class CreateLicensePackHandler {
 
 	@Execute
-	public void execute(Shell shell, UserDomainRegistry registry) {
-		String selected = LocWokbench.selectLoadPath(shell, registry.getFileExtension());
-		if (selected != null) {
-			registry.registerSource(selected);
-		}
+	public void execute(IEclipseContext context, Shell shell) {
+		String domain = LicensesRegistry.DOMAIN_NAME;
+		LocWorkbenchEmfforms.createDomainContentObject(context, domain, shell);
 	}
-		
+
 }

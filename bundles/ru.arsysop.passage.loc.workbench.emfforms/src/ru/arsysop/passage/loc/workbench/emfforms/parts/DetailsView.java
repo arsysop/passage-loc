@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.emfforms;
+package ru.arsysop.passage.loc.workbench.emfforms.parts;
 
 import java.util.List;
 
@@ -30,7 +30,6 @@ import javax.inject.Named;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
-import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -64,13 +63,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
-import ru.arsysop.passage.lic.model.api.LicensePack;
-import ru.arsysop.passage.lic.model.api.ProductLine;
-import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
-import ru.arsysop.passage.lic.registry.LicensesEvents;
-import ru.arsysop.passage.lic.registry.ProductsEvents;
-import ru.arsysop.passage.lic.registry.UsersEvents;
 import ru.arsysop.passage.loc.edit.LocEdit;
 
 public class DetailsView {
@@ -104,24 +97,6 @@ public class DetailsView {
 	@Inject
 	@Optional
 	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) Notifier input) {
-		show(input);
-	}
-
-	@Inject
-	@Optional
-	public void showProductLine(@UIEventTopic(ProductsEvents.PRODUCT_LINE_CREATE) ProductLine input) {
-		show(input);
-	}
-
-	@Inject
-	@Optional
-	public void showUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_CREATE) UserOrigin input) {
-		show(input);
-	}
-
-	@Inject
-	@Optional
-	public void showLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_CREATE) LicensePack input) {
 		show(input);
 	}
 
@@ -184,9 +159,15 @@ public class DetailsView {
 
 	protected TreeMasterDetailComposite createTreeMasterDetail(final Composite composite, Object editorInput,
 			final CreateElementCallback createElementCallback) {
+		MenuProvider menuProvider = createMenuProvider(createElementCallback);
 		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
 				.fillDefaults(composite, SWT.NONE, editorInput).customizeCildCreation(createElementCallback)
-				.customizeMenu(new MenuProvider() {
+				.customizeMenu(menuProvider).create();
+		return treeMasterDetail;
+	}
+
+	protected MenuProvider createMenuProvider(final CreateElementCallback createElementCallback) {
+		MenuProvider menuProvider = new MenuProvider() {
 					@Override
 					public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
 						final MenuManager menuMgr = new MenuManager();
@@ -201,8 +182,8 @@ public class DetailsView {
 						return menu;
 
 					}
-				}).create();
-		return treeMasterDetail;
+				};
+		return menuProvider;
 	}
 
 	protected void configurePart(Resource resource) {

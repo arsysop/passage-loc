@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.emfforms;
+package ru.arsysop.passage.loc.workbench.emfforms.wizards;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -30,18 +30,14 @@ import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 
 public class CreateFormWizard extends CreateFileWizard {
 
-	private final boolean createForm;
-
 	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
-			EStructuralFeature nameFeature, ClassifierInitializer initializer, boolean createForm) {
+			EStructuralFeature nameFeature, ClassifierInitializer initializer) {
 		super(registry, eObject, identifierFeature, nameFeature, initializer);
-		this.createForm = createForm;
-
 	}
 
 	@Override
 	protected CreateFileWizardPage createFilePage() {
 		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				eObject, initializer, identifierFeature != null, nameFeature != null, createForm);
+				eObject, initializer, identifierFeature != null, nameFeature != null);
 	}
 }
