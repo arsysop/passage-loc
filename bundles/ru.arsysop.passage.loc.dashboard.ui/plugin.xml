@@ -2,7 +2,7 @@
 <plugin>
 
    <extension
-         id="ru.arsysop.passage.loc.dashboard.fragment"
+         id="ru.arsysop.passage.loc.dashboard.ui.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment
             uri="fragment.e4xmi">

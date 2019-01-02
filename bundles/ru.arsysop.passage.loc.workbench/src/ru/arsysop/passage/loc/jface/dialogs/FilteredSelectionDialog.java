@@ -107,7 +107,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (filter != null) {
-					filter.setFilteringText(getfilteringField());
+					filter.setFilteringText(getFilteringField());
 					tableViewItems.refresh();
 					Table table = tableViewItems.getTable();
 					if (table.getItemCount() > 0) {
@@ -179,7 +179,7 @@ public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 		okPressed();
 	}
 
-	public String getfilteringField() {
+	public String getFilteringField() {
 		return filteringField.getText();
 	}
 

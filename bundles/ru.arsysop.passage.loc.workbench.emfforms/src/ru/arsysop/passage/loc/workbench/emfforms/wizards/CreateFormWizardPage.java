@@ -18,7 +18,7 @@ public class CreateFormWizardPage extends CreateFileWizardPage {
 
 	public CreateFormWizardPage(String pageName, String extension, EObject object, ClassifierInitializer initializer,
 			boolean createId, boolean createName) {
-		super(object, pageName, extension, initializer, createId, createName);
+		super(pageName, object, extension, initializer, createId, createName);
 	}
 	
 	@Override

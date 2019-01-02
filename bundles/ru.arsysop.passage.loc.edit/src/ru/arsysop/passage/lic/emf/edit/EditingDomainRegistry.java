@@ -30,7 +30,7 @@ import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 
 public interface EditingDomainRegistry extends DescriptorRegistry, IEditingDomainProvider, ComposedAdapterFactoryProvider {
-	
+
 	String getFileExtension();
 	
 	Path getBasePath();

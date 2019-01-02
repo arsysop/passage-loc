@@ -23,17 +23,18 @@ package ru.arsysop.passage.loc.products.ui.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.ProductsRegistry;
+import ru.arsysop.passage.loc.products.ui.ProductsUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateProductLineHandler {
 
 	@Execute
-	public void execute(IEclipseContext context, Shell shell) {
+	public void execute(IEclipseContext context) {
 		String domain = ProductsRegistry.DOMAIN_NAME;
-		LocWokbench.createDomainContentObject(context, domain, shell);
+		String perspectiveId = ProductsUi.PERSPECTIVE_MAIN;
+		LocWokbench.createDomainResource(context, domain, perspectiveId);
 	}
 
 }

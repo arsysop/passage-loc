@@ -5,7 +5,6 @@
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_6wlLisgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.menu.file" label="File">
         <children xsi:type="menu:Menu" xmi:id="_A1Pz4At6Eem3luAFH_XWkA" elementId="ru.arsysop.passage.loc.workbench.menu.file.new" label="New"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_o8EEYPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.new" label="New..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/new.png" command="_oHxDAPJKEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_vfriYPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.open" label="Open..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/open.png" command="_VVIqQPIlEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="__inoUPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.file.save" label="Save" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/save.png" command="_qIUC4PGkEei3isMrv8wWOw"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_b1ZJEPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.menuseparator.fie"/>
@@ -22,10 +21,7 @@
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_iK-aoAgmEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore" containerData="30"/>
     <trimBars xmi:id="_6wlLlcgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.trimbars.top">
       <children xsi:type="menu:ToolBar" xmi:id="_52QqQOTyEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.toolbar.main">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_6xg3MAt2Eem3luAFH_XWkA" elementId="ru.arsysop.passage.loc.workbench.directtoolitem.new" label="" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/new.png" tooltip="New">
-          <menu xmi:id="_99FbUAt2Eem3luAFH_XWkA" elementId="ru.arsysop.passage.loc.workbench.menu.new" label="New"/>
-        </children>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_tTSiIPJJEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.new" label="New..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/new.png" command="_oHxDAPJKEeiO9ZCh0caXIg"/>
+        <children xsi:type="menu:ToolBarSeparator" xmi:id="_WCkLUA6dEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.new"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_a0iSMPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.open" label="Open..." iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/open.png" command="_VVIqQPIlEeiO9ZCh0caXIg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_7WOgYPGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handledtoolitem.save" label="Save" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/save.png" command="_qIUC4PGkEei3isMrv8wWOw"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_IvR-YPJkEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.toolbarseparator.fie"/>
@@ -58,10 +54,6 @@
     <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
   <commands xmi:id="_oHxDAPJKEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.new" commandName="New"/>
-  <commands xmi:id="_SbT18AwaEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.command.resource.load" commandName="Load">
-    <parameters xmi:id="_ZWhUkAwaEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.commandparameter.resource.load.domain" name="Command Parameter Resource Load Domain" optional="false"/>
-    <parameters xmi:id="_nHDkEAxNEemxuq6DPuSYjg" elementId="ru.arsysop.passage.loc.workbench.commandparameter.resource.load.perspective" name="Command Parameter Resource Load Perspective"/>
-  </commands>
   <commands xmi:id="_VVIqQPIlEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.open" commandName="Open"/>
   <commands xmi:id="_Us_jAPJjEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.workbench.command.file.export" commandName="Export"/>
   <commands xmi:id="_qIUC4PGkEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.command.file.save" commandName="Save"/>

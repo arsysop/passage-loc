@@ -18,22 +18,30 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.users.ui.handlers;
+package ru.arsysop.passage.loc.dashboard.ui.handlers;
+
+import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 
-import ru.arsysop.passage.lic.registry.UsersRegistry;
-import ru.arsysop.passage.loc.users.ui.UsersUi;
+import ru.arsysop.passage.loc.dashboard.ui.DashboardUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
-public class CreateUserOriginHandler {
+public class DashboardCreateHandler {
 
 	@Execute
-	public void execute(IEclipseContext context) {
-		String domain = UsersRegistry.DOMAIN_NAME;
-		String perspectiveId = UsersUi.PERSPECTIVE_MAIN;
-		LocWokbench.createDomainResource(context, domain, perspectiveId);
+	public void execute(IEclipseContext eclipseContext,
+			@Named(DashboardUi.COMMANDPARAMETER_CREATE_DOMAIN) String domain,
+			@Named(DashboardUi.COMMANDPARAMETER_CREATE_PERSPECTIVE) String perspectiveId) {
+		LocWokbench.createDomainResource(eclipseContext, domain, perspectiveId);
+	}
+
+
+	@CanExecute
+	public boolean canExecute(@Named(DashboardUi.COMMANDPARAMETER_CREATE_DOMAIN) String domain) {
+		return domain != null;
 	}
 
 }

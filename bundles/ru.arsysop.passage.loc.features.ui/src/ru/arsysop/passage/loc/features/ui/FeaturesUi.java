@@ -20,6 +20,9 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.features.ui;
 
+import java.util.stream.StreamSupport;
+
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
@@ -27,9 +30,10 @@ import org.eclipse.swt.widgets.Shell;
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
+import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
-import ru.arsysop.passage.loc.features.ui.viewers.FeatureSearchFilter;
 import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
+import ru.arsysop.passage.loc.jface.dialogs.LabelSearchFilter;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class FeaturesUi {
@@ -41,14 +45,18 @@ public class FeaturesUi {
 	public static FeatureDescriptor selectFeatureDescriptor(Shell shell, LicensingImages images,
 			FeatureDomainRegistry registry, FeatureDescriptor initial) {
 
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new FeatureSearchFilter());
-		dialog.setTitle("Select Feature");
-		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getFeature().getName()));
+		String title = "Select Feature";
+		String classifier = LicPackage.eINSTANCE.getFeature().getName();
+		Iterable<FeatureDescriptor> input = registry.getFeatures();
+		LabelSearchFilter filter = new LabelSearchFilter();
+
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, filter);
+		dialog.setTitle(title);
+		dialog.setImage(images.getImage(classifier));
 
 		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
 		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-
-		dialog.setInput(registry.getFeatures());
+		dialog.setInput(input);
 		if (initial != null) {
 			dialog.setInitial(initial);
 		}
@@ -61,5 +69,5 @@ public class FeaturesUi {
 		}
 		return null;
 	}
-
+	
 }

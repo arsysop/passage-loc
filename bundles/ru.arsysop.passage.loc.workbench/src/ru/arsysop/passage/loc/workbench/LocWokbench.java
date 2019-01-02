@@ -23,6 +23,7 @@ package ru.arsysop.passage.loc.workbench;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -31,7 +32,9 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -42,6 +45,10 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
+import ru.arsysop.passage.loc.jface.dialogs.LabelSearchFilter;
+import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 
 public class LocWokbench {
@@ -50,18 +57,6 @@ public class LocWokbench {
 
 	public static final String COMMAND_VIEW_PERSPECTIVE = "ru.arsysop.passage.loc.workbench.command.view.perspective"; //$NON-NLS-1$
 	public static final String COMMANDPARAMETER_VIEW_PERSPECTIVE_ID = "ru.arsysop.passage.loc.workbench.commandparameter.perspective.id"; //$NON-NLS-1$
-
-	public static final String COMMAND_RESOURCE_CREATE = "ru.arsysop.passage.loc.workbench.command.resource.create"; //$NON-NLS-1$
-	public static final String COMMANDPARAMETER_RESOURCE_CREATE_DOMAIN = "ru.arsysop.passage.loc.workbench.commandparameter.resource.create.domain"; //$NON-NLS-1$
-	public static final String COMMANDPARAMETER_RESOURCE_CREATE_PERSPECTIVE = "ru.arsysop.passage.loc.workbench.commandparameter.resource.create.perspective"; //$NON-NLS-1$
-
-	public static final String COMMAND_RESOURCE_LOAD = "ru.arsysop.passage.loc.workbench.command.resource.load"; //$NON-NLS-1$
-	public static final String COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN = "ru.arsysop.passage.loc.workbench.commandparameter.resource.load.domain"; //$NON-NLS-1$
-	public static final String COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE = "ru.arsysop.passage.loc.workbench.commandparameter.resource.load.perspective"; //$NON-NLS-1$
-
-	public static final String COMMAND_RESOURCE_SAVE = "ru.arsysop.passage.loc.workbench.command.resource.save"; //$NON-NLS-1$
-
-	public static final String COMMAND_RESOURCE_DELETE = "ru.arsysop.passage.loc.workbench.command.resource.delete"; //$NON-NLS-1$
 
 	public static String selectSavePath(Shell shell, String extension) {
 		String[] array = maskFilters(extension);
@@ -91,7 +86,7 @@ public class LocWokbench {
 		return "*." + extension; //$NON-NLS-1$
 	}
 
-	public static void createDomainContentObject(IEclipseContext context, String domain, Shell shell) {
+	public static void createDomainResource(IEclipseContext context, String domain, String perspectiveId) {
 		DomainRegistryAccess registryAccess = context.get(DomainRegistryAccess.class);
 		LicensingImages images = context.get(LicensingImages.class);
 	
@@ -104,6 +99,7 @@ public class LocWokbench {
 		EObject eObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
 	
 		Wizard wizard = new CreateFileWizard(registry, eObject, featureIdentifier, featureName, initializer);
+		Shell shell = context.get(Shell.class);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(initializer.newObjectTitle());
@@ -129,7 +125,7 @@ public class LocWokbench {
 		registry.registerSource(selected);
 	}
 
-	protected static void switchPerspective(IEclipseContext eclipseContext, String perspectiveId) {
+	public static void switchPerspective(IEclipseContext eclipseContext, String perspectiveId) {
 		EPartService partService = eclipseContext.get(EPartService.class);
 		Optional<MPerspective> switched = partService.switchPerspective(perspectiveId);
 		if (switched.isPresent()) {
@@ -143,4 +139,43 @@ public class LocWokbench {
 		}
 	}
 
+	public static <C> C selectClassifier(IEclipseContext context, String domain, String classifier, String title, Iterable<C> input, C initial, Class<C> clazz) {
+		Object selected = selectClassifier(context, domain, classifier, title, input, initial);
+		if (clazz.isInstance(selected)) {
+			return clazz.cast(selected);
+		}
+		return null;
+	}
+
+	public static <C> Object selectClassifier(IEclipseContext context, String domain, String classifier, String title, Iterable<C> input, C initial) {
+		if (input == null) {
+			return null;
+		}
+		long count = StreamSupport.stream(input.spliterator(), false).count();
+		if (count == 0) {
+			return null;
+		}
+		if (count == 1) {
+			return input.iterator().next();
+		}
+		Shell shell = context.get(Shell.class);
+		LicensingImages images = context.get(LicensingImages.class);
+		LabelSearchFilter filter = new LabelSearchFilter();
+		ComposedAdapterFactoryProvider provider = context.get(ComposedAdapterFactoryProvider.class);
+
+		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, filter);
+		dialog.setTitle(title);
+		dialog.setImage(images.getImage(classifier));
+
+		ComposedAdapterFactory factory = provider.getComposedAdapterFactory();
+		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
+		dialog.setInput(input);
+		if (initial != null) {
+			dialog.setInitial(initial);
+		}
+		if (dialog.open() == Dialog.OK) {
+			return dialog.getFirstResult();
+		}
+		return null;
+	}
 }

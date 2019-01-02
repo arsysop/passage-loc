@@ -38,7 +38,7 @@ import ru.arsysop.passage.lic.model.core.LicModelCore;
 
 public class CreateFileWizard extends Wizard {
 
-	protected final EditingDomainRegistry editingDomainRegistry;
+	private final EditingDomainRegistry editingDomainRegistry;
 	protected final EObject eObject;
 	protected final ClassifierInitializer initializer;
 	protected final EStructuralFeature identifierFeature;
@@ -57,13 +57,13 @@ public class CreateFileWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		filePage = createFilePage();
+		filePage = createFilePage(editingDomainRegistry);
 		addPage(filePage);
 	}
 
-	protected CreateFileWizardPage createFilePage() {
-		return new CreateFileWizardPage(eObject, CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
-				initializer, identifierFeature != null, nameFeature != null);
+	protected CreateFileWizardPage createFilePage(EditingDomainRegistry registry) {
+		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), eObject,
+				editingDomainRegistry.getFileExtension(), initializer, identifierFeature != null, nameFeature != null);
 	}
 
 	@Override
@@ -106,7 +106,5 @@ public class CreateFileWizard extends Wizard {
 			return false;
 		}
 	}
-	
-
 
 }

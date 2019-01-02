@@ -26,20 +26,21 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 
+import ru.arsysop.passage.loc.dashboard.ui.DashboardUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class DashboardLoadHandler {
 
 	@Execute
 	public void execute(IEclipseContext eclipseContext,
-			@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain,
-			@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE) String perspectiveId) {
+			@Named(DashboardUi.COMMANDPARAMETER_LOAD_DOMAIN) String domain,
+			@Named(DashboardUi.COMMANDPARAMETER_LOAD_PERSPECTIVE) String perspectiveId) {
 		LocWokbench.loadDomainResource(eclipseContext, domain, perspectiveId);
 	}
 
 
 	@CanExecute
-	public boolean canExecute(@Named(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN) String domain) {
+	public boolean canExecute(@Named(DashboardUi.COMMANDPARAMETER_LOAD_DOMAIN) String domain) {
 		return domain != null;
 	}
 

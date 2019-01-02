@@ -36,8 +36,8 @@ public class CreateFormWizard extends CreateFileWizard {
 	}
 
 	@Override
-	protected CreateFileWizardPage createFilePage() {
-		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), editingDomainRegistry.getFileExtension(),
+	protected CreateFileWizardPage createFilePage(EditingDomainRegistry registry) {
+		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), registry.getFileExtension(),
 				eObject, initializer, identifierFeature != null, nameFeature != null);
 	}
 }

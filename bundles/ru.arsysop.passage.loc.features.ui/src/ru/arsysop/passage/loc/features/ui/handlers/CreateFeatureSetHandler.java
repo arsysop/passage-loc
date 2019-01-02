@@ -22,17 +22,18 @@ package ru.arsysop.passage.loc.features.ui.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;
+import ru.arsysop.passage.loc.features.ui.FeaturesUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFeatureSetHandler {
 
 	@Execute
-	public void execute(IEclipseContext context, Shell shell) {
+	public void execute(IEclipseContext context) {
 		String domain = FeaturesRegistry.DOMAIN_NAME;
-		LocWokbench.createDomainContentObject(context, domain, shell);
+		String perspectiveId = FeaturesUi.PERSPECTIVE_MAIN;
+		LocWokbench.createDomainResource(context, domain, perspectiveId);
 	}
 
 }

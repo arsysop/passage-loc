@@ -13,7 +13,6 @@
         <children xsi:type="basic:PartStack" xmi:id="_xXoDcAp1EemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.partstack.details" containerData="70"/>
       </children>
       <handlers xmi:id="_z3QbEArXEemYD4Lz_PRA6A" elementId="ru.arsysop.passage.loc.users.ui.handler.file.open" contributionURI="bundleclass://ru.arsysop.passage.loc.users.ui/ru.arsysop.passage.loc.users.ui.handlers.LoadUserOriginHandler" command="_DTJDQAp1EemYD4Lz_PRA6A"/>
-      <handlers xmi:id="_JdQyUA6KEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.users.ui.handler.resource.load" contributionURI="bundleclass://ru.arsysop.passage.loc.users.ui/ru.arsysop.passage.loc.users.ui.handlers.LoadUserOriginHandler" command="_LRDEIA6KEemZZbTGyctv6w"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UtWa4Ap2EemYD4Lz_PRA6A" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.view">

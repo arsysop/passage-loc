@@ -60,8 +60,8 @@ public class CreateFileWizardPage extends WizardPage {
 	private boolean createName;
 	private boolean createId;
 
-	public CreateFileWizardPage(EObject eObject, String pageName, String extension, ClassifierInitializer initializer,
-			boolean createId, boolean createName) {
+	public CreateFileWizardPage(String pageName, EObject eObject, String extension, ClassifierInitializer initializer, boolean createId,
+			boolean createName) {
 		super(pageName);
 
 		this.extension = extension;

@@ -36,14 +36,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
-import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductsRegistry;
 import ru.arsysop.passage.lic.registry.UsersRegistry;
 import ru.arsysop.passage.loc.dashboard.ui.DashboardUi;
@@ -55,7 +52,6 @@ import ru.arsysop.passage.loc.features.ui.FeaturesUi;
 import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.products.ui.ProductsUi;
 import ru.arsysop.passage.loc.users.ui.UsersUi;
-import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 
@@ -102,7 +98,7 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		createLinks(group, FeaturesRegistry.DOMAIN_NAME);
 
 		featureSets = createFeatureSetBlock(group);
-		features = createFeatureBlock(group, featureRegistry);
+		features = createFeatureBlock(group);
 		featureVersions = createFeatureVersionBlock(group);
 
 		updateFeatureInfo(featureRegistry);
@@ -117,10 +113,18 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Feature Sets defined.\nPlease create or load Feature Set definitions";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = FeaturesRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getFeatureSet().getName();
+		block.configureEdit("Select Feature Set to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
-	protected DashboardPanelBlock createFeatureBlock(Composite parent, FeatureDomainRegistry registry) {
+	protected DashboardPanelBlock createFeatureBlock(Composite parent) {
 		DashboardPanelBlock block = new DashboardPanelBlock();
 		String label = "Features:";
 		Image image = getImage(LicPackage.eINSTANCE.getFeature());
@@ -129,15 +133,12 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Features defined.\nPlease create it for the Feature Set(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = FeaturesRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getFeature().getName();
 		block.configureEdit("Select Feature to edit", new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Shell activeShell = e.widget.getDisplay().getActiveShell();
-				FeatureDescriptor descriptor = FeaturesUi.selectFeatureDescriptor(activeShell, licensingImages, registry, null);
-				if (descriptor != null) {
-					//switch perspective
-					//select product
-				}
+				executeEditCommand(domain, classifier);
 			}
 		});
 		return block;
@@ -152,6 +153,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Feature Versions defined.\nPlease create it for the Feature(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = FeaturesRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getFeatureVersion().getName();
+		block.configureEdit("Select Feature Version to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -188,6 +197,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Product Lines defined.\nPlease create or load Product Line definitions";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = ProductsRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getProductLine().getName();
+		block.configureEdit("Select Product Line to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -200,15 +217,12 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Products defined.\nPlease create it for the Product Line(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = ProductsRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getProduct().getName();
 		block.configureEdit("Select Product to edit", new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Shell activeShell = e.widget.getDisplay().getActiveShell();
-				ProductDescriptor descriptor = ProductsUi.selectProductDescriptor(activeShell, licensingImages, registry, null);
-				if (descriptor != null) {
-					//switch perspective
-					//select product
-				}
+				executeEditCommand(domain, classifier);
 			}
 		});
 		return block;
@@ -223,6 +237,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Product Versions defined.\nPlease create it for the Product(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = ProductsRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getProductVersion().getName();
+		block.configureEdit("Select Product Version to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -235,6 +257,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Product Version Features defined.\nPlease create it for the Product Verion(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = ProductsRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getProductVersionFeature().getName();
+		block.configureEdit("Select Product Version Feature to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -270,6 +300,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no User Origins defined.\nPlease create or load User Origin definitions";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = UsersRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getUserOrigin().getName();
+		block.configureEdit("Select User Origin to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -282,6 +320,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no Users defined.\nPlease create it for the User Origin(s)";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = UsersRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getUser().getName();
+		block.configureEdit("Select User to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -313,6 +359,14 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		String warning = "You have no License Packs defined.\nPlease create or load License Pack definitions";
 		block.setInfo(info);
 		block.setWarning(warning);
+		String domain = LicensesRegistry.DOMAIN_NAME;
+		String classifier = LicPackage.eINSTANCE.getLicensePack().getName();
+		block.configureEdit("Select License Pack to edit", new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				executeEditCommand(domain, classifier);
+			}
+		});
 		return block;
 	}
 
@@ -351,18 +405,23 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	}
 
 	protected void executeCreateCommand(String domain) {
-		// TODO Auto-generated method stub
-		
+		Map<Object, Object> parameters = new HashMap<>();
+		parameters.put(DashboardUi.COMMANDPARAMETER_CREATE_DOMAIN, domain);
+		String perspectiveId = resolvePerspectiveId(domain);
+		if (perspectiveId != null) {
+			parameters.put(DashboardUi.COMMANDPARAMETER_CREATE_PERSPECTIVE, perspectiveId);
+		}
+		DashboardUi.executeCommand(context, DashboardUi.COMMAND_CREATE, parameters);
 	}
 
 	protected void executeLoadCommand(String domain) {
 		Map<Object, Object> parameters = new HashMap<>();
-		parameters.put(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_DOMAIN, domain);
+		parameters.put(DashboardUi.COMMANDPARAMETER_LOAD_DOMAIN, domain);
 		String perspectiveId = resolvePerspectiveId(domain);
 		if (perspectiveId != null) {
-			parameters.put(LocWokbench.COMMANDPARAMETER_RESOURCE_LOAD_PERSPECTIVE, perspectiveId);
+			parameters.put(DashboardUi.COMMANDPARAMETER_LOAD_PERSPECTIVE, perspectiveId);
 		}
-		DashboardUi.executeCommand(context, LocWokbench.COMMAND_RESOURCE_LOAD, parameters);
+		DashboardUi.executeCommand(context, DashboardUi.COMMAND_LOAD, parameters);
 	}
 
 	protected String resolvePerspectiveId(String domain) {
@@ -384,9 +443,15 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 		return null;
 	}
 
-	protected void executeEditCommand(String domain) {
-		// TODO Auto-generated method stub
-		
+	protected void executeEditCommand(String domain, String classifier) {
+		Map<Object, Object> parameters = new HashMap<>();
+		parameters.put(DashboardUi.COMMANDPARAMETER_EDIT_DOMAIN, domain);
+		parameters.put(DashboardUi.COMMANDPARAMETER_EDIT_CLASSIFIER, classifier);
+		String perspectiveId = resolvePerspectiveId(domain);
+		if (perspectiveId != null) {
+			parameters.put(DashboardUi.COMMANDPARAMETER_EDIT_PERSPECTIVE, perspectiveId);
+		}
+		DashboardUi.executeCommand(context, DashboardUi.COMMAND_EDIT, parameters);
 	}
 
 	protected Image getImage(EClass eClass) {
