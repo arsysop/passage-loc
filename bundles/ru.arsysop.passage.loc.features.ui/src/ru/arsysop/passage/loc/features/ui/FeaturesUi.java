@@ -20,21 +20,13 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.features.ui;
 
-import java.util.stream.StreamSupport;
-
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
-import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
-import ru.arsysop.passage.loc.jface.dialogs.LabelSearchFilter;
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
+import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class FeaturesUi {
 
@@ -44,30 +36,11 @@ public class FeaturesUi {
 
 	public static FeatureDescriptor selectFeatureDescriptor(Shell shell, LicensingImages images,
 			FeatureDomainRegistry registry, FeatureDescriptor initial) {
-
-		String title = "Select Feature";
 		String classifier = LicPackage.eINSTANCE.getFeature().getName();
+		String title = "Select Feature";
 		Iterable<FeatureDescriptor> input = registry.getFeatures();
-		LabelSearchFilter filter = new LabelSearchFilter();
-
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, filter);
-		dialog.setTitle(title);
-		dialog.setImage(images.getImage(classifier));
-
-		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
-		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-		dialog.setInput(input);
-		if (initial != null) {
-			dialog.setInitial(initial);
-		}
-		if (dialog.open() == Dialog.OK) {
-			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof FeatureDescriptor) {
-				FeatureDescriptor feature = (FeatureDescriptor) firstResult;
-				return feature;
-			}
-		}
-		return null;
+		Class<FeatureDescriptor> clazz = FeatureDescriptor.class;
+		return LocWokbench.selectClassifier(shell, images, registry, classifier, title, input, initial, clazz);
 	}
 	
 }

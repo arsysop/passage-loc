@@ -77,7 +77,7 @@ public class DashboardUi {
 			String perspectiveId) {
 		Iterable<?> input = resolveInput(context, domain, classifier);
 		String title = resolveTitle(context, domain, classifier);
-		Object selectedClassifier = LocWokbench.selectClassifier(context, domain, classifier, title, input, null);
+		Object selectedClassifier = LocWokbench.selectClassifier(context, classifier, title, input, null);
 		if (selectedClassifier != null) {
 			LocWokbench.switchPerspective(context, perspectiveId);
 			ESelectionService selectionService = context.get(ESelectionService.class);

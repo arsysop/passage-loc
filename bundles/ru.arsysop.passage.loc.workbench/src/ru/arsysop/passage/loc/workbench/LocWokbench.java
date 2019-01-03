@@ -139,15 +139,32 @@ public class LocWokbench {
 		}
 	}
 
-	public static <C> C selectClassifier(IEclipseContext context, String domain, String classifier, String title, Iterable<C> input, C initial, Class<C> clazz) {
-		Object selected = selectClassifier(context, domain, classifier, title, input, initial);
+	public static <C> C selectClassifier(IEclipseContext context, String classifier, String title, Iterable<C> input, C initial, Class<C> clazz) {
+		Object selected = selectClassifier(context, classifier, title, input, initial);
 		if (clazz.isInstance(selected)) {
 			return clazz.cast(selected);
 		}
 		return null;
 	}
 
-	public static <C> Object selectClassifier(IEclipseContext context, String domain, String classifier, String title, Iterable<C> input, C initial) {
+	public static <C> Object selectClassifier(IEclipseContext context, String classifier, String title, Iterable<C> input, C initial) {
+		Shell shell = context.get(Shell.class);
+		LicensingImages images = context.get(LicensingImages.class);
+		ComposedAdapterFactoryProvider provider = context.get(ComposedAdapterFactoryProvider.class);
+		return selectClassifier(shell, images, provider, classifier, title, input, initial);
+	}
+
+	public static <C> C selectClassifier(Shell shell, LicensingImages images, ComposedAdapterFactoryProvider provider, String classifier,
+			String title, Iterable<C> input, C initial, Class<C> clazz) {
+		Object selected = selectClassifier(shell, images, provider, classifier, title, input, initial);
+		if (clazz.isInstance(selected)) {
+			return clazz.cast(selected);
+		}
+		return null;
+	}
+
+	public static <C> Object selectClassifier(Shell shell, LicensingImages images, ComposedAdapterFactoryProvider provider, String classifier,
+			String title, Iterable<C> input, C initial) {
 		if (input == null) {
 			return null;
 		}
@@ -158,10 +175,7 @@ public class LocWokbench {
 		if (count == 1) {
 			return input.iterator().next();
 		}
-		Shell shell = context.get(Shell.class);
-		LicensingImages images = context.get(LicensingImages.class);
 		LabelSearchFilter filter = new LabelSearchFilter();
-		ComposedAdapterFactoryProvider provider = context.get(ComposedAdapterFactoryProvider.class);
 
 		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, filter);
 		dialog.setTitle(title);
