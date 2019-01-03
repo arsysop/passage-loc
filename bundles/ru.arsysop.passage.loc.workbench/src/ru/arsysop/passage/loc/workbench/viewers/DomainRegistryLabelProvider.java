@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
@@ -41,12 +42,14 @@ public class DomainRegistryLabelProvider extends LabelProvider {
 		}
 		if (element instanceof ProductVersionFeatureDescriptor) {
 			ProductVersionFeatureDescriptor productVersionFeature = (ProductVersionFeatureDescriptor) element;
+			String text = getText(productVersionFeature.getProductVersion());
+			return text + ' ' + ':' + ' ' + productVersionFeature.getFeatureIdentifier() + ' ' + productVersionFeature.getFeatureVersion();
 		}
 
 		if (element instanceof FeatureVersionDescriptor) {
-			ProductVersionDescriptor productVersion = (ProductVersionDescriptor) element;
-			ProductDescriptor product = productVersion.getProduct();
-			return product.getName() + ' ' + productVersion.getVersion();
+			FeatureVersionDescriptor productVersion = (FeatureVersionDescriptor) element;
+			FeatureDescriptor feature = productVersion.getFeature();
+			return feature.getName() + ' ' + productVersion.getVersion();
 		}
 		return delegate.getText(element);
 	}
