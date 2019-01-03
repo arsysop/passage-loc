@@ -20,9 +20,6 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.dashboard.ui.panel;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -48,10 +45,6 @@ import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
-import ru.arsysop.passage.loc.features.ui.FeaturesUi;
-import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
-import ru.arsysop.passage.loc.products.ui.ProductsUi;
-import ru.arsysop.passage.loc.users.ui.UsersUi;
 
 public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 
@@ -405,53 +398,15 @@ public class DefaultDashboardPanelAdvisor implements DashboardPanelAdvisor {
 	}
 
 	protected void executeCreateCommand(String domain) {
-		Map<Object, Object> parameters = new HashMap<>();
-		parameters.put(DashboardUi.COMMANDPARAMETER_CREATE_DOMAIN, domain);
-		String perspectiveId = resolvePerspectiveId(domain);
-		if (perspectiveId != null) {
-			parameters.put(DashboardUi.COMMANDPARAMETER_CREATE_PERSPECTIVE, perspectiveId);
-		}
-		DashboardUi.executeCommand(context, DashboardUi.COMMAND_CREATE, parameters);
+		DashboardUi.executeCreateCommand(this.context, domain);
 	}
 
 	protected void executeLoadCommand(String domain) {
-		Map<Object, Object> parameters = new HashMap<>();
-		parameters.put(DashboardUi.COMMANDPARAMETER_LOAD_DOMAIN, domain);
-		String perspectiveId = resolvePerspectiveId(domain);
-		if (perspectiveId != null) {
-			parameters.put(DashboardUi.COMMANDPARAMETER_LOAD_PERSPECTIVE, perspectiveId);
-		}
-		DashboardUi.executeCommand(context, DashboardUi.COMMAND_LOAD, parameters);
-	}
-
-	protected String resolvePerspectiveId(String domain) {
-		if (domain == null) {
-			return null;
-		}
-		switch (domain) {
-		case FeaturesRegistry.DOMAIN_NAME:
-			return FeaturesUi.PERSPECTIVE_MAIN;
-		case ProductsRegistry.DOMAIN_NAME:
-			return ProductsUi.PERSPECTIVE_MAIN;
-		case UsersRegistry.DOMAIN_NAME:
-			return UsersUi.PERSPECTIVE_MAIN;
-		case LicensesRegistry.DOMAIN_NAME:
-			return LicensesUi.PERSPECTIVE_MAIN;
-		default:
-			break;
-		}
-		return null;
+		DashboardUi.executeLoadCommand(this.context, domain);
 	}
 
 	protected void executeEditCommand(String domain, String classifier) {
-		Map<Object, Object> parameters = new HashMap<>();
-		parameters.put(DashboardUi.COMMANDPARAMETER_EDIT_DOMAIN, domain);
-		parameters.put(DashboardUi.COMMANDPARAMETER_EDIT_CLASSIFIER, classifier);
-		String perspectiveId = resolvePerspectiveId(domain);
-		if (perspectiveId != null) {
-			parameters.put(DashboardUi.COMMANDPARAMETER_EDIT_PERSPECTIVE, perspectiveId);
-		}
-		DashboardUi.executeCommand(context, DashboardUi.COMMAND_EDIT, parameters);
+		DashboardUi.executeEditCommand(this.context, domain, classifier);
 	}
 
 	protected Image getImage(EClass eClass) {
