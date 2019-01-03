@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -35,6 +36,7 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -63,11 +65,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.LocEdit;
+import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class DetailsView {
 
+	private final IEclipseContext context;
 	private final MPart part;
 
 	private Composite content;
@@ -79,7 +85,8 @@ public class DetailsView {
 	private CommandStack commandStack;
 
 	@Inject
-	public DetailsView(MPart part) {
+	public DetailsView(IEclipseContext context, MPart part) {
+		this.context = context;
 		this.part = part;
 		this.dirtyStackListener = e -> {
 			part.setDirty(true);
@@ -154,6 +161,10 @@ public class DetailsView {
 		final TreeMasterDetailComposite treeMasterDetail = createTreeMasterDetail(composite, editorInput,
 				createElementCallback);
 		treeMasterDetail.setLayoutData(treeMasterDetailLayoutData);
+		TreeViewer selectionProvider = treeMasterDetail.getSelectionProvider();
+		LicensingImages licensingImages = context.get(LicensingImages.class);
+		AdapterFactory adapterFactory = context.get(ComposedAdapterFactoryProvider.class).getComposedAdapterFactory();
+		selectionProvider.setLabelProvider(new DomainRegistryLabelProvider(licensingImages, adapterFactory));
 		return treeMasterDetail;
 	}
 

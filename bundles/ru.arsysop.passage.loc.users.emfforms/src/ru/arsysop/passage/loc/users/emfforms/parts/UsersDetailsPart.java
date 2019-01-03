@@ -2,6 +2,7 @@ package ru.arsysop.passage.loc.users.emfforms.parts;
 
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -14,8 +15,8 @@ import ru.arsysop.passage.loc.workbench.emfforms.parts.DetailsView;
 public class UsersDetailsPart extends DetailsView {
 
 	@Inject
-	public UsersDetailsPart(MPart part) {
-		super(part);
+	public UsersDetailsPart(IEclipseContext context, MPart part) {
+		super(context, part);
 	}
 
 	@Inject
