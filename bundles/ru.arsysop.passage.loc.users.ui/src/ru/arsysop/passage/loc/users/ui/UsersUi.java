@@ -20,16 +20,13 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.users.ui;
 
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
-import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
+import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class UsersUi {
 
@@ -39,25 +36,11 @@ public class UsersUi {
 
 	public static UserDescriptor selectUserDescriptor(Shell shell, LicensingImages images, UserDomainRegistry registry,
 			UserDescriptor initial) {
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new UserSearchFilter());
-		dialog.setTitle("Select User");
-		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getUser().getName()));
-
-		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
-		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-
-		dialog.setInput(registry.getUsers());
-		if (initial != null) {
-			dialog.setInitial(initial);
-		}
-		if (dialog.open() == Dialog.OK) {
-			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof UserDescriptor) {
-				UserDescriptor descriptor = (UserDescriptor) firstResult;
-				return descriptor;
-			}
-		}
-		return null;
+		String classifier = LicPackage.eINSTANCE.getUser().getName();
+		String title = "Select User";
+		Iterable<UserDescriptor> input = registry.getUsers();
+		Class<UserDescriptor> clazz = UserDescriptor.class;
+		return LocWokbench.selectClassifier(shell, images, registry, classifier, title, input, initial, clazz);
 	}
 
 }
