@@ -26,9 +26,6 @@
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_-GChwA6REemZZbTGyctv6w" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.file.new">
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_BrLccA6SEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.features.ui.handledmenuitem.featureset" label="Feature Set" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/feature.png" tooltip="New Feature Set">
-      <parameters xmi:id="_VPr94A6SEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.features.ui.parameter.resource.create.domain" name="ru.arsysop.passage.loc.workbench.commandparameter.resource.create.domain" value="features"/>
-      <parameters xmi:id="_7q770A6SEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.features.ui.parameter.resource.create.perspective" name="ru.arsysop.passage.loc.workbench.commandparameter.resource.create.perspective" value="ru.arsysop.passage.loc.features.ui.perspective.main"/>
-    </elements>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_BrLccA6SEemZZbTGyctv6w" elementId="ru.arsysop.passage.loc.features.ui.handledmenuitem.featureset" label="Feature Set" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/feature.png" tooltip="New Feature Set" command="_wztSkA6dEemZZbTGyctv6w"/>
   </fragments>
 </fragment:ModelFragments>

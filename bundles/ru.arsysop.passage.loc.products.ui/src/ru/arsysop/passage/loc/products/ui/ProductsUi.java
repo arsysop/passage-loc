@@ -20,8 +20,6 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.products.ui;
 
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
@@ -29,9 +27,7 @@ import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
-import ru.arsysop.passage.loc.jface.dialogs.FilteredSelectionDialog;
-
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
+import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class ProductsUi {
 
@@ -39,52 +35,21 @@ public class ProductsUi {
 
 	public static final String PERSPECTIVE_MAIN = BUNDLE_SYMBOLIC_NAME + '.' + "perspective.main"; //$NON-NLS-1$
 
-	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images,
-			ProductDomainRegistry registry, ProductDescriptor initial) {
-
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new ProductSearchFilter());
-		dialog.setTitle("Select Product");
-		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProduct().getName()));
-
-		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
-		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-
-		dialog.setInput(registry.getProducts());
-		if (initial != null) {
-			dialog.setInitial(initial);
-		}
-		if (dialog.open() == Dialog.OK) {
-			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof ProductDescriptor) {
-				ProductDescriptor product = (ProductDescriptor) firstResult;
-				return product;
-			}
-		}
-		return null;
+	public static ProductDescriptor selectProductDescriptor(Shell shell, LicensingImages images, ProductDomainRegistry registry, ProductDescriptor initial) {
+		String classifier = LicPackage.eINSTANCE.getProduct().getName();
+		String title = "Select Product";
+		Iterable<ProductDescriptor> input = registry.getProducts();
+		Class<ProductDescriptor> clazz = ProductDescriptor.class;
+		return LocWokbench.selectClassifier(shell, images, registry, classifier, title, input, initial, clazz);
 	}
 
 	public static ProductVersionDescriptor selectProductVersionDescriptor(Shell shell, LicensingImages images,
 			ProductDomainRegistry registry, ProductVersionDescriptor initial) {
-
-		FilteredSelectionDialog dialog = new FilteredSelectionDialog(shell, images, false, new ProductSearchFilter());
-		dialog.setTitle("Select Product Version");
-		dialog.setImage(images.getImage(LicPackage.eINSTANCE.getProductVersion().getName()));
-
-		ComposedAdapterFactory factory = registry.getComposedAdapterFactory();
-		dialog.setLabelProvider(new DomainRegistryLabelProvider(images, factory));
-
-		dialog.setInput(registry.getProductVersions());
-		if (initial != null) {
-			dialog.setInitial(initial);
-		}
-		if (dialog.open() == Dialog.OK) {
-			Object firstResult = dialog.getFirstResult();
-			if (firstResult instanceof ProductVersionDescriptor) {
-				ProductVersionDescriptor productVersion = (ProductVersionDescriptor) firstResult;
-				return productVersion;
-			}
-		}
-		return null;
+		String classifier = LicPackage.eINSTANCE.getProductVersion().getName();
+		String title = "Select Product Version";
+		Iterable<ProductVersionDescriptor> input = registry.getProductVersions();
+		Class<ProductVersionDescriptor> clazz = ProductVersionDescriptor.class;
+		return LocWokbench.selectClassifier(shell, images, registry, classifier, title, input, initial, clazz);
 	}
 
 }
