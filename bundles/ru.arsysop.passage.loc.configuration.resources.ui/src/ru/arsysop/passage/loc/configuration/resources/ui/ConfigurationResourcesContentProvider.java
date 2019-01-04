@@ -44,28 +44,27 @@ public class ConfigurationResourcesContentProvider implements ITreeContentProvid
 
 	@Override
 	public Object[] getElements(Object inputElement) {
-		if (inputElement == null) {
-			return new Object[] {};
-		}
+		Object[] result = null;
 		if (inputElement instanceof List<?>) {
 			List<?> lstElemnts = (List<?>) inputElement;
-			if (lstElemnts.size() == 0) {
-				return new Object[] {};
+			if (!lstElemnts.isEmpty()) {
+				result = lstElemnts.toArray(new Object[] { lstElemnts.size() });
 			}
-
-			return lstElemnts.toArray(new Object[] { lstElemnts.size() });
 		}
-		return (Object[]) inputElement;
+		if (inputElement instanceof String) {
+			result = new Object[] { inputElement };
+		}
+		return (result != null) ? result : new Object[0];
 	}
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
 
-		if (parentElement instanceof String) {
+		if (parentElement != null && parentElement instanceof String) {
 			return new Object[] { parentElement };
 		}
 
-		List<String> sources = getSourcesfromDomain(parentElement);
+		List<String> sources = getSourcesElementbyDomain(parentElement);
 		return sources.toArray();
 	}
 
@@ -76,11 +75,11 @@ public class ConfigurationResourcesContentProvider implements ITreeContentProvid
 
 	@Override
 	public boolean hasChildren(Object element) {
-		List<String> sources = getSourcesfromDomain(element);
+		List<String> sources = getSourcesElementbyDomain(element);
 		return !sources.isEmpty();
 	}
 
-	public List<String> getSourcesfromDomain(Object parentElement) {
+	public List<String> getSourcesElementbyDomain(Object parentElement) {
 		List<String> collect = new ArrayList<>();
 		if (parentElement instanceof EditingDomainBasedRegistry) {
 			EditingDomainBasedRegistry baseRegistry = (EditingDomainBasedRegistry) parentElement;

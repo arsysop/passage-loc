@@ -30,7 +30,7 @@ import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 class ConfigurationResourcesLabelProvider extends LabelProvider {
 
 	private static final String CONFIGURATION_RESOURCE = "Configuration Resources of %s:"; //$NON-NLS-1$
-	private static final String RESOURCE = "Resources %s ."; //$NON-NLS-1$
+	private static final String RESOURCE = "Resource: %s"; //$NON-NLS-1$
 	private LicensingImages images;
 
 	public ConfigurationResourcesLabelProvider(LicensingImages images) {
@@ -50,7 +50,7 @@ class ConfigurationResourcesLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {
 		if (element instanceof EditingDomainBasedRegistry) {
 			EditingDomainBasedRegistry registry = (EditingDomainBasedRegistry) element;
-			return images.getImage(registry.toString());
+			return images.getImage(registry.getContentClassifier().getName());
 		}
 		return super.getImage(element);
 	}
