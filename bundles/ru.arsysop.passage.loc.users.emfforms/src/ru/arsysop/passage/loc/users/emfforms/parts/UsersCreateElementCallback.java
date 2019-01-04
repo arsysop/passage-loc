@@ -15,7 +15,7 @@ public class UsersCreateElementCallback implements CreateElementCallback {
 	@Override
 	public boolean beforeCreateElement(Object newElement) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

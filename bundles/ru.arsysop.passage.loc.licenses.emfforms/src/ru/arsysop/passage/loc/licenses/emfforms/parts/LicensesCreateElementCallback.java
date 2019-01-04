@@ -15,7 +15,7 @@ public class LicensesCreateElementCallback implements CreateElementCallback {
 	@Override
 	public boolean beforeCreateElement(Object newElement) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

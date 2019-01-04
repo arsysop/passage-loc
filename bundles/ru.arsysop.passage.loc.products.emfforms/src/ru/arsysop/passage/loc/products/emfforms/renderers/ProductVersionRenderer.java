@@ -76,15 +76,6 @@ public class ProductVersionRenderer extends TextWithButtonRenderer {
 	protected void selectIdentifier() {
 		Shell shell = Display.getDefault().getActiveShell();
 		ProductVersionDescriptor initial = null;
-//		try {
-//			Object value = getModelValue().getValue();
-//			if (value instanceof String) {
-//				String id = (String) value;
-//				initial = registry.getProductVersion(productId, version);
-//			}
-//		} catch (DatabindingFailedException e) {
-//			getReportService().report(new DatabindingFailedReport(e));
-//		}
 		ProductVersionDescriptor descriptor = ProductsUi.selectProductVersionDescriptor(shell, getLicensingImages(), registry, initial);
 		if (descriptor != null) {
 			String identifier = descriptor.getVersion();
