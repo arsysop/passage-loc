@@ -39,9 +39,13 @@ import org.eclipse.swt.widgets.Composite;
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
-import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
+import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
+import ru.arsysop.passage.lic.registry.LicensesEvents;
+import ru.arsysop.passage.lic.registry.ProductLineDescriptor;
 import ru.arsysop.passage.lic.registry.ProductsEvents;
+import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
+import ru.arsysop.passage.lic.registry.UsersEvents;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -85,40 +89,73 @@ public class ConfigurationResourcesOverviewPanelPart {
 
 	@Inject
 	@Optional
-	public void createFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_CREATE) FeatureSetDescriptor dscriptor) {
+	public void createFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_CREATE) FeatureSetDescriptor descriptor) {
 		treeView.refresh();
 	}
 
 	@Inject
 	@Optional
-	public void deleteFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_DELETE) FeatureSetDescriptor dscriptor) {
+	public void deleteFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_DELETE) FeatureSetDescriptor descriptor) {
 		treeView.refresh();
 	}
 
 	@Inject
 	@Optional
-	public void updateFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_UPDATE) FeatureSetDescriptor dscriptor) {
+	public void updateFeatureSet(@UIEventTopic(FeaturesEvents.FEATURE_SET_UPDATE) FeatureSetDescriptor descriptor) {
 		treeView.refresh();
 	}
 
 	@Inject
 	@Optional
-	public void createProductLine(
-			@UIEventTopic(ProductsEvents.PRODUCT_LINE_CREATE) FeatureVersionDescriptor dscriptor) {
+	public void createProductLine(@UIEventTopic(ProductsEvents.PRODUCT_LINE_CREATE) ProductLineDescriptor descriptor) {
 		treeView.refresh();
 	}
 
 	@Inject
 	@Optional
-	public void deleteProductLine(
-			@UIEventTopic(ProductsEvents.PRODUCT_LINE_DELETE) FeatureVersionDescriptor dscriptor) {
+	public void deleteProductLine(@UIEventTopic(ProductsEvents.PRODUCT_LINE_DELETE) ProductLineDescriptor descriptor) {
 		treeView.refresh();
 	}
 
 	@Inject
 	@Optional
-	public void updatedProductLine(
-			@UIEventTopic(ProductsEvents.PRODUCT_LINE_UPDATE) FeatureVersionDescriptor dscriptor) {
+	public void updatedProductLine(@UIEventTopic(ProductsEvents.PRODUCT_LINE_UPDATE) ProductLineDescriptor descriptor) {
+		treeView.refresh();
+	}
+
+	@Inject
+	@Optional
+	public void createUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_CREATE) UserOriginDescriptor descriptor) {
+		treeView.refresh();
+	}
+
+	@Inject
+	@Optional
+	public void deleteUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_DELETE) UserOriginDescriptor descriptor) {
+		treeView.refresh();
+	}
+
+	@Inject
+	@Optional
+	public void updateUserOrigin(@UIEventTopic(UsersEvents.USER_ORIGIN_UPDATE) UserOriginDescriptor descriptor) {
+		treeView.refresh();
+	}
+
+	@Inject
+	@Optional
+	public void createLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_CREATE) LicensePackDescriptor descriptor) {
+		treeView.refresh();
+	}
+
+	@Inject
+	@Optional
+	public void deleteLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_DELETE) LicensePackDescriptor descriptor) {
+		treeView.refresh();
+	}
+
+	@Inject
+	@Optional
+	public void updateLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_UPDATE) LicensePackDescriptor descriptor) {
 		treeView.refresh();
 	}
 }
