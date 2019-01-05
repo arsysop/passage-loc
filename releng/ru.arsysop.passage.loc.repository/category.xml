@@ -57,8 +57,8 @@
 		<category name="ru.arsysop.passage.loc.category" />
 	</feature>
 	<feature
-		url="features/ru.arsysop.passage.loc.configuration.resources.feature_0.3.2.qualifier.jar"
-		id="ru.arsysop.passage.loc.configuration.resources.feature"
+		url="features/ru.arsysop.passage.loc.edit.ui.feature_0.3.2.qualifier.jar"
+		id="ru.arsysop.passage.loc.edit.ui.feature"
 		version="0.3.2.qualifier">
 		<category name="ru.arsysop.passage.loc.category" />
 	</feature>

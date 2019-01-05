@@ -67,8 +67,8 @@
 		<module>../../bundles/ru.arsysop.passage.loc.dashboard.ui</module>
 		<module>../../features/ru.arsysop.passage.loc.dashboard.feature</module>
 		
-		<module>../../bundles/ru.arsysop.passage.loc.configuration.resources.ui</module>
-		<module>../../features/ru.arsysop.passage.loc.configuration.resources.feature</module>
+		<module>../../bundles/ru.arsysop.passage.loc.edit.ui</module>
+		<module>../../features/ru.arsysop.passage.loc.edit.ui.feature</module>
 
 		<module>../../releng/ru.arsysop.passage.loc.repository</module>
 
