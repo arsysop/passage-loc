@@ -21,7 +21,7 @@ public class LicensesDetailsPart extends DetailsView {
 
 	@Inject
 	@Optional
-	public void showFeatureSet(@UIEventTopic(LicensesEvents.LICENSE_PACK_CREATE) LicensePack input) {
+	public void showLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_CREATE) LicensePack input) {
 		show(input);
 	}
 	
