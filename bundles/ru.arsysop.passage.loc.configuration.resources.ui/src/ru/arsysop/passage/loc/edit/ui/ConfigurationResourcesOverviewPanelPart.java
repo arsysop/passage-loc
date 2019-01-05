@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.configuration.resources.ui;
+package ru.arsysop.passage.loc.edit.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +81,7 @@ public class ConfigurationResourcesOverviewPanelPart {
 	private void createRegistryTree(Composite area) {
 		treeView = new TreeViewer(area);
 		treeView.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		treeView.setAutoExpandLevel(2);
 		treeView.setContentProvider(new ConfigurationResourcesContentProvider());
 		treeView.setLabelProvider(new ConfigurationResourcesLabelProvider(licensingImages));
 		treeView.setInput(registries);

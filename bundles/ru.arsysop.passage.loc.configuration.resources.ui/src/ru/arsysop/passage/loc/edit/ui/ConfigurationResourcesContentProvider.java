@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.configuration.resources.ui;
+package ru.arsysop.passage.loc.edit.ui;
 
 import java.util.ArrayList;
 import java.util.List;

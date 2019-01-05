@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: ru.arsysop.passage.loc.configuration.resources.ui;singleton:=true
-Automatic-Module-Name: ru.arsysop.passage.loc.configuration.resources.ui
+Bundle-SymbolicName: ru.arsysop.passage.loc.edit.ui;singleton:=true
+Automatic-Module-Name: ru.arsysop.passage.loc.edit.ui
 Bundle-Version: 0.3.2.qualifier
 Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor

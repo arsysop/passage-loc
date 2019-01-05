@@ -2,6 +2,6 @@
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_ayKhoAn1EemmM9IATLmVRA">
   <imports xsi:type="basic:PartSashContainer" xmi:id="_Bx3mgAqxEem_CNKPTh3siQ" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_RiHooAqwEem_CNKPTh3siQ" featurename="children" parentElementId="ru.arsysop.passage.loc.dashboard.partstack.welcome">
-    <elements xsi:type="basic:Part" xmi:id="_F8RxcAqxEem_CNKPTh3siQ" elementId="ru.arsysop.passage.loc.cobfiguration.resources.ui.part.overview" contributionURI="bundleclass://ru.arsysop.passage.loc.configuration.resources.ui/ru.arsysop.passage.loc.configuration.resources.ui.ConfigurationResourcesOverviewPanelPart" label="Configuration resources" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png"/>
+    <elements xsi:type="basic:Part" xmi:id="_F8RxcAqxEem_CNKPTh3siQ" elementId="ru.arsysop.passage.loc.cobfiguration.resources.ui.part.overview" contributionURI="bundleclass://ru.arsysop.passage.loc.edit.ui/ru.arsysop.passage.loc.edit.ui.ConfigurationResourcesOverviewPanelPart" label="Configuration resources" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png"/>
   </fragments>
 </fragment:ModelFragments>

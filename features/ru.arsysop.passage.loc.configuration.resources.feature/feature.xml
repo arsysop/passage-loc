@@ -20,7 +20,7 @@
 		ArSysOp - initial API and implementation
 -->
 <feature
-      id="ru.arsysop.passage.loc.configuration.resources.feature"
+      id="ru.arsysop.passage.loc.edit.ui.feature"
       label="%featureName"
       version="0.3.2.qualifier"
       provider-name="%providerName"
@@ -40,7 +40,7 @@
    </license>
 
    <plugin
-         id="ru.arsysop.passage.loc.configuration.resources.ui"
+         id="ru.arsysop.passage.loc.edit.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
