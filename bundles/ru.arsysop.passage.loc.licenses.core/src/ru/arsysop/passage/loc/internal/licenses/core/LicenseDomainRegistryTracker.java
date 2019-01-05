@@ -23,19 +23,50 @@ package ru.arsysop.passage.loc.internal.licenses.core;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 
+import ru.arsysop.passage.lic.model.api.FeatureSet;
+import ru.arsysop.passage.lic.model.api.LicensePack;
+import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 
 public class LicenseDomainRegistryTracker extends EContentAdapter {
-	
+
 	private final LicenseDomainRegistry registry;
-	
+
 	public LicenseDomainRegistryTracker(LicenseDomainRegistry registry) {
 		this.registry = registry;
 	}
 
 	@Override
 	public void notifyChanged(Notification notification) {
+		Object notifier = notification.getNotifier();
+		if (notifier instanceof LicensePack) {
+			LicensePack licensePack = (LicensePack) notifier;
+			switch (notification.getFeatureID(FeatureSet.class)) {
+			case LicPackage.LICENSE_PACK__IDENTIFIER:
+				processLicensePackIdentifier(licensePack, notification);
+				break;
+				//FIXME: over identifiers
+			default:
+				break;
+			}
+		}
 		super.notifyChanged(notification);
+	}
+
+	protected void processLicensePackIdentifier(LicensePack licensePack, Notification notification) {
+		String oldValue = notification.getOldStringValue();
+		String newValue = notification.getNewStringValue();
+		switch (notification.getEventType()) {
+		case Notification.SET:
+			if (oldValue != null) {
+				registry.unregisterLicensePack(oldValue);
+			}
+			if (newValue != null) {
+				registry.registerLicensePack(licensePack);
+			}
+		default:
+			break;
+		}
 	}
 
 }

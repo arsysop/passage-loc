@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
@@ -45,6 +46,7 @@ import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
+import ru.arsysop.passage.lic.registry.LicensesEvents;
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
@@ -68,6 +70,17 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		super.unbindEnvironmentInfo(environmentInfo);
+	}
+
+	@Reference
+	@Override
+	public void bindEventAdmin(EventAdmin eventAdmin) {
+		super.bindEventAdmin(eventAdmin);
+	}
+
+	@Override
+	public void unbindEventAdmin(EventAdmin eventAdmin) {
+		super.unbindEventAdmin(eventAdmin);
 	}
 
 	@Reference
@@ -154,14 +167,19 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 		for (EObject eObject : contents) {
 			if (eObject instanceof LicensePack) {
 				LicensePack licensePack = (LicensePack) eObject;
-				addedLicensePack(licensePack);
+				registerLicensePack(licensePack);
 			}
 		}
 	}
 
-	protected void addedLicensePack(LicensePack licensePack) {
+	@Override
+	public void registerLicensePack(LicensePack licensePack) {
 		String identifier = licensePack.getIdentifier();
-		licensePackIndex.put(identifier, licensePack);
+		LicensePack existing = licensePackIndex.put(identifier, licensePack);
+		if (existing != null) {
+			// FIXME: warning
+		}
+		eventAdmin.postEvent(createEvent(LicensesEvents.LICENSE_PACK_CREATE, licensePack));
 		String userIdentifier = licensePack.getUserIdentifier();
 		List<LicensePack> userPackList = userPackIndex.computeIfAbsent(userIdentifier, key -> new ArrayList<>());
 		userPackList.add(licensePack);
@@ -178,37 +196,40 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 		for (EObject eObject : contents) {
 			if (eObject instanceof LicensePack) {
 				LicensePack licensePack = (LicensePack) eObject;
-				removedLicensePack(licensePack);
+				unregisterLicensePack(licensePack.getIdentifier());
 			}
 		}
 	}
 
-	protected void removedLicensePack(LicensePack licensePack) {
-		String identifier = licensePack.getIdentifier();
-		licensePackIndex.remove(identifier);
-		String userIdentifier = licensePack.getUserIdentifier();
+	@Override
+	public void unregisterLicensePack(String identifier) {
+		LicensePack removed = licensePackIndex.remove(identifier);
+		if (removed != null) {
+			eventAdmin.postEvent(createEvent(LicensesEvents.LICENSE_PACK_DELETE, removed));
+			String userIdentifier = removed.getUserIdentifier();
 
-		List<LicensePack> userPackList = userPackIndex.get(userIdentifier);
-		if (userPackList != null) {
-			userPackList.remove(licensePack);
-			if (userPackList.isEmpty()) {
-				userPackIndex.remove(userIdentifier);
-			}
-		}
-
-		String productIdentifier = licensePack.getProductIdentifier();
-		Map<String, List<LicensePack>> map = productVersionPackIndex.get(productIdentifier);
-		if (map != null) {
-			String productVersion = licensePack.getProductVersion();
-			List<LicensePack> list = map.get(productVersion);
-			if (list != null) {
-				list.remove(licensePack);
-				if (list.isEmpty()) {
-					map.remove(productVersion);
+			List<LicensePack> userPackList = userPackIndex.get(userIdentifier);
+			if (userPackList != null) {
+				userPackList.remove(removed);
+				if (userPackList.isEmpty()) {
+					userPackIndex.remove(userIdentifier);
 				}
 			}
-			if (map.isEmpty()) {
-				productVersionPackIndex.remove(productIdentifier);
+
+			String productIdentifier = removed.getProductIdentifier();
+			Map<String, List<LicensePack>> map = productVersionPackIndex.get(productIdentifier);
+			if (map != null) {
+				String productVersion = removed.getProductVersion();
+				List<LicensePack> list = map.get(productVersion);
+				if (list != null) {
+					list.remove(removed);
+					if (list.isEmpty()) {
+						map.remove(productVersion);
+					}
+				}
+				if (map.isEmpty()) {
+					productVersionPackIndex.remove(productIdentifier);
+				}
 			}
 		}
 
@@ -226,7 +247,7 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public EStructuralFeature getContentNameAttribute() {
-		return LicPackage.eINSTANCE.getLicensePack_IssueDate();
+		return null;
 	}
 
 }
