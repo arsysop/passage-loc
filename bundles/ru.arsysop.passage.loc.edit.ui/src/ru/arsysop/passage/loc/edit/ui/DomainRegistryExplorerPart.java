@@ -51,7 +51,7 @@ import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-public class ConfigurationResourcesOverviewPanelPart {
+public class DomainRegistryExplorerPart {
 
 	private List<EditingDomainRegistry> registries = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class ConfigurationResourcesOverviewPanelPart {
 	private LicensingImages licensingImages;
 
 	@Inject
-	public ConfigurationResourcesOverviewPanelPart(IEclipseContext context) {
+	public DomainRegistryExplorerPart(IEclipseContext context) {
 		this.registries.add(context.get(FeatureDomainRegistry.class));
 		this.registries.add(context.get(ProductDomainRegistry.class));
 		this.registries.add(context.get(UserDomainRegistry.class));
@@ -82,8 +82,8 @@ public class ConfigurationResourcesOverviewPanelPart {
 		treeView = new TreeViewer(area);
 		treeView.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		treeView.setAutoExpandLevel(2);
-		treeView.setContentProvider(new ConfigurationResourcesContentProvider());
-		treeView.setLabelProvider(new ConfigurationResourcesLabelProvider(licensingImages));
+		treeView.setContentProvider(new DomainRegistryContentProvider());
+		treeView.setLabelProvider(new DomainRegistryLabelProvider(licensingImages));
 		treeView.setInput(registries);
 
 	}

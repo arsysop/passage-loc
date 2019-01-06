@@ -20,17 +20,19 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit.ui;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 
-public class ConfigurationResourcesContentProvider implements ITreeContentProvider {
+public class DomainRegistryContentProvider implements ITreeContentProvider {
+	
+	private static final Object[] NO_CHILDREN = new Object[0];
 
 	@Override
 	public void dispose() {
@@ -44,28 +46,22 @@ public class ConfigurationResourcesContentProvider implements ITreeContentProvid
 
 	@Override
 	public Object[] getElements(Object inputElement) {
-		Object[] result = null;
-		if (inputElement instanceof List<?>) {
-			List<?> lstElemnts = (List<?>) inputElement;
-			if (!lstElemnts.isEmpty()) {
-				result = lstElemnts.toArray(new Object[] { lstElemnts.size() });
-			}
-		}
-		if (inputElement instanceof String) {
-			result = new Object[] { inputElement };
-		}
-		return (result != null) ? result : new Object[0];
+		return getChildren(inputElement);
 	}
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-
-		if (parentElement != null && parentElement instanceof String) {
-			return new Object[] { parentElement };
+		if (parentElement instanceof List<?>) {
+			List<?> list = (List<?>) parentElement;
+			return list.toArray();
 		}
-
-		List<String> sources = getSourcesElementbyDomain(parentElement);
-		return sources.toArray();
+		if (parentElement instanceof EditingDomainBasedRegistry) {
+			EditingDomainBasedRegistry baseRegistry = (EditingDomainBasedRegistry) parentElement;
+			ResourceSet resourceSet = baseRegistry.getEditingDomain().getResourceSet();
+			EList<Resource> resources = resourceSet.getResources();
+			return resources.toArray();
+		}
+		return NO_CHILDREN;
 	}
 
 	@Override
@@ -75,17 +71,8 @@ public class ConfigurationResourcesContentProvider implements ITreeContentProvid
 
 	@Override
 	public boolean hasChildren(Object element) {
-		List<String> sources = getSourcesElementbyDomain(element);
-		return !sources.isEmpty();
-	}
-
-	public List<String> getSourcesElementbyDomain(Object parentElement) {
-		List<String> collect = new ArrayList<>();
-		if (parentElement instanceof EditingDomainBasedRegistry) {
-			EditingDomainBasedRegistry baseRegistry = (EditingDomainBasedRegistry) parentElement;
-			collect = StreamSupport.stream(baseRegistry.getSources().spliterator(), false).collect(Collectors.toList());
-		}
-		return collect;
+		Object[] children = getChildren(element);
+		return children.length > 0;
 	}
 
 }
