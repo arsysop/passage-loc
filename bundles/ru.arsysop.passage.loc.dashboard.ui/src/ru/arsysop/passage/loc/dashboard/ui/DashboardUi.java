@@ -29,6 +29,7 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
@@ -80,8 +81,8 @@ public class DashboardUi {
 		Object selectedClassifier = LocWokbench.selectClassifier(context, classifier, title, input, null);
 		if (selectedClassifier != null) {
 			LocWokbench.switchPerspective(context, perspectiveId);
-			ESelectionService selectionService = context.get(ESelectionService.class);
-			selectionService.setSelection(selectedClassifier);
+			IEventBroker broker = context.get(IEventBroker.class);
+			broker.post(LocWokbench.TOPIC_SHOW, selectedClassifier);
 		}
 	}
 

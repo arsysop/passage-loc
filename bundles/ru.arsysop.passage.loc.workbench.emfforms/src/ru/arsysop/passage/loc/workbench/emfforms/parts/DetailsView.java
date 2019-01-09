@@ -28,7 +28,9 @@ import javax.inject.Inject;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -70,6 +72,7 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.LocEdit;
+import ru.arsysop.passage.loc.workbench.LocWokbench;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class DetailsView {
@@ -110,6 +113,12 @@ public class DetailsView {
 		content.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		content.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).create());
 		content.setLayoutData(GridDataFactory.fillDefaults().create());
+	}
+
+	@Inject
+	@Optional
+	protected void subscribeTopicShow(@UIEventTopic(LocWokbench.TOPIC_SHOW) Notifier input, IEclipseContext context) {
+		show(input, context);
 	}
 
 	protected void show(Notifier input, IEclipseContext context) {
