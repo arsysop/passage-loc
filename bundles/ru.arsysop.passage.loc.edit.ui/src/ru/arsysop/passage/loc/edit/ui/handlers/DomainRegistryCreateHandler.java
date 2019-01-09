@@ -30,9 +30,12 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;
+import ru.arsysop.passage.lic.registry.LicenseRegistry;
+import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.lic.registry.ProductsRegistry;
 import ru.arsysop.passage.lic.registry.UsersRegistry;
 import ru.arsysop.passage.loc.features.ui.FeaturesUi;
+import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.products.ui.ProductsUi;
 import ru.arsysop.passage.loc.users.ui.UsersUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
@@ -67,13 +70,14 @@ public class DomainRegistryCreateHandler {
 			perspectiveId = UsersUi.PERSPECTIVE_MAIN;
 			break;
 		case REGISTRY_RESOURCE_CREATE_LICENSE:
-			domain = UsersRegistry.DOMAIN_NAME;
-			perspectiveId = UsersUi.PERSPECTIVE_MAIN;
+			domain = LicensesRegistry.DOMAIN_NAME;
+			perspectiveId = LicensesUi.PERSPECTIVE_MAIN;
 			break;
 		}
 
 		if (domainRegistryId != null && perspectiveId != null) {
 			LocWokbench.createDomainResource(context, domain, perspectiveId);
 		}
+
 	}
 }
