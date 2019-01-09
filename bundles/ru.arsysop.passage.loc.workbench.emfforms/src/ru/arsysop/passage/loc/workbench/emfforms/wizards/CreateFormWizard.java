@@ -20,19 +20,16 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.workbench.emfforms.wizards;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 
 public class CreateFormWizard extends CreateFileWizard {
 
-	public CreateFormWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
-			EStructuralFeature nameFeature, ClassifierInitializer initializer) {
-		super(registry, eObject, identifierFeature, nameFeature, initializer);
+	public CreateFormWizard(IEclipseContext context, String domain, String perspectiveId) {
+		super(context, domain, perspectiveId);
 	}
 
 	@Override
