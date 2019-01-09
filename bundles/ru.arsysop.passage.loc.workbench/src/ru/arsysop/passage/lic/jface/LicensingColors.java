@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.lic.base.ui;
+package ru.arsysop.passage.lic.jface;
 
 import org.eclipse.swt.graphics.Color;
 

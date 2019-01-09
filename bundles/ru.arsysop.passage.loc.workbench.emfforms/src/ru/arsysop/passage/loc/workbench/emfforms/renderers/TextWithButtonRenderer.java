@@ -44,8 +44,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-import ru.arsysop.passage.lic.base.ui.LicensingColors;
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.jface.LicensingColors;
 import ru.arsysop.passage.loc.jface.LocImages;
 
 public abstract class TextWithButtonRenderer extends SimpleControlSWTControlSWTRenderer {

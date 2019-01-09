@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
-import ru.arsysop.passage.lic.base.ui.StatusLine;
+import ru.arsysop.passage.lic.jface.StatusLine;
 
 public abstract class ObjectSelectionStatusDialog extends ObjectSelectionDialog {
 
