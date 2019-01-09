@@ -25,14 +25,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
@@ -55,6 +53,9 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -73,7 +74,6 @@ import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 
 public class DetailsView {
 
-	private final IEclipseContext context;
 	private final MPart part;
 
 	private Composite content;
@@ -81,15 +81,26 @@ public class DetailsView {
 	//TreeMasterDetailComposite implies the Resource has root EObject
 	private EObject root;
 
-	private CommandStackListener dirtyStackListener;
+	private final CommandStackListener dirtyStackListener;
+	private final ISelectionChangedListener selectionChangedListener;
 	private CommandStack commandStack;
 
 	@Inject
-	public DetailsView(IEclipseContext context, MPart part) {
-		this.context = context;
+	public DetailsView(MPart part, ESelectionService selectionService) {
 		this.part = part;
 		this.dirtyStackListener = e -> {
-			part.setDirty(true);
+			Object source = e.getSource();
+			if (source instanceof BasicCommandStack) {
+				BasicCommandStack stack = (BasicCommandStack) source;
+				part.setDirty(stack.isSaveNeeded());
+			}
+		};
+		this.selectionChangedListener = e -> {
+			ISelection selection = e.getSelection();
+			if (selection instanceof IStructuredSelection) {
+				IStructuredSelection structured = (IStructuredSelection) selection;
+				selectionService.setSelection(structured.getFirstElement());
+			}
 		};
 	}
 
@@ -101,13 +112,7 @@ public class DetailsView {
 		content.setLayoutData(GridDataFactory.fillDefaults().create());
 	}
 
-	@Inject
-	@Optional
-	public void setInput(@Named(IServiceConstants.ACTIVE_SELECTION) Notifier input) {
-		show(input);
-	}
-
-	protected void show(Notifier input) {
+	protected void show(Notifier input, IEclipseContext context) {
 		if (content == null || content.isDisposed()) {
 			return;
 		}
@@ -116,15 +121,16 @@ public class DetailsView {
 		}
 		this.root = LocEdit.extractEObject(input);
 		Resource resource = LocEdit.extractResource(input);
-		configurePart(resource);
+		configurePart(resource, context);
 		Control[] children = content.getChildren();
 		for (Control control : children) {
 			control.dispose();
 		}
 		if (this.root != null) {
 			try {
-				TreeMasterDetailComposite rootView = createRootView(content, resource, getCreateElementCallback());
+				TreeMasterDetailComposite rootView = createRootView(content, resource, getCreateElementCallback(), context);
 				TreeViewer selectionProvider = rootView.getSelectionProvider();
+				selectionProvider.addSelectionChangedListener(selectionChangedListener);
 				selectionProvider.refresh();
 				EObject objectToReveal = this.root;
 				while (objectToReveal != null) {
@@ -147,7 +153,7 @@ public class DetailsView {
 	}
 
 	protected TreeMasterDetailComposite createRootView(Composite parent, Object editorInput,
-			CreateElementCallback createElementCallback) {
+			CreateElementCallback createElementCallback, IEclipseContext context) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 
@@ -197,9 +203,12 @@ public class DetailsView {
 		return menuProvider;
 	}
 
-	protected void configurePart(Resource resource) {
+	protected void configurePart(Resource resource, IEclipseContext context) {
 		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(LocEdit.extractEObject(resource));
+		context.set(EditingDomain.class, editingDomain);
 		if (editingDomain instanceof AdapterFactoryEditingDomain) {
+			AdapterFactory adapterFactory = ((AdapterFactoryEditingDomain)editingDomain).getAdapterFactory();
+			context.set(AdapterFactory.class, adapterFactory);
 			if (commandStack == null) {
 				commandStack = editingDomain.getCommandStack();
 				commandStack.addCommandStackListener(dirtyStackListener);
