@@ -21,5 +21,6 @@ Require-Bundle: javax.inject,
  org.eclipse.e4.ui.services,
  org.eclipse.e4.ui.workbench,
  ru.arsysop.passage.loc.features.ui,
- ru.arsysop.passage.loc.products.ui
+ ru.arsysop.passage.loc.products.ui,
+ ru.arsysop.passage.loc.users.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

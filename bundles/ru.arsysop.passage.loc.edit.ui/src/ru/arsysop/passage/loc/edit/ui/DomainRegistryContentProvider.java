@@ -31,7 +31,7 @@ import org.eclipse.jface.viewers.Viewer;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 
 public class DomainRegistryContentProvider implements ITreeContentProvider {
-	
+
 	private static final Object[] NO_CHILDREN = new Object[0];
 
 	@Override

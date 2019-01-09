@@ -66,7 +66,6 @@ public class DomainRegistryExplorerPart {
 		this.registries.add(context.get(UserDomainRegistry.class));
 		this.registries.add(context.get(LicenseDomainRegistry.class));
 		this.licensingImages = context.get(LicensingImages.class);
-
 	}
 
 	@PostConstruct
