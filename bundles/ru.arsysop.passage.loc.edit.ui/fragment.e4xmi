@@ -15,6 +15,12 @@
             <children xsi:type="menu:HandledMenuItem" xmi:id="_mc1oIBP9Eem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.handledmenuitem.product" label="Product" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/product.png" command="_fKXv4BMoEem9Y4PoNAYRsw">
               <parameters xmi:id="_hYvYIBQpEem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.product.registry.create" name="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create" value="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create.product"/>
             </children>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_VDATEBRAEem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.handledmenuitem.license" label="License" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/license.png" tooltip="Create License" command="_fKXv4BMoEem9Y4PoNAYRsw">
+              <parameters xmi:id="_0XfpsBRAEem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.licenseregistry.create" name="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create" value="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create.license"/>
+            </children>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_ZmMKYBRAEem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.handledmenuitem.user" label="User" iconURI="platform:/plugin/ru.arsysop.passage.lic.model.edit/icons/full/obj16/user.png" tooltip="Create User" command="_fKXv4BMoEem9Y4PoNAYRsw">
+              <parameters xmi:id="_051hwBRAEem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.user.registry.create" name="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create" value="ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create.user"/>
+            </children>
           </menu>
         </children>
         <children xsi:type="menu:HandledToolItem" xmi:id="_apfWEBQiEem9Y4PoNAYRsw" elementId="ru.arsysop.passage.loc.edit.ui.handledtoolitem.1" iconURI="platform:/plugin/ru.arsysop.passage.loc.workbench/images/remove.png" tooltip="Unregister resource" command="_jqLjEBMoEem9Y4PoNAYRsw"/>

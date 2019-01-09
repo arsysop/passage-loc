@@ -85,7 +85,6 @@ public class DomainRegistryExplorerPart {
 		treeView.setContentProvider(new DomainRegistryContentProvider());
 		treeView.setLabelProvider(new DomainRegistryLabelProvider(licensingImages));
 		treeView.setInput(registries);
-
 	}
 
 	public ISelection getStructureSelectedItem() {
