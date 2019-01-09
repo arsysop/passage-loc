@@ -20,17 +20,38 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 
 public class LocEdit {
 	
 	public static final String EXTENSION_KEY_PRIVATE = ".scr"; //$NON-NLS-1$
 	
 	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
+
+	public static EditingDomain extractEditingDomain(IEclipseContext context) {
+		EditingDomain editingDomain = context.get(EditingDomain.class);
+		if (editingDomain != null) {
+			return editingDomain;
+		}
+		IEditingDomainProvider provider = context.get(IEditingDomainProvider.class);
+		if (provider != null) {
+			return provider.getEditingDomain();
+		}
+		EditingDomainRegistry registry = context.get(EditingDomainRegistry.class);
+		if (registry != null) {
+			return registry.getEditingDomain();
+		}
+		return null;
+	}
 
 	public static Resource extractResource(Object object) {
 		if (object instanceof EObject) {

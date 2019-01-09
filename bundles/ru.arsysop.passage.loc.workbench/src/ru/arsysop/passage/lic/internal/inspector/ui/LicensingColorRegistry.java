@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
-import ru.arsysop.passage.lic.base.ui.LicensingColors;
+import ru.arsysop.passage.lic.jface.LicensingColors;
 
 @Component
 public class LicensingColorRegistry implements LicensingColors {

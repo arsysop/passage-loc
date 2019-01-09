@@ -18,23 +18,15 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.workbench.emfforms.wizards;
+package ru.arsysop.passage.lic.jface;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.swt.graphics.Color;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
-import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
+public interface LicensingColors {
 
-public class CreateFormWizard extends CreateFileWizard {
+	String COLOR_VALIDATION_OK = "COLOR_VALIDATION_OK"; //$NON-NLS-1$
+	String COLOR_VALIDATION_ERROR = "COLOR_VALIDATION_ERROR"; //$NON-NLS-1$
 
-	public CreateFormWizard(IEclipseContext context, String domain, String perspectiveId) {
-		super(context, domain, perspectiveId);
-	}
+	Color getColor(String identifier);
 
-	@Override
-	protected CreateFileWizardPage createFilePage(EditingDomainRegistry registry) {
-		return new CreateFormWizardPage(CreateFileWizardPage.class.getName(), registry.getFileExtension(),
-				eObject, initializer, identifierFeature != null, nameFeature != null);
-	}
 }

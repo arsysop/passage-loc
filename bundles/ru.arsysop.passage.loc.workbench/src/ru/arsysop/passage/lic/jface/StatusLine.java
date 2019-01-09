@@ -18,12 +18,14 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.lic.base.ui;
+package ru.arsysop.passage.lic.jface;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Composite;
+
+import ru.arsysop.passage.lic.base.ui.LicensingImages;
 
 public class StatusLine extends CLabel {
 	

@@ -18,15 +18,31 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.lic.base.ui;
+package ru.arsysop.passage.lic.emf.edit;
 
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
-public interface LicensingColors {
+public class LabeledDiagnostician extends Diagnostician {
+	private final AdapterFactory adapterFactory;
 
-	String COLOR_VALIDATION_OK = "COLOR_VALIDATION_OK"; //$NON-NLS-1$
-	String COLOR_VALIDATION_ERROR = "COLOR_VALIDATION_ERROR"; //$NON-NLS-1$
+	public LabeledDiagnostician(AdapterFactory adapterFactory) {
+		this.adapterFactory = adapterFactory;
+	}
 
-	Color getColor(String identifier);
+	@Override
+	public String getObjectLabel(EObject eObject) {
+		if (adapterFactory != null && !eObject.eIsProxy()) {
+			IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(eObject,
+					IItemLabelProvider.class);
+			if (itemLabelProvider != null) {
+				return itemLabelProvider.getText(eObject);
+			}
+		}
+
+		return super.getObjectLabel(eObject);
+	}
 
 }

@@ -22,7 +22,6 @@ package ru.arsysop.passage.loc.workbench.emfforms;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -37,7 +36,7 @@ public class LocWorkbenchEmfforms {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.workbench.emfforms"; //$NON-NLS-1$
 
-	public static void createDomainContentObject(IEclipseContext context, String domain, Shell shell) {
+	public static void createDomainContentObject(IEclipseContext context, String domain, String perspectiveId) {
 		DomainRegistryAccess registryAccess = context.get(DomainRegistryAccess.class);
 		LicensingImages images = context.get(LicensingImages.class);
 	
@@ -45,9 +44,9 @@ public class LocWorkbenchEmfforms {
 		ClassifierInitializer initializer = registryAccess.getClassifierInitializer(domain);
 	
 		EClass eClass = registry.getContentClassifier();
-		EObject eObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
 	
-		Wizard wizard = new CreateFormWizard(registry, eObject, null, null, initializer);
+		Wizard wizard = new CreateFormWizard(context, domain, perspectiveId);
+		Shell shell = context.get(Shell.class);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.setTitle(initializer.newObjectTitle());

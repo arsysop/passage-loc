@@ -32,16 +32,20 @@
                value="%application.name">
          </property>
          <property
-               name="windowImages"
-               value="images/passage16.png,images/passage32.png,images/passage48.png,images/passage64.png,images/passage128.png">
-         </property>
-         <property
-               name="windowImages"
-               value="images/passage_lg.png">
-         </property>
-         <property
                name="applicationCSS"
                value="platform:/plugin/ru.arsysop.passage.loc.workbench/css/default.css">
+         </property>
+         <property
+               name="applicationXMI"
+               value="platform:/plugin/ru.arsysop.passage.loc.workbench/LOC.e4xmi">
+         </property>
+         <property
+               name="lifeCycleURI"
+               value="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.LocLifeCycle">
+         </property>
+         <property
+               name="windowImages"
+               value="images/passage16.png,images/passage32.png,images/passage48.png,images/passage64.png,images/passage128.png">
          </property>
          <property
                name="aboutImage"

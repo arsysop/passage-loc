@@ -23,47 +23,59 @@ package ru.arsysop.passage.loc.workbench.wizards;
 import java.io.File;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 
 import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
+import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizard extends Wizard {
 
-	private final EditingDomainRegistry editingDomainRegistry;
 	protected final EObject eObject;
 	protected final ClassifierInitializer initializer;
 	protected final EStructuralFeature identifierFeature;
 	protected final EStructuralFeature nameFeature;
+
+	private final IEclipseContext eclipseContext;
+	private final EditingDomainRegistry domainRegistry;
+	private final String perspectiveId;
+
 	private CreateFileWizardPage filePage;
 
-	public CreateFileWizard(EditingDomainRegistry registry, EObject eObject, EStructuralFeature identifierFeature,
-			EStructuralFeature nameFeature, ClassifierInitializer initializer) {
-		this.editingDomainRegistry = registry;
-		this.eObject = eObject;
-
-		this.identifierFeature = identifierFeature;
-		this.nameFeature = nameFeature;
-		this.initializer = initializer;
+	public CreateFileWizard(IEclipseContext context, String domain, String perspectiveId) {
+		this.eclipseContext = context;
+		this.perspectiveId = perspectiveId;
+		DomainRegistryAccess registryAccess = context.get(DomainRegistryAccess.class);
+		EditingDomainRegistry domainRegistry = registryAccess.getDomainRegistry(domain);
+		EClass eClass = domainRegistry.getContentClassifier();
+		this.domainRegistry = domainRegistry;
+		this.eObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
+		this.identifierFeature = domainRegistry.getContentIdentifierAttribute();
+		this.nameFeature = domainRegistry.getContentNameAttribute();
+		this.initializer = registryAccess.getClassifierInitializer(domain);
 	}
 
 	@Override
 	public void addPages() {
-		filePage = createFilePage(editingDomainRegistry);
+		filePage = createFilePage(domainRegistry);
 		addPage(filePage);
 	}
 
 	protected CreateFileWizardPage createFilePage(EditingDomainRegistry registry) {
 		return new CreateFileWizardPage(CreateFileWizardPage.class.getName(), eObject,
-				editingDomainRegistry.getFileExtension(), initializer, identifierFeature != null, nameFeature != null);
+				domainRegistry.getFileExtension(), initializer, identifierFeature != null, nameFeature != null);
 	}
 
 	@Override
@@ -90,15 +102,16 @@ public class CreateFileWizard extends Wizard {
 
 			IRunnableWithProgress operation = new IRunnableWithProgress() {
 				public void run(IProgressMonitor progressMonitor) {
-					ResourceSet resourceSet = editingDomainRegistry.getEditingDomain().getResourceSet();
+					ResourceSet resourceSet = new ResourceSetImpl();
 					Resource resource = resourceSet.createResource(fileURI);
 					resource.getContents().add(eObject);
 					LicModelCore.save(resource);
+					LocWokbench.switchPerspective(eclipseContext, perspectiveId);
+					domainRegistry.registerSource(fileURI.toFileString());
 				}
 			};
 
 			getContainer().run(false, false, operation);
-
 			return true;
 		} catch (Exception exception) {
 			// FIXME:

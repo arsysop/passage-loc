@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
-import ru.arsysop.passage.lic.base.ui.LicensingColors;
+import ru.arsysop.passage.lic.jface.LicensingColors;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class ValidatedTextRenderer extends SimpleControlSWTControlSWTRenderer {

@@ -22,17 +22,18 @@ package ru.arsysop.passage.loc.licenses.emfforms.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
+import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.workbench.emfforms.LocWorkbenchEmfforms;
 
 public class CreateLicensePackHandler {
 
 	@Execute
-	public void execute(IEclipseContext context, Shell shell) {
+	public void execute(IEclipseContext context) {
 		String domain = LicensesRegistry.DOMAIN_NAME;
-		LocWorkbenchEmfforms.createDomainContentObject(context, domain, shell);
+		String perspectiveId = LicensesUi.PERSPECTIVE_MAIN;
+		LocWorkbenchEmfforms.createDomainContentObject(context, domain, perspectiveId);
 	}
 
 }
