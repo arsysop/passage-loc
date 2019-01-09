@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.window.main" selectedElement="_iI4kYKO-EeeLebrZVlD4jQ" label="%application.name" iconURI="" tooltip="%application.tooltip" width="900" height="600">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.window.main" selectedElement="_iI4kYKO-EeeLebrZVlD4jQ" label="" iconURI="" tooltip="" width="900" height="600">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_iI4kYKO-EeeLebrZVlD4jQ" elementId="ru.arsysop.passage.loc.workbench.perspectivestack.main"/>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_6wlLisgZEeSyMNYR5xypkQ" elementId="ru.arsysop.passage.loc.workbench.menu.file" label="File">

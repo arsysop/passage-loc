@@ -36,6 +36,10 @@
                value="platform:/plugin/ru.arsysop.passage.loc.workbench/css/default.css">
          </property>
          <property
+               name="applicationXMI"
+               value="platform:/plugin/ru.arsysop.passage.loc.workbench/LOC.e4xmi">
+         </property>
+         <property
                name="lifeCycleURI"
                value="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.LocLifeCycle">
          </property>
