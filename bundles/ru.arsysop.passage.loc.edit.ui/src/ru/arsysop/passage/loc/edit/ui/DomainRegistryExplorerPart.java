@@ -30,6 +30,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -86,6 +87,14 @@ public class DomainRegistryExplorerPart {
 		treeView.setLabelProvider(new DomainRegistryLabelProvider(licensingImages));
 		treeView.setInput(registries);
 
+	}
+
+	public ISelection getStructureSelectedItem() {
+		if (treeView != null) {
+			ISelection selection = treeView.getSelection();
+			return selection;
+		}
+		return null;
 	}
 
 	@Inject
