@@ -22,6 +22,8 @@ package ru.arsysop.passage.loc.edit.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -29,8 +31,9 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -87,12 +90,34 @@ public class DomainRegistryExplorerPart {
 		treeView.setInput(registries);
 	}
 
-	public ISelection getStructureSelectedItem() {
+	public boolean unregisterStructureSelectedItem() {
 		if (treeView != null) {
-			ISelection selection = treeView.getSelection();
-			return selection;
+			Object selection = treeView.getStructuredSelection().getFirstElement();
+			if (selection instanceof XMIResource) {
+				XMIResource resource = (XMIResource) selection;
+				for (EditingDomainRegistry registry : registries) {
+					URI uri = resource.getURI();
+					List<String> collectSources = StreamSupport.stream(registry.getSources().spliterator(), false)
+							.collect(Collectors.toList());
+					String path = uri.path();
+					if (collectSources.contains(path)) {
+						registry.unregisterSource(path);
+						return true;
+					}
+				}
+			}
 		}
-		return null;
+		return false;
+	}
+
+	public String getUnregisterResourceName() {
+		if (treeView != null) {
+			Object selection = treeView.getStructuredSelection().getFirstElement();
+			if (selection instanceof XMIResource) {
+				return ((XMIResource) selection).getURI().toFileString();
+			}
+		}
+		return "";
 	}
 
 	@Inject
@@ -166,4 +191,9 @@ public class DomainRegistryExplorerPart {
 	public void updateLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_UPDATE) LicensePackDescriptor descriptor) {
 		treeView.refresh();
 	}
+
+	public void updateView() {
+		treeView.refresh();
+	}
+
 }

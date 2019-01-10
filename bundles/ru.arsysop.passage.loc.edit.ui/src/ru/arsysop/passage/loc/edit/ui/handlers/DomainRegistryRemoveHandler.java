@@ -27,13 +27,34 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import ru.arsysop.passage.loc.edit.ui.DomainRegistryExplorerPart;
+
 public class DomainRegistryRemoveHandler {
+
+	private static final String DIALOG_TITLE = "Unregister domain resource";
+	private static final String DIALOG_MSG_TEMPLATE = "Unregister domain resource: '%s' ?";
 
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication application,
 			EPartService partService, IEclipseContext context) {
+
+		Object object = partService.getActivePart().getObject();
+
+		if (object instanceof DomainRegistryExplorerPart) {
+			DomainRegistryExplorerPart registryExplorer = (DomainRegistryExplorerPart) object;
+			String resource = registryExplorer.getUnregisterResourceName();
+			if (resource != null && !resource.isEmpty()) {
+				String dialogMsg = String.format(DIALOG_MSG_TEMPLATE, resource);
+				if (MessageDialog.openConfirm(shell, DIALOG_TITLE, dialogMsg)) {
+					if (registryExplorer.unregisterStructureSelectedItem()) {
+						registryExplorer.updateView();
+					}
+				}
+			}
+		}
 
 	}
 }

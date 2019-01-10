@@ -23,5 +23,6 @@ Require-Bundle: javax.inject,
  ru.arsysop.passage.loc.features.ui,
  ru.arsysop.passage.loc.products.ui,
  ru.arsysop.passage.loc.users.ui,
- ru.arsysop.passage.loc.licenses.ui
+ ru.arsysop.passage.loc.licenses.ui,
+ org.eclipse.emf.ecore.xmi
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

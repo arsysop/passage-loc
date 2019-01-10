@@ -30,7 +30,6 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;
-import ru.arsysop.passage.lic.registry.LicenseRegistry;
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.lic.registry.ProductsRegistry;
 import ru.arsysop.passage.lic.registry.UsersRegistry;
@@ -42,12 +41,12 @@ import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class DomainRegistryCreateHandler {
 
+	private static final String PERSPECTIVE_DASHBOARD_ID = "ru.arsysop.passage.loc.dashboard.perspective.main";
 	private static final String REGISTRY_RESOURCE_CREATE = "ru.arsysop.passage.loc.edit.ui.commandparameter.domain.resource.create";
 	private static final String REGISTRY_RESOURCE_CREATE_FEATURE = REGISTRY_RESOURCE_CREATE + ".feature";
 	private static final String REGISTRY_RESOURCE_CREATE_PRODUCT = REGISTRY_RESOURCE_CREATE + ".product";
 	private static final String REGISTRY_RESOURCE_CREATE_USER = REGISTRY_RESOURCE_CREATE + ".user";
 	private static final String REGISTRY_RESOURCE_CREATE_LICENSE = REGISTRY_RESOURCE_CREATE + ".license";
-
 	private String domain = "";
 	private String perspectiveId = "";
 
@@ -77,7 +76,7 @@ public class DomainRegistryCreateHandler {
 
 		if (domainRegistryId != null && perspectiveId != null) {
 			LocWokbench.createDomainResource(context, domain, perspectiveId);
+			LocWokbench.switchPerspective(context, PERSPECTIVE_DASHBOARD_ID);
 		}
-
 	}
 }
