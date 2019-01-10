@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
@@ -49,8 +51,8 @@ import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
-	
-	//@see org.eclipse.e4.core.services.events.IEventBroker.DATA
+
+	// @see org.eclipse.e4.core.services.events.IEventBroker.DATA
 	protected static final String PROPERTY_DATA = "org.eclipse.e4.data"; //$NON-NLS-1$
 
 	protected EnvironmentInfo environmentInfo;
@@ -67,9 +69,10 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 
 	public EditingDomainBasedRegistry() {
 		BasicCommandStack commandStack = new BasicCommandStack();
-		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack, new HashMap<Resource, Boolean>());
+		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack,
+				new HashMap<Resource, Boolean>());
 	}
-	
+
 	protected void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		this.environmentInfo = environmentInfo;
 	}
@@ -77,7 +80,7 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	protected void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		this.environmentInfo = null;
 	}
-	
+
 	protected void bindEventAdmin(EventAdmin eventAdmin) {
 		this.eventAdmin = eventAdmin;
 	}
@@ -85,17 +88,17 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	protected void unbindEventAdmin(EventAdmin eventAdmin) {
 		this.eventAdmin = null;
 	}
-	
+
 	protected void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		this.composedAdapterFactory = factoryProvider.getComposedAdapterFactory();
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
-	
+
 	protected void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		this.composedAdapterFactory = null;
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
-	
+
 	@Override
 	public Path getBasePath() {
 		String areaValue = environmentInfo.getProperty("user.home"); //$NON-NLS-1$
@@ -108,12 +111,12 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		}
 		return passagePath;
 	}
-	
+
 	protected void activate(Map<String, Object> properties) {
 		contentAdapter = createContentAdapter();
 		editingDomain.getResourceSet().eAdapters().add(contentAdapter);
 	}
-	
+
 	protected abstract EContentAdapter createContentAdapter();
 
 	protected void deactivate(Map<String, Object> properties) {
@@ -124,12 +127,12 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	public ComposedAdapterFactory getComposedAdapterFactory() {
 		return composedAdapterFactory;
 	}
-	
+
 	@Override
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
 	}
-	
+
 	protected Map<?, ?> getLoadOptions() {
 		return new HashMap<>();
 	}
@@ -154,6 +157,7 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		Resource resource = resourceSet.getResource(uri, false);
 		beforeUnload(resource.getContents());
 		resource.unload();
+		resourceSet.getResources().remove(resource);
 	}
 
 	protected abstract void beforeUnload(EList<EObject> contents);
@@ -168,21 +172,25 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		try {
 			loadSource(source);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(this.getClass().getName()).log(Level.FINER, e.getMessage(), e);
 		}
 	}
-	
+
 	@Override
 	public void unregisterSource(String source) {
 		sources.remove(source);
+		try {
+			unloadSource(source);
+		} catch (Exception e) {
+			Logger.getLogger(this.getClass().getName()).log(Level.FINER, e.getMessage(), e);
+		}
 	}
-	
+
 	@Override
 	public Iterable<String> getSources() {
 		return Collections.unmodifiableList(sources);
 	}
-	
+
 	protected static Event createEvent(String topic, Object data) {
 		Map<String, Object> properties = new HashMap<>();
 		properties.put(PROPERTY_DATA, data);

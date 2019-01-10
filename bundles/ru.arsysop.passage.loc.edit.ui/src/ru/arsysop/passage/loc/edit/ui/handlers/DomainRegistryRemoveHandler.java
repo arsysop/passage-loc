@@ -34,8 +34,8 @@ import ru.arsysop.passage.loc.edit.ui.DomainRegistryExplorerPart;
 
 public class DomainRegistryRemoveHandler {
 
-	private static final String DIALOG_TITLE = "Unregister domain resource";
-	private static final String DIALOG_MSG_TEMPLATE = "Unregister domain resource: '%s' ?";
+	private static final String DIALOG_TITLE = "Unregister domain resource"; //$NON-NLS-1$
+	private static final String DIALOG_MSG_TEMPLATE = "Unregister domain resource: '%s' ?"; //$NON-NLS-1$
 
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication application,

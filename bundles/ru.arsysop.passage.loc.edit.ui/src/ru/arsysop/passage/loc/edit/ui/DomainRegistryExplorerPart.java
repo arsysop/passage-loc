@@ -61,6 +61,7 @@ public class DomainRegistryExplorerPart {
 
 	private TreeViewer treeView;
 	private LicensingImages licensingImages;
+	private DomainRegistryContentProvider contentProvider;
 
 	@Inject
 	public DomainRegistryExplorerPart(IEclipseContext context) {
@@ -85,7 +86,8 @@ public class DomainRegistryExplorerPart {
 		treeView = new TreeViewer(area);
 		treeView.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		treeView.setAutoExpandLevel(2);
-		treeView.setContentProvider(new DomainRegistryContentProvider());
+		contentProvider = new DomainRegistryContentProvider();
+		treeView.setContentProvider(contentProvider);
 		treeView.setLabelProvider(new DomainRegistryLabelProvider(licensingImages));
 		treeView.setInput(registries);
 	}
