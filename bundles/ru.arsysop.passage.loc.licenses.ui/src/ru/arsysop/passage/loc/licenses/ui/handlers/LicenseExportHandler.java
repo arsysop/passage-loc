@@ -29,12 +29,18 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Version;
 
+import ru.arsysop.passage.lic.base.LicensingConfigurations;
 import ru.arsysop.passage.lic.model.api.LicensePack;
+import ru.arsysop.passage.lic.runtime.AccessManager;
+import ru.arsysop.passage.lic.runtime.LicensingCondition;
+import ru.arsysop.passage.lic.runtime.LicensingConfiguration;
 import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -43,7 +49,28 @@ import ru.arsysop.passage.loc.licenses.core.LicensesCore;
 public class LicenseExportHandler {
 
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) LicensePack licensePack, Shell shell, LicenseDomainRegistry licenseRegistry, ProductDomainRegistry productRegistry, StreamCodec streamCodec) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) LicensePack licensePack, Shell shell, LicenseDomainRegistry licenseRegistry, ProductDomainRegistry productRegistry, StreamCodec streamCodec, AccessManager accessManager, IApplicationContext applicationContext) {
+		String productId = applicationContext.getBrandingId();
+		Version version = applicationContext.getBrandingBundle().getVersion();
+		StringBuilder sb = new StringBuilder();
+		sb.append(version.getMajor()).append('.');
+		sb.append(version.getMinor()).append('.');
+		sb.append(version.getMicro());
+		String productVersion = sb.toString();
+		LicensingConfiguration configuration = LicensingConfigurations.create(productId, productVersion);
+		Iterable<LicensingCondition> extractConditions = accessManager.extractConditions(configuration);
+		boolean found = false;
+		for (LicensingCondition licensingCondition : extractConditions) {
+			String feature = licensingCondition.getFeatureIdentifier();
+			if ("ru.arsysop.passage.lco.licenses.export".equals(feature)) {
+				found = true;
+			}
+		}
+		if (!found) {
+			MessageDialog.openError(shell, "Error", "No license");
+			return;
+		}
+		
 		try {
 			String exportLicense = LicensesCore.exportLicensePack(licensePack, productRegistry, licenseRegistry, streamCodec);
 			String format = "License pack exported succesfully: \n\n %s \n";
@@ -61,5 +88,5 @@ public class LicenseExportHandler {
 	public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional LicensePack licensePack) {
 		return licensePack != null;
 	}
-		
+
 }

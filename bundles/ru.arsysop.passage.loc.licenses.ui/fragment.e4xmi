@@ -16,6 +16,7 @@
       </children>
       <handlers xmi:id="_HEOMkPIpEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.open" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseOpenHandler" command="_LEzGEPIpEeiO9ZCh0caXIg"/>
       <handlers xmi:id="_uF8WAPJoEeiO9ZCh0caXIg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.license.export" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseExportHandler" command="_B0LYAPJlEeiO9ZCh0caXIg"/>
+      <handlers xmi:id="_qU6lkBQAEemRg8XCpeTHbg" elementId="ru.arsysop.passage.loc.licenses.ui.handler.0" contributionURI="bundleclass://ru.arsysop.passage.loc.licenses.ui/ru.arsysop.passage.loc.licenses.ui.handlers.LicenseExportHandler" command="_B0LYAPJlEeiO9ZCh0caXIg"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_4yf2IOjiEeirQd2CUcYMjQ" featurename="children" parentElementId="ru.arsysop.passage.loc.workbench.menu.view">

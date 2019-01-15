@@ -33,10 +33,6 @@ import ru.arsysop.passage.lic.registry.FeaturesRegistry;
 import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.lic.registry.ProductsRegistry;
 import ru.arsysop.passage.lic.registry.UsersRegistry;
-import ru.arsysop.passage.loc.features.ui.FeaturesUi;
-import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
-import ru.arsysop.passage.loc.products.ui.ProductsUi;
-import ru.arsysop.passage.loc.users.ui.UsersUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class DomainRegistryCreateHandler {
@@ -58,25 +54,20 @@ public class DomainRegistryCreateHandler {
 		switch (domainRegistryId) {
 		case REGISTRY_RESOURCE_CREATE_FEATURE:
 			domain = FeaturesRegistry.DOMAIN_NAME;
-			perspectiveId = FeaturesUi.PERSPECTIVE_MAIN;
 			break;
 		case REGISTRY_RESOURCE_CREATE_PRODUCT:
 			domain = ProductsRegistry.DOMAIN_NAME;
-			perspectiveId = ProductsUi.PERSPECTIVE_MAIN;
 			break;
 		case REGISTRY_RESOURCE_CREATE_USER:
 			domain = UsersRegistry.DOMAIN_NAME;
-			perspectiveId = UsersUi.PERSPECTIVE_MAIN;
 			break;
 		case REGISTRY_RESOURCE_CREATE_LICENSE:
 			domain = LicensesRegistry.DOMAIN_NAME;
-			perspectiveId = LicensesUi.PERSPECTIVE_MAIN;
 			break;
 		}
 
 		if (domainRegistryId != null && perspectiveId != null) {
-			LocWokbench.createDomainResource(context, domain, perspectiveId);
-			LocWokbench.switchPerspective(context, PERSPECTIVE_DASHBOARD_ID);
+			LocWokbench.createDomainResource(context, domain, PERSPECTIVE_DASHBOARD_ID);
 		}
 	}
 }

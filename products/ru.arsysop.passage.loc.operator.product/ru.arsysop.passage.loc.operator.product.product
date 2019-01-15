@@ -21,10 +21,10 @@
 		ArSysOp - initial API and implementation
 -->
 
-<product name="Passage Licensing Operator Workbench" uid="ru.arsysop.passage.loc.workbench.product" id="ru.arsysop.passage.loc.workbench.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="0.3.2.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Passage Licensing Operator Workbench" uid="ru.arsysop.passage.loc.operator.product" id="ru.arsysop.passage.loc.operator.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="0.3.2.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/ru.arsysop.passage.loc.workbench/images/passage_lg.png"/>
+      <image path="/ru.arsysop.passage.loc.operator/images/passage_lg.png"/>
    </aboutInfo>
 
    <configIni use="default">
@@ -37,10 +37,10 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/ru.arsysop.passage.loc.workbench/images/passage16.png" i32="/ru.arsysop.passage.loc.workbench/images/passage32.png" i48="/ru.arsysop.passage.loc.workbench/images/passage48.png" i64="/ru.arsysop.passage.loc.workbench/images/passage64.png" i128="/ru.arsysop.passage.loc.workbench/images/passage128.png"/>
+   <windowImages i16="/ru.arsysop.passage.loc.operator/images/passage16.png" i32="/ru.arsysop.passage.loc.operator/images/passage32.png" i48="/ru.arsysop.passage.loc.operator/images/passage48.png" i64="/ru.arsysop.passage.loc.operator/images/passage64.png" i128="/ru.arsysop.passage.loc.operator/images/passage128.png"/>
 
    <splash
-      location="ru.arsysop.passage.loc.workbench" />
+      location="ru.arsysop.passage.loc.operator" />
    <launcher name="PassageOperator">
       <win useIco="false">
          <bmp
@@ -73,6 +73,7 @@
       <feature id="ru.arsysop.passage.loc.users.feature"/>
       <feature id="ru.arsysop.passage.loc.licenses.feature"/>
       <feature id="ru.arsysop.passage.loc.dashboard.feature"/>
+      <feature id="ru.arsysop.passage.loc.operator.feature"/>
    </features>
 
    <configurations>
