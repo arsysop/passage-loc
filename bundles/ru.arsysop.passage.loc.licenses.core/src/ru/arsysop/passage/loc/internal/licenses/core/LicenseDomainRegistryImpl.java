@@ -42,7 +42,6 @@ import org.osgi.service.event.EventAdmin;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.LicensePack;
-import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
@@ -122,7 +121,7 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public String getFileExtension() {
-		return LicModelCore.FILE_EXTENSION_CONDITIONS;
+		return LicensesRegistry.FILE_EXTENSION_XMI;
 	}
 
 	@Override
