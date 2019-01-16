@@ -47,6 +47,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
+import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 

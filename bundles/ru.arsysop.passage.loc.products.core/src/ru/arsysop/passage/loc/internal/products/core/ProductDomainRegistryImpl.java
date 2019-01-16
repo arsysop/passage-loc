@@ -39,6 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
+import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.Product;
@@ -54,7 +55,6 @@ import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
 import ru.arsysop.passage.lic.registry.ProductsEvents;
 import ru.arsysop.passage.lic.registry.ProductsRegistry;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 

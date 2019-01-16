@@ -9,6 +9,6 @@
    </service>
    <reference bind="bindEnvironmentInfo" interface="org.eclipse.osgi.service.environment.EnvironmentInfo" name="EnvironmentInfo" unbind="unbindEnvironmentInfo"/>
    <reference bind="bindEventAdmin" interface="org.osgi.service.event.EventAdmin" name="EventAdmin" unbind="unbindEventAdmin"/>
-   <reference bind="bindFactoryProvider" interface="ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider" name="FactoryProvider" unbind="unbindFactoryProvider"/>
+   <reference bind="bindFactoryProvider" interface="ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider" name="FactoryProvider" unbind="unbindFactoryProvider"/>
    <implementation class="ru.arsysop.passage.loc.internal.features.core.FeatureDomainRegistryImpl"/>
 </scr:component>

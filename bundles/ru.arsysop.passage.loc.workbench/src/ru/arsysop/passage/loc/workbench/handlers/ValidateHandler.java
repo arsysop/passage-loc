@@ -36,8 +36,8 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.emf.edit.LabeledDiagnostician;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 
 public class ValidateHandler {
 

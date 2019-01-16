@@ -18,7 +18,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package ru.arsysop.passage.loc.edit;
+package ru.arsysop.passage.lic.emf.edit;
 
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 

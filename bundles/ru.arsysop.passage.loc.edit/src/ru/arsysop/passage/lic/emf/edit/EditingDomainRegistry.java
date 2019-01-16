@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 
 public interface EditingDomainRegistry extends DescriptorRegistry, IEditingDomainProvider, ComposedAdapterFactoryProvider {
 

@@ -69,8 +69,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
