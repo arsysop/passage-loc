@@ -21,19 +21,17 @@
 package ru.arsysop.passage.loc.internal.users.core;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 
-public class UserDomainRegistryTracker extends EContentAdapter {
-	
-	private final UserDomainRegistry registry;
+public class UserDomainRegistryTracker extends DomainContentAdapter<UserDomainRegistry> {
 	
 	public UserDomainRegistryTracker(UserDomainRegistry registry) {
-		this.registry = registry;
+		super(registry);
 	}
 
 	@Override

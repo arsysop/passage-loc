@@ -27,8 +27,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
+import ru.arsysop.passage.lic.registry.Identified;
 
 public interface EditingDomainRegistry extends DescriptorRegistry, IEditingDomainProvider, ComposedAdapterFactoryProvider {
+	
+	void registerContent(Identified content);
+
+	void unregisterContent(String identifier);
 
 	String getFileExtension();
 	

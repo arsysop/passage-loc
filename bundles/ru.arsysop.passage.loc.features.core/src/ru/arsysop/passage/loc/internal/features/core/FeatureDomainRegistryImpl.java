@@ -27,11 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -40,8 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
@@ -50,6 +49,7 @@ import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
 import ru.arsysop.passage.lic.registry.FeaturesEvents;
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;
+import ru.arsysop.passage.lic.registry.Identified;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
@@ -178,18 +178,8 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	}
 
 	@Override
-	protected EContentAdapter createContentAdapter() {
+	protected DomainContentAdapter<FeatureDomainRegistry> createContentAdapter() {
 		return new FeatureDomainRegistryTracker(this);
-	}
-
-	@Override
-	protected void afterLoad(EList<EObject> contents) {
-		for (EObject eObject : contents) {
-			if (eObject instanceof FeatureSetDescriptor) {
-				FeatureSetDescriptor featureSet = (FeatureSetDescriptor) eObject;
-				registerFeatureSet(featureSet);
-			}
-		}
 	}
 
 	@Override
@@ -231,16 +221,6 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 			// FIXME: warning
 		}
 		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_CREATE, featureVersion));
-	}
-
-	@Override
-	protected void beforeUnload(EList<EObject> contents) {
-		for (EObject eObject : contents) {
-			if (eObject instanceof FeatureSetDescriptor) {
-				FeatureSetDescriptor featureSet = (FeatureSetDescriptor) eObject;
-				unregisterFeatureSet(featureSet.getIdentifier());
-			}
-		}
 	}
 
 	@Override
@@ -294,6 +274,21 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	public EStructuralFeature getContentNameAttribute() {
 		return LicPackage.eINSTANCE.getFeatureSet_Name();
+	}
+
+	@Override
+	public void registerContent(Identified content) {
+		if (content instanceof FeatureSet) {
+			FeatureSet featureSet = (FeatureSet) content;
+			registerFeatureSet(featureSet);
+		} else {
+			//TODO: warning
+		}
+	}
+
+	@Override
+	public void unregisterContent(String identifier) {
+		unregisterFeatureSet(identifier);
 	}
 
 }

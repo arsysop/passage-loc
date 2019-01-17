@@ -27,9 +27,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -38,12 +36,14 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.lic.registry.Identified;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.lic.registry.UserOriginDescriptor;
 import ru.arsysop.passage.lic.registry.UserRegistry;
@@ -141,18 +141,8 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 	}
 
 	@Override
-	protected EContentAdapter createContentAdapter() {
+	protected DomainContentAdapter<UserDomainRegistry> createContentAdapter() {
 		return new UserDomainRegistryTracker(this);
-	}
-
-	@Override
-	protected void afterLoad(EList<EObject> contents) {
-		for (EObject eObject : contents) {
-			if (eObject instanceof UserOrigin) {
-				UserOrigin userOrigin = (UserOrigin) eObject;
-				registerUserOrigin(userOrigin);
-			}
-		}
 	}
 
 	@Override
@@ -177,16 +167,6 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 			// FIXME: warning
 		}
 		eventAdmin.postEvent(createEvent(UsersEvents.USER_CREATE, user));
-	}
-
-	@Override
-	protected void beforeUnload(EList<EObject> contents) {
-		for (EObject eObject : contents) {
-			if (eObject instanceof UserOrigin) {
-				UserOrigin userOrigin = (UserOrigin) eObject;
-				unregisterUserOrigin(userOrigin.getIdentifier());
-			}
-		}
 	}
 
 	@Override
@@ -222,6 +202,21 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	public EStructuralFeature getContentNameAttribute() {
 		return LicPackage.eINSTANCE.getUserOrigin_Name();
+	}
+
+	@Override
+	public void registerContent(Identified content) {
+		if (content instanceof UserOrigin) {
+			UserOrigin userOrigin = (UserOrigin) content;
+			registerUserOrigin(userOrigin);
+		} else {
+			//TODO: warning
+		}
+	}
+
+	@Override
+	public void unregisterContent(String identifier) {
+		unregisterUserOrigin(identifier);
 	}
 
 }

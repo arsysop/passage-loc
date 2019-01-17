@@ -27,11 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -40,10 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.LicensePack;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.lic.registry.Identified;
 import ru.arsysop.passage.lic.registry.LicensePackDescriptor;
 import ru.arsysop.passage.lic.registry.LicenseRegistry;
 import ru.arsysop.passage.lic.registry.LicensesEvents;
@@ -157,18 +156,8 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 	}
 
 	@Override
-	protected EContentAdapter createContentAdapter() {
+	protected DomainContentAdapter<LicenseDomainRegistry> createContentAdapter() {
 		return new LicenseDomainRegistryTracker(this);
-	}
-
-	@Override
-	protected void afterLoad(EList<EObject> contents) {
-		for (EObject eObject : contents) {
-			if (eObject instanceof LicensePack) {
-				LicensePack licensePack = (LicensePack) eObject;
-				registerLicensePack(licensePack);
-			}
-		}
 	}
 
 	@Override
@@ -188,16 +177,6 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 		String productVersion = licensePack.getProductVersion();
 		List<LicensePack> list = map.computeIfAbsent(productVersion, key -> new ArrayList<>());
 		list.add(licensePack);
-	}
-
-	@Override
-	protected void beforeUnload(EList<EObject> contents) {
-		for (EObject eObject : contents) {
-			if (eObject instanceof LicensePack) {
-				LicensePack licensePack = (LicensePack) eObject;
-				unregisterLicensePack(licensePack.getIdentifier());
-			}
-		}
 	}
 
 	@Override
@@ -247,6 +226,21 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 	@Override
 	public EStructuralFeature getContentNameAttribute() {
 		return null;
+	}
+
+	@Override
+	public void registerContent(Identified content) {
+		if (content instanceof LicensePack) {
+			LicensePack licensePack = (LicensePack) content;
+			registerLicensePack(licensePack);
+		} else {
+			//TODO: warning
+		}
+	}
+
+	@Override
+	public void unregisterContent(String identifier) {
+		unregisterLicensePack(identifier);
 	}
 
 }

@@ -48,6 +48,7 @@ import org.osgi.service.event.EventAdmin;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
@@ -118,7 +119,7 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		editingDomain.getResourceSet().eAdapters().add(contentAdapter);
 	}
 
-	protected abstract EContentAdapter createContentAdapter();
+	protected abstract DomainContentAdapter<? extends EditingDomainRegistry> createContentAdapter();
 
 	protected void deactivate(Map<String, Object> properties) {
 		editingDomain.getResourceSet().eAdapters().remove(contentAdapter);
@@ -147,21 +148,15 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		ResourceSet resourceSet = editingDomain.getResourceSet();
 		Resource resource = resourceSet.createResource(uri);
 		resource.load(getLoadOptions());
-		afterLoad(resource.getContents());
 	}
-
-	protected abstract void afterLoad(EList<EObject> contents);
 
 	public void unloadSource(String source) throws Exception {
 		URI uri = createURI(source);
 		ResourceSet resourceSet = editingDomain.getResourceSet();
 		Resource resource = resourceSet.getResource(uri, false);
-		beforeUnload(resource.getContents());
 		resource.unload();
 		resourceSet.getResources().remove(resource);
 	}
-
-	protected abstract void beforeUnload(EList<EObject> contents);
 
 	protected URI createURI(String source) {
 		return URI.createFileURI(source);

@@ -21,8 +21,8 @@
 package ru.arsysop.passage.loc.internal.products.core;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.model.api.Product;
 import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
@@ -30,12 +30,10 @@ import ru.arsysop.passage.lic.model.api.ProductVersionFeature;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
-public class ProductDomainRegistryTracker extends EContentAdapter {
-	
-	private final ProductDomainRegistry registry;
+public class ProductDomainRegistryTracker extends DomainContentAdapter<ProductDomainRegistry> {
 	
 	public ProductDomainRegistryTracker(ProductDomainRegistry registry) {
-		this.registry = registry;
+		super(registry);
 	}
 
 	@Override

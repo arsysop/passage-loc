@@ -21,19 +21,17 @@
 package ru.arsysop.passage.loc.internal.licenses.core;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.LicensePack;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 
-public class LicenseDomainRegistryTracker extends EContentAdapter {
-
-	private final LicenseDomainRegistry registry;
+public class LicenseDomainRegistryTracker extends DomainContentAdapter<LicenseDomainRegistry> {
 
 	public LicenseDomainRegistryTracker(LicenseDomainRegistry registry) {
-		this.registry = registry;
+		super(registry);
 	}
 
 	@Override
