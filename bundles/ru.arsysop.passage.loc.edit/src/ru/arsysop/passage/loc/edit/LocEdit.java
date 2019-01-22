@@ -20,6 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import java.io.IOException;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -33,6 +37,8 @@ import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 
 public class LocEdit {
 	
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.edit"; //$NON-NLS-1$
+
 	public static final String EXTENSION_KEY_PRIVATE = ".scr"; //$NON-NLS-1$
 	
 	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
@@ -104,4 +110,15 @@ public class LocEdit {
 		
 		return sb.toString();
 	}
+
+	public static IStatus save(Resource resource) {
+		try {
+			//FIXME: define parameters
+			resource.save(null);
+			return Status.OK_STATUS;
+		} catch (IOException e) {
+			return new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "Error saving resource", e);
+		}
+	}
+
 }

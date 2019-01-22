@@ -70,7 +70,6 @@ import org.eclipse.swt.widgets.Menu;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
-import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
@@ -250,7 +249,7 @@ public class DetailsView {
 		}
 		Resource eResource = root.eResource();
 		if (eResource != null) {
-			IStatus status = LicModelCore.save(eResource);
+			IStatus status = LocEdit.save(eResource);
 			if (status.isOK()) {
 				if (commandStack instanceof BasicCommandStack) {
 					BasicCommandStack basicCommandStack = (BasicCommandStack) commandStack;

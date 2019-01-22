@@ -41,7 +41,6 @@ import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.FeatureSet;
-import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
@@ -115,7 +114,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public String getFileExtension() {
-		return LicModelCore.FILE_EXTENSION_FEATURES;
+		return FeaturesRegistry.FILE_EXTENSION_XMI;
 	}
 
 	@Override

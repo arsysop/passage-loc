@@ -38,7 +38,7 @@ import org.eclipse.jface.wizard.Wizard;
 import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.core.LicModelCore;
+import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class CreateFileWizard extends Wizard {
@@ -105,7 +105,7 @@ public class CreateFileWizard extends Wizard {
 					ResourceSet resourceSet = new ResourceSetImpl();
 					Resource resource = resourceSet.createResource(fileURI);
 					resource.getContents().add(eObject);
-					LicModelCore.save(resource);
+					LocEdit.save(resource);
 					LocWokbench.switchPerspective(eclipseContext, perspectiveId);
 					domainRegistry.registerSource(fileURI.toFileString());
 				}

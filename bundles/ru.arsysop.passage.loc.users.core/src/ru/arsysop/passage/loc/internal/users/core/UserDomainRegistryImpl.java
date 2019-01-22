@@ -41,7 +41,6 @@ import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.model.api.User;
 import ru.arsysop.passage.lic.model.api.UserOrigin;
-import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.Identified;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
@@ -108,7 +107,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public String getFileExtension() {
-		return LicModelCore.FILE_EXTENSION_USERS;
+		return UsersRegistry.FILE_EXTENSION_XMI;
 	}
 
 	@Override

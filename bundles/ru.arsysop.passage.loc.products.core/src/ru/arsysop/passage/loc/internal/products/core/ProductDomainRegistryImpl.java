@@ -41,12 +41,10 @@ import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.Product;
 import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
 import ru.arsysop.passage.lic.model.api.ProductVersionFeature;
-import ru.arsysop.passage.lic.model.core.LicModelCore;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.Identified;
 import ru.arsysop.passage.lic.registry.ProductDescriptor;
@@ -138,7 +136,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public String getFileExtension() {
-		return LicModelCore.FILE_EXTENSION_PRODUCTS;
+		return ProductsRegistry.FILE_EXTENSION_XMI;
 	}
 
 	@Override
