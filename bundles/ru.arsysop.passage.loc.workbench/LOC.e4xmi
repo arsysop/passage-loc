@@ -22,8 +22,8 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_NUsyMOTuEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.menu.view" label="View"/>
       <children xsi:type="menu:Menu" xmi:id="_4tOAUIFiEeivxedica_7mQ" elementId="ru.arsysop.passage.loc.workbench.menu.help" label="Help">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_LYoXUO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.inspect.hardware" label="Inspect Hardware" iconURI="platform:/plugin/ru.arsysop.passage.lic.inspector.ui/icons/etool16/hw-inspector.png" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/ru.arsysop.passage.lic.jface/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_LYoXUO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.inspect.hardware" label="Inspect Hardware" iconURI="platform:/plugin/org.eclipse.passage.lic.inspector.ui/icons/etool16/hw-inspector.png" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/org.eclipse.passage.lic.jface/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
       </children>
     </mainMenu>
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_iK-aoAgmEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore" containerData="30"/>
@@ -42,7 +42,7 @@
     </trimBars>
   </children>
   <handlers xmi:id="_uPtcsOdJEeigXNdbugUBXw" elementId="ru.arsysop.passage.loc.workbench.handler.perspective.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenPerspectiveHandler" command="_5P07MOdJEeigXNdbugUBXw"/>
-  <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://ru.arsysop.passage.lic.inspector.ui/ru.arsysop.passage.lic.inspector.ui.hadlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
+  <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://org.eclipse.passage.lic.inspector.ui/org.eclipse.passage.lic.inspector.ui.hadlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
   <handlers xmi:id="_dnVRcO4pEei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.aboutdialog.open" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.OpenAboutDialogHandler" command="_V2DtgO4pEei1L9WYDuiuXw"/>
   <handlers xmi:id="_zo4A8O50Eei1L9WYDuiuXw" elementId="ru.arsysop.passage.loc.workbench.handler.file.exit" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.ExitWorkbenchHandler" command="_o5o3EO50Eei1L9WYDuiuXw"/>
   <handlers xmi:id="_IgapwPGlEei3isMrv8wWOw" elementId="ru.arsysop.passage.loc.workbench.handler.file.save" contributionURI="bundleclass://ru.arsysop.passage.loc.workbench/ru.arsysop.passage.loc.workbench.handlers.SaveHandler" command="_qIUC4PGkEei3isMrv8wWOw"/>
