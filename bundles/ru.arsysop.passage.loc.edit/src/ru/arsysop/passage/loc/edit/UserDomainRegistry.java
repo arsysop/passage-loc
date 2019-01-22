@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,20 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.model.api.User;
+import ru.arsysop.passage.lic.model.api.UserOrigin;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 import ru.arsysop.passage.lic.registry.UserRegistry;
 
 public interface UserDomainRegistry extends UserRegistry, EditingDomainRegistry, DescriptorRegistry {
 
+	void registerUserOrigin(UserOrigin userOrigin);
+
+	void unregisterUserOrigin(String userOriginId);
+	
+	void registerUser(User user);
+
+	void unregisterUser(String userId);
+	
 }

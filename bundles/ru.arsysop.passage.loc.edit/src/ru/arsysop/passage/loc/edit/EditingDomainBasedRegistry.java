@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,23 +29,37 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventAdmin;
 
+import ru.arsysop.passage.lic.base.LicensingPaths;
+import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
-	
-	public static final String LICENSING_REGISTRY_FILE = "licensing.registry.file"; //$NON-NLS-1$
-	
+
+	// @see org.eclipse.e4.core.services.events.IEventBroker.DATA
+	protected static final String PROPERTY_DATA = "org.eclipse.e4.data"; //$NON-NLS-1$
+
 	protected EnvironmentInfo environmentInfo;
+
+	protected EventAdmin eventAdmin;
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
@@ -53,34 +67,44 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 
 	private final List<String> sources = new ArrayList<>();
 
+	private EContentAdapter contentAdapter;
+
 	public EditingDomainBasedRegistry() {
 		BasicCommandStack commandStack = new BasicCommandStack();
-		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack, new HashMap<Resource, Boolean>());
+		editingDomain = new AdapterFactoryEditingDomain(composedAdapterFactory, commandStack,
+				new HashMap<Resource, Boolean>());
 	}
-	
-	public void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
+
+	protected void bindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		this.environmentInfo = environmentInfo;
 	}
 
-	public void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
+	protected void unbindEnvironmentInfo(EnvironmentInfo environmentInfo) {
 		this.environmentInfo = null;
 	}
-	
-	public void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
+
+	protected void bindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = eventAdmin;
+	}
+
+	protected void unbindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = null;
+	}
+
+	protected void bindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		this.composedAdapterFactory = factoryProvider.getComposedAdapterFactory();
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
-	
-	public void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
+
+	protected void unbindFactoryProvider(ComposedAdapterFactoryProvider factoryProvider) {
 		this.composedAdapterFactory = null;
 		editingDomain.setAdapterFactory(composedAdapterFactory);
 	}
-	
+
 	@Override
 	public Path getBasePath() {
-		String areaValue = environmentInfo.getProperty("osgi.instance.area");
-		Path instance = Paths.get(java.net.URI.create(areaValue));
-		Path passagePath = instance.resolve(".passage");
+		String areaValue = environmentInfo.getProperty("user.home"); //$NON-NLS-1$
+		Path passagePath = Paths.get(areaValue, LicensingPaths.FOLDER_LICENSING_BASE);
 		try {
 			Files.createDirectories(passagePath);
 		} catch (IOException e) {
@@ -89,23 +113,28 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		}
 		return passagePath;
 	}
-	
-	public void activate() {
+
+	protected void activate(Map<String, Object> properties) {
+		contentAdapter = createContentAdapter();
+		editingDomain.getResourceSet().eAdapters().add(contentAdapter);
 	}
-	
-	public void deactivate() {
+
+	protected abstract DomainContentAdapter<? extends EditingDomainRegistry> createContentAdapter();
+
+	protected void deactivate(Map<String, Object> properties) {
+		editingDomain.getResourceSet().eAdapters().remove(contentAdapter);
 	}
 
 	@Override
 	public ComposedAdapterFactory getComposedAdapterFactory() {
 		return composedAdapterFactory;
 	}
-	
+
 	@Override
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
 	}
-	
+
 	protected Map<?, ?> getLoadOptions() {
 		return new HashMap<>();
 	}
@@ -126,6 +155,7 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		ResourceSet resourceSet = editingDomain.getResourceSet();
 		Resource resource = resourceSet.getResource(uri, false);
 		resource.unload();
+		resourceSet.getResources().remove(resource);
 	}
 
 	protected URI createURI(String source) {
@@ -138,19 +168,30 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 		try {
 			loadSource(source);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(this.getClass().getName()).log(Level.FINER, e.getMessage(), e);
 		}
 	}
-	
+
 	@Override
 	public void unregisterSource(String source) {
 		sources.remove(source);
+		try {
+			unloadSource(source);
+		} catch (Exception e) {
+			Logger.getLogger(this.getClass().getName()).log(Level.FINER, e.getMessage(), e);
+		}
 	}
-	
+
 	@Override
 	public Iterable<String> getSources() {
 		return Collections.unmodifiableList(sources);
+	}
+
+	protected static Event createEvent(String topic, Object data) {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(PROPERTY_DATA, data);
+		Event event = new Event(topic, properties);
+		return event;
 	}
 
 }

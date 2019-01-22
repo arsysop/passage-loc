@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.Status;
 
 import ru.arsysop.passage.lic.base.LicensingPaths;
 import ru.arsysop.passage.lic.model.api.LicensePack;
+import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.LocEdit;
@@ -40,7 +41,7 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 public class LicensesCore {
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.core"; //$NON-NLS-1$
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.licenses.core"; //$NON-NLS-1$
 
 	public static String exportLicensePack(LicensePack licensePack, ProductDomainRegistry productRegistry, LicenseDomainRegistry licenseRegistry, StreamCodec streamCodec) throws CoreException {
 		String packIdentifier = licensePack.getIdentifier();
@@ -62,17 +63,24 @@ public class LicensesCore {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
 			throw new CoreException(error);
 		}
-		String identifier = licensePack.getProductIdentifier();
-		String version = licensePack.getProductVersion();
+		String productIdentifier = licensePack.getProductIdentifier();
+		String productVersion = licensePack.getProductVersion();
 		Path basePath = licenseRegistry.getBasePath();
-		Path path = basePath.resolve(identifier).resolve(version);
+		Path path = basePath.resolve(productIdentifier).resolve(productVersion);
 		String storageKeyFolder = path.toFile().getAbsolutePath();
-		String keyFileName = identifier + '_' + version;
+		String keyFileName = productIdentifier + '_' + productVersion;
 		String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 		File privateProductToken = new File(privateKeyPath);
 		if (!privateProductToken.exists()) {
 			String pattern = "Product private key not found: \n %s";
 			String message = String.format(pattern, privateProductToken.getAbsolutePath());
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
+			throw new CoreException(error);
+		}
+
+		if (streamCodec == null) {
+			String pattern = "Unable to issue license for pack keys for version %s of %s : \n codec not found";
+			String message = String.format(pattern, productVersion, productIdentifier);
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
 			throw new CoreException(error);
 		}
@@ -84,8 +92,9 @@ public class LicensesCore {
 		File licenseEncoded = new File(licenseOut);
 		try (FileInputStream licenseInput = new FileInputStream(licenseFile);
 				FileOutputStream licenseOutput = new FileOutputStream(licenseEncoded); FileInputStream keyStream = new FileInputStream(privateProductToken)) {
-			String username = identifier;
-			String password = productRegistry.createPassword(identifier, version);
+			String username = productIdentifier;
+			ProductVersionDescriptor pvd = productRegistry.getProductVersion(productIdentifier, productVersion);
+			String password = productRegistry.createPassword(pvd);
 			streamCodec.encodeStream(licenseInput, licenseOutput, keyStream, username, password);
 			licensePack.setIdentifier(uuid);;
 			licensePack.setIssueDate(value);;

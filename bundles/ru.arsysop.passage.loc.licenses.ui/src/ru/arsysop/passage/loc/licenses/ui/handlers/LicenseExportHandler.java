@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import javax.inject.Named;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -43,12 +44,16 @@ import ru.arsysop.passage.loc.licenses.core.LicensesCore;
 public class LicenseExportHandler {
 
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) LicensePack licensePack, Shell shell, LicenseDomainRegistry licenseRegistry, ProductDomainRegistry productRegistry, StreamCodec streamCodec) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) LicensePack licensePack, IEclipseContext context) {
+		ProductDomainRegistry productRegistry = context.get(ProductDomainRegistry.class);
+		LicenseDomainRegistry licenseRegistry = context.get(LicenseDomainRegistry.class);
+		StreamCodec streamCodec = context.get(StreamCodec.class);
+		Shell shell = context.get(Shell.class);
 		try {
-			String exportLicense = LicensesCore.exportLicensePack(licensePack, productRegistry, licenseRegistry, streamCodec);
+			String exportLicense = LicensesCore.exportLicensePack(licensePack, productRegistry , licenseRegistry , streamCodec );
 			String format = "License pack exported succesfully: \n\n %s \n";
 			String message = String.format(format, exportLicense);
-			MessageDialog.openInformation(shell, "License Pack Export", message);
+			MessageDialog.openInformation(shell , "License Pack Export", message);
 		} catch (CoreException e) {
 			IStatus status = e.getStatus();
 			Bundle bundle = Platform.getBundle(status.getPlugin());
@@ -61,5 +66,5 @@ public class LicenseExportHandler {
 	public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional LicensePack licensePack) {
 		return licensePack != null;
 	}
-		
+
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.base.ui.RestrictionVerdictLabels;
 import ru.arsysop.passage.lic.inspector.HardwareInspector;
 import ru.arsysop.passage.lic.inspector.ui.dialogs.LicensingInspectorDialog;
+import ru.arsysop.passage.lic.runtime.ConfigurationRequirement;
 import ru.arsysop.passage.lic.runtime.RestrictionVerdict;
 
 public class LicensingStatusToolControl {
@@ -48,6 +49,7 @@ public class LicensingStatusToolControl {
 	private final LicensingImages images;
 	private final HardwareInspector hardwareInspector;
 
+	private final List<ConfigurationRequirement> requirements = new ArrayList<>();
 	private final List<RestrictionVerdict> verdicts = new ArrayList<>();
 
 	private Button button;
@@ -60,7 +62,14 @@ public class LicensingStatusToolControl {
 	
 	@Inject
 	@Optional
-	public void applicationStarted(@UIEventTopic(LicensingEvents.LicensingLifeCycle.RESTRICTION_EXECUTED) Iterable<RestrictionVerdict> actions) {
+	public void requirementsResolved(@UIEventTopic(LicensingEvents.LicensingLifeCycle.REQUIREMENTS_RESOLVED) Iterable<ConfigurationRequirement> reqs) {
+		requirements.clear();
+		reqs.forEach(requirements::add);
+	}
+
+	@Inject
+	@Optional
+	public void restrictionsExecuted(@UIEventTopic(LicensingEvents.LicensingLifeCycle.RESTRICTIONS_EXECUTED) Iterable<RestrictionVerdict> actions) {
 		verdicts.clear();
 		actions.forEach(verdicts::add);
 		RestrictionVerdict last = RestrictionVerdictLabels.resolveLastVerdict(verdicts);
@@ -74,9 +83,11 @@ public class LicensingStatusToolControl {
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String contacts = "Passage Licensing Integration Components \nhttps://github.com/arsysop/passage-lic";
 				Shell activeShell = button.getDisplay().getActiveShell();
-				LicensingInspectorDialog dialog = new LicensingInspectorDialog(activeShell, images, verdicts);
+				LicensingInspectorDialog dialog = new LicensingInspectorDialog(activeShell, images, contacts);
 				dialog.setHardwareInspector(hardwareInspector);
+				dialog.updateLicensingStatus(requirements, verdicts);
 				dialog.open();
 			}
 		});
@@ -88,7 +99,7 @@ public class LicensingStatusToolControl {
 		String key = RestrictionVerdictLabels.resolveImageKey(last);
 		button.setImage(images.getImage(key));
 		button.setText(RestrictionVerdictLabels.resolveLabel(last));
-		button.setToolTipText(RestrictionVerdictLabels.resolveTooltip(last));
+		button.setToolTipText(RestrictionVerdictLabels.resolveSummary(last));
 	}
 
 }

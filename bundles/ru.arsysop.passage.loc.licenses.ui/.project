@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Copyright (c) 2018 ArSysOp
+	Copyright (c) 2018-2019 ArSysOp
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -37,6 +37,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.pde.SchemaBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.pde.ds.core.builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>

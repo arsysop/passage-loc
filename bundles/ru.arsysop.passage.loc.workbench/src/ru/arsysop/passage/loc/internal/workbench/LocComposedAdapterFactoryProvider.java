@@ -5,8 +5,8 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.osgi.service.component.annotations.Component;
 
+import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.model.edit.providers.LicItemProviderAdapterFactory;
-import ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider;
 
 @Component
 public class LocComposedAdapterFactoryProvider implements ComposedAdapterFactoryProvider {

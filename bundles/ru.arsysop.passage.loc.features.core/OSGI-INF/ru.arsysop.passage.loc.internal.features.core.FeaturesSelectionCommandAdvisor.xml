@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.loc.internal.features.core.FeaturesSelectionCommandAdvisor">
+   <property name="ru.arsysop.passage.lic.emf.edit.domain.name" value="features"/>
+   <service>
+      <provide interface="ru.arsysop.passage.lic.emf.edit.SelectionCommandAdvisor"/>
+   </service>
+   <reference bind="bindDomainRegistry" interface="ru.arsysop.passage.loc.edit.FeatureDomainRegistry" name="DomainRegistry" unbind="unbindDomainRegistry"/>
+   <implementation class="ru.arsysop.passage.loc.internal.features.core.FeaturesSelectionCommandAdvisor"/>
+</scr:component>

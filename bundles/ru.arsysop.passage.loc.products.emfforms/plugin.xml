@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Copyright (c) 2018 ArSysOp
+	Copyright (c) 2018-2019 ArSysOp
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -27,8 +27,9 @@
             filePath="viewmodels/ProductLine.view">
       </file>
    </extension>
+
    <extension
-         id="ru.arsysop.passage.loc.products.emfforms.fragment"
+         id="ru.arsysop.passage.loc.products.ui.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment
             uri="fragment.e4xmi">

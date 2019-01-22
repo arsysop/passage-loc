@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
 <!--
-	Copyright (c) 2018 ArSysOp
+	Copyright (c) 2018-2019 ArSysOp
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -32,7 +32,18 @@
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.slf4j.api" version="0.0.0"/>
-			<repository location="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
+			<unit id="org.slf4j.api.source" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpg" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpg.source" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpkix" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcpkix.source" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcprov" version="0.0.0"/>
+			<unit id="org.bouncycastle.bcprov.source" version="0.0.0"/>
+			<unit id="com.sun.jna" version="4.5.1.v20180403-1933"/>
+			<unit id="com.sun.jna.platform" version="4.5.1.v20180403-1933"/>
+			<unit id="com.sun.jna.platform.source" version="4.5.1.v20180403-1933"/>
+			<unit id="com.sun.jna.source" version="4.5.1.v20180403-1933"/>
+			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emf.ecp.sdk.feature.feature.group" version="0.0.0"/>
@@ -40,13 +51,12 @@
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="ru.arsysop.passage.brc.license.feature.feature.group" version="0.0.0"/>
-			<unit id="ru.arsysop.passage.brc.bc.feature.feature.group" version="0.0.0"/>
 			<unit id="ru.arsysop.passage.brc.oshi.feature.feature.group" version="0.0.0"/>
-			<repository location="http://dl.bintray.com/arsysop/passage-brc/0.3.1/"/>
+			<repository location="http://dl.bintray.com/arsysop/passage-brc/0.3.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="ru.arsysop.passage.lic.feature.feature.group" version="0.0.0"/>
-			<repository location="http://dl.bintray.com/arsysop/passage-lic/0.3.1/"/>
+			<repository location="http://dl.bintray.com/arsysop/passage-lic/0.3.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.junit" version="4.12.0.v201504281640"/>
@@ -55,12 +65,5 @@
 			<unit id="org.mockito.source" version="2.13.0.v20180426-1843"/>
 			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
 		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.9.2.v20180207-1730"/>
-			<unit id="com.fasterxml.jackson.core.jackson-core" version="2.9.2.v20180207-1730"/>
-			<unit id="com.fasterxml.jackson.core.jackson-databind" version="2.9.2.v20180207-1730"/>
-			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
-		</location>
-
 	</locations>
 </target>

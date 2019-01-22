@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Copyright (c) 2018 ArSysOp
+	Copyright (c) 2018-2019 ArSysOp
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -24,9 +24,13 @@
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
-            filePath="viewmodels/User.view">
+            filePath="viewmodels/LicensePack.view">
+      </file>
+      <file
+            filePath="viewmodels/LicenseGrant.view">
       </file>
    </extension>
+
    <extension
          id="ru.arsysop.passage.loc.licenses.emfforms.fragment"
          point="org.eclipse.e4.workbench.model">

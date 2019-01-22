@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Copyright (c) 2018 ArSysOp
+	Copyright (c) 2018-2019 ArSysOp
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
 	<parent>
 		<groupId>ru.arsysop.passage.loc</groupId>
 		<artifactId>ru.arsysop.passage.loc.parent</artifactId>
-		<version>0.3.1</version>
+		<version>0.3.2</version>
 		<relativePath>../../releng/ru.arsysop.passage.loc.parent</relativePath>
 	</parent>
 
@@ -44,6 +44,14 @@
 		<module>../../bundles/ru.arsysop.passage.loc.workbench.emfforms</module>
 		<module>../../features/ru.arsysop.passage.loc.workbench.feature</module>
 
+		<module>../../bundles/ru.arsysop.passage.loc.edit.ui</module>
+		<module>../../features/ru.arsysop.passage.loc.edit.ui.feature</module>
+
+		<module>../../bundles/ru.arsysop.passage.loc.features.core</module>
+		<module>../../bundles/ru.arsysop.passage.loc.features.ui</module>
+		<module>../../bundles/ru.arsysop.passage.loc.features.emfforms</module>
+		<module>../../features/ru.arsysop.passage.loc.features.feature</module>
+
 		<module>../../bundles/ru.arsysop.passage.loc.products.core</module>
 		<module>../../bundles/ru.arsysop.passage.loc.products.ui</module>
 		<module>../../bundles/ru.arsysop.passage.loc.products.emfforms</module>
@@ -54,9 +62,20 @@
 		<module>../../bundles/ru.arsysop.passage.loc.licenses.emfforms</module>
 		<module>../../features/ru.arsysop.passage.loc.licenses.feature</module>
 
+		<module>../../bundles/ru.arsysop.passage.loc.users.core</module>
+		<module>../../bundles/ru.arsysop.passage.loc.users.ui</module>
+		<module>../../bundles/ru.arsysop.passage.loc.users.emfforms</module>
+		<module>../../features/ru.arsysop.passage.loc.users.feature</module>
+
+		<module>../../bundles/ru.arsysop.passage.loc.dashboard.ui</module>
+		<module>../../features/ru.arsysop.passage.loc.dashboard.feature</module>
+		
+		<module>../../bundles/ru.arsysop.passage.loc.operator</module>
+		<module>../../features/ru.arsysop.passage.loc.operator.feature</module>
+
 		<module>../../releng/ru.arsysop.passage.loc.repository</module>
 
-		<module>../../products/ru.arsysop.passage.loc.workbench.product</module>
+		<module>../../products/ru.arsysop.passage.loc.operator.product</module>
 	</modules>
 
 </project>
