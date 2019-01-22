@@ -23,7 +23,7 @@
       <children xsi:type="menu:Menu" xmi:id="_NUsyMOTuEeihL8M4VJIClA" elementId="ru.arsysop.passage.loc.workbench.menu.view" label="View"/>
       <children xsi:type="menu:Menu" xmi:id="_4tOAUIFiEeivxedica_7mQ" elementId="ru.arsysop.passage.loc.workbench.menu.help" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_LYoXUO1jEeiDZvQDX7JRaA" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.inspect.hardware" label="Inspect Hardware" iconURI="platform:/plugin/ru.arsysop.passage.lic.inspector.ui/icons/etool16/hw-inspector.png" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/ru.arsysop.passage.lic.base.ui/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_uCBvYOcwEeiJj4xxolP3dw" elementId="ru.arsysop.passage.loc.workbench.handledmenuitem.about" label="About" iconURI="platform:/plugin/ru.arsysop.passage.lic.jface/icons/obj16/passage.png" command="_V2DtgO4pEei1L9WYDuiuXw"/>
       </children>
     </mainMenu>
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_iK-aoAgmEemX0JS0sOPu6Q" elementId="ru.arsysop.passage.loc.workbench.partsashcontainer.explore" containerData="30"/>

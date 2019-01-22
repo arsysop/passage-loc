@@ -26,10 +26,10 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.workbench.emfforms.wizards.CreateFormWizard;
 
 public class LocWorkbenchEmfforms {

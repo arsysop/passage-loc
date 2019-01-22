@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.workbench.dialogs.ManageTextValuesDialog;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;
 

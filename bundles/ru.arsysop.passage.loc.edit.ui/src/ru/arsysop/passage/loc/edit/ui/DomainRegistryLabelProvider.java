@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.FeatureRegistry;
 import ru.arsysop.passage.lic.registry.FeaturesRegistry;

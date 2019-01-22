@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 
 public class FilteredSelectionDialog extends ObjectSelectionStatusDialog {
 

@@ -22,7 +22,7 @@ package ru.arsysop.passage.loc.users.ui;
 
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;

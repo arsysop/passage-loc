@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 
 public class AboutDialog extends Dialog {
 

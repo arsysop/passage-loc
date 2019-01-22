@@ -40,8 +40,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;
 import ru.arsysop.passage.loc.workbench.viewers.ResourceSetAdapter;
