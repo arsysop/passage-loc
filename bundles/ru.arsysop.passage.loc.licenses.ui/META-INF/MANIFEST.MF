@@ -27,4 +27,3 @@ Export-Package: ru.arsysop.passage.loc.licenses.ui,
  ru.arsysop.passage.loc.licenses.ui.handlers,
  ru.arsysop.passage.loc.licenses.ui.viewers
 Bundle-ActivationPolicy: lazy
-Provide-Capability: licensing.feature;licensing.feature="ru.arsysop.passage.lco.licenses.export";name="Issue License";version="0.3.2";level="error"

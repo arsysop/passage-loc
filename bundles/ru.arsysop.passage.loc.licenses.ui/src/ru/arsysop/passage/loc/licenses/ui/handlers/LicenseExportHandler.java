@@ -59,17 +59,6 @@ public class LicenseExportHandler {
 		String productVersion = sb.toString();
 		LicensingConfiguration configuration = LicensingConfigurations.create(productId, productVersion);
 		Iterable<LicensingCondition> extractConditions = accessManager.extractConditions(configuration);
-		boolean found = false;
-		for (LicensingCondition licensingCondition : extractConditions) {
-			String feature = licensingCondition.getFeatureIdentifier();
-			if ("ru.arsysop.passage.lco.licenses.export".equals(feature)) {
-				found = true;
-			}
-		}
-		if (!found) {
-			MessageDialog.openError(shell, "Error", "No license");
-			return;
-		}
 		
 		try {
 			String exportLicense = LicensesCore.exportLicensePack(licensePack, productRegistry, licenseRegistry, streamCodec);

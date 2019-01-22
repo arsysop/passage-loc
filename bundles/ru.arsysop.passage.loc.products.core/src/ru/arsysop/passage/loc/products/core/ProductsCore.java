@@ -70,10 +70,10 @@ public class ProductsCore {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
 			throw new CoreException(error);
 		}
+		String identifier = product.getIdentifier();
+		String version = productVersion.getVersion();
+		Path basePath = registry.getBasePath();
 		try {
-			String identifier = product.getIdentifier();
-			String version = productVersion.getVersion();
-			Path basePath = registry.getBasePath();
 			Path path = basePath.resolve(identifier).resolve(version);
 			Files.createDirectories(path);
 			String storageKeyFolder = path.toFile().getAbsolutePath();
