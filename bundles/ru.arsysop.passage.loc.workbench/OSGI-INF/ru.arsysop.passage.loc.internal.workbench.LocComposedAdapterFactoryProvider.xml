@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.loc.internal.workbench.LocComposedAdapterFactoryProvider">
    <service>
-      <provide interface="ru.arsysop.passage.loc.edit.ComposedAdapterFactoryProvider"/>
+      <provide interface="ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider"/>
    </service>
    <implementation class="ru.arsysop.passage.loc.internal.workbench.LocComposedAdapterFactoryProvider"/>
 </scr:component>

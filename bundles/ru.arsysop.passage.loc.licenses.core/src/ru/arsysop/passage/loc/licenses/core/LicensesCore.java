@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 public class LicensesCore {
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.products.core"; //$NON-NLS-1$
+	public static final String BUNDLE_SYMBOLIC_NAME = "ru.arsysop.passage.loc.licenses.core"; //$NON-NLS-1$
 
 	public static String exportLicensePack(LicensePack licensePack, ProductDomainRegistry productRegistry, LicenseDomainRegistry licenseRegistry, StreamCodec streamCodec) throws CoreException {
 		String packIdentifier = licensePack.getIdentifier();
@@ -74,6 +74,13 @@ public class LicensesCore {
 		if (!privateProductToken.exists()) {
 			String pattern = "Product private key not found: \n %s";
 			String message = String.format(pattern, privateProductToken.getAbsolutePath());
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
+			throw new CoreException(error);
+		}
+
+		if (streamCodec == null) {
+			String pattern = "Unable to issue license for pack keys for version %s of %s : \n codec not found";
+			String message = String.format(pattern, productVersion, productIdentifier);
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
 			throw new CoreException(error);
 		}

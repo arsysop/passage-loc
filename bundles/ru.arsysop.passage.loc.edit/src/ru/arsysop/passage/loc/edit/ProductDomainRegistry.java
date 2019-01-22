@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,11 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
+import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.model.api.Product;
+import ru.arsysop.passage.lic.model.api.ProductLine;
+import ru.arsysop.passage.lic.model.api.ProductVersion;
+import ru.arsysop.passage.lic.model.api.ProductVersionFeature;
 import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 import ru.arsysop.passage.lic.registry.ProductRegistry;
 import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
@@ -27,5 +32,22 @@ import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 public interface ProductDomainRegistry extends ProductRegistry, EditingDomainRegistry, DescriptorRegistry {
 
 	String createPassword(ProductVersionDescriptor productVersion);
+
+	void registerProductLine(ProductLine productLine);
+
+	void registerProduct(Product product);
+
+	void registerProductVersion(Product product, ProductVersion productVersion);
+
+	void registerProductVersionFeature(Product product, ProductVersion productVersion,
+			ProductVersionFeature productVersionFeature);
+
+	void unregisterProductLine(String productLineId);
+
+	void unregisterProduct(String productId);
+
+	void unregisterProductVersion(String productId, String version);
+
+	void unregisterProductVersionFeature(String productId, String version, String featureId);
 
 }

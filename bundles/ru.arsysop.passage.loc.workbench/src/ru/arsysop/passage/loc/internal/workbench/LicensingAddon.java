@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,14 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.workbench;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.osgi.framework.Version;
@@ -46,7 +50,12 @@ public class LicensingAddon {
 
 	@Inject
 	@Optional
-	public void applicationStarted(@UIEventTopic(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE) Event event) {
+	public void applicationStarted(@UIEventTopic(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE) Event event, MApplication application) {
+		String brandingName = applicationContext.getBrandingName();
+		List<MWindow> children = application.getChildren();
+		for (MWindow window : children) {
+			window.setLabel(brandingName);
+		}
 		String productId = applicationContext.getBrandingId();
 		Version version = applicationContext.getBrandingBundle().getVersion();
 		StringBuilder sb = new StringBuilder();

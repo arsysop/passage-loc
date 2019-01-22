@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,82 +20,44 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.licenses.emfforms.renderers;
 
-import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import ru.arsysop.passage.lic.model.meta.LicPackage;
+import ru.arsysop.passage.loc.workbench.emfforms.renderers.ConditionTypeRenderer;
+import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRendererService;
 
-public class ConditionTypeRendererService implements EMFFormsDIRendererService<VControl> {
+@Component
+public class ConditionTypeRendererService extends StructuredFeatureRendererService implements EMFFormsDIRendererService<VControl> {
 
-	private EMFFormsDatabinding databindingService;
-	private ReportService reportService;
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
-	 */
-	@Override
-	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
-		if (!VControl.class.isInstance(vElement)) {
-			return NOT_APPLICABLE;
-		}
-		final VControl control = (VControl) vElement;
-		if (control.getDomainModelReference() == null) {
-			return NOT_APPLICABLE;
-		}
-		@SuppressWarnings("rawtypes")
-		IValueProperty valueProperty;
-		try {
-			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(),
-					viewModelContext.getDomainModel());
-		} catch (final DatabindingFailedException ex) {
-			reportService.report(new DatabindingFailedReport(ex));
-			return NOT_APPLICABLE;
-		}
-		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueProperty.getValueType());
-
-		if (LicPackage.eINSTANCE.getLicenseGrant_ConditionType().equals(eStructuralFeature)) {
-			return 10;
-		}
-
-		return NOT_APPLICABLE;
+	public ConditionTypeRendererService() {
+		super(ConditionTypeRenderer.class, LicPackage.eINSTANCE.getLicenseGrant_ConditionType());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsD
-	 *      IRendererService#getRendererClass()
-	 */
+	@Reference
 	@Override
-	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return ConditionTypeRenderer.class;
-	}
-
 	public void bindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = databindingService;
+		super.bindEMFFormsDatabinding(databindingService);
 	}
-
+	
+	@Override
 	public void unbindEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
+		super.unbindEMFFormsDatabinding(databindingService);
 	}
-
+	
+	@Reference
+	@Override
 	public void bindReportService(ReportService reportService) {
-		this.reportService = reportService;
+		super.bindReportService(reportService);
 	}
-
+	
+	@Override
 	public void unbindReportService(ReportService reportService) {
-		this.reportService = null;
+		super.unbindReportService(reportService);
 	}
 
 }

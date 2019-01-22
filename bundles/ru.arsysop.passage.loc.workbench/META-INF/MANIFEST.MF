@@ -7,9 +7,9 @@ Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Copyright: %Bundle-Copyright
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
+Require-Bundle: org.slf4j.api;bundle-version="0.0.0",
+ org.eclipse.osgi.services;bundle-version="0.0.0",
  org.eclipse.core.runtime,
- org.eclipse.swt,
  org.eclipse.jface,
  org.eclipse.emf.ecore.xmi;bundle-version="0.0.0",
  org.eclipse.emf.edit.ui,
@@ -33,12 +33,17 @@ Require-Bundle: org.eclipse.osgi.services;bundle-version="0.0.0",
  ru.arsysop.passage.lic.inspector;bundle-version="0.0.0",
  ru.arsysop.passage.lic.inspector.ui;bundle-version="0.0.0",
  ru.arsysop.passage.loc.edit;bundle-version="0.0.0";visibility:=reexport
-Import-Package: javax.inject;version="1.0.0"
-Export-Package: ru.arsysop.passage.loc.workbench,
+Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
+  javax.inject;version="1.0.0"
+Export-Package: ru.arsysop.passage.lic.inspector,
+ ru.arsysop.passage.lic.jface,
+ ru.arsysop.passage.loc.jface,
+ ru.arsysop.passage.loc.jface.dialogs,
+ ru.arsysop.passage.loc.workbench,
  ru.arsysop.passage.loc.workbench.dialogs,
  ru.arsysop.passage.loc.workbench.handlers,
+ ru.arsysop.passage.loc.workbench.parts,
  ru.arsysop.passage.loc.workbench.viewers,
  ru.arsysop.passage.loc.workbench.wizards
-Eclipse-BundleShape: dir
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/*.xml

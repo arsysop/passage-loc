@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,10 +70,16 @@ public class ProductsCore {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
 			throw new CoreException(error);
 		}
+		String identifier = product.getIdentifier();
+		String version = productVersion.getVersion();
+		if (streamCodec == null) {
+			String pattern = "Unable to create keys for version %s of %s : \n codec not found";
+			String message = String.format(pattern, version, product.getName());
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
+			throw new CoreException(error);
+		}
+		Path basePath = registry.getBasePath();
 		try {
-			String identifier = product.getIdentifier();
-			String version = productVersion.getVersion();
-			Path basePath = registry.getBasePath();
 			Path path = basePath.resolve(identifier).resolve(version);
 			Files.createDirectories(path);
 			String storageKeyFolder = path.toFile().getAbsolutePath();

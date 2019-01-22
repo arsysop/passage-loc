@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
 import ru.arsysop.passage.lic.base.ui.LicensingImages;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
-import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryExplorer;
+import ru.arsysop.passage.loc.workbench.parts.DomainRegistryExplorer;
 
 public class LicenseExplorer extends DomainRegistryExplorer {
 

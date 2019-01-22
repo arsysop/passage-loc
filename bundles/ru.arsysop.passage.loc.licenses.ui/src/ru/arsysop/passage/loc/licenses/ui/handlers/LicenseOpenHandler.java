@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 ArSysOp
+ * Copyright (c) 2018-2019 ArSysOp
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,20 +20,20 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.licenses.ui.handlers;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
+import ru.arsysop.passage.lic.registry.FeaturesRegistry;
+import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class LicenseOpenHandler {
 
 	@Execute
-	public void execute(Shell shell, LicenseDomainRegistry registry) {
-		String selected = LocWokbench.selectLoadPath(shell, registry.getFileExtension());
-		if (selected != null) {
-			registry.registerSource(selected);
-		}
+	public void execute(IEclipseContext eclipseContext) {
+		String domain = FeaturesRegistry.DOMAIN_NAME;
+		String perspectiveId = LicensesUi.PERSPECTIVE_MAIN;
+		LocWokbench.loadDomainResource(eclipseContext, domain, perspectiveId);
 	}
-		
+
 }
