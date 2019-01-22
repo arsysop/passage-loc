@@ -35,6 +35,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.passage.lic.jface.LicensingColors;
+import org.eclipse.passage.lic.jface.LicensingImages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -44,8 +46,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-import ru.arsysop.passage.lic.jface.LicensingColors;
-import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.jface.LocImages;
 
 public abstract class TextWithButtonRenderer extends SimpleControlSWTControlSWTRenderer {

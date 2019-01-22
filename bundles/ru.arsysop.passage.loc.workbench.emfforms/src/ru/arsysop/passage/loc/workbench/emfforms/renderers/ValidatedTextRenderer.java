@@ -17,6 +17,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.passage.lic.jface.LicensingColors;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -25,7 +26,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
-import ru.arsysop.passage.lic.jface.LicensingColors;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class ValidatedTextRenderer extends SimpleControlSWTControlSWTRenderer {

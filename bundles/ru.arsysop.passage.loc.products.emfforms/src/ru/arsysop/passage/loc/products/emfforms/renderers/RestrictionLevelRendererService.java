@@ -24,10 +24,10 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
+import org.eclipse.passage.lic.model.meta.LicPackage;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.RestrictionLevelRenderer;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.StructuredFeatureRendererService;
 

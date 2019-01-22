@@ -20,11 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.users.core;
 
+import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
+import org.eclipse.passage.lic.registry.UsersRegistry;
 import org.osgi.service.component.annotations.Component;
-
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
-import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.registry.UsersRegistry;
 
 @Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + UsersRegistry.DOMAIN_NAME })
 public final class UserOriginClassifierInitializer implements ClassifierInitializer {

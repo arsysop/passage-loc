@@ -32,8 +32,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
 
 public class LocEdit {
 	

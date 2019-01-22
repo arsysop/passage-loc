@@ -24,12 +24,12 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.jface.LicensingImages;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
-import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.workbench.emfforms.wizards.CreateFormWizard;
 
 public class LocWorkbenchEmfforms {

@@ -31,8 +31,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
+import org.eclipse.passage.lic.model.meta.LicPackage;
 
-import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.ValidatedTextRenderer;
 
 public class BaseTextRendererService implements EMFFormsDIRendererService<VControl> {

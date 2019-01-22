@@ -20,10 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.api.LicensePack;
-import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.LicenseRegistry;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.model.api.LicensePack;
+import org.eclipse.passage.lic.registry.DescriptorRegistry;
+import org.eclipse.passage.lic.registry.LicenseRegistry;
 
 public interface LicenseDomainRegistry extends LicenseRegistry, EditingDomainRegistry, DescriptorRegistry {
 

@@ -21,13 +21,12 @@
 package ru.arsysop.passage.lic.internal.inspector.ui;
 
 import org.eclipse.jface.resource.ColorRegistry;
+import org.eclipse.passage.lic.jface.LicensingColors;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-
-import ru.arsysop.passage.lic.jface.LicensingColors;
 
 @Component
 public class LicensingColorRegistry implements LicensingColors {

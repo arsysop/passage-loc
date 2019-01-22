@@ -29,20 +29,19 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.passage.lic.base.LicensingEvents;
+import org.eclipse.passage.lic.inspector.HardwareInspector;
+import org.eclipse.passage.lic.inspector.ui.dialogs.LicensingInspectorDialog;
+import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.jface.RestrictionVerdictLabels;
+import org.eclipse.passage.lic.runtime.ConfigurationRequirement;
+import org.eclipse.passage.lic.runtime.RestrictionVerdict;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-
-import ru.arsysop.passage.lic.base.LicensingEvents;
-import ru.arsysop.passage.lic.inspector.HardwareInspector;
-import ru.arsysop.passage.lic.inspector.ui.dialogs.LicensingInspectorDialog;
-import ru.arsysop.passage.lic.jface.LicensingImages;
-import ru.arsysop.passage.lic.jface.RestrictionVerdictLabels;
-import ru.arsysop.passage.lic.runtime.ConfigurationRequirement;
-import ru.arsysop.passage.lic.runtime.RestrictionVerdict;
 
 public class LicensingStatusToolControl {
 	

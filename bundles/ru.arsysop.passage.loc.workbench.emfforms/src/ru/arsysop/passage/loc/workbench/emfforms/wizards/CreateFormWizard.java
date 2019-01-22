@@ -21,8 +21,8 @@
 package ru.arsysop.passage.loc.workbench.emfforms.wizards;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizard;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 

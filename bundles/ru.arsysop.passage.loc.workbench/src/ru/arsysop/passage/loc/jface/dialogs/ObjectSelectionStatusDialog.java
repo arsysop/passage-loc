@@ -22,6 +22,8 @@ package ru.arsysop.passage.loc.jface.dialogs;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.jface.StatusLine;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -30,9 +32,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-
-import ru.arsysop.passage.lic.jface.LicensingImages;
-import ru.arsysop.passage.lic.jface.StatusLine;
 
 public abstract class ObjectSelectionStatusDialog extends ObjectSelectionDialog {
 

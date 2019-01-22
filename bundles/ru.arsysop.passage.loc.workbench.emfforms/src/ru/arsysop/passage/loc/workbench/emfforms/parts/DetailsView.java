@@ -60,6 +60,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import org.eclipse.passage.lic.jface.LicensingImages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -68,8 +70,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
-import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
-import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 import ru.arsysop.passage.loc.workbench.viewers.DomainRegistryLabelProvider;

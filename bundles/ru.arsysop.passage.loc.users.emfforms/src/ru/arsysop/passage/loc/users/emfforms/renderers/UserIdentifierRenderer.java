@@ -30,6 +30,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.passage.lic.registry.UserDescriptor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -37,7 +38,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.registry.UserDescriptor;
 import ru.arsysop.passage.loc.edit.UserDomainRegistry;
 import ru.arsysop.passage.loc.users.ui.UsersUi;
 import ru.arsysop.passage.loc.workbench.emfforms.renderers.TextWithButtonRenderer;

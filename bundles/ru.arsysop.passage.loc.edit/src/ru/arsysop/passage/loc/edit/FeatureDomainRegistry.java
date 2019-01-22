@@ -20,11 +20,11 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
-import ru.arsysop.passage.lic.registry.FeatureRegistry;
-import ru.arsysop.passage.lic.registry.FeatureSetDescriptor;
-import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.registry.FeatureDescriptor;
+import org.eclipse.passage.lic.registry.FeatureRegistry;
+import org.eclipse.passage.lic.registry.FeatureSetDescriptor;
+import org.eclipse.passage.lic.registry.FeatureVersionDescriptor;
 
 public interface FeatureDomainRegistry extends FeatureRegistry, EditingDomainRegistry {
 

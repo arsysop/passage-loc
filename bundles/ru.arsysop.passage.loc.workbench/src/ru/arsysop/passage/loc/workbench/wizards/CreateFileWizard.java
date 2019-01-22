@@ -34,10 +34,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
 
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
-import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
 import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 

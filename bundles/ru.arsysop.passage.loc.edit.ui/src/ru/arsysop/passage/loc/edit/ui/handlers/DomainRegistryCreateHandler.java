@@ -27,12 +27,12 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.passage.lic.registry.FeaturesRegistry;
+import org.eclipse.passage.lic.registry.LicensesRegistry;
+import org.eclipse.passage.lic.registry.ProductsRegistry;
+import org.eclipse.passage.lic.registry.UsersRegistry;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.registry.FeaturesRegistry;
-import ru.arsysop.passage.lic.registry.LicensesRegistry;
-import ru.arsysop.passage.lic.registry.ProductsRegistry;
-import ru.arsysop.passage.lic.registry.UsersRegistry;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 
 public class DomainRegistryCreateHandler {

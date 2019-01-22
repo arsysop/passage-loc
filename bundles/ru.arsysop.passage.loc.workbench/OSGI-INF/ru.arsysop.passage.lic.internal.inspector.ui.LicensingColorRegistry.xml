@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="ru.arsysop.passage.lic.internal.inspector.ui.LicensingColorRegistry">
    <service>
-      <provide interface="ru.arsysop.passage.lic.jface.LicensingColors"/>
+      <provide interface="org.eclipse.passage.lic.jface.LicensingColors"/>
    </service>
    <implementation class="ru.arsysop.passage.lic.internal.inspector.ui.LicensingColorRegistry"/>
 </scr:component>

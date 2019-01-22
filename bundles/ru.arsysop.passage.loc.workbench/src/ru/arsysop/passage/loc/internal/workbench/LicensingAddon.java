@@ -30,12 +30,11 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.passage.lic.base.LicensingConfigurations;
+import org.eclipse.passage.lic.runtime.AccessManager;
+import org.eclipse.passage.lic.runtime.LicensingConfiguration;
 import org.osgi.framework.Version;
 import org.osgi.service.event.Event;
-
-import ru.arsysop.passage.lic.base.LicensingConfigurations;
-import ru.arsysop.passage.lic.runtime.AccessManager;
-import ru.arsysop.passage.lic.runtime.LicensingConfiguration;
 
 public class LicensingAddon {
 

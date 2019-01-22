@@ -23,18 +23,18 @@ package ru.arsysop.passage.loc.edit.ui;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.model.meta.LicPackage;
+import org.eclipse.passage.lic.registry.FeatureRegistry;
+import org.eclipse.passage.lic.registry.FeaturesRegistry;
+import org.eclipse.passage.lic.registry.LicenseRegistry;
+import org.eclipse.passage.lic.registry.LicensesRegistry;
+import org.eclipse.passage.lic.registry.ProductRegistry;
+import org.eclipse.passage.lic.registry.ProductsRegistry;
+import org.eclipse.passage.lic.registry.UserRegistry;
+import org.eclipse.passage.lic.registry.UsersRegistry;
 import org.eclipse.swt.graphics.Image;
 
-import ru.arsysop.passage.lic.jface.LicensingImages;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.lic.registry.FeatureRegistry;
-import ru.arsysop.passage.lic.registry.FeaturesRegistry;
-import ru.arsysop.passage.lic.registry.LicenseRegistry;
-import ru.arsysop.passage.lic.registry.LicensesRegistry;
-import ru.arsysop.passage.lic.registry.ProductRegistry;
-import ru.arsysop.passage.lic.registry.ProductsRegistry;
-import ru.arsysop.passage.lic.registry.UserRegistry;
-import ru.arsysop.passage.lic.registry.UsersRegistry;
 import ru.arsysop.passage.loc.edit.EditingDomainBasedRegistry;
 
 class DomainRegistryLabelProvider extends LabelProvider {

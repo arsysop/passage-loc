@@ -20,11 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.features.core;
 
+import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
+import org.eclipse.passage.lic.registry.FeaturesRegistry;
 import org.osgi.service.component.annotations.Component;
-
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
-import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.registry.FeaturesRegistry;
 
 @Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + FeaturesRegistry.DOMAIN_NAME })
 public final class FeatureSetClassifierInitializer implements ClassifierInitializer {

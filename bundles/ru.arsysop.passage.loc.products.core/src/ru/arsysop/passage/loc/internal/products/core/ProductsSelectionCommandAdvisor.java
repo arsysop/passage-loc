@@ -22,13 +22,13 @@ package ru.arsysop.passage.loc.internal.products.core;
 
 import java.util.Collections;
 
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
+import org.eclipse.passage.lic.emf.edit.SelectionCommandAdvisor;
+import org.eclipse.passage.lic.model.meta.LicPackage;
+import org.eclipse.passage.lic.registry.ProductsRegistry;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.emf.edit.SelectionCommandAdvisor;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.lic.registry.ProductsRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 
 @Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + ProductsRegistry.DOMAIN_NAME })

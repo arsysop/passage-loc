@@ -20,11 +20,10 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.internal.products.core;
 
+import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
+import org.eclipse.passage.lic.registry.ProductsRegistry;
 import org.osgi.service.component.annotations.Component;
-
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
-import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
-import ru.arsysop.passage.lic.registry.ProductsRegistry;
 
 @Component(property = { DomainRegistryAccess.PROPERTY_DOMAIN_NAME + '=' + ProductsRegistry.DOMAIN_NAME })
 public final class ProductLineClassifierInitializer implements ClassifierInitializer {

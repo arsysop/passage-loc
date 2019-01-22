@@ -6,12 +6,12 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
+import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import ru.arsysop.passage.lic.emf.edit.ClassifierInitializer;
 import ru.arsysop.passage.loc.workbench.wizards.CreateFileWizardPage;
 
 public class CreateFormWizardPage extends CreateFileWizardPage {

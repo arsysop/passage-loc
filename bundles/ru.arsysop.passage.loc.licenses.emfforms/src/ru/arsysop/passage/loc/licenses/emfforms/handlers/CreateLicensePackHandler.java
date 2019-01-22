@@ -22,8 +22,8 @@ package ru.arsysop.passage.loc.licenses.emfforms.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.passage.lic.registry.LicensesRegistry;
 
-import ru.arsysop.passage.lic.registry.LicensesRegistry;
 import ru.arsysop.passage.loc.licenses.ui.LicensesUi;
 import ru.arsysop.passage.loc.workbench.emfforms.LocWorkbenchEmfforms;
 

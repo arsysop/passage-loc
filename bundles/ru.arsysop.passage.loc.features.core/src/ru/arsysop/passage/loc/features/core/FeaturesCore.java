@@ -20,7 +20,7 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.features.core;
 
-import ru.arsysop.passage.lic.model.meta.LicPackage;
+import org.eclipse.passage.lic.model.meta.LicPackage;
 
 public class FeaturesCore {
 

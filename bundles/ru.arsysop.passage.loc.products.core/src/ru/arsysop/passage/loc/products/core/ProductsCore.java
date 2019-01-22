@@ -29,11 +29,11 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.passage.lic.base.LicensingPaths;
+import org.eclipse.passage.lic.model.api.Product;
+import org.eclipse.passage.lic.model.api.ProductVersion;
+import org.eclipse.passage.lic.runtime.io.StreamCodec;
 
-import ru.arsysop.passage.lic.base.LicensingPaths;
-import ru.arsysop.passage.lic.model.api.Product;
-import ru.arsysop.passage.lic.model.api.ProductVersion;
-import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 

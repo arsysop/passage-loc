@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.lic.internal.inspector.core.RestrictionLevelInspector">
    <service>
-      <provide interface="ru.arsysop.passage.lic.inspector.RestrictionInpector"/>
+      <provide interface="org.eclipse.passage.lic.inspector.RestrictionInpector"/>
    </service>
    <implementation class="ru.arsysop.passage.lic.internal.inspector.core.RestrictionLevelInspector"/>
 </scr:component>

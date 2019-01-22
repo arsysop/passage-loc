@@ -23,8 +23,8 @@ package ru.arsysop.passage.loc.licenses.ui.viewers;
 import javax.inject.Inject;
 
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.passage.lic.jface.LicensingImages;
 
-import ru.arsysop.passage.lic.jface.LicensingImages;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.workbench.parts.DomainRegistryExplorer;
 

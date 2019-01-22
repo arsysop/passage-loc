@@ -34,11 +34,11 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.passage.lic.model.api.ProductVersion;
+import org.eclipse.passage.lic.runtime.io.StreamCodec;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
 
-import ru.arsysop.passage.lic.model.api.ProductVersion;
-import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.products.core.ProductsCore;
 

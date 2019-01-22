@@ -43,14 +43,13 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.osgi.service.environment.EnvironmentInfo;
+import org.eclipse.passage.lic.base.LicensingPaths;
+import org.eclipse.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import org.eclipse.passage.lic.emf.edit.DomainContentAdapter;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.registry.DescriptorRegistry;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
-
-import ru.arsysop.passage.lic.base.LicensingPaths;
-import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
-import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.registry.DescriptorRegistry;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
 

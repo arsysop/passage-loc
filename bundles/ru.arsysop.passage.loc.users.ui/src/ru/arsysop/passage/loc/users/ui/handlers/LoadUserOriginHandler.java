@@ -22,8 +22,8 @@ package ru.arsysop.passage.loc.users.ui.handlers;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.passage.lic.registry.UsersRegistry;
 
-import ru.arsysop.passage.lic.registry.UsersRegistry;
 import ru.arsysop.passage.loc.users.ui.UsersUi;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 

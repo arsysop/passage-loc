@@ -20,12 +20,12 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.products.ui;
 
+import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.model.meta.LicPackage;
+import org.eclipse.passage.lic.registry.ProductDescriptor;
+import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.jface.LicensingImages;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.lic.registry.ProductDescriptor;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 

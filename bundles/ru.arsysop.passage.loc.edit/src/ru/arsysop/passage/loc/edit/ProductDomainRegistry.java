@@ -20,14 +20,14 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.edit;
 
-import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
-import ru.arsysop.passage.lic.model.api.Product;
-import ru.arsysop.passage.lic.model.api.ProductLine;
-import ru.arsysop.passage.lic.model.api.ProductVersion;
-import ru.arsysop.passage.lic.model.api.ProductVersionFeature;
-import ru.arsysop.passage.lic.registry.DescriptorRegistry;
-import ru.arsysop.passage.lic.registry.ProductRegistry;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
+import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.model.api.Product;
+import org.eclipse.passage.lic.model.api.ProductLine;
+import org.eclipse.passage.lic.model.api.ProductVersion;
+import org.eclipse.passage.lic.model.api.ProductVersionFeature;
+import org.eclipse.passage.lic.registry.DescriptorRegistry;
+import org.eclipse.passage.lic.registry.ProductRegistry;
+import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
 
 public interface ProductDomainRegistry extends ProductRegistry, EditingDomainRegistry, DescriptorRegistry {
 

@@ -34,10 +34,9 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
+import org.eclipse.passage.lic.emf.edit.LabeledDiagnostician;
 import org.eclipse.swt.widgets.Shell;
-
-import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
-import ru.arsysop.passage.lic.emf.edit.LabeledDiagnostician;
 
 public class ValidateHandler {
 

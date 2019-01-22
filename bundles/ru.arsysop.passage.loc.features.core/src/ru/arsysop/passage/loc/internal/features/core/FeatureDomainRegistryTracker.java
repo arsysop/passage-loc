@@ -21,12 +21,12 @@
 package ru.arsysop.passage.loc.internal.features.core;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.passage.lic.emf.edit.DomainContentAdapter;
+import org.eclipse.passage.lic.model.api.Feature;
+import org.eclipse.passage.lic.model.api.FeatureSet;
+import org.eclipse.passage.lic.model.api.FeatureVersion;
+import org.eclipse.passage.lic.model.meta.LicPackage;
 
-import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
-import ru.arsysop.passage.lic.model.api.Feature;
-import ru.arsysop.passage.lic.model.api.FeatureSet;
-import ru.arsysop.passage.lic.model.api.FeatureVersion;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 
 public class FeatureDomainRegistryTracker extends DomainContentAdapter<FeatureDomainRegistry> {

@@ -20,18 +20,17 @@
  *******************************************************************************/
 package ru.arsysop.passage.lic.internal.inspector.core;
 
-import static ru.arsysop.passage.lic.base.LicensingProperties.LICENSING_CONDITION_TYPE;
+import static org.eclipse.passage.lic.base.LicensingProperties.LICENSING_CONDITION_TYPE;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.passage.lic.inspector.ConditionInpector;
+import org.eclipse.passage.lic.runtime.ConditionEvaluator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-
-import ru.arsysop.passage.lic.inspector.ConditionInpector;
-import ru.arsysop.passage.lic.runtime.ConditionEvaluator;
 
 @Component
 public class ConditionEvaluatorInspector implements ConditionInpector {

@@ -4,10 +4,9 @@ import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
+import org.eclipse.passage.lic.jface.ImageFinder;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
-
-import ru.arsysop.passage.lic.jface.ImageFinder;
 
 public class LocLifeCycle {
 

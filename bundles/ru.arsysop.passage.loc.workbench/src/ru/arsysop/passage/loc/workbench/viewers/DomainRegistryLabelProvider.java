@@ -4,14 +4,13 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.registry.FeatureDescriptor;
+import org.eclipse.passage.lic.registry.FeatureVersionDescriptor;
+import org.eclipse.passage.lic.registry.ProductDescriptor;
+import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
+import org.eclipse.passage.lic.registry.ProductVersionFeatureDescriptor;
 import org.eclipse.swt.graphics.Image;
-
-import ru.arsysop.passage.lic.jface.LicensingImages;
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
-import ru.arsysop.passage.lic.registry.FeatureVersionDescriptor;
-import ru.arsysop.passage.lic.registry.ProductDescriptor;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
-import ru.arsysop.passage.lic.registry.ProductVersionFeatureDescriptor;
 
 public class DomainRegistryLabelProvider extends LabelProvider {
 	

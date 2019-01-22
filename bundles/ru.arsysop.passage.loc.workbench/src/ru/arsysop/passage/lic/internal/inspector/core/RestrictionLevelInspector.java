@@ -24,10 +24,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.passage.lic.base.LicensingNamespaces;
+import org.eclipse.passage.lic.inspector.RestrictionInpector;
 import org.osgi.service.component.annotations.Component;
-
-import ru.arsysop.passage.lic.base.LicensingNamespaces;
-import ru.arsysop.passage.lic.inspector.RestrictionInpector;
 
 @Component
 public class RestrictionLevelInspector implements RestrictionInpector {

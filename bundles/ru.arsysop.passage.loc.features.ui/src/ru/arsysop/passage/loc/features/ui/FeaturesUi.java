@@ -20,11 +20,11 @@
  *******************************************************************************/
 package ru.arsysop.passage.loc.features.ui;
 
+import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.model.meta.LicPackage;
+import org.eclipse.passage.lic.registry.FeatureDescriptor;
 import org.eclipse.swt.widgets.Shell;
 
-import ru.arsysop.passage.lic.jface.LicensingImages;
-import ru.arsysop.passage.lic.model.meta.LicPackage;
-import ru.arsysop.passage.lic.registry.FeatureDescriptor;
 import ru.arsysop.passage.loc.edit.FeatureDomainRegistry;
 import ru.arsysop.passage.loc.workbench.LocWokbench;
 

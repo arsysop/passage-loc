@@ -30,11 +30,11 @@ import java.util.UUID;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.passage.lic.base.LicensingPaths;
+import org.eclipse.passage.lic.model.api.LicensePack;
+import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
+import org.eclipse.passage.lic.runtime.io.StreamCodec;
 
-import ru.arsysop.passage.lic.base.LicensingPaths;
-import ru.arsysop.passage.lic.model.api.LicensePack;
-import ru.arsysop.passage.lic.registry.ProductVersionDescriptor;
-import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.LocEdit;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;

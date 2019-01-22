@@ -31,8 +31,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-
-import ru.arsysop.passage.lic.base.LicensingVersions;
+import org.eclipse.passage.lic.base.LicensingVersions;
 
 public class MatchRuleRenderer extends ComboControlRenderer {
 
