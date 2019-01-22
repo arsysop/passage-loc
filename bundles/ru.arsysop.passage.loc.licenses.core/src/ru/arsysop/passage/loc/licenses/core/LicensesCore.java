@@ -78,6 +78,13 @@ public class LicensesCore {
 			throw new CoreException(error);
 		}
 
+		if (streamCodec == null) {
+			String pattern = "Unable to issue license for pack keys for version %s of %s : \n codec not found";
+			String message = String.format(pattern, productVersion, productIdentifier);
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
+			throw new CoreException(error);
+		}
+
 		String uuid = UUID.randomUUID().toString();
 		Date value = new Date();
 		String licenseOut = storageKeyFolder + File.separator + uuid + LicensingPaths.EXTENSION_LICENSE_ENCRYPTED;

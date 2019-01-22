@@ -25,22 +25,17 @@ import javax.inject.Named;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.Version;
 
-import ru.arsysop.passage.lic.base.LicensingConfigurations;
 import ru.arsysop.passage.lic.model.api.LicensePack;
-import ru.arsysop.passage.lic.runtime.AccessManager;
-import ru.arsysop.passage.lic.runtime.LicensingCondition;
-import ru.arsysop.passage.lic.runtime.LicensingConfiguration;
 import ru.arsysop.passage.lic.runtime.io.StreamCodec;
 import ru.arsysop.passage.loc.edit.LicenseDomainRegistry;
 import ru.arsysop.passage.loc.edit.ProductDomainRegistry;
@@ -49,22 +44,16 @@ import ru.arsysop.passage.loc.licenses.core.LicensesCore;
 public class LicenseExportHandler {
 
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) LicensePack licensePack, Shell shell, LicenseDomainRegistry licenseRegistry, ProductDomainRegistry productRegistry, StreamCodec streamCodec, AccessManager accessManager, IApplicationContext applicationContext) {
-		String productId = applicationContext.getBrandingId();
-		Version version = applicationContext.getBrandingBundle().getVersion();
-		StringBuilder sb = new StringBuilder();
-		sb.append(version.getMajor()).append('.');
-		sb.append(version.getMinor()).append('.');
-		sb.append(version.getMicro());
-		String productVersion = sb.toString();
-		LicensingConfiguration configuration = LicensingConfigurations.create(productId, productVersion);
-		Iterable<LicensingCondition> extractConditions = accessManager.extractConditions(configuration);
-		
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) LicensePack licensePack, IEclipseContext context) {
+		ProductDomainRegistry productRegistry = context.get(ProductDomainRegistry.class);
+		LicenseDomainRegistry licenseRegistry = context.get(LicenseDomainRegistry.class);
+		StreamCodec streamCodec = context.get(StreamCodec.class);
+		Shell shell = context.get(Shell.class);
 		try {
-			String exportLicense = LicensesCore.exportLicensePack(licensePack, productRegistry, licenseRegistry, streamCodec);
+			String exportLicense = LicensesCore.exportLicensePack(licensePack, productRegistry , licenseRegistry , streamCodec );
 			String format = "License pack exported succesfully: \n\n %s \n";
 			String message = String.format(format, exportLicense);
-			MessageDialog.openInformation(shell, "License Pack Export", message);
+			MessageDialog.openInformation(shell , "License Pack Export", message);
 		} catch (CoreException e) {
 			IStatus status = e.getStatus();
 			Bundle bundle = Platform.getBundle(status.getPlugin());
