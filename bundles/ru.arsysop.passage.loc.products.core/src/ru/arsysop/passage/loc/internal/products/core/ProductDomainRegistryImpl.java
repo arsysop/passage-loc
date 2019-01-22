@@ -41,6 +41,7 @@ import ru.arsysop.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import ru.arsysop.passage.lic.emf.edit.DomainContentAdapter;
 import ru.arsysop.passage.lic.emf.edit.DomainRegistryAccess;
 import ru.arsysop.passage.lic.emf.edit.EditingDomainRegistry;
+import ru.arsysop.passage.lic.model.api.FeatureSet;
 import ru.arsysop.passage.lic.model.api.Product;
 import ru.arsysop.passage.lic.model.api.ProductLine;
 import ru.arsysop.passage.lic.model.api.ProductVersion;
@@ -361,14 +362,17 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 
 	@Override
 	public void registerContent(Identified content) {
-		// TODO Auto-generated method stub
-		
+		if (content instanceof ProductLine) {
+			ProductLine productLine = (ProductLine) content;
+			registerProductLine(productLine);
+		} else {
+			//TODO: warning
+		}
 	}
 
 	@Override
 	public void unregisterContent(String identifier) {
-		// TODO Auto-generated method stub
-		
+		unregisterProductLine(identifier);
 	}
 
 }

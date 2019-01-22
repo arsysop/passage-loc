@@ -72,6 +72,12 @@ public class ProductsCore {
 		}
 		String identifier = product.getIdentifier();
 		String version = productVersion.getVersion();
+		if (streamCodec == null) {
+			String pattern = "Unable to create keys for version %s of %s : \n codec not found";
+			String message = String.format(pattern, version, product.getName());
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
+			throw new CoreException(error);
+		}
 		Path basePath = registry.getBasePath();
 		try {
 			Path path = basePath.resolve(identifier).resolve(version);

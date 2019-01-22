@@ -27,6 +27,7 @@ import javax.inject.Named;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -44,7 +45,11 @@ import ru.arsysop.passage.loc.products.core.ProductsCore;
 public class ProductExportHandler {
 
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) ProductVersion productVersion, Shell shell, ProductDomainRegistry registry, StreamCodec streamCodec) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) ProductVersion productVersion,
+			IEclipseContext context) {
+		ProductDomainRegistry registry = context.get(ProductDomainRegistry.class);
+		StreamCodec streamCodec = context.get(StreamCodec.class);
+		Shell shell = context.get(Shell.class);
 		try {
 			List<String> exportProductKeys = ProductsCore.exportProductKeys(productVersion, registry, streamCodec);
 			String format = "Product keys exported succesfully: \n\n %s \n %s \n";
