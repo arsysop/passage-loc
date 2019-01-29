@@ -27,26 +27,20 @@
 			<repository location="http://download.eclipse.org/cbi/updates/license/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.platform.sdk" version="4.8.0.I20180611-0500"/>
-			<unit id="org.eclipse.rcp.feature.group" version="4.8.0.v20180611-0656"/>
-			<unit id="org.eclipse.rcp.source.feature.group" version="4.8.0.v20180611-0656"/>
-			<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.0.v20180518-2029"/>
-			<unit id="org.eclipse.equinox.sdk.feature.group" version="3.14.0.v20180518-2029"/>
-			<repository location="http://download.eclipse.org/eclipse/updates/4.8/"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+			<repository location="http://download.eclipse.org/releases/2018-09/"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.platform.sdk" version="0.0.0"/>
+			<unit id="org.eclipse.rcp.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.rcp.source.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
+			<repository location="http://download.eclipse.org/eclipse/updates/4.9/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.slf4j.api" version="0.0.0"/>
 			<unit id="org.slf4j.api.source" version="0.0.0"/>
-			<unit id="org.bouncycastle.bcpg" version="0.0.0"/>
-			<unit id="org.bouncycastle.bcpg.source" version="0.0.0"/>
-			<unit id="org.bouncycastle.bcpkix" version="0.0.0"/>
-			<unit id="org.bouncycastle.bcpkix.source" version="0.0.0"/>
-			<unit id="org.bouncycastle.bcprov" version="0.0.0"/>
-			<unit id="org.bouncycastle.bcprov.source" version="0.0.0"/>
-			<unit id="com.sun.jna" version="4.5.1.v20180403-1933"/>
-			<unit id="com.sun.jna.platform" version="4.5.1.v20180403-1933"/>
-			<unit id="com.sun.jna.platform.source" version="4.5.1.v20180403-1933"/>
-			<unit id="com.sun.jna.source" version="4.5.1.v20180403-1933"/>
 			<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
