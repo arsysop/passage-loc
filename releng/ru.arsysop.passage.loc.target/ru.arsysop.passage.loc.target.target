@@ -22,6 +22,10 @@
 -->
 <target name="ru.arsysop.passage.loc.target" sequenceNumber="83">
 	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.license.feature.group" version="0.0.0"/>
+			<repository location="http://download.eclipse.org/cbi/updates/license/"/>
+		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.platform.sdk" version="4.8.0.I20180611-0500"/>
 			<unit id="org.eclipse.rcp.feature.group" version="4.8.0.v20180611-0656"/>
@@ -50,13 +54,12 @@
 			<repository location="http://download.eclipse.org/releases/photon/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="ru.arsysop.passage.brc.license.feature.feature.group" version="0.0.0"/>
-			<unit id="ru.arsysop.passage.brc.oshi.feature.feature.group" version="0.0.0"/>
-			<repository location="http://dl.bintray.com/arsysop/passage-brc/0.3.2/"/>
+			<unit id="org.eclipse.passage.brc.oshi.feature.feature.group" version="0.0.0"/>
+			<repository location="http://dl.bintray.com/arsysop/passage-brc/0.3.3/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="ru.arsysop.passage.lic.feature.feature.group" version="0.0.0"/>
-			<repository location="http://dl.bintray.com/arsysop/passage-lic/0.3.2/"/>
+			<unit id="org.eclipse.passage.lic.feature.feature.group" version="0.0.0"/>
+			<repository location="http://dl.bintray.com/arsysop/passage-lic/0.3.3/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.junit" version="4.12.0.v201504281640"/>
