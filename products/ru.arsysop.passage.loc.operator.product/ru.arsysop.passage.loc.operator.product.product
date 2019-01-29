@@ -21,7 +21,7 @@
 		ArSysOp - initial API and implementation
 -->
 
-<product name="Passage Licensing Operator Workbench" uid="ru.arsysop.passage.loc.operator.product" id="ru.arsysop.passage.loc.operator.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="0.3.2.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Passage Licensing Operator Workbench" uid="ru.arsysop.passage.loc.operator.product" id="ru.arsysop.passage.loc.operator.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="0.3.3.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/ru.arsysop.passage.loc.operator/images/passage_lg.png"/>
