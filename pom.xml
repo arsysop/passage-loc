@@ -26,18 +26,18 @@
 >
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>ru.arsysop.passage.loc.root</artifactId>
+	<artifactId>org.eclipse.passage.loc.root</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
-		<groupId>ru.arsysop.passage.loc</groupId>
-		<artifactId>ru.arsysop.passage.loc.parent</artifactId>
+		<groupId>org.eclipse.passage.loc</groupId>
+		<artifactId>org.eclipse.passage.loc.parent</artifactId>
 		<version>0.3.3-SNAPSHOT</version>
-		<relativePath>./releng/ru.arsysop.passage.loc.parent</relativePath>
+		<relativePath>./releng/org.eclipse.passage.loc.parent</relativePath>
 	</parent>
 
 	<modules>
-		<module>./releng/ru.arsysop.passage.loc.aggregator</module>
+		<module>./releng/org.eclipse.passage.loc.aggregator</module>
 	</modules>
 
 </project>
