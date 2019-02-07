@@ -15,10 +15,13 @@ package org.eclipse.passage.loc.internal.workbench;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.passage.lic.emf.edit.ClassifierInitializer;
 import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
 import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
 import org.eclipse.passage.lic.emf.edit.SelectionCommandAdvisor;
+import org.eclipse.passage.lic.model.meta.LicPackage;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -35,6 +38,12 @@ public class LocDomainRegistryAccess implements DomainRegistryAccess {
 	private final Map<String, ClassifierInitializer> classifierInitializers = new HashMap<>();
 	private final Map<String, SelectionCommandAdvisor> selectionAdvisors = new HashMap<>();
 	
+	@Activate
+	public void activate() {
+		EPackage.Registry.INSTANCE.put("http://www.arsysop.ru/passage/lic/0.3.1", LicPackage.eINSTANCE); //$NON-NLS-1$
+		EPackage.Registry.INSTANCE.put("http://www.arsysop.ru/passage/lic/0.3.2", LicPackage.eINSTANCE); //$NON-NLS-1$
+	}
+
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE)
 	public void registerEditingDomainRegistry(EditingDomainRegistry instance, Map<String, Object> properties) {
 		String domain = String.valueOf(properties.get(PROPERTY_DOMAIN_NAME));
