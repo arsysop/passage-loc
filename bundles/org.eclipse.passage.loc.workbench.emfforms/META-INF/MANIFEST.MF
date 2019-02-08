@@ -34,3 +34,5 @@ Export-Package: org.eclipse.passage.loc.workbench.emfforms,
  org.eclipse.passage.loc.workbench.emfforms.parts,
  org.eclipse.passage.loc.workbench.emfforms.renderers,
  org.eclipse.passage.loc.workbench.emfforms.wizards
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/*.xml
