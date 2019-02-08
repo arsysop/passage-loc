@@ -15,6 +15,7 @@ package org.eclipse.passage.loc.licenses.core;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.UUID;
@@ -22,6 +23,11 @@ import java.util.UUID;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.passage.lic.base.LicensingPaths;
 import org.eclipse.passage.lic.model.api.LicensePack;
 import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
@@ -34,31 +40,40 @@ public class LicensesCore {
 
 	public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.passage.loc.licenses.core"; //$NON-NLS-1$
 
-	public static String exportLicensePack(LicensePack licensePack, ProductDomainRegistry productRegistry, LicenseDomainRegistry licenseRegistry, StreamCodec streamCodec) throws CoreException {
-		String packIdentifier = licensePack.getIdentifier();
-		if (packIdentifier != null) {
-			String pattern = "License Pack already exported: \n %s";
-			String message = String.format(pattern, packIdentifier);
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-			throw new CoreException(error);
-		}
-		Date issueDate = licensePack.getIssueDate();
-		if (issueDate != null) {
-			String pattern = "License Pack already exported: \n %s";
-			String message = String.format(pattern, issueDate);
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-			throw new CoreException(error);
-		}
-		String errors = LocEdit.extractValidationError(licensePack);
+	public static String exportLicensePack(LicensePack pack, ProductDomainRegistry productRegistry, LicenseDomainRegistry licenseRegistry, StreamCodec streamCodec) throws CoreException {
+		LicensePack license = EcoreUtil.copy(pack);
+		String errors = LocEdit.extractValidationError(license);
 		if (errors != null) {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
 			throw new CoreException(error);
 		}
-		String productIdentifier = licensePack.getProductIdentifier();
-		String productVersion = licensePack.getProductVersion();
+		String productIdentifier = license.getProductIdentifier();
+		String productVersion = license.getProductVersion();
 		Path basePath = licenseRegistry.getBasePath();
 		Path path = basePath.resolve(productIdentifier).resolve(productVersion);
 		String storageKeyFolder = path.toFile().getAbsolutePath();
+
+		String uuid = UUID.randomUUID().toString();
+		Date value = new Date();
+		license.setIdentifier(uuid);
+		license.setIssueDate(value);
+		String licenseIn = storageKeyFolder + File.separator + uuid + LicensingPaths.EXTENSION_LICENSE_DECRYPTED;
+		
+		URI uri = URI.createFileURI(licenseIn);
+		ResourceSet resourceSet = new ResourceSetImpl();
+		Resource resource = resourceSet.createResource(uri);
+		resource.getContents().add(license);
+		try {
+			resource.save(null);
+		} catch (IOException e) {
+			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "License Pack export error", e);
+			throw new CoreException(error);
+		}
+
+		if (streamCodec == null) {
+			return licenseIn;
+		}
+
 		String keyFileName = productIdentifier + '_' + productVersion;
 		String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 		File privateProductToken = new File(privateKeyPath);
@@ -69,26 +84,14 @@ public class LicensesCore {
 			throw new CoreException(error);
 		}
 
-		if (streamCodec == null) {
-			String pattern = "Unable to issue license for pack keys for version %s of %s : \n codec not found";
-			String message = String.format(pattern, productVersion, productIdentifier);
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-			throw new CoreException(error);
-		}
-
-		String uuid = UUID.randomUUID().toString();
-		Date value = new Date();
 		String licenseOut = storageKeyFolder + File.separator + uuid + LicensingPaths.EXTENSION_LICENSE_ENCRYPTED;
-		String licenseFile = licensePack.eResource().getURI().toFileString();
 		File licenseEncoded = new File(licenseOut);
-		try (FileInputStream licenseInput = new FileInputStream(licenseFile);
+		try (FileInputStream licenseInput = new FileInputStream(licenseIn);
 				FileOutputStream licenseOutput = new FileOutputStream(licenseEncoded); FileInputStream keyStream = new FileInputStream(privateProductToken)) {
 			String username = productIdentifier;
 			ProductVersionDescriptor pvd = productRegistry.getProductVersion(productIdentifier, productVersion);
 			String password = productRegistry.createPassword(pvd);
 			streamCodec.encodeStream(licenseInput, licenseOutput, keyStream, username, password);
-			licensePack.setIdentifier(uuid);;
-			licensePack.setIssueDate(value);;
 			return licenseOut;
 		} catch (Exception e) {
 			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "License Pack export error", e);
