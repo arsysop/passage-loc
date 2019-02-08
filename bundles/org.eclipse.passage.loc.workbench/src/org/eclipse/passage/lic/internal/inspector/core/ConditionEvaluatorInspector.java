@@ -50,7 +50,7 @@ public class ConditionEvaluatorInspector implements ConditionInpector {
 	@Override
 	public String getDefaultType() {
 		// TODO configure via property?
-		return "hardware";
+		return "<undefined>";
 	}
 
 }
