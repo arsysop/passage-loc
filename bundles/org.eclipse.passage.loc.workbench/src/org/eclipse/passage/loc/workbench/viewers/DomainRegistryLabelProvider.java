@@ -17,8 +17,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.passage.lic.jface.LicensingImages;
+import org.eclipse.passage.lic.model.api.LicensePack;
 import org.eclipse.passage.lic.registry.FeatureDescriptor;
 import org.eclipse.passage.lic.registry.FeatureVersionDescriptor;
+import org.eclipse.passage.lic.registry.LicensePackDescriptor;
 import org.eclipse.passage.lic.registry.ProductDescriptor;
 import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
 import org.eclipse.passage.lic.registry.ProductVersionFeatureDescriptor;
@@ -61,6 +63,13 @@ public class DomainRegistryLabelProvider extends LabelProvider {
 			FeatureVersionDescriptor productVersion = (FeatureVersionDescriptor) element;
 			FeatureDescriptor feature = productVersion.getFeature();
 			return feature.getName() + ' ' + productVersion.getVersion();
+		}
+		if (element instanceof LicensePack) {
+			LicensePack pack = (LicensePack) element;
+			String packId = pack.getIdentifier();
+			String productId = pack.getProductIdentifier();
+			String productVersion = pack.getProductVersion();
+			return packId + ' ' + '(' + productId + ' ' + productVersion + ')';
 		}
 		return delegate.getText(element);
 	}
