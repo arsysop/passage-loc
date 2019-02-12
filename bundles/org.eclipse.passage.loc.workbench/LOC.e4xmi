@@ -37,9 +37,6 @@
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_1tnR8Aa0EemNz8l9BTvo0A" elementId="org.eclipse.passage.loc.workbench.toolbarseparator.view"/>
       </children>
     </trimBars>
-    <trimBars xmi:id="_i1VvsPPBEeidN5pWK-UnUQ" elementId="org.eclipse.passage.loc.workbench.trimbar.0" side="Bottom">
-      <children xsi:type="menu:ToolControl" xmi:id="_j1Rj4PPbEeidN5pWK-UnUQ" elementId="org.eclipse.passage.loc.workbench.toolcontrol.licensing.status" contributionURI="bundleclass://org.eclipse.passage.loc.workbench/org.eclipse.passage.loc.internal.workbench.LicensingStatusToolControl"/>
-    </trimBars>
   </children>
   <handlers xmi:id="_uPtcsOdJEeigXNdbugUBXw" elementId="org.eclipse.passage.loc.workbench.handler.perspective.open" contributionURI="bundleclass://org.eclipse.passage.loc.workbench/org.eclipse.passage.loc.workbench.handlers.OpenPerspectiveHandler" command="_5P07MOdJEeigXNdbugUBXw"/>
   <handlers xmi:id="_Rv9FwO1jEeiDZvQDX7JRaA" elementId="org.eclipse.passage.loc.workbench.handler.inspect.hardware" contributionURI="bundleclass://org.eclipse.passage.lic.inspector.ui/org.eclipse.passage.lic.inspector.ui.handlers.InspectHardwareHandler" command="_mYhFMO1jEeiDZvQDX7JRaA"/>
