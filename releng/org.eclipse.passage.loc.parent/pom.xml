@@ -20,7 +20,7 @@
 
 	<groupId>org.eclipse.passage.loc</groupId>
 	<artifactId>org.eclipse.passage.loc.parent</artifactId>
-	<version>0.3.3-SNAPSHOT</version>
+	<version>0.3.3</version>
 	<packaging>pom</packaging>
 
 	<prerequisites>
