@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ru.arsysop.passage.loc.internal.features.core.FeatureSetClassifierInitializer">
-   <property name="ru.arsysop.passage.lic.emf.edit.domain.name" value="features"/>
-   <service>
-      <provide interface="ru.arsysop.passage.lic.emf.edit.ClassifierInitializer"/>
-   </service>
-   <implementation class="ru.arsysop.passage.loc.internal.features.core.FeatureSetClassifierInitializer"/>
-</scr:component>
