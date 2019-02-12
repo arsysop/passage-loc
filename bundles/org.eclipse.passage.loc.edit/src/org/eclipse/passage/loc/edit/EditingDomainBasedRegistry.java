@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
@@ -36,19 +37,25 @@ import org.eclipse.osgi.service.environment.EnvironmentInfo;
 import org.eclipse.passage.lic.base.LicensingPaths;
 import org.eclipse.passage.lic.emf.edit.ComposedAdapterFactoryProvider;
 import org.eclipse.passage.lic.emf.edit.DomainContentAdapter;
+import org.eclipse.passage.lic.emf.edit.DomainRegistryAccess;
 import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
+import org.eclipse.passage.lic.model.meta.LicPackage;
 import org.eclipse.passage.lic.registry.DescriptorRegistry;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
 public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, EditingDomainRegistry {
-
-	// @see org.eclipse.e4.core.services.events.IEventBroker.DATA
-	protected static final String PROPERTY_DATA = "org.eclipse.e4.data"; //$NON-NLS-1$
+	
+	//FIXME: AF find better place
+	static {
+		EPackage.Registry.INSTANCE.put("http://www.arsysop.ru/passage/lic/0.3.1", LicPackage.eINSTANCE); //$NON-NLS-1$
+		EPackage.Registry.INSTANCE.put("http://www.arsysop.ru/passage/lic/0.3.2", LicPackage.eINSTANCE); //$NON-NLS-1$
+	}
 
 	protected EnvironmentInfo environmentInfo;
 
 	protected EventAdmin eventAdmin;
+
+	private String domainName;
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
@@ -104,14 +111,55 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	}
 
 	protected void activate(Map<String, Object> properties) {
+		domainName = String.valueOf(properties.get(DomainRegistryAccess.PROPERTY_DOMAIN_NAME));
 		contentAdapter = createContentAdapter();
 		editingDomain.getResourceSet().eAdapters().add(contentAdapter);
+		loadResourceSet();
+	}
+
+	protected void loadResourceSet() {
+		try {
+			Path domainPath = getResourceSetPath();
+			if (!Files.exists(domainPath)) {
+				return;
+			}
+			List<String> lines = Files.readAllLines(domainPath);
+			for (String line : lines) {
+				registerSource(line);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	protected Path getResourceSetPath() throws Exception {
+		String areaValue = environmentInfo.getProperty(LicensingPaths.PROPERTY_OSGI_INSTALL_AREA);
+		Path areaPath = Paths.get(new java.net.URI(areaValue));
+		Path passagePath = areaPath.resolve(LicensingPaths.FOLDER_LICENSING_BASE);
+		Files.createDirectories(passagePath);
+		Path domainPath = passagePath.resolve(domainName);
+		return domainPath;
 	}
 
 	protected abstract DomainContentAdapter<? extends EditingDomainRegistry> createContentAdapter();
 
 	protected void deactivate(Map<String, Object> properties) {
+		saveResourceSet();
 		editingDomain.getResourceSet().eAdapters().remove(contentAdapter);
+	}
+
+	protected void saveResourceSet() {
+		try {
+			Path domainPath = getResourceSetPath();
+			if (!Files.exists(domainPath)) {
+				Files.createFile(domainPath);
+			}
+			Files.write(domainPath, sources);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -174,13 +222,6 @@ public abstract class EditingDomainBasedRegistry implements DescriptorRegistry, 
 	@Override
 	public Iterable<String> getSources() {
 		return Collections.unmodifiableList(sources);
-	}
-
-	protected static Event createEvent(String topic, Object data) {
-		Map<String, Object> properties = new HashMap<>();
-		properties.put(PROPERTY_DATA, data);
-		Event event = new Event(topic, properties);
-		return event;
 	}
 
 }

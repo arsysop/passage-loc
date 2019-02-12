@@ -36,6 +36,7 @@ import org.eclipse.passage.lic.registry.UsersEvents;
 import org.eclipse.passage.lic.registry.UsersRegistry;
 import org.eclipse.passage.loc.edit.EditingDomainBasedRegistry;
 import org.eclipse.passage.loc.edit.UserDomainRegistry;
+import org.eclipse.passage.loc.runtime.OperatorEvents;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -142,7 +143,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(UsersEvents.USER_ORIGIN_CREATE, userOrigin));
+		eventAdmin.postEvent(OperatorEvents.create(UsersEvents.USER_ORIGIN_CREATE, userOrigin));
 		EList<User> users = userOrigin.getUsers();
 		for (User user : users) {
 			registerUser(user);
@@ -156,14 +157,14 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(UsersEvents.USER_CREATE, user));
+		eventAdmin.postEvent(OperatorEvents.create(UsersEvents.USER_CREATE, user));
 	}
 
 	@Override
 	public void unregisterUserOrigin(String userOriginId) {
 		UserOrigin removed = userOriginIndex.remove(userOriginId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(UsersEvents.USER_ORIGIN_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(UsersEvents.USER_ORIGIN_DELETE, removed));
 			EList<User> users = removed.getUsers();
 			for (User user : users) {
 				unregisterUser(user.getEmail());
@@ -175,7 +176,7 @@ public class UserDomainRegistryImpl extends EditingDomainBasedRegistry
 	public void unregisterUser(String userId) {
 		User removed = userIndex.remove(userId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(UsersEvents.USER_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(UsersEvents.USER_DELETE, removed));
 		}
 	}
 

@@ -35,6 +35,7 @@ import org.eclipse.passage.lic.registry.LicensesEvents;
 import org.eclipse.passage.lic.registry.LicensesRegistry;
 import org.eclipse.passage.loc.edit.EditingDomainBasedRegistry;
 import org.eclipse.passage.loc.edit.LicenseDomainRegistry;
+import org.eclipse.passage.loc.runtime.OperatorEvents;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -158,7 +159,7 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(LicensesEvents.LICENSE_PACK_CREATE, licensePack));
+		eventAdmin.postEvent(OperatorEvents.create(LicensesEvents.LICENSE_PACK_CREATE, licensePack));
 		String userIdentifier = licensePack.getUserIdentifier();
 		List<LicensePack> userPackList = userPackIndex.computeIfAbsent(userIdentifier, key -> new ArrayList<>());
 		userPackList.add(licensePack);
@@ -174,7 +175,7 @@ public class LicenseDomainRegistryImpl extends EditingDomainBasedRegistry
 	public void unregisterLicensePack(String identifier) {
 		LicensePack removed = licensePackIndex.remove(identifier);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(LicensesEvents.LICENSE_PACK_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(LicensesEvents.LICENSE_PACK_DELETE, removed));
 			String userIdentifier = removed.getUserIdentifier();
 
 			List<LicensePack> userPackList = userPackIndex.get(userIdentifier);

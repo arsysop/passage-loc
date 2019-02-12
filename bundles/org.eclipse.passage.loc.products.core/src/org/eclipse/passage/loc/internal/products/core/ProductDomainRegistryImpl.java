@@ -42,6 +42,7 @@ import org.eclipse.passage.lic.registry.ProductsEvents;
 import org.eclipse.passage.lic.registry.ProductsRegistry;
 import org.eclipse.passage.loc.edit.EditingDomainBasedRegistry;
 import org.eclipse.passage.loc.edit.ProductDomainRegistry;
+import org.eclipse.passage.loc.runtime.OperatorEvents;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -227,7 +228,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_LINE_CREATE, productLine));
+		eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_LINE_CREATE, productLine));
 		EList<Product> products = productLine.getProducts();
 		for (Product product : products) {
 			registerProduct(product);
@@ -241,7 +242,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_CREATE, product));
+		eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_CREATE, product));
 		EList<ProductVersion> productVersions = product.getProductVersions();
 		for (ProductVersion productVersion : productVersions) {
 			registerProductVersion(product, productVersion);
@@ -257,7 +258,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_CREATE, productVersion));
+		eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_VERSION_CREATE, productVersion));
 	}
 
 	@Override
@@ -273,14 +274,14 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_FEATURE_CREATE, productVersionFeature));
+		eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_VERSION_FEATURE_CREATE, productVersionFeature));
 	}
 
 	@Override
 	public void unregisterProductLine(String productLineId) {
 		ProductLine removed = productLineIndex.remove(productLineId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_LINE_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_LINE_DELETE, removed));
 			EList<Product> products = removed.getProducts();
 			for (Product product : products) {
 				unregisterProduct(product.getIdentifier());
@@ -292,7 +293,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 	public void unregisterProduct(String productId) {
 		Product removed = productIndex.remove(productId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_DELETE, removed));
 			EList<ProductVersion> productVersions = removed.getProductVersions();
 			for (ProductVersion productVersion : productVersions) {
 				unregisterProductVersion(productId, productVersion.getVersion());
@@ -306,7 +307,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (versions != null) {
 			ProductVersion removed = versions.remove(version);
 			if (removed != null) {
-				eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_DELETE, removed));
+				eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_VERSION_DELETE, removed));
 			}
 			if (versions.isEmpty()) {
 				productVersionIndex.remove(productId);
@@ -327,7 +328,7 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 			if (features != null) {
 				ProductVersionFeature removed = features.remove(featureId);
 				if (removed != null) {
-					eventAdmin.postEvent(createEvent(ProductsEvents.PRODUCT_VERSION_FEATURE_DELETE, removed));
+					eventAdmin.postEvent(OperatorEvents.create(ProductsEvents.PRODUCT_VERSION_FEATURE_DELETE, removed));
 				}
 				if (features.isEmpty()) {
 					versions.remove(version);

@@ -37,6 +37,7 @@ import org.eclipse.passage.lic.registry.FeaturesRegistry;
 import org.eclipse.passage.lic.registry.Identified;
 import org.eclipse.passage.loc.edit.EditingDomainBasedRegistry;
 import org.eclipse.passage.loc.edit.FeatureDomainRegistry;
+import org.eclipse.passage.loc.runtime.OperatorEvents;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -179,7 +180,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_CREATE, featureSet));
+		eventAdmin.postEvent(OperatorEvents.create(FeaturesEvents.FEATURE_SET_CREATE, featureSet));
 		Iterable<? extends FeatureDescriptor> features = featureSet.getFeatures();
 		for (FeatureDescriptor feature : features) {
 			registerFeature(feature);
@@ -193,7 +194,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_CREATE, feature));
+		eventAdmin.postEvent(OperatorEvents.create(FeaturesEvents.FEATURE_CREATE, feature));
 		Iterable<? extends FeatureVersionDescriptor> featureVersions = feature.getFeatureVersions();
 		for (FeatureVersionDescriptor featureVersion : featureVersions) {
 			registerFeatureVersion(feature, featureVersion);
@@ -210,14 +211,14 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (existing != null) {
 			// FIXME: warning
 		}
-		eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_CREATE, featureVersion));
+		eventAdmin.postEvent(OperatorEvents.create(FeaturesEvents.FEATURE_VERSION_CREATE, featureVersion));
 	}
 
 	@Override
 	public void unregisterFeatureSet(String featureSetId) {
 		FeatureSetDescriptor removed = featureSetIndex.remove(featureSetId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_SET_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(FeaturesEvents.FEATURE_SET_DELETE, removed));
 			Iterable<? extends FeatureDescriptor> features = removed.getFeatures();
 			for (FeatureDescriptor feature : features) {
 				unregisterFeature(feature.getIdentifier());
@@ -229,7 +230,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 	public void unregisterFeature(String featureId) {
 		FeatureDescriptor removed = featureIndex.remove(featureId);
 		if (removed != null) {
-			eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_DELETE, removed));
+			eventAdmin.postEvent(OperatorEvents.create(FeaturesEvents.FEATURE_DELETE, removed));
 			Iterable<? extends FeatureVersionDescriptor> featureVersions = removed.getFeatureVersions();
 			for (FeatureVersionDescriptor featureVersion : featureVersions) {
 				unregisterFeatureVersion(featureId, featureVersion.getVersion());
@@ -243,7 +244,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 		if (map != null) {
 			FeatureVersionDescriptor removed = map.remove(version);
 			if (removed != null) {
-				eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_DELETE, removed));
+				eventAdmin.postEvent(OperatorEvents.create(FeaturesEvents.FEATURE_VERSION_DELETE, removed));
 			}
 			if (map.isEmpty()) {
 				featureVersionIndex.remove(version);
