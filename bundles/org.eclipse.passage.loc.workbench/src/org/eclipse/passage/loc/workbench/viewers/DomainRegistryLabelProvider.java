@@ -20,7 +20,6 @@ import org.eclipse.passage.lic.jface.LicensingImages;
 import org.eclipse.passage.lic.model.api.LicensePack;
 import org.eclipse.passage.lic.registry.FeatureDescriptor;
 import org.eclipse.passage.lic.registry.FeatureVersionDescriptor;
-import org.eclipse.passage.lic.registry.LicensePackDescriptor;
 import org.eclipse.passage.lic.registry.ProductDescriptor;
 import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
 import org.eclipse.passage.lic.registry.ProductVersionFeatureDescriptor;
