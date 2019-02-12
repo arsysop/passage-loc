@@ -10,7 +10,7 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package org.eclipse.passage.loc.licenses.core;
+package org.eclipse.passage.loc.internal.licenses.core;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +20,6 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.UUID;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -30,22 +29,65 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.passage.lic.base.LicensingPaths;
 import org.eclipse.passage.lic.model.api.LicensePack;
+import org.eclipse.passage.lic.registry.LicensePackDescriptor;
 import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
 import org.eclipse.passage.lic.runtime.io.StreamCodec;
 import org.eclipse.passage.loc.edit.LicenseDomainRegistry;
 import org.eclipse.passage.loc.edit.LocEdit;
 import org.eclipse.passage.loc.edit.ProductDomainRegistry;
+import org.eclipse.passage.loc.runtime.LicenseOperatorEvents;
+import org.eclipse.passage.loc.runtime.LicenseOperatorService;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.event.EventAdmin;
 
-public class LicensesCore {
+public class LicenseOperatorServiceImpl implements LicenseOperatorService {
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.passage.loc.licenses.core"; //$NON-NLS-1$
+	private String pluginId;
 
-	public static String exportLicensePack(LicensePack pack, ProductDomainRegistry productRegistry, LicenseDomainRegistry licenseRegistry, StreamCodec streamCodec) throws CoreException {
+	private EventAdmin eventAdmin;
+	private LicenseDomainRegistry licenseRegistry;
+	private ProductDomainRegistry productRegistry;
+	private StreamCodec streamCodec;
+	
+	@Activate
+	public void activate(BundleContext context) {
+		pluginId = context.getBundle().getSymbolicName();
+	}
+
+	@Reference
+	public void bindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = eventAdmin;
+	}
+
+	public void unbindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = null;
+	}
+
+	@Reference(cardinality=ReferenceCardinality.OPTIONAL)
+	public void bindStreamCodec(StreamCodec streamCodec) {
+		this.streamCodec = streamCodec;
+	}
+
+	public void unbindStreamCodec(StreamCodec streamCodec) {
+		this.streamCodec = null;
+	}
+
+	@Override
+	public IStatus issueLicensePack(LicensePackDescriptor descriptor) {
+		LicensePack pack = null;
+		if (descriptor instanceof LicensePack) {
+			pack = (LicensePack) descriptor;
+		}
+		if (pack == null) {
+			return new Status(IStatus.ERROR, pluginId, "Invalid License Pack");
+		}
 		LicensePack license = EcoreUtil.copy(pack);
 		String errors = LocEdit.extractValidationError(license);
 		if (errors != null) {
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, errors);
 		}
 		String productIdentifier = license.getProductIdentifier();
 		String productVersion = license.getProductVersion();
@@ -65,13 +107,15 @@ public class LicensesCore {
 		resource.getContents().add(license);
 		try {
 			resource.save(null);
+			eventAdmin.postEvent(LicenseOperatorEvents.decodedIssued(licenseIn));
 		} catch (IOException e) {
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "License Pack export error", e);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, "License Pack export error", e);
 		}
 
 		if (streamCodec == null) {
-			return licenseIn;
+			String format = "License pack exported succesfully: \n\n %s \n";
+			String message = String.format(format, licenseIn);
+			return new Status(IStatus.OK, pluginId, message);
 		}
 
 		String keyFileName = productIdentifier + '_' + productVersion;
@@ -80,8 +124,7 @@ public class LicensesCore {
 		if (!privateProductToken.exists()) {
 			String pattern = "Product private key not found: \n %s";
 			String message = String.format(pattern, privateProductToken.getAbsolutePath());
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, message);
 		}
 
 		String licenseOut = storageKeyFolder + File.separator + uuid + LicensingPaths.EXTENSION_LICENSE_ENCRYPTED;
@@ -92,12 +135,13 @@ public class LicensesCore {
 			ProductVersionDescriptor pvd = productRegistry.getProductVersion(productIdentifier, productVersion);
 			String password = productRegistry.createPassword(pvd);
 			streamCodec.encodeStream(licenseInput, licenseOutput, keyStream, username, password);
-			return licenseOut;
+			eventAdmin.postEvent(LicenseOperatorEvents.encodedIssued(licenseOut));
+			String format = "License pack exported succesfully: \n\n %s \n";
+			String message = String.format(format, licenseOut);
+			return new Status(IStatus.OK, pluginId, message);
 		} catch (Exception e) {
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "License Pack export error", e);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, "License Pack export error", e);
 		}
 	}
-	
 
 }

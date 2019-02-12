@@ -31,6 +31,7 @@
 	<modules>
 		<module>../../releng/org.eclipse.passage.loc.target</module>
 
+		<module>../../bundles/org.eclipse.passage.loc.runtime</module>
 		<module>../../bundles/org.eclipse.passage.loc.edit</module>
 		<module>../../bundles/org.eclipse.passage.loc.workbench</module>
 		<module>../../bundles/org.eclipse.passage.loc.workbench.emfforms</module>

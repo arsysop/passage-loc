@@ -20,6 +20,7 @@ Require-Bundle: org.eclipse.jface;bundle-version="0.0.0",
  org.eclipse.passage.lic.registry;bundle-version="0.0.0",
  org.eclipse.passage.lic.model;bundle-version="0.0.0",
  org.eclipse.passage.lic.model.edit;bundle-version="0.0.0",
+ org.eclipse.passage.loc.runtime;bundle-version="0.0.0",
  org.eclipse.passage.loc.workbench;bundle-version="0.0.0",
  org.eclipse.passage.loc.licenses.core;bundle-version="0.0.0"
 Import-Package: javax.inject;version="1.0.0"

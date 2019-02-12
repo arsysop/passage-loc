@@ -10,38 +10,78 @@
  * Contributors:
  *     ArSysOp - initial API and implementation
  *******************************************************************************/
-package org.eclipse.passage.loc.products.core;
+package org.eclipse.passage.loc.internal.products.core;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.passage.lic.base.LicensingPaths;
 import org.eclipse.passage.lic.model.api.Product;
 import org.eclipse.passage.lic.model.api.ProductVersion;
+import org.eclipse.passage.lic.registry.ProductVersionDescriptor;
 import org.eclipse.passage.lic.runtime.io.StreamCodec;
 import org.eclipse.passage.loc.edit.LocEdit;
 import org.eclipse.passage.loc.edit.ProductDomainRegistry;
+import org.eclipse.passage.loc.runtime.ProductOperatorEvents;
+import org.eclipse.passage.loc.runtime.ProductOperatorService;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.event.EventAdmin;
 
-public class ProductsCore {
+@Component
+public class ProductOperatorServiceImpl implements ProductOperatorService {
+	
+	private String pluginId;
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.passage.loc.products.core"; //$NON-NLS-1$
+	private EventAdmin eventAdmin;
+	private ProductDomainRegistry productRegistry;
+	private StreamCodec streamCodec;
+	
+	@Activate
+	public void activate(BundleContext context) {
+		pluginId = context.getBundle().getSymbolicName();
+	}
 
-	public static List<String> exportProductKeys(ProductVersion productVersion, ProductDomainRegistry registry,
-			StreamCodec streamCodec) throws CoreException {
+	@Reference
+	public void bindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = eventAdmin;
+	}
+
+	public void unbindEventAdmin(EventAdmin eventAdmin) {
+		this.eventAdmin = null;
+	}
+
+	@Reference(cardinality=ReferenceCardinality.OPTIONAL)
+	public void bindStreamCodec(StreamCodec streamCodec) {
+		this.streamCodec = streamCodec;
+	}
+
+	public void unbindStreamCodec(StreamCodec streamCodec) {
+		this.streamCodec = null;
+	}
+
+	@Override
+	public IStatus createProductKeys(ProductVersionDescriptor descriptor) {
+		ProductVersion productVersion = null;
+		if (descriptor instanceof ProductVersion) {
+			productVersion = (ProductVersion) descriptor;
+		}
+		if (productVersion == null) {
+			return new Status(IStatus.ERROR, pluginId, "Invalid Product Version");
+		}
 		String installationToken = productVersion.getInstallationToken();
 		if (installationToken != null) {
 			File publicFile = new File(installationToken);
 			if (publicFile.exists()) {
 				String pattern = "Public key already defined: \n %s";
 				String message = String.format(pattern, publicFile.getAbsolutePath());
-				IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-				throw new CoreException(error);
+				return new Status(IStatus.ERROR, pluginId, message);
 			}
 		}
 		String secureToken = productVersion.getSecureToken();
@@ -50,26 +90,23 @@ public class ProductsCore {
 			if (privateFile.exists()) {
 				String pattern = "Private key already defined: \n %s";
 				String message = String.format(pattern, privateFile.getAbsolutePath());
-				IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-				throw new CoreException(error);
+				return new Status(IStatus.ERROR, pluginId, message);
 			}
 		}
 
 		Product product = productVersion.getProduct();
 		String errors = LocEdit.extractValidationError(product);
 		if (errors != null) {
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, errors);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, errors);
 		}
 		String identifier = product.getIdentifier();
 		String version = productVersion.getVersion();
 		if (streamCodec == null) {
 			String pattern = "Unable to create keys for version %s of %s : \n codec not found";
 			String message = String.format(pattern, version, product.getName());
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, message);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, message);
 		}
-		Path basePath = registry.getBasePath();
+		Path basePath = productRegistry.getBasePath();
 		try {
 			Path path = basePath.resolve(identifier).resolve(version);
 			Files.createDirectories(path);
@@ -79,14 +116,16 @@ public class ProductsCore {
 					+ LicensingPaths.EXTENSION_PRODUCT_PUBLIC;
 			String privateKeyPath = storageKeyFolder + File.separator + keyFileName + LocEdit.EXTENSION_KEY_PRIVATE;
 			streamCodec.createKeyPair(publicKeyPath, privateKeyPath, identifier,
-					registry.createPassword(productVersion));
+					productRegistry.createPassword(productVersion));
 			productVersion.setInstallationToken(publicKeyPath);
 			productVersion.setSecureToken(privateKeyPath);
-
-			return Arrays.asList(publicKeyPath, privateKeyPath);
+			eventAdmin.postEvent(ProductOperatorEvents.publicCreated(publicKeyPath));
+			eventAdmin.postEvent(ProductOperatorEvents.privateCreated(privateKeyPath));
+			String format = "Product keys exported succesfully: \n\n %s \n %s \n";
+			String message = String.format(format, publicKeyPath, privateKeyPath);
+			return new Status(IStatus.OK, pluginId, message);
 		} catch (Exception e) {
-			IStatus error = new Status(IStatus.ERROR, BUNDLE_SYMBOLIC_NAME, "Product key export error", e);
-			throw new CoreException(error);
+			return new Status(IStatus.ERROR, pluginId, "Product key export error", e);
 		}
 	}
 

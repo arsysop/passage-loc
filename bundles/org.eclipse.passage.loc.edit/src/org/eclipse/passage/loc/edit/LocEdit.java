@@ -75,11 +75,15 @@ public class LocEdit {
 		return null;
 	}
 
-	public static String extractValidationError(EObject newObject) {
-		if (newObject == null) {
+	public static String extractValidationError(Object input) {
+		EObject eObject = null;
+		if (input instanceof EObject) {
+			eObject = (EObject) input;
+		}
+		if (eObject == null) {
 			return "Input is invalid";
 		}
-		final Diagnostic result = Diagnostician.INSTANCE.validate(newObject);
+		final Diagnostic result = Diagnostician.INSTANCE.validate(eObject);
 		if (result.getSeverity() == Diagnostic.OK) {
 			return null;
 		}
