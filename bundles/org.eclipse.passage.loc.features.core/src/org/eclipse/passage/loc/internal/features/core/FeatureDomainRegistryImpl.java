@@ -246,7 +246,7 @@ public class FeatureDomainRegistryImpl extends EditingDomainBasedRegistry
 				eventAdmin.postEvent(createEvent(FeaturesEvents.FEATURE_VERSION_DELETE, removed));
 			}
 			if (map.isEmpty()) {
-				featureVersionIndex.remove(featureId);
+				featureVersionIndex.remove(version);
 			}
 		}
 	}

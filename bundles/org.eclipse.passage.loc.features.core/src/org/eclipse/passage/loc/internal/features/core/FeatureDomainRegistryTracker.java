@@ -158,10 +158,10 @@ public class FeatureDomainRegistryTracker extends DomainContentAdapter<FeatureDo
 		switch (notification.getEventType()) {
 		case Notification.SET:
 			if (oldValue != null) {
-				registry.unregisterFeatureVersion(feature.getIdentifier(), oldValue);;
+				registry.unregisterFeatureVersion(feature.getIdentifier(), oldValue);
 			}
 			if (newValue != null) {
-				registry.registerFeatureVersion(feature, featureVersion);;
+				registry.registerFeatureVersion(feature, featureVersion);
 			}
 		default:
 			break;
