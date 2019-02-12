@@ -311,6 +311,11 @@ public class ProductDomainRegistryImpl extends EditingDomainBasedRegistry
 			if (versions.isEmpty()) {
 				productVersionIndex.remove(productId);
 			}
+			EList<ProductVersionFeature> productVersionFeatures = removed.getProductVersionFeatures();
+			for (ProductVersionFeature productVersionFeature : productVersionFeatures) {
+				String featureId = productVersionFeature.getFeatureIdentifier();
+				unregisterProductVersionFeature(productId, version, featureId );
+			}
 		}
 	}
 

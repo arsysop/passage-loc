@@ -14,8 +14,6 @@ package org.eclipse.passage.loc.edit.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -23,9 +21,10 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.passage.lic.emf.edit.EditingDomainRegistry;
 import org.eclipse.passage.lic.jface.LicensingImages;
@@ -52,7 +51,6 @@ public class DomainRegistryExplorerPart {
 
 	private TreeViewer treeView;
 	private LicensingImages licensingImages;
-	private DomainRegistryContentProvider contentProvider;
 
 	@Inject
 	public DomainRegistryExplorerPart(IEclipseContext context) {
@@ -69,48 +67,29 @@ public class DomainRegistryExplorerPart {
 		Composite area = new Composite(parent, SWT.NONE);
 		area.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 		area.setLayout(new GridLayout(1, false));
-		createRegistryTree(area);
-
-	}
-
-	private void createRegistryTree(Composite area) {
-		treeView = new TreeViewer(area);
-		treeView.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		treeView.setAutoExpandLevel(2);
-		contentProvider = new DomainRegistryContentProvider();
-		treeView.setContentProvider(contentProvider);
-		treeView.setLabelProvider(new DomainRegistryLabelProvider(licensingImages));
+		treeView = createRegistryTree(area);
+		ESelectionService selectionService = context.get(ESelectionService.class);
+		treeView.addSelectionChangedListener(e -> {
+			ISelection selection = e.getSelection();
+			if (selection instanceof IStructuredSelection) {
+				IStructuredSelection structured = (IStructuredSelection) selection;
+				if (structured.size() == 1) {
+					selectionService.setSelection(structured.getFirstElement());
+				} else {
+					selectionService.setSelection(structured.toArray());
+				}
+			}
+		});
 		treeView.setInput(registries);
 	}
 
-	public boolean unregisterStructureSelectedItem() {
-		if (treeView != null) {
-			Object selection = treeView.getStructuredSelection().getFirstElement();
-			if (selection instanceof XMIResource) {
-				XMIResource resource = (XMIResource) selection;
-				for (EditingDomainRegistry registry : registries) {
-					URI uri = resource.getURI();
-					List<String> collectSources = StreamSupport.stream(registry.getSources().spliterator(), false)
-							.collect(Collectors.toList());
-					String path = uri.path();
-					if (collectSources.contains(path)) {
-						registry.unregisterSource(path);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public String getUnregisterResourceName() {
-		if (treeView != null) {
-			Object selection = treeView.getStructuredSelection().getFirstElement();
-			if (selection instanceof XMIResource) {
-				return ((XMIResource) selection).getURI().toFileString();
-			}
-		}
-		return "";
+	private TreeViewer createRegistryTree(Composite area) {
+		TreeViewer treeView = new TreeViewer(area);
+		treeView.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		treeView.setAutoExpandLevel(2);
+		treeView.setContentProvider(new DomainRegistryContentProvider());
+		treeView.setLabelProvider(new DomainRegistryLabelProvider(licensingImages));
+		return treeView;
 	}
 
 	@Inject
@@ -182,10 +161,6 @@ public class DomainRegistryExplorerPart {
 	@Inject
 	@Optional
 	public void updateLicensePack(@UIEventTopic(LicensesEvents.LICENSE_PACK_UPDATE) LicensePackDescriptor descriptor) {
-		treeView.refresh();
-	}
-
-	public void updateView() {
 		treeView.refresh();
 	}
 

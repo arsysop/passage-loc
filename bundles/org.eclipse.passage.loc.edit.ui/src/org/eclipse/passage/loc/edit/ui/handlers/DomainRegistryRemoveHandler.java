@@ -15,37 +15,34 @@ package org.eclipse.passage.loc.edit.ui.handlers;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.passage.loc.edit.ui.DomainRegistryExplorerPart;
 import org.eclipse.swt.widgets.Shell;
 
 public class DomainRegistryRemoveHandler {
 
-	private static final String DIALOG_TITLE = "Unregister domain resource"; //$NON-NLS-1$
-	private static final String DIALOG_MSG_TEMPLATE = "Unregister domain resource: '%s' ?"; //$NON-NLS-1$
-
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication application,
-			EPartService partService, IEclipseContext context) {
-
-		Object object = partService.getActivePart().getObject();
-
-		if (object instanceof DomainRegistryExplorerPart) {
-			DomainRegistryExplorerPart registryExplorer = (DomainRegistryExplorerPart) object;
-			String resource = registryExplorer.getUnregisterResourceName();
-			if (resource != null && !resource.isEmpty()) {
-				String dialogMsg = String.format(DIALOG_MSG_TEMPLATE, resource);
-				if (MessageDialog.openConfirm(shell, DIALOG_TITLE, dialogMsg)) {
-					if (registryExplorer.unregisterStructureSelectedItem()) {
-						registryExplorer.updateView();
-					}
-				}
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) Resource resource, IEclipseContext context) {
+		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet != null) {
+			Shell shell = context.get(Shell.class);
+			String message = String.format("Unregister domain resource: '%s' ?", resource.getURI());
+			String title = "Unregister Resource";
+			if (MessageDialog.openConfirm(shell, title, message)) {
+				resource.unload();
+				resourceSet.getResources().remove(resource);
 			}
 		}
-
 	}
+	
+	@CanExecute
+	public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Resource resource) {
+		return resource != null;
+	}
+
 }
