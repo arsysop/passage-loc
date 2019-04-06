@@ -1,11 +1,7 @@
 ## Passage Licensing Operator Components (LOC) 
 
-The Passage LOC is a part of the [Eclipse Passage](https://projects.eclipse.org/projects/technology.passage) solution.
-It contains the E4 RCP Application that helps to manage licensing data:
-* Feature Sets and Features
-* Product Lines, Products and Product Versions
-* Users
-* License Packs and License Conditions
+The Passage LOC has been migrated to [Eclipse Passage](https://www.eclipse.org/passage).
+
 
 ### License
 
